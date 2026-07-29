@@ -24,6 +24,13 @@ jobs:
           restore-keys: |
             unity-library-
 
+      - name: Write Unity License
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        run: |
+          mkdir -p ~/.local/share/unity3d/Unity
+          printf '%s' "$UNITY_LICENSE" > ~/.local/share/unity3d/Unity/Unity_lic.ulf
+
       - name: Build Android APK
         uses: game-ci/unity-builder@v4
         env:

@@ -1,0 +1,403 @@
+TriggerSets:
+########################################## KICKS
+
+###################################### ATTACKS
+
+################################### BASIC KICK (P)
+  - Name: KICK_Precise
+    Templates: [LOCK_STYLE_PRECISE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.BASIC, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Kick_Precise}
+
+  - Name: KICK_Short_As_Heavy_Precise
+    Templates: [LOCK_STYLE_PRECISE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.HEAVY, TACTICS.ATTACK_VERY_CLOSE]
+        Priority: 241
+        Conditions:
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "90"}
+        Actions:
+          - Animation: {Name: Kick_Knee_Short}
+
+
+  - Name: KICK_Agile
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.BASIC, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Kick_Agile}
+
+  - Name: KICK_Short_As_Heavy_Agile
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.HEAVY, TACTICS.ATTACK_VERY_CLOSE]
+        Priority: 241
+        Conditions:
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "90"}
+        Actions:
+          - Animation: {Name: Kick_Knee_Short}
+
+
+  - Name: KICK_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.BASIC, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Kick_Strong}
+
+  - Name: KICK_Short_As_Heavy_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.HEAVY, TACTICS.ATTACK_VERY_CLOSE]
+        Priority: 241
+        Conditions:
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "90"}
+        Actions:
+          - Animation: {Name: Kick_Knee_Short}
+
+      #- Templates: [KICK.SUPER_1, TACTICS.ATTACK_VERY_CLOSE]
+      #  Priority: 221
+      #  Conditions:
+      #    - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "90"}
+      #  Actions:
+      #    - Animation: {Name: Kick_Knee_Short}
+
+      - Templates: [KICK.SPINNING, TACTICS.ATTACK_VERY_CLOSE]
+        Priority: 221
+        Conditions:
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "90"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_NO_KNEE_KICK].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Kick_Knee_Short}
+
+################################### BASIC ATTACK INSTEAD SUPER
+  - Name: KICK_Precise_Instead_Super_1
+    Templates: [LOCK_STYLE_PRECISE, LOCK_SKELETON, LOCK_NOT_SUPER_ARMOR]
+    Triggers:
+      - Templates: [KICK.SUPER_1]
+        Actions:
+          - Animation: {Name: Kick_Front_Precise}
+
+  - Name: KICK_Agile_Instead_Super_1
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_NOT_SUPER_ARMOR]
+    Triggers:
+      - Templates: [KICK.SUPER_1]
+        Actions:
+          - Animation: {Name: Kick_Agile}
+
+  - Name: KICK_Strong_Instead_Super_1
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON, LOCK_NOT_SUPER_ARMOR]
+    Triggers:
+      - Templates: [KICK.SUPER_1]
+        Actions:
+          - Animation: {Name: Kick_Strong}
+
+################################### DOUBLE KICK (P + P)
+  - Name: KICK_DOUBLE_Agile
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Kick_Double_Agile}
+
+  - Name: KICK_DOUBLE_Precise
+    Templates: [LOCK_STYLE_PRECISE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Kick_Double_Precise}
+
+################################### TRIPLE KICK (P + P + P)
+  - Name: KICK_TRIPLE_Agile
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.TRIPLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Kick_Triple_Agile}
+
+################################### HEAVY KICK (Forward + P)
+  - Name: KICK_HEAVY_Precise
+    Templates: [LOCK_STYLE_PRECISE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.HEAVY, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Kick_Front_Precise}
+
+  - Name: KICK_HEAVY_Agile
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.HEAVY, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Kick_Front_Agile}
+
+  - Name: KICK_HEAVY_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.HEAVY, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Kick_Front_Strong}
+
+################################### SUPER KICK (Forward + P)
+#  - Name: KICK_SUPER_1_Precise_1
+#    Templates: [LOCK_STYLE_PRECISE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+#    #, LOCK_SUPER_ARMOR
+#    #Locks:
+#    #  - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_PRECISE_1"}
+#    Triggers:
+#      - Templates: [KICK.SUPER_1, TACTICS.ATTACK_CLOSE]
+#        Actions:
+#          - Animation: {Name: Precise_Super_1_Kick_1}
+
+  - Name: KICK_SUPER_1_Agile_1
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_AGILE_1"}
+    Triggers:
+      - Templates: [KICK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Agile_Super_1_Kick_1}
+
+  - Name: KICK_SUPER_1_Agile_2
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_AGILE_1"}
+    Triggers:
+      - Templates: [KICK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Agile_Super_1_Kick_2}
+
+  - Name: KICK_SUPER_1_Agile_3
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_AGILE_1"}
+    Triggers:
+      - Templates: [KICK.SUPER_3, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Agile_Super_1_Kick_3}
+
+  - Name: KICK_SUPER_2_Agile_1
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_AGILE_2"}
+    Triggers:
+      - Templates: [KICK.SUPER_1, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Agile_Super_2_Kick_1}
+
+  - Name: KICK_SUPER_2_Agile_2
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_AGILE_2"}
+    Triggers:
+      - Templates: [KICK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Agile_Super_2_Kick_2}
+
+  - Name: KICK_SUPER_2_Agile_3
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_AGILE_2"}
+    Triggers:
+      - Templates: [KICK.SUPER_3, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Agile_Super_2_Kick_3}
+
+  - Name: KICK_SUPER_3_Agile_1
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_AGILE_3"}
+    Triggers:
+      - Templates: [KICK.SUPER_1, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Agile_Super_3_Kick_1}
+
+  - Name: KICK_SUPER_3_Agile_2
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_AGILE_3"}
+    Triggers:
+      - Templates: [KICK.SUPER_2, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Agile_Super_3_Kick_2}
+
+  - Name: KICK_SUPER_3_Agile_3
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON, LOCK_SUPER_ARMOR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_AGILE_3"}
+    Triggers:
+      - Templates: [KICK.SUPER_3, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Agile_Super_3_Kick_3}
+
+############## STR
+
+  - Name: KICK_SUPER_1_Strong_1
+    Templates: [LOCK_STYLE_STRONG, LOCK_SUPER_ARMOR, LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_STRONG_1"}
+    Triggers:
+      - Templates: [KICK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Strong_Super_1_Kick_1}
+
+  - Name: KICK_SUPER_1_Strong_2
+    Templates: [LOCK_STYLE_STRONG, LOCK_SUPER_ARMOR, LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_STRONG_1"}
+    Triggers:
+      - Templates: [KICK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Strong_Super_1_Kick_2}
+          
+  - Name: KICK_SUPER_2_Strong_1
+    Templates: [LOCK_STYLE_STRONG, LOCK_SUPER_ARMOR, LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_STRONG_2"}
+    Triggers:
+      - Templates: [KICK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Strong_Super_2_Kick_1}
+
+  - Name: KICK_SUPER_2_Strong_2
+    Templates: [LOCK_STYLE_STRONG, LOCK_SUPER_ARMOR, LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_STRONG_2"}
+    Triggers:
+      - Templates: [KICK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Strong_Super_2_Kick_2}
+
+  - Name: KICK_SUPER_2_Strong_3
+    Templates: [LOCK_STYLE_STRONG, LOCK_SUPER_ARMOR, LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_STRONG_2"}
+    Triggers:
+      - Templates: [KICK.SUPER_3, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Strong_Super_2_Kick_3}
+
+  - Name: KICK_SUPER_3_Strong_1
+    Templates: [LOCK_STYLE_STRONG, LOCK_SUPER_ARMOR, LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_STRONG_3"}
+    Triggers:
+      - Templates: [KICK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Strong_Super_3_Kick_1}
+
+  - Name: KICK_SUPER_3_Strong_2
+    Templates: [LOCK_STYLE_STRONG, LOCK_SUPER_ARMOR, LOCK_SKELETON, LOCK_SUBTYPE_NOT_FISTS]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_STRONG_3"}
+    Triggers:
+      - Templates: [REACTION.HIT_TO_ENEMY]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Strong_Super_3_Kick"}
+          - Greater: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Me],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Strong_Super_3_Kick_2}
+
+  - Name: KICK_SUPER_3_Strong_2_Without_Weapon
+    Templates: [LOCK_STYLE_STRONG, LOCK_SUPER_ARMOR, LOCK_SKELETON, LOCK_SUBTYPE_FISTS]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR_STRONG_3"}
+    Triggers:
+      - Templates: [REACTION.HIT_TO_ENEMY]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Strong_Super_3_Kick"}
+          - Greater: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Me],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Strong_Super_3_Kick_2_Fists}
+
+
+  - Name: KICK_SUPER_3_Strong_2_Reaction
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SUPER_ARMOR_STRONG_3"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Strong_Super_3_Kick"}
+          - Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],Wall,Front].X)", Value2: "150"}
+          #- Or:
+          #  - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Strong_Super_3_Kick_2"}
+          #  - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Strong_Super_3_Kick_2_Fists"}
+        Actions:
+          - Animation: {Name: Strong_Super_3_Kick_2_Passive}
+
+################################### LOW KICK (Down + P)
+  - Name: SWEEP_KICK_Precise
+    Templates: [LOCK_STYLE_PRECISE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.LOW, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Kick_Sweep_Precise}
+
+  - Name: SWEEP_KICK_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.LOW, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Kick_Sweep_Strong}
+
+  - Name: SWEEP_KICK_Agile
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.LOW, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Kick_Sweep_Agile}
+
+  - Name: SWEEP_Kick_Double_Agile
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.LOW_DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Kick_Sweep_Double_Agile}
+
+################################### UPPER KICK (Up + O)
+  - Name: KICK_TEST_UPPER_Precise
+    Templates: [LOCK_STYLE_PRECISE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.UPPER, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Kick_Upper_Agile}
+          
+  - Name: KICK_UPPER_Agile
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.UPPER, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Kick_Upper_Agile}
+
+  - Name: KICK_TEST_UPPER_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.UPPER, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Kick_Upper_Strong}
+
+################################### SPINNING KICK (Back + P)
+  - Name: KICK_SPINNING_Agile
+    Templates: [LOCK_STYLE_AGILE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.SPINNING, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Kick_Spinning_Agile}
+
+  - Name: KICK_SPINNING_Precise
+    Templates: [LOCK_STYLE_PRECISE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.SPINNING, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Kick_Spinning_Precise}
+          
+  - Name: KICK_SPINNING_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [KICK.SPINNING, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Kick_Spinning_Strong}

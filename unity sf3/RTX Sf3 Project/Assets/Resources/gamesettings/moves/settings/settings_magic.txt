@@ -1,0 +1,97 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# MAGIC #################################################
+  - Animation: Magic_Fireball_Creation
+    FileName: magic_fireball.bin
+    Groups:
+      - ATTACK
+      - MAGIC
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Magic_Fireball
+        Start: 26
+        End: 26
+    Sounds:
+      - Common:
+          - magic/fireball/fireball_cast
+        Frame: 10
+
+  - Animation: Magic_Fireball_Model_Attack
+    FileName: magic_fireball_bullet.bin
+    Groups:
+      - ATTACK
+      - MAGIC_ATTACKING_EDGE
+#    FirstFrame: 1
+#    EndFrame: 9
+    Velocity:
+        X: 12
+    Looped: 1
+    BlendingFrames: 0
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: 50
+            Y: 90
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+#        Start: 1
+#        End: 9
+        HitTags:
+          - Hit_Stomach_Critical_Fall
+          - Unblockable
+          - No_FX_SFX
+        AttackingParts:
+          - Magic_attacking_edge
+        Impulse:
+            Y: 15000
+        Slowmo:
+            Start: 0
+            End: 15
+            Distance: 600
+        Damage:
+            Attack: UnarmedDamage
+            Defense: BodyDefense
+            BaseDamage: 0.01

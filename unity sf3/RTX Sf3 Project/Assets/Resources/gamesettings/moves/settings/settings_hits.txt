@@ -1,0 +1,1777 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# REACTIONS 
+  - Animation: Hit_Head
+    FileName: h_head_middle_average.bin
+    BlendingFrames: 1
+    Groups:
+      - HIT
+    FirstFrame: 3
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Blocking
+        Start: 23
+      - Name: Throwable
+        Start: 23
+      - Name: Transitional
+        End: 12
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/light/m/m_light_dmg_1
+            - voice/hit/light/m/m_light_dmg_2
+            - voice/hit/light/m/m_light_dmg_3
+            - voice/hit/light/m/m_light_dmg_4
+            - voice/hit/light/m/m_light_dmg_5
+            - voice/hit/light/m/m_light_dmg_6
+          Female:
+            - voice/hit/light/f/f_light_dmg_1
+            - voice/hit/light/f/f_light_dmg_2
+            - voice/hit/light/f/f_light_dmg_3
+            - voice/hit/light/f/f_light_dmg_4
+            - voice/hit/light/f/f_light_dmg_5
+            - voice/hit/light/f/f_light_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Head_Short
+    FileName: h_head_short_fast.bin
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 14
+      - Name: Blocking
+        Start: 15
+      - Name: Throwable
+        Start: 15
+      - Name: Transitional
+        End: 4
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/light/m/m_light_dmg_1
+            - voice/hit/light/m/m_light_dmg_2
+            - voice/hit/light/m/m_light_dmg_3
+            - voice/hit/light/m/m_light_dmg_4
+            - voice/hit/light/m/m_light_dmg_5
+            - voice/hit/light/m/m_light_dmg_6
+          Female:
+            - voice/hit/light/f/f_light_dmg_1
+            - voice/hit/light/f/f_light_dmg_2
+            - voice/hit/light/f/f_light_dmg_3
+            - voice/hit/light/f/f_light_dmg_4
+            - voice/hit/light/f/f_light_dmg_5
+            - voice/hit/light/f/f_light_dmg_6
+        Frame: 1
+        
+  - Animation: Hit_Head_Heavy
+    FileName: h_head_heavy_slow.bin
+#    BlendingFrames: 7
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 32
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 33
+      - Name: Transitional
+        End: 22
+      - Name: Transitional_To_Heavy
+        End: 11
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Head_Middle_Slow
+    FileName: h_hit_head_middle_slow.bin
+#    BlendingFrames: 7
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 32
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 33
+      - Name: Transitional
+        End: 22
+      - Name: Transitional_To_Heavy
+        End: 11
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Overhead
+    FileName: h_overhead_middle_average.bin
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 19
+      - Name: Blocking
+        Start: 20
+      - Name: Throwable
+        Start: 20
+      - Name: Transitional
+        End: 9
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/light/m/m_light_dmg_1
+            - voice/hit/light/m/m_light_dmg_2
+            - voice/hit/light/m/m_light_dmg_3
+            - voice/hit/light/m/m_light_dmg_4
+            - voice/hit/light/m/m_light_dmg_5
+            - voice/hit/light/m/m_light_dmg_6
+          Female:
+            - voice/hit/light/f/f_light_dmg_1
+            - voice/hit/light/f/f_light_dmg_2
+            - voice/hit/light/f/f_light_dmg_3
+            - voice/hit/light/f/f_light_dmg_4
+            - voice/hit/light/f/f_light_dmg_5
+            - voice/hit/light/f/f_light_dmg_6
+        Frame: 1
+
+  - Animation: Hit_Overhead_Heavy
+    FileName: h_overhead_heavy_slow.bin
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 29
+      - Name: Unstable
+        Start: 9
+        End: 20
+      - Name: Blocking
+        Start: 30
+      - Name: Throwable
+        Start: 30
+      - Name: Transitional
+        Start: 14
+        End: 19
+      - Name: Transitional_To_Heavy
+        End: 13
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 1
+
+  - Animation: Hit_Overhead_Short
+    FileName: h_overhead_short_fast.bin
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 13
+      - Name: Blocking
+        Start: 14
+      - Name: Throwable
+        Start: 14
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/light/m/m_light_dmg_1
+            - voice/hit/light/m/m_light_dmg_2
+            - voice/hit/light/m/m_light_dmg_3
+            - voice/hit/light/m/m_light_dmg_4
+            - voice/hit/light/m/m_light_dmg_5
+            - voice/hit/light/m/m_light_dmg_6
+          Female:
+            - voice/hit/light/f/f_light_dmg_1
+            - voice/hit/light/f/f_light_dmg_2
+            - voice/hit/light/f/f_light_dmg_3
+            - voice/hit/light/f/f_light_dmg_4
+            - voice/hit/light/f/f_light_dmg_5
+            - voice/hit/light/f/f_light_dmg_6
+        Frame: 1
+
+  - Animation: Hit_Chest
+    FileName: h_chest_middle_average.bin
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Blocking
+        Start: 23
+      - Name: Throwable
+        Start: 23
+      - Name: Transitional
+        End: 12
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 2
+      
+  - Animation: Hit_Chest_Short
+    FileName: h_chest_short_fast.bin
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 14
+      - Name: Blocking
+        Start: 15
+      - Name: Throwable
+        Start: 15
+      - Name: Transitional
+        End: 4
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/light/m/m_light_dmg_1
+            - voice/hit/light/m/m_light_dmg_2
+            - voice/hit/light/m/m_light_dmg_3
+            - voice/hit/light/m/m_light_dmg_4
+            - voice/hit/light/m/m_light_dmg_5
+            - voice/hit/light/m/m_light_dmg_6
+          Female:
+            - voice/hit/light/f/f_light_dmg_1
+            - voice/hit/light/f/f_light_dmg_2
+            - voice/hit/light/f/f_light_dmg_3
+            - voice/hit/light/f/f_light_dmg_4
+            - voice/hit/light/f/f_light_dmg_5
+            - voice/hit/light/f/f_light_dmg_6
+        Frame: 2
+      
+  - Animation: Hit_Chest_Heavy
+    FileName: h_chest_heavy_slow.bin
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 28
+      - Name: Blocking
+        Start: 29
+      - Name: Throwable
+        Start: 29
+      - Name: Transitional
+        End: 18
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Chest_Middle_Slow
+    FileName: h_hit_chest_middle_slow.bin
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 28
+      - Name: Blocking
+        Start: 29
+      - Name: Throwable
+        Start: 29
+      - Name: Transitional
+        End: 18
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Chest_Short_Average
+    FileName: h_chest_short_average.bin
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Blocking
+        Start: 23
+      - Name: Throwable
+        Start: 23
+      - Name: Transitional
+        End: 12
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 2
+
+  - Animation: Hit_Chest_Heavy_Slow_39
+    FileName: h_chest_heavy_slow_39.bin
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 40
+      - Name: Blocking
+        Start: 41
+      - Name: Throwable
+        Start: 41
+      - Name: Transitional
+        End: 18
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Chest_Middle_Short_Average
+    FileName: h_chest_middle_short_average.bin
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Blocking
+        Start: 23
+      - Name: Throwable
+        Start: 23
+      - Name: Transitional
+        End: 12
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 2
+
+  - Animation: Hit_Stomach
+    FileName: h_stomach_middle_average.bin
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 23
+      - Name: Blocking
+        Start: 24
+      - Name: Throwable
+        Start: 24
+      - Name: Transitional
+        End: 13
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Stomach_Short
+    FileName: h_stomach_short_fast.bin
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 15
+      - Name: Blocking
+        Start: 16
+      - Name: Throwable
+        Start: 16
+      - Name: Transitional
+        End: 5
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/light/m/m_light_dmg_1
+            - voice/hit/light/m/m_light_dmg_2
+            - voice/hit/light/m/m_light_dmg_3
+            - voice/hit/light/m/m_light_dmg_4
+            - voice/hit/light/m/m_light_dmg_5
+            - voice/hit/light/m/m_light_dmg_6
+          Female:
+            - voice/hit/light/f/f_light_dmg_1
+            - voice/hit/light/f/f_light_dmg_2
+            - voice/hit/light/f/f_light_dmg_3
+            - voice/hit/light/f/f_light_dmg_4
+            - voice/hit/light/f/f_light_dmg_5
+            - voice/hit/light/f/f_light_dmg_6
+        Frame: 3
+        
+  - Animation: Hit_Stomach_Heavy
+    FileName: h_stomach_heavy_slow.bin
+    Groups:
+      - HIT
+    FirstFrame: 3
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 29
+      - Name: Blocking
+        Start: 30
+      - Name: Throwable
+        Start: 30
+      - Name: Transitional
+        Start: 14
+        End: 19
+      - Name: Transitional_To_Heavy
+        End: 13
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Stomach_Chest_Heavy_Slow_40
+    FileName: h_stomach_chest_heavy_slow_40.bin
+    Groups:
+      - HIT
+    FirstFrame: 4
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 43
+      - Name: Blocking
+        Start: 44
+      - Name: Throwable
+        Start: 44
+      - Name: Transitional
+        Start: 23
+        End: 33
+      - Name: Transitional_To_Heavy
+        End: 13
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Stomach_Heavy_Slow_41
+    FileName: h_stomach_heavy_slow_41.bin
+    Groups:
+      - HIT
+    FirstFrame: 2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 42
+      - Name: Blocking
+        Start: 43
+      - Name: Throwable
+        Start: 43
+      - Name: Transitional
+        Start: 22
+        End: 32
+      - Name: Transitional_To_Heavy
+        End: 13
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+        
+  - Animation: Hit_Legs
+    FileName: h_legs_middle_average.bin
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 25
+      - Name: Blocking
+        Start: 26
+      - Name: Throwable
+        Start: 26
+      - Name: Transitional
+        End: 15
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/light/m/m_light_dmg_1
+            - voice/hit/light/m/m_light_dmg_2
+            - voice/hit/light/m/m_light_dmg_3
+            - voice/hit/light/m/m_light_dmg_4
+            - voice/hit/light/m/m_light_dmg_5
+            - voice/hit/light/m/m_light_dmg_6
+          Female:
+            - voice/hit/light/f/f_light_dmg_1
+            - voice/hit/light/f/f_light_dmg_2
+            - voice/hit/light/f/f_light_dmg_3
+            - voice/hit/light/f/f_light_dmg_4
+            - voice/hit/light/f/f_light_dmg_5
+            - voice/hit/light/f/f_light_dmg_6
+        Frame: 3
+
+  - Animation: Hit_Legs_Short
+    FileName: h_legs_short_fast.bin
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 16
+      - Name: Blocking
+        Start: 17
+      - Name: Throwable
+        Start: 17
+      - Name: Transitional
+        End: 6
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/light/m/m_light_dmg_1
+            - voice/hit/light/m/m_light_dmg_2
+            - voice/hit/light/m/m_light_dmg_3
+            - voice/hit/light/m/m_light_dmg_4
+            - voice/hit/light/m/m_light_dmg_5
+            - voice/hit/light/m/m_light_dmg_6
+          Female:
+            - voice/hit/light/f/f_light_dmg_1
+            - voice/hit/light/f/f_light_dmg_2
+            - voice/hit/light/f/f_light_dmg_3
+            - voice/hit/light/f/f_light_dmg_4
+            - voice/hit/light/f/f_light_dmg_5
+            - voice/hit/light/f/f_light_dmg_6
+        Frame: 2
+        
+  - Animation: Hit_Legs_Heavy
+    FileName: h_hit_legs_middle_slow.bin
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 32
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 33
+      - Name: Transitional
+        End: 22
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 3
+        
+  - Animation: Hit_Wall
+    FileName: h_hit_wall.bin
+#    BlendingFrames: 1
+    FirstFrame: 2
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Wall
+            Part: Back
+        Shift:
+            X: -35
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 12
+      - Name: Blocking
+        Start: 13
+      - Name: Throwable
+        Start: 13
+
+  - Animation: Hit_Head_Critical_Fall
+    FileName: h_hit_head_fall.bin
+    Groups:
+      - HIT
+      - FALL
+      - FALL_CRITICAL
+      - FALL_CRITICAL_ON_BACK
+      - FOLLOWED_BY
+    EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        # End: 15
+      - Name: Unstable
+        #End: 18
+      - Name: Transitional
+        End: 12
+      - Name: Floorfall
+        Start: 20
+        End: 20
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 1
+        
+  - Animation: Hit_Overhead_Critical_Fall
+    FileName: h_hit_Overhead_fall.bin
+    Groups:
+      - HIT
+      - FALL
+      - FALL_CRITICAL
+      - FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        # End: 15
+      - Name: Unstable
+        #End: 18
+      - Name: Floorfall
+        Start: 9
+        End: 9
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 1
+
+  - Animation: Hit_Chest_Critical_Fall
+    FileName: h_hit_chest_fall.bin
+    Groups:
+      - HIT
+      - FALL
+      - FALL_CRITICAL
+      - FALL_CRITICAL_ON_BACK
+      - FOLLOWED_BY
+#    EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        # End: 15
+      - Name: Unstable
+        #End: 18
+      - Name: Transitional
+        End: 12
+      - Name: Floorfall
+        Start: 23
+        End: 23
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 1
+
+  - Animation: Hit_Stomach_Critical_Fall
+    FileName: h_hit_stomach_fall.bin
+    Groups:
+      - HIT
+      - FALL
+      - FALL_CRITICAL
+      - FALL_CRITICAL_ON_BACK
+      - FOLLOWED_BY
+    EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        # End: 15
+      - Name: Unstable
+        #End: 18
+      - Name: Floorfall
+        Start: 17
+        End: 17
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 1
+
+  - Animation: Hit_Legs_Critical_Fall
+    FileName: h_hit_legs_fall.bin
+    Groups:
+      - HIT
+      - FALL
+      - FALL_CRITICAL
+      - FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        # End: 15
+      - Name: Unstable
+        #End: 18
+      - Name: Floorfall
+        Start: 14
+        End: 14
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 1
+        
+  - Animation: Roll_Front_Hit
+    FileName: h_roll_front_hit.bin
+    Groups:
+      - STAND_UP_ROLL
+      - STAND_UP
+      - HIT
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 28
+      - Name: Blocking
+        Start: 29
+      - Name: Throwable
+        Start: 29
+      - Name: Unstable
+        End: 23
+        
+  - Animation: Roll_Back_Hit
+    FileName: h_roll_back_hit.bin
+    Groups:
+      - STAND_UP_ROLL
+      - STAND_UP
+      - HIT
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 13
+    FirstFrame: 4
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 33
+      - Name: Blocking
+        Start: 34
+      - Name: Throwable
+        Start: 34
+      - Name: Transitional
+        End: 15
+      - Name: Unstable
+        End: 25
+
+  - Animation: Hit_Wall_Critical_Fall
+    FileName: h_hit_wall_fall.bin
+    Groups:
+      - HIT
+      - FALL
+      - FALL_CRITICAL
+      - FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+    FirstFrame: 4
+    #BlendingFrames: 12
+    #EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        #Pivot:
+        #    Object: Nodes
+        #    Part: foot_l
+        #Position:
+        #    Player: Me
+        #    Object: Pivot
+            
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Wall
+            Part: Back
+        #Shift:
+        #    X: -25
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    #Transitions:
+    #  - FrameShift: 0
+    #    Animations:
+    #      - Hit_Chest_Critical_Fall
+    #      - Hit_Head_Critical_Fall
+    Intervals:
+      - Name: Uninterrupt
+        # End: 15
+      - Name: Unstable
+        #End: 18
+      - Name: Floorfall
+        Start: 20
+        End: 20
+      - Type: NoWallRepulsion
+        End: 15
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 1
+
+  - Animation: Hit_Wall_Middle_Heavy
+    FileName: h_hit_wall_middle_heavy.bin
+#    BlendingFrames: 1
+    FirstFrame: 2
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        #Pivot:
+        #    Object: Nodes
+        #    Part: foot_l
+        #Position:
+        #    Player: Me
+        #    Object: Pivot
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Wall
+            Part: Back
+        #Shift:
+        #    X: -35
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Hit_Overhead_Heavy
+          - Hit_Stomach_Heavy
+    Intervals:
+      - Name: Uninterrupt
+        End: 30
+      - Name: Blocking
+        Start: 31
+      - Name: Throwable
+        Start: 31
+      - Type: NoWallRepulsion
+        Start: 8
+        End: 20
+
+  - Animation: Hit_Wall_High_Heavy
+    FileName: h_hit_wall_high_heavy.bin
+#    BlendingFrames: 1
+    FirstFrame: 2
+    Groups:
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        #Pivot:
+        #    Object: Nodes
+        #    Part: foot_l
+        #Position:
+        #    Player: Me
+        #    Object: Pivot
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Wall
+            Part: Back
+        #Shift:
+        #    X: -35
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Hit_Head_Heavy
+    Intervals:
+      - Name: Uninterrupt
+        End: 32
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 33
+      - Type: NoWallRepulsion
+        Start: 11
+        End: 20
+
+  - Animation: Roll_Hit_Wall_Back
+    FileName: h_roll_hit_wall_back.bin
+    WeaponSwitchFrame: 13
+    FirstFrame: 4
+    Groups:
+      - STAND_UP_ROLL
+      - STAND_UP
+      - HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Wall
+            Part: Back
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Roll_Back_Hit
+    Intervals:
+      - Name: Uninterrupt
+        End: 33
+      - Name: Blocking
+        Start: 34
+      - Name: Throwable
+        Start: 34
+      - Name: Unstable
+        End: 25
+      - Type: NoWallRepulsion
+        Start: 12
+        End: 20

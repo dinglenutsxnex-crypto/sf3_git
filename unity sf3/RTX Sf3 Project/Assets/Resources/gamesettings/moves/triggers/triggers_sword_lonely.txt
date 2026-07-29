@@ -1,0 +1,219 @@
+TriggerSets:
+########################################## SWORD
+
+###################################### ATTACKS
+
+################################### BASIC ATTACK (O)
+  - Name: ATTACK_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Slash}
+
+  - Name: ATTACK_Sword_Lonely_Short_As_Heavy
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_VERY_CLOSE]
+        Priority: 221
+        Conditions:
+          - Not:
+#            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "JUMP", IgnoredByAI: 1}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FALL", IgnoredByAI: 1}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "STAND_UP", IgnoredByAI: 1}
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "110"}
+        Actions:
+          - Animation: {Name: Twohanded_Sword_Slash_Short}
+
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_VERY_CLOSE]
+        Priority: 221
+        Conditions:
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "90"}
+        Actions:
+          - Animation: {Name: Twohanded_Sword_Slash_Short}
+
+################################### DOUBLE ATTACK (O + O)
+  - Name: ATTACK_DOUBLE_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Slash_Double}
+
+################################### BASIC ATTACK INSTEAD SUPER
+  - Name: ATTACK_Sword_Lonely_Instead_Super_1
+    Templates: [LOCK_SUBTYPE_SWORD, LOCK_NOT_SUPER_WEAPON]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Slash}
+
+################################### UPPER ATTACK (Up + O)
+  - Name: ATTACK_UPPER_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Slash_Upper}
+
+################################### HEAVY ATTACK (Forward + O)
+  - Name: ATTACK_HEAVY_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Slash_Heavy}
+
+################################### LOW ATTACK (LOW + O)
+  - Name: ATTACK_LOW_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Slash_Low}
+
+################################### SPINNING ATTACK (Back + O)
+  - Name: ATTACK_SPINNING_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Slash_Spinning}
+
+################################### SUPER ATTACK (Forward + O + O)
+########### SUPER_1
+  - Name: ATTACK_SUPER_1_1_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORD_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Slash_1_Super_1}
+
+  - Name: ATTACK_SUPER_1_2_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORD_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Slash_1_Super_2}
+
+########### SUPER_2
+  - Name: ATTACK_SUPER_2_1_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORD_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Super_2_Slash_1}
+          
+  - Name: ATTACK_SUPER_2_2_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORD_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Super_2_Slash_2}
+###################################### STANCES, MOVES etc.
+#  - Name: TRANSITION_Sword_Lonely
+#    Templates: [LOCK_SUBTYPE_SWORD]
+#    Triggers:
+#      - Templates: [TRANSITION.COMMON]
+#        Actions:
+#          - Animation: {Name: Sword_Lonely_Transition}
+######################## 
+  - Name: STEP_FORWARD_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD, STEP_FORWARD]
+    Triggers:
+      - Actions:
+          - Animation: {Name: Sword_Lonely_Step_Forward}
+
+  - Name: STEP_BACK_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD, STEP_BACK]
+    Triggers:
+      - Actions:
+          - Animation: {Name: Sword_Lonely_Step_Back}
+
+  - Name: LOW_STANCE_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [LOW_STANCE.IN]
+        Priority: 206
+        Actions:
+          - Animation: {Name: Sword_Lonely_Low_Stance_In}
+
+      - Templates: [LOW_STANCE.LOOP]
+        Priority: 206
+        Actions:
+          - Animation: {Name: Sword_Lonely_Low_Stance_Idle}
+
+      - Templates: [LOW_STANCE.OUT]
+        Priority: 101
+        Actions:
+          - Animation: {Name: Sword_Lonely_Low_Stance_Out}
+
+######################## 
+  - Name: STANCE_IDLE_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [STANCE.IDLE]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Stance_Idle}
+
+  - Name: STANCE_START_BIRTH_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Stance_Start_Birth}
+
+  - Name: STANCE_START_BIRTH_Sword_Lonely_Dojo
+    Templates: [LOCK_SUBTYPE_SWORD, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Stance_Idle}
+
+########################
+  - Name: STANCE_START_ROUND_PLAYER_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD, LOCK_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Stance_Start_Round}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD, LOCK_NOT_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Stance_Start_Round}
+
+
+########################
+  - Name: STANCE_START_IDLE_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Stance_Start_Idle}
+
+########################
+  - Name: STANCE_WIN_ROUND_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [STANCE.WIN_ROUND]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Stance_Win_Round}
+
+########################
+  - Name: STANCE_FINISHING_ROUND_IDLE_Sword_Lonely
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Triggers:
+      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+        Actions:
+          - Animation: {Name: Sword_Lonely_Stance_Win_Idle}

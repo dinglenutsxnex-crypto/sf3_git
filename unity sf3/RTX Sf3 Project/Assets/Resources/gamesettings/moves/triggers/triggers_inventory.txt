@@ -1,0 +1,497 @@
+####################################################################################
+####################################################################################
+TriggerSets:
+####################################################################################
+########################## INVENTORY TEMPLATES #####################################
+#         LOCK_INVENTORY_0_WEAPON = LOCK_SUBTYPE_FISTS
+
+  - Name: LOCK_INVENTORY_1_WEAPON
+    Type: Template
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SWORD_LONELY"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "TWOHANDED_SWORD"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "STAFF"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SPEAR"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "GUANDAO"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "NAGINATA"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "KATANA"}
+       
+  - Name: LOCK_INVENTORY_1_WEAPON_MIRRORED
+    Type: Template
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "NUNCHAKU"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "TWOHANDED_SWORD"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "TWOHANDED_HAMMER"}
+
+  - Name: LOCK_INVENTORY_2_WEAPON
+    Type: Template
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SWORDS"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SABERS"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "KNIVES"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "AXES"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SAI"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "HAMMERS"}
+
+
+        
+############################ INVENTORY & SHOP
+  - Name: INVENTORY
+    Type: Template
+    Triggers:
+      - Name: TRY_ON_WEAPON
+        Priority: 20010
+        Events:
+          - Equip: {Player: Me}
+          - TryOn: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Module[].SelectedItemType", Value2: "Weapon"}
+
+      - Name: TRY_ON_ARMOR
+        Priority: 20010
+        Events:
+          - Equip: {Player: Me}
+          - TryOn: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Module[].SelectedItemType", Value2: "Armor"}
+
+      - Name: TRY_ON_HELMET
+        Priority: 20010
+        Events:
+          - Equip: {Player: Me}
+          - TryOn: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Module[].SelectedItemType", Value2: "Helmet"}
+
+#### IN/OUT/IDLE
+      - Name: IN
+        Priority: 20001
+        Events:
+          - AnimationEnd: {Player: Me}
+          - ModulePreEnter: {Name: Inventory}
+          - ModulePreEnter: {Name: Shop}
+          - ModulePreEnter: {Name: CharacterCreation}
+          - ModulePreEnter: {Name: BoosterpacksScreen}
+          - ModuleEnter: {Name: Inventory}
+          - ModuleEnter: {Name: Shop}
+          - ModuleEnter: {Name: CharacterCreation}
+          - ModuleEnter: {Name: BoosterpacksScreen}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, TryOn_Crutch].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+          - Or:
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Or:
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "Inventory"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "CharacterCreation"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "BoosterpacksScreen"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY"}
+            - And:
+              - Or:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "ModulePreEnter"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "ModuleEnter"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY"}
+        Actions:
+          - SetVariable: {Name: TryOn_Crutch, Value: "1", ApplyTo: Enemy}
+
+      - Name: IN_REVERSE
+        Priority: 20001
+        Events:
+          - AnimationEnd: {Player: Me}
+          - ModulePreEnter: {Name: Inventory}
+          - ModulePreEnter: {Name: Shop}
+          - ModulePreEnter: {Name: CharacterCreation}
+          - ModulePreEnter: {Name: BoosterpacksScreen}
+          - ModuleEnter: {Name: Inventory}
+          - ModuleEnter: {Name: Shop}
+          - ModuleEnter: {Name: CharacterCreation}
+          - ModuleEnter: {Name: BoosterpacksScreen}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, TryOn_Crutch].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+          - Or:
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Or:
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "Inventory"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "CharacterCreation"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "BoosterpacksScreen"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY"}
+            - And:
+              - Or:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "ModulePreEnter"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "ModuleEnter"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY"}
+        Actions:
+          - SetVariable: {Name: TryOn_Crutch, Value: "1", ApplyTo: Enemy}
+      
+      - Name: IDLE
+        Priority: 20000
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY_OUT"}
+          - Or:
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Inventory"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "CharacterCreation"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "PerkScreen"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "BoosterpacksScreen"}
+
+      - Name: OUT
+        Priority: 20000
+        Events:
+          - ModulePreEnter: {Name: DojoInterface}
+          - ModuleEnter: {Name: DojoInterface}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY_IN"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY_IDLE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "TRY_ON"}
+          - Or:
+            - Equal: {Value1: "?Trigger[].Event", Value2: "ModulePreEnter"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Not:
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "Inventory"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "CharacterCreation"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "PerkScreen"}
+                - Equal: {Value1: "?Module[].CurrentModule", Value2: "BoosterpacksScreen"}
+        Actions:
+          - SetVariable: {Name: TryOn_Crutch, Value: "0", ApplyTo: Enemy, Frames: 1}
+ 
+
+
+
+ 
+##########################################TRYON EXIT SYGNAL######################################################################################
+
+  - Name: SHOP
+    Templates: [LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Name: EXIT
+        Priority: 100000
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "TRY_ON"}
+          - Not:
+            - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "4"}
+        Actions:
+          - EndTryOn
+
+          
+          
+          
+          
+
+################################### IN/OUT INVENTORY TRIGGERS ###################################
+
+################################### 0 WEAPON IN/OUT
+  - Name: Inv_0_In_M
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.IN]
+        Actions:
+          - Animation: {Name: Inv_0_In_M}
+  
+      - Templates: [INVENTORY.IN_REVERSE]
+        Actions:
+          - Animation: {Name: Inv_0_In_Back_M}
+  
+  - Name: Inv_0_Idle
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.IDLE]
+        Actions:
+          - Animation: {Name: Inv_0_Idle}
+  
+  - Name: Inventory_0_Out
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.OUT]
+        Actions:
+          - Animation: {Name: Inventory_0_Out}
+  
+  
+#################################### 1 WEAPON IN/OUT
+  - Name: Inventory_1_In_M
+    Templates: [LOCK_INVENTORY_1_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.IN]
+        Actions:
+          - Animation: {Name: Inventory_1_In_M}
+  
+      - Templates: [INVENTORY.IN_REVERSE]
+        Locks:
+        Actions:
+          - Animation: {Name: Inv_1_In_Back_M}
+  
+  - Name: Inv_1_Idle
+    Templates: [LOCK_INVENTORY_1_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.IDLE]
+        Actions:
+          - Animation: {Name: Inv_1_Idle}
+  
+  - Name: Inv_1_Out
+    Templates: [LOCK_INVENTORY_1_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.OUT]
+        Actions:
+          - Animation: {Name: Inv_1_Out}
+  
+  
+#################################### 1 WEAPON MIRRORED IN/OUT
+  - Name: Inv_1_In_M_Mirrored
+    Templates: [LOCK_INVENTORY_1_WEAPON_MIRRORED, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.IN]
+        Actions:
+          - Animation: {Name: Inv_1_In_M_Mirrored}
+  
+      - Templates: [INVENTORY.IN_REVERSE]
+        Actions:
+          - Animation: {Name: Inv_1_In_Back_M_Mirrored}
+  
+  - Name: Inv_1_Idle_Mirrored
+    Templates: [LOCK_INVENTORY_1_WEAPON_MIRRORED, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.IDLE]
+        Actions:
+          - Animation: {Name: Inv_1_Idle_Mirrored}
+  
+  - Name: Inv_1_Out_Mirrored
+    Templates: [LOCK_INVENTORY_1_WEAPON_MIRRORED, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.OUT]
+        Actions:
+          - Animation: {Name: Inv_1_Out_Mirrored}
+       
+       
+#################################### 2 WEAPON IN/OUT
+  - Name: Inv_2_In_M
+    Templates: [LOCK_INVENTORY_2_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.IN]
+        Actions:
+          - Animation: {Name: Inv_2_In_M}
+  
+      - Templates: [INVENTORY.IN_REVERSE]
+        Actions:
+          - Animation: {Name: Inv_2_In_Back_M}
+  
+  - Name: Inv_2_Idle
+    Templates: [LOCK_INVENTORY_2_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.IDLE]
+        Actions:
+          - Animation: {Name: Inv_2_Idle}
+  
+  - Name: Inv_2_Out
+    Templates: [LOCK_INVENTORY_2_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.OUT]
+        Actions:
+          - Animation: {Name: Inv_2_Out}
+          
+          
+          
+          
+######################### 0 WEAPON TRYON INVENTORY TRIGGERS ######################## 
+
+######################### 0 HELMETS
+  - Name: Inv_0_Helm_01
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_HELMET]
+        Actions:
+          - Animation: {Name: Inv_0_Helm_01}
+          
+######################### 0 ARMORS
+  - Name: Inv_0_Armor_Common
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_ARMOR]
+        Actions:
+          - AnimationRandom: {Names: [Inv_0_Armor_01_M, Inv_0_Armor_02_M, Inv_0_Armor_04_M]}
+
+######################### 0 WEAPONS
+  - Name: Inv_0_Weapon_Common
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_WEAPON]
+        Actions:
+          - AnimationRandom: {Names: [Inv_0_Armor_01_M, Inv_0_Armor_02_M, Inv_0_Armor_04_M]}
+
+######################## 1 WEAPON TRYON INVENTORY TRIGGERS ######################## 
+
+####################### 1 HELMETS
+  - Name: Inv_1_Helm_01
+    Templates: [LOCK_INVENTORY_1_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_HELMET]
+        Actions:
+          - Animation: {Name: Inv_1_Helm_01}
+         
+####################### 1 ARMORS
+  - Name: Inv_1_ARMOR_Common
+    Templates: [LOCK_INVENTORY_1_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_ARMOR]
+        Actions:
+          - AnimationRandom: {Names: [Inv_1_Armor_01_M, Inv_1_Armor_02_M, Inv_1_Armor_04_M]}
+          
+######################## 1 WEAPON
+  - Name: Inv_1_OneHanded_Sword_01
+    Templates: [LOCK_INVENTORY_1_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_WEAPON]
+        Actions:
+          - Animation: {Name: Inv_1_OneHanded_Sword_01}
+
+  - Name: Inv_1_Staff_01
+    Templates: [LOCK_WEAPON_TYPE_POLEARM, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_WEAPON]
+        Priority: 20011
+        Actions:
+          - Animation: {Name: Inv_1_Staff_01}
+            
+######################## 1 WEAPON MIRRORED TRYON INVENTORY TRIGGERS ######################## 
+
+
+####################### 1 HELMETS MIRRORED
+  - Name: Inv_1_Helm_01_Mirrored
+    Templates: [LOCK_INVENTORY_1_WEAPON_MIRRORED, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_HELMET]
+        Actions:
+          - Animation: {Name: Inv_1_Helm_01_Mirrored}
+         
+ ###################### 1 ARMORS MIRRORED
+  - Name: Inv_1_ARMOR_Common_Mirrored
+    Templates: [LOCK_INVENTORY_1_WEAPON_MIRRORED, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_ARMOR]
+        Actions:
+          - AnimationRandom: {Names: [Inv_1_Armor_01_M_Mirrored, Inv_1_Armor_02_M_Mirrored, Inv_1_Armor_04_M_Mirrored]}
+          
+ ####################### 1 WEAPON MIRRORED
+  - Name: Inv_1_Weapon_Common_Mirrored
+    Templates: [LOCK_INVENTORY_1_WEAPON_MIRRORED, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_WEAPON]
+        Actions:
+          - Animation: {Name: Inv_1_Dual_Swords_01_Mirrored}
+          
+  - Name: Inv_1_Nunchaku_01
+    Templates: [LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "NUNCHAKU"}
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_WEAPON]
+        Priority: 20011
+        Actions:
+          - Animation: {Name: Inv_1_OneHanded_Sword_01_Mirrored}
+ 
+  - Name: Inv_1_Twohanded_Sword_01
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_WEAPON]
+        Priority: 20011
+        Actions:
+          - Animation: {Name: Inv_1_Twohanded_Sword_01}
+
+  - Name: Inv_1_Twohanded_Hammer_01
+    Templates: [LOCK_SUBTYPE_TWOHANDED_HAMMER, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_WEAPON]
+        Priority: 20011
+        Actions:
+          - Animation: {Name: Inv_1_Twohanded_Hammer_01}
+          
+ ######################### 2 WEAPON TRYON INVENTORY TRIGGERS ######################## 
+          
+######################## 2 ARMORS
+  - Name: INVENTORY_1_ARMOR_Common
+    Templates: [LOCK_INVENTORY_2_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_ARMOR]
+        Actions:
+          - AnimationRandom: {Names: [Inv_2_Armor_01_M, Inv_2_Armor_02_M, Inv_2_Armor_04_M]}
+
+######################## 2 HELMETS
+  - Name: Inv_2_Helm_01
+    Templates: [LOCK_INVENTORY_2_WEAPON, LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_HELMET]
+        Actions:
+          - Animation: {Name: Inv_2_Helm_01}
+
+######################## 2 WEAPONS
+  - Name: Inv_2_Dual_Swords_01
+    Templates: [LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "KNIVES"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "AXES"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SAI"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "HAMMERS"}
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_WEAPON]
+        Actions:
+          - Animation: {Name: Inv_2_Dual_Swords_01}
+          
+  - Name: Inv_2_OneHanded_Sword_01
+    Templates: [LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SWORDS"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SABERS"}
+    Triggers:
+      - Templates: [INVENTORY.TRY_ON_WEAPON]
+        Actions:
+          - Animation: {Name: Inv_2_OneHanded_Sword_01}
+          
+          
+          
+          
+          
+          
+          

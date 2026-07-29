@@ -1,0 +1,5269 @@
+Animations:
+# ################################################# SHADOW MOVES #################################################
+  - Animation: Shadow_Dash
+    FileName: p_shadow_dash.bin
+    Groups:
+      - ATTACK
+      - WEAPON
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 32
+      - Name: Shadow_Move_Successful
+        Start: 32
+        End: 32
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 33
+      - Type: NoRepulsion
+        Start: 8
+        End: 27
+      - Type: Attack
+        HitTags:
+          - Hit_Stomach
+          - Unblockable
+        Start: 8
+        End: 27
+        AttackingParts:
+          - Stomach
+          - Forearm_left
+          - Forearm_right
+          - Neck
+          - Head
+          - Thigh_left
+          - Thigh_right
+          - Sword_Attacking_Edge_r
+          - Sword_Attacking_Edge_l
+        Impulse:
+            X: 20000
+        Slowmo:
+            Distance: 600
+            Start: 8
+            End: 27
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.15
+        Dodge:
+            Distance: 350
+    Sounds:
+      - Common:
+          - shadow_moves/dash/dash_new
+        Frame: 5
+
+
+  - Animation: Shadow_Blink_In
+    FileName: sf_teleport.bin
+    EndFrame: 11
+    #Transitions:
+    #  - FrameShift: 0
+    #    Animations:
+    #      - LOW_STANCE_IN
+    #      - LOW_STANCE_LOOP
+    #      - LOW_STANCE_OUT
+    Groups:
+      - SHADOW_MOVE
+      - FOLLOWED_BY
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+    Sounds:
+      - Common:
+          - shadow_moves/teleport/teleport_in
+        Frame: 1
+
+  - Animation: Shadow_Blink_Out
+    FileName: sf_teleport.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    FirstFrame: 17
+    BlendingFrames: 0
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: -150
+    SetDirection:
+        From:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 30
+      - Name: Shadow_Move_Successful
+        Start: 17
+        End: 17
+      - Name: Blocking
+        Start: 31
+      - Name: Throwable
+        Start: 31
+    Sounds:
+      - Common:
+          - shadow_moves/teleport/teleport_out
+        Frame: 17
+
+  - Animation: Shadow_dodge
+    FileName: m_low_stance_dodge.bin
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Throwable
+      - Name: Uninterrupt
+      - Name: Invincible
+      - Name: Dodging
+
+  - Animation: Shadow_Push_Player
+    FileName: prc_shadow_wave.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Shadow_Move_Successful
+        Start: 22
+        End: 22
+      - Name: Force_Push
+        Start: 7
+        End: 7
+    Sounds:
+      - Common:
+          - shadow_moves/force_push/force
+        Frame: 7
+
+  - Animation: Shadow_Thud
+    FileName: shadow_str_jump.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Shadow_Move_Successful
+        Start: 25
+        End: 25
+      - Name: Unstable
+        Start: 15
+        End: 24
+      - Name: Shadow_Explosion
+        Start: 25
+        End: 25
+    Sounds:
+      - Common:
+          - shadow_moves/thud/shadow_jump_start
+        Frame: 4
+      - Common:
+          - shadow_moves/thud/shadow_jump_end2
+        Frame: 25
+
+  - Animation: Shadow_Thud_Model_Attack
+    FileName: shadow_jump_explosion.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    EndFrame: 9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: magic_joint_root
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+        #Start: 1
+        End: 9
+        HitTags:
+          - Hit_Legs_Critical_Fall
+          - Unblockable
+          - No_FX_SFX
+        AttackingParts:
+          - Magic_attacking_edge
+        Impulse:
+            Y: 20000
+        Slowmo:
+            Start: 1
+            End: 9
+            Distance: 300
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.17
+        Dodge:
+            Distance: 300
+            
+  - Animation: Shadow_Twohanded_Sword_Slash
+    FileName: shadow_twohanded_heavy_slash.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      #W8 FOR FIX ApplyTo: Parent
+      - SHADOW_MOVE_END
+      #W8 FOR FIX ApplyTo: Parent
+      - WEAPON
+      - TWOHANDED_SWORD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 61
+      - Name: Shadow_Move_Successful
+        Start: 30
+        End: 30
+      - Name: Riposte
+        End: 17
+      - Name: Shadow_Twohanded_Sword_Slash_Model_Creation
+        Start: 29
+        End: 30
+      - Name: Throwable
+        Start: 56
+      - Name: Blocking
+        Start: 62
+      - Type: Attack
+        Start: 26
+        End: 28
+        HitTags:
+          - Hit_Overhead_Heavy
+          - Unblockable
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: -8000
+        Slowmo:
+            Start: 20
+            End: 28
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.1
+        Block:
+            Distance: 270
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 23
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+      - Floor:
+          Stone:
+            - shadow_moves/2h_slash/shadow_slash_newtest_1_metal
+          Wood:
+            - shadow_moves/2h_slash/shadow_slash_newtest_2_wood
+        Frame: 21
+
+  - Animation: Shadow_Twohanded_Sword_Slash_Model_Attack
+    FileName: shadow_twohanded_heavy_slash_model.bin
+    BlendingFrames: 0
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: foot_l
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: foot_l
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+        Start: 3
+        End: 25
+        HitTags:
+          - Hit_Legs_Critical_Fall
+          - Unblockable
+          - No_FX_SFX
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 20000
+            Y: 40000
+        Slowmo:
+            Start: 1
+            End: 25
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.2
+        Dodge:
+            Distance: 350
+            
+  - Animation: Shadow_Staff_Slash
+    FileName: shadow_staff_ability.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - STAFF
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 73
+      - Name: Shadow_Move_Successful
+        Start: 60
+        End: 60
+      - Name: Throwable
+        Start: 68
+      - Name: Blocking
+        Start: 74
+      - Type: Attack
+        Start: 6
+        End: 9
+        HitTags:
+          - Hit_Head
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 2
+            End: 9
+            Distance: 400
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 10
+        End: 12
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 6
+            End: 12
+            Distance: 300  
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 11
+            End: 17
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 19
+        End: 23
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 15
+            End: 23
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 26
+        End: 28
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 22
+            End: 28
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 32
+        End: 35
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 28
+            End: 35
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 38
+        End: 41
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 34
+            End: 41
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 44
+        End: 46
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 40
+            End: 46
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 52
+        End: 54
+        HitTags:
+          - Hit_Overhead
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 48
+            End: 54
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.04
+      - Type: Attack
+        Start: 59
+        End: 61
+        HitTags:
+          - Hit_Overhead_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 55
+            End: 61
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.06
+    Sounds:
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_out
+        Frame: 3
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_1
+        Frame: 7
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_2
+        Frame: 15
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_3
+        Frame: 22
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_4
+        Frame: 32
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_5
+        Frame: 44
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_6
+        Frame: 52
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_in
+        Frame: 63
+
+  - Animation: Shadow_Spurt_Cast
+    FileName: shadow_ability_armor_str_2_player.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Shadow_Move_Successful
+        Start: 25
+        End: 25
+
+
+  - Animation: Shadow_Carapace
+    FileName: shadow_ability_armor_str_2_player.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 36 
+      - Name: Blocking
+        Start: 37
+      - Name: Throwable
+        Start: 31
+      - Name: Shadow_Move_Successful
+        Start: 21
+        End: 21
+      - Name: Shadow_Carapace_Model_Creation
+        Start: 5
+        End: 5
+    Sounds:
+#      - Gender:
+#          Male:
+#            - voice/attack/heavy/m/m_heavy_attack_1
+#            - voice/attack/heavy/m/m_heavy_attack_4
+#            - voice/attack/heavy/m/m_heavy_attack_5
+#            - voice/attack/heavy/m/m_heavy_attack_6
+#            - voice/attack/heavy/m/m_heavy_attack_7
+#          Female:
+#            - voice/attack/heavy/f/f_heavy_attack_1
+#            - voice/attack/heavy/f/f_heavy_attack_2
+#            - voice/attack/heavy/f/f_heavy_attack_3
+#            - voice/attack/heavy/f/f_heavy_attack_4
+#            - voice/attack/heavy/f/f_heavy_attack_5
+#        Frame: 3
+      - Common:
+          - shadow_moves/carapace/shadow_spray
+        Frame: 1
+
+  - Animation: Shadow_Carapace_Model_Attack
+    FileName: shadow_ability_armor_str_2_bullet.bin
+    BlendingFrames: 0
+    FirstFrame: 3
+    EndFrame: 35
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: chest
+        #Shift:
+        #    Y: 30
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+        Start: 8
+        End: 19
+        HitTags:
+          - Hit_Chest_Middle_Slow
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 14000
+            Y: 8000
+        Slowmo:
+            Start: 5
+            End: 19
+            Distance: 400
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.17
+
+  - Animation: Shadow_Power_Will_Cast
+    FileName: shadow_ability_armor_str_01.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 47
+      - Name: Shadow_Move_Successful
+        Start: 30
+        End: 30
+      - Name: Throwable
+        Start: 42
+      - Name: Blocking
+        Start: 48
+      - Name: Shadow_Power_Will_No_Reaction
+        Start: 30
+        End: 30
+
+
+  - Animation: Shadow_Mind_Throw_Active_Create
+    FileName: shadow_ability_helm_str_a_start.bin
+    Groups:
+      - SHADOW_MOVE
+#      - SHADOW_MOVE_END
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+#        End: 22
+      - Name: Shadow_Move_Successful
+        Start: 13
+        End: 13
+      - Name: Mind_Throw
+        Start: 1
+        End: 1
+      - Type: DissolveWeapon
+    Sounds:
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_cast
+        Frame: 3
+
+  - Animation: Shadow_Mind_Throw_Active_Loop
+    FileName: shadow_ability_helm_str_a_cycle.bin
+    #Looped: 1
+    Groups:
+      - SHADOW_MOVE
+#      - SHADOW_MOVE_END
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Uninterrupt
+        # End: 22
+      - Type: DissolveWeapon
+
+  - Animation: Shadow_Mind_Throw_Active_Throw
+    FileName: shadow_ability_helm_str_a_pull.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Uninterrupt
+#        End: 22
+      - Type: DissolveWeapon
+        End: 48
+      - Type: Attack
+        Start: 43
+        End: 43
+        HitTags:
+          - Unblockable
+        Slowmo:
+            Start: 40
+            End: 43
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.15
+    Sounds:
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_hit
+        Frame: 3
+
+  - Animation: Shadow_Mind_Throw_Active_Miss
+    FileName: shadow_ability_helm_str_a_miss.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Uninterrupt
+        # End: 22
+
+  - Animation: Shadow_Mind_Throw_Passive
+    FileName: shadow_ability_helm_str_b.bin
+    FirstFrame: 15
+    EndFrame: 80
+    Groups:
+      - SHADOW_MOVE_PASSIVE
+      - FALL
+      - FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+      - THROW_FALL
+      - SUPER_FALL
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+#      - Type: NoRepulsion
+      - Name: Uninterrupt
+      - Name: Unstable
+        Start: 62
+      - Name: Floorfall_Mind_Throw
+        Start: 60
+        End: 60
+    Sounds:
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_hit
+        Frame: 15
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 24
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 37
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_hit_end
+        Frame: 46
+
+  - Animation: Shadow_Mind_Throw_Model_Create
+    FileName: shadow_ability_helm_str_bullet.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+#      - SHADOW_MOVE_END
+    BlendingFrames: 0
+#    FirstFrame: 9
+    EndFrame: 9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+
+  - Animation: Shadow_Mind_Throw_Model_Attack
+    FileName: shadow_ability_helm_str_bullet_fly.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+#      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    FirstFrame: 10
+    # EndFrame: 9
+    Velocity:
+        X: 12
+    Looped: 1
+    BlendingFrames: 0
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: magic_joint_root
+#        Shift:
+#            X: 40
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            #Player: Enemy
+            #Object: Nodes
+            #Part: pelvis
+            Player: Me
+            Object: Nodes
+            Part: magic_joint_root
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+#        Start: 1
+#        End: 9
+        HitTags:
+          - Hit_Mind_Throw
+          - Unblockable
+        AttackingParts:
+          - Magic_attacking_edge
+        Impulse:
+            X: 8000
+            Y: 5000
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0
+    # Sounds:
+      # - Common:
+          # - ranged/shuriken/shuriken_fly
+        # Frame: 1
+
+  - Animation: Shadow_Mind_Throw_Model_Attack_End
+    FileName: shadow_ability_helm_str_bullet_fly.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+#      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    FirstFrame: 10
+    # EndFrame: 9
+    BlendingFrames: 0
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: magic_joint_root
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: magic_joint_root
+    Intervals:
+      - Name: Shadow_Mind_Throw_trail_end
+        Start: 18
+        End: 18
+
+  - Animation: Shadow_Stasis
+    FileName: s_agl_helm_time_freeze.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 70
+      - Name: Shadow_Move_Successful
+        Start: 48
+        End: 48
+      - Name: Blocking
+        Start: 71
+      - Name: Shadow_Stasis
+        Start: 48
+        End: 48
+      - Type: DissolveWeapon
+        End: 60
+    Sounds:
+      - Common:
+          - shadow_moves/stasis/shadow_stasis_clocks
+        Frame: 54
+
+
+  - Animation: Shadow_Mind_Control_Active
+    FileName: m_agl_stance.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        # End: 22
+      - Name: Shadow_Move_Successful
+        Start: 23
+        End: 23
+      - Name: Mind_Control
+        Start: 23
+        End: 23
+      - Type: Attack
+        Start: 50
+        End: 52
+        HitTags:
+          - Hit_Chest
+          - Unblockable
+        Slowmo:
+            Start: 37
+            End: 41
+            Distance: 300
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.15
+    Sounds:
+      - Common:
+          - shadow_moves/force_push/force
+        Frame: 23
+
+  - Animation: Shadow_Mind_Control_Passive
+    FileName: h_stun_reaction.bin
+    Groups:
+      - SHADOW_MOVE_PASSIVE
+#      - FALL
+#      - THROW_FALL
+#      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+
+  - Animation: Shadow_Evaporation
+    FileName: shadow_str_jump.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+#      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Shadow_Move_Successful
+        Start: 25
+        End: 25
+      - Name: Unstable
+        Start: 15
+        End: 24
+      - Name: Shadow_Evaporation
+        Start: 25
+        End: 25
+    Sounds:
+      - Common:
+          - shadow_moves/thud/shadow_jump_start
+        Frame: 4
+      - Common:
+          - shadow_moves/thud/shadow_jump_end2
+        Frame: 25
+
+  - Animation: Shadow_Evaporation_Model_Attack
+    FileName: shadow_jump_explosion.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    FirstFrame: 1
+#    EndFrame: 9
+    Velocity:
+        X: 5
+#    Looped: 1
+    BlendingFrames: 0
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+        Start: 1
+#        End: 9
+        HitTags:
+          - Hit_Shadow_Evaporation
+          - Unblockable
+        AttackingParts:
+          - Magic_attacking_edge
+        Impulse:
+            Y: 20000
+        Slowmo:
+            Start: 1
+            End: 20
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.01
+
+  - Animation: Shadow_Evaporation_Passive
+    FileName: h_stun_reaction.bin
+    Groups:
+      - SHADOW_MOVE_PASSIVE
+#    EndFrame: 45
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        # End: 15
+    Sounds:
+      - Gender:
+          Male:
+            - voice/hit/heavy/m/m_heavy_dmg_1
+            - voice/hit/heavy/m/m_heavy_dmg_2
+            - voice/hit/heavy/m/m_heavy_dmg_3
+            - voice/hit/heavy/m/m_heavy_dmg_4
+            - voice/hit/heavy/m/m_heavy_dmg_5
+            - voice/hit/heavy/m/m_heavy_dmg_6
+          Female:
+            - voice/hit/heavy/f/f_heavy_dmg_1
+            - voice/hit/heavy/f/f_heavy_dmg_2
+            - voice/hit/heavy/f/f_heavy_dmg_3
+            - voice/hit/heavy/f/f_heavy_dmg_4
+            - voice/hit/heavy/f/f_heavy_dmg_5
+            - voice/hit/heavy/f/f_heavy_dmg_6
+        Frame: 1
+        
+        
+  - Animation: Shadow_Mine_Start
+    FileName: s_agl_arm_dodge.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+#      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+     # - Name: Unstable
+     #   Start: 15
+     #   End: 24
+      - Name: Shadow_Mine
+        Start: 18
+        End: 18
+    Sounds:
+      #- Common:
+      #    - shadow_moves/thud/shadow_jump_start
+      #  Frame: 4
+      - Common:
+          - shadow_moves/teleport/teleport_in
+        Frame: 4
+
+  - Animation: Shadow_Mine_End
+    FileName: s_agl_arm_dodge_teleport.bin
+    BlendingFrames: 0
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+        Shift:
+            X: -350
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Shadow_Move_Successful
+        Start: 1
+        End: 1
+      - Name: Shadow_Mine_End_FX
+        Start: 1
+        End: 1
+      - Name: Unstable
+        End: 15
+    Sounds:
+      #- Common:
+      #    - shadow_moves/teleport/teleport_out
+      #  Frame: 1
+      - Common:
+          - shadow_moves/thud/shadow_jump_end2
+        Frame: 1
+
+  - Animation: Shadow_Mine_Model_Attack
+    FileName: s_str_armor_uppercut_bullet.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    FirstFrame: 15
+    EndFrame: 31
+    BlendingFrames: 0
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        Shift:
+          #  Y: -40
+            X: 50
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+        Start: 1
+        End: 31
+        HitTags:
+          - Hit_Legs_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 10000
+            Y: 20000
+        Slowmo:
+            Start: 1
+            End: 31
+            Distance: 200
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.1
+
+
+  - Animation: Shadow_Guandao_Slash_1
+    FileName: shadow_ability_guandao_1.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - GUANDAO
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 80
+      - Name: Shadow_Move_Successful
+        Start: 60
+        End: 60
+      - Name: Throwable
+        Start: 75
+      - Name: Blocking
+        Start: 81
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Legs
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 11
+            End: 17
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 24
+        End: 27
+        HitTags:
+          - Hit_Stomach
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 20
+            End: 27
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 33
+        End: 36
+        HitTags:
+          - Hit_Stomach
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 29
+            End: 36
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 38
+        End: 40
+        HitTags:
+          - Hit_Stomach
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 34
+            End: 40
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 42
+        End: 43
+        HitTags:
+          - Hit_Chest
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 38
+            End: 43
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 46
+        End: 48
+        HitTags:
+          - Hit_Chest
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 42
+            End: 48
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 50
+        End: 51
+        HitTags:
+          - Hit_Chest
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 46
+            End: 51
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.04
+      - Type: Attack
+        Start: 52
+        End: 54
+        HitTags:
+          - Hit_Stomach
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 48
+            End: 54
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.04
+      - Type: Attack
+        Start: 59
+        End: 61
+        HitTags:
+          - Hit_Stomach_Critical_Fall
+          - Unblockable
+          - No_FX_SFX
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 55
+            End: 61
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.06
+    Sounds:
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_out
+        Frame: 3
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_1
+        Frame: 7
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_2
+        Frame: 15
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_3
+        Frame: 22
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_4
+        Frame: 30
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_4
+        Frame: 36
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_5
+        Frame: 42
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_5
+        Frame: 48
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_6
+        Frame: 52
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_in
+        Frame: 56
+
+  - Animation: Shadow_Guandao_Slash_2
+    FileName: shadow_ability_guandao_2.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - GUANDAO
+#    WeaponSwitchFrames:
+#      - Name: Main
+#        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 80
+      - Name: Shadow_Move_Successful
+        Start: 60
+        End: 60
+      - Name: Throwable
+        Start: 75
+      - Name: Blocking
+        Start: 81
+      - Type: Attack
+        Start: 11
+        End: 13
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 6
+            End: 13
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 30
+        End: 32
+        HitTags:
+          - Hit_Head
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 11
+            End: 17
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 49
+        End: 51
+        HitTags:
+          - Hit_Overhead_Critical_Fall
+          - Hand_left
+          - Forearm_left
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+          - Guandao_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 44
+            End: 51
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.08
+    Sounds:
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_out
+        Frame: 3
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_1
+        Frame: 7
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_2
+        Frame: 15
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_3
+        Frame: 22
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_4
+        Frame: 32
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_5
+        Frame: 44
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_in
+        Frame: 50
+
+  - Animation: Shadow_Sword_Lonely_Slash_Start
+    FileName: shadow_ability_sword_1_start.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      #- SHADOW_MOVE_END
+      - WEAPON
+      - SWORD_LONELY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+    Sounds:
+      - Common:
+          - shadow_moves/sword_lonely_slash/rise
+        Frame: 1
+      # - Common:
+          # - shadow_moves/sword_lonely_slash/shadow_quaterstaff_hit_1
+        # Frame: 7
+
+  - Animation: Shadow_Sword_Lonely_Slash_Attack
+    FileName: shadow_ability_sword_1_attack.bin
+    FirstFrame: 18
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 26
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      #- SHADOW_MOVE_END
+      - WEAPON
+      - SWORD_LONELY
+#      - FOLLOWED_BY
+    RepulsionScale:
+        X: 0.7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Name: ShadowJumpDown
+        Start: 30
+        End: 30
+      - Name: Shadow_Move_Successful
+        Start: 37
+        End: 37
+      - Type: NoRepulsion
+        Start: 33
+        End: 42
+      - Type: Attack
+        Start: 33
+        End: 37
+        HitTags:
+          - Hit_Overhead_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Sword_Attacking_Edge_l
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 30
+            End: 37
+            Distance: 800
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.15
+    Sounds:
+      - Common:
+          - shadow_moves/sword_lonely_slash/fall
+        Frame: 26
+
+  - Animation: Shadow_Sword_Lonely_Slash_End
+    FileName: shadow_ability_sword_1_end.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - SWORD_LONELY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+
+  - Animation: Shadow_Sword_Lonely_Slash_Model
+    FileName: shadow_ability_sword_1_bullet.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_ATTACKING_EDGE
+    Looped: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+#        Shift:
+#            Y: -50
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: magic_joint_root
+        To:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+
+############################################ SHADOW DUAL SWORDS
+  - Animation: Shadow_Dual_Swords_Miss
+    FileName: shadow_ability_dual_swords_double.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      #- SHADOW_MOVE_END
+      - WEAPON
+      - DUAL_SWORDS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 61
+      - Name: Blocking
+        Start: 62
+      - Name: Transitional
+        End: 34
+      - Name: Shadow_Move_Successful
+        Start: 34
+        End: 34
+      - Name: Shadow_Dual_Swords_Left_FX
+        Start: 17
+        End: 17
+      - Name: Shadow_Dual_Swords_Right_FX
+        Start: 25
+        End: 25
+      - Type: Attack
+        Start: 19
+        End: 26
+        HitTags:
+          - Hit_Chest
+          - Shadow_Dual_Sword_Hit
+          - Unblockable
+        AttackingParts:
+          - Dual_Sword_Attacking_Edge_r
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 19
+            End: 26
+            Distance: 500
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 27
+        End: 34
+        HitTags:
+          - Hit_Chest
+          - Shadow_Dual_Sword_Hit
+          - Unblockable
+        AttackingParts:
+          - Dual_Sword_Attacking_Edge_l
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 27
+            End: 34
+            Distance: 500
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+###      - Type: Attack
+###        Start: 10
+###        End: 30
+###        HitTags:
+###          - Shadow_Dual_Sword_Hit
+###          - Unblockable
+###        AttackingParts:
+###          - Dual_Sword_Attacking_Edge_l
+###          - Dual_Sword_Attacking_Edge_r
+###        Impulse:
+###            X: 15000
+###            Y: 8000
+###        Slowmo:
+###            Start: 10
+###            End: 30
+###            Distance: 500
+###        Damage:
+###            Attack: WeaponDamage
+###            Defense: BodyDefense
+###            BaseDamage: 0.12
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_in
+        Frame: 17
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_in
+        Frame: 25
+
+  - Animation: Shadow_Dual_Swords_Hit
+    FileName: shadow_abillty_dual_swords_tripple.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - DUAL_SWORDS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Transitions:
+      - FrameShift: 0
+        AITransistable: 1
+        Animations:
+          - Shadow_Dual_Swords_Miss
+    Intervals:
+      - Name: Uninterrupt
+        End: 61
+      - Name: Blocking
+        Start: 62
+      - Name: Shadow_Dual_Swords_Left_FX
+        Start: 17
+        End: 17
+      - Name: Shadow_Dual_Swords_Right_FX
+        Start: 25
+        End: 25
+      - Name: Shadow_Move_Successful
+        Start: 34
+        End: 34
+      - Name: Shadow_Dual_Swords_Model_Create
+        Start: 42
+        End: 42
+      - Type: DissolveWeapon
+        Start: 39
+        End: 60
+      - Type: Attack
+        Start: 19
+        End: 26
+        HitTags:
+          - Hit_Chest
+          - Shadow_Dual_Sword_Hit
+          - Unblockable
+        AttackingParts:
+          - Dual_Sword_Attacking_Edge_r
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 19
+            End: 26
+            Distance: 500
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 27
+        End: 34
+        HitTags:
+          - Hit_Chest
+          - Shadow_Dual_Sword_Hit
+          - Unblockable
+        AttackingParts:
+          - Dual_Sword_Attacking_Edge_l
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 27
+            End: 34
+            Distance: 500
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+    Sounds:
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_in
+        Frame: 17
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_in
+        Frame: 25
+
+  - Animation: Shadow_Dual_Swords_Slash_Model
+    FileName: shadow_ability_dual_swords_bullet.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_ATTACKING_EDGE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: 25
+            Y: -15
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: magic_joint_root
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Shadow_Dual_Swords_Slash_Model_FX
+        Start: 10
+        End: 10
+      - Type: NoWallRepulsion
+      - Name: Shadow_Dual_Swords_Slash_Model_FX
+        Start: 11
+        End: 11
+      - Type: Attack
+        Start: 1
+        HitTags:
+          - Hit_Overhead_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: -10000
+            Y: 20000
+        Slowmo:
+            Start: 1
+            End: 25
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.15
+    Sounds:
+      - Common:
+          - shadow_moves/sword_lonely_slash/fall
+        Frame: 2
+
+  - Animation: Shadow_Nunchaku_Slash
+    FileName: s_nunchaku_throw.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - NUNCHAKU
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 98
+      - Name: Shadow_Move_Successful
+        Start: 28
+        End: 28
+      - Name: Throwable
+        Start: 93
+      - Name: Blocking
+        Start: 99
+      - Type: Attack
+        Start: 29
+        End: 37
+        HitTags:
+          - Hit_Chest_Heavy
+          - Unblockable
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 24
+            End: 37
+            Distance: 450
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.06
+      - Type: Attack
+        Start: 50
+        End: 63
+        HitTags:
+          - Hit_Overhead_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 48
+            End: 63
+            Distance: 450
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.08
+    Sounds:
+      - Common:
+          - shadow_moves/sword_lonely_slash/rise
+        Frame: 26
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 52
+
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 1
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 10
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 18
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 63
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 70
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 80
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 90
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 103
+
+  - Animation: Shadow_Uppercut
+    FileName: s_str_armor_uppercut.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 58
+      - Name: Shadow_Move_Successful
+        Start: 30
+        End: 30
+      - Name: DissolveWeapon
+        End: 30
+      - Name: Shadow_Uppercut_SFX
+        Start: 16
+        End: 16
+      - Name: Shadow_Uppercut_Model_Creation
+        Start: 7
+        End: 7
+      - Name: Throwable
+        Start: 53
+      - Name: Blocking
+        Start: 59
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+
+  - Animation: Shadow_Uppercut_Model_Attack
+    FileName: s_str_armor_uppercut_bullet.bin
+    BlendingFrames: 0
+    FirstFrame: 6
+    ##FirstFrame: 7
+    #EndFrame: 31
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            Y: 10
+            X: -30
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+        Start: 21
+        End: 30
+        HitTags:
+          - Hit_Shadow_Uppercut
+          - Unblockable
+          - No_FX_SFX
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: -20000
+            Y: 29000
+        Slowmo:
+            Start: 18
+            End: 30
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.15
+
+  - Animation: Shadow_Spear_Throw
+    FileName: s_spear_throw.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 70
+      - Name: Shadow_Move_Successful
+        Start: 18
+        End: 18
+      - Name: Shadow_Spear_Throw_Model_Creation
+        Start: 18
+        End: 18
+      - Name: Throwable
+        Start: 65
+      - Name: Blocking
+        Start: 71
+      #- Type: Attack
+      #  Start: 20
+      #  End: 22
+      #  HitTags:
+      #    - Hit_Head_Short
+      #    - Unblockable
+      #  AttackingParts:
+      #    - Spear_Attacking_Edge_l
+      #  Impulse:
+      #      X: 18000
+      #      Y: 3000
+      #  Slowmo:
+      #      Start: 15
+      #      End: 22
+      #      Distance: 350
+      #  Damage:
+      #      Attack: MagicPower
+      #      Defense: BodyDefense
+      #      BaseDamage: 0.02
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+
+  - Animation: Shadow_Spear_Throw_Model_Attack
+    FileName: s_spear_throw_bullet.bin
+    BlendingFrames: 0
+    #FirstFrame: 7
+    #EndFrame: 31
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            Y: 5
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+        Start: 3
+        End: 3
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 20000
+            Y: -3000
+        Slowmo:
+            Start: 1
+            End: 3
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: HeadDefense
+            BaseDamage: 0.03
+      - Type: Attack
+        Start: 6
+        End: 6
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 20000
+            Y: -3000
+        Slowmo:
+            Start: 4
+            End: 6
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: HeadDefense
+            BaseDamage: 0.03
+      - Type: Attack
+        Start: 9
+        End: 9
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 20000
+            Y: -3000
+        Slowmo:
+            Start: 7
+            End: 9
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: HeadDefense
+            BaseDamage: 0.03
+      - Type: Attack
+        Start: 12
+        End: 12
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 20000
+            Y: -3000
+        Slowmo:
+            Start: 10
+            End: 12
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: HeadDefense
+            BaseDamage: 0.03
+      - Type: Attack
+        Start: 15
+        End: 15
+        HitTags:
+          - Hit_Head_Heavy
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 20000
+            Y: -3000
+        Slowmo:
+            Start: 13
+            End: 15
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            Defense: HeadDefense
+            BaseDamage: 0.05
+            
+            
+
+  - Animation: Shadow_Hammers_Throw_Miss
+    FileName: s_dual_hammers_throw_miss.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      #- SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 76
+      - Name: Shadow_Move_Successful
+        Start: 30
+        End: 30
+      - Name: Shadow_Hammers_FX
+        Start: 16
+        End: 16
+      - Name: Shadow_Hammers_miss_hit_FX
+        Start: 23
+        End: 23
+      - Name: Shadow_Hammers_FX_2
+        Start: 56
+        End: 56
+      - Name: Throwable
+        Start: 71
+      - Name: Blocking
+        Start: 77
+      - Name: Transitional
+        End: 32
+      - Type: Attack
+        Start: 12
+        End: 20
+        HitTags:
+          - Hit_Chest_Heavy
+          - Unblockable
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 250
+        Damage:
+            Attack: MagicPower
+            BaseDamage: 0.05
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle_Heavy
+      - Type: Attack
+        Start: 22
+        End: 28
+        HitTags:
+          - Hit_Shadow_Hammers_Throw_Start
+          - Unblockable
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Impulse:
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 18
+            End: 30
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            BaseDamage: 0.05
+      - Type: Attack
+        Start: 29
+        End: 32
+        HitTags:
+          - Unblockable
+          - Hit_Shadow_Hammers_Throw_End
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hammers_Attacking_Edge_l
+        Impulse:
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 250
+        Damage:
+            Attack: MagicPower
+            BaseDamage: 0.1
+      #- Type: Attack
+      #  Start: 53
+      #  End: 56
+      #  HitTags:
+      #    - Hit_Stomach_Short
+      #    - Unblockable
+      #  AttackingParts:
+      #    - Hammers_Attacking_Edge_r
+      #    - Hammers_Attacking_Edge_l
+      #  Impulse:
+      #      X: 20000
+      #      Y: 15000
+      #  Slowmo:
+      #      Start: 8
+      #      End: 16
+      #      Distance: 250
+      #  Damage:
+      #      Attack: WeaponDamage
+      #      BaseDamage: 0.03
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 6
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 10
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 17
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_hit
+        Frame: 22
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 49
+
+  - Animation: Shadow_Hammers_Throw
+    FileName: s_dual_hammers_throw.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Transitions:
+      - FrameShift: 0
+        AITransistable: 1
+        Animations:
+          - Shadow_Hammers_Throw_Miss
+    Intervals:
+      - Name: Uninterrupt
+        End: 76
+      - Name: Shadow_Move_Successful
+        Start: 30
+        End: 30
+      #- Name: Shadow_Hammers_Throw_Model_Creation
+      #  Start: 7
+      #  End: 7
+      - Name: Shadow_Hammers_FX
+        Start: 16
+        End: 16
+      - Name: Shadow_Hammers_FX_2
+        Start: 56
+        End: 56
+      - Name: Throwable
+        Start: 71
+      - Name: Blocking
+        Start: 77
+      - Type: Attack
+        Start: 12
+        End: 20
+        HitTags:
+          - Hit_Chest_Heavy
+          - Unblockable
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 250
+        Damage:
+            Attack: MagicPower
+            BaseDamage: 0.05
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle_Heavy
+      - Type: Attack
+        Start: 22
+        End: 28
+        HitTags:
+          - Hit_Shadow_Hammers_Throw_Start
+          - Unblockable
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Impulse:
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 18
+            End: 30
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            BaseDamage: 0.05
+      - Type: Attack
+        Start: 29
+        End: 32
+        HitTags:
+          - Unblockable
+          - Hit_Shadow_Hammers_Throw_End
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hammers_Attacking_Edge_l
+        Impulse:
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 250
+        Damage:
+            Attack: MagicPower
+            BaseDamage: 0.1
+      #- Type: Attack
+      #  Start: 53
+      #  End: 56
+      #  HitTags:
+      #    - Hit_Stomach_Short
+      #    - Unblockable
+      #  AttackingParts:
+      #    - Hammers_Attacking_Edge_r
+      #    - Hammers_Attacking_Edge_l
+      #  Impulse:
+      #      X: 20000
+      #      Y: 15000
+      #  Slowmo:
+      #      Start: 8
+      #      End: 16
+      #      Distance: 250
+      #  Damage:
+      #      Attack: MagicPower
+      #      BaseDamage: 0.03
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 6
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 10
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 17
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_hit
+        Frame: 22
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 49
+
+  - Animation: Shadow_Hammers_Throw_Passive_Start
+    FileName: s_dual_hammers_throw_passive_start.bin
+    FirstFrame: 4
+    Groups:
+      - SHADOW_MOVE_PASSIVE
+      - FALL
+      - FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        #Shift:
+        #    X: -170
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+#      - Type: NoRepulsion
+      - Name: Uninterrupt
+      #- Name: Floorfall
+      #  Start: 40
+      #  End: 40
+
+  - Animation: Shadow_Hammers_Throw_Passive_End
+    FileName: s_dual_hammers_throw_passive_end.bin
+    Groups:
+      - SHADOW_MOVE_PASSIVE
+      - FALL
+      - FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: weapon_r
+        Shift:
+            X: 45
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+#      - Type: NoRepulsion
+      - Name: Uninterrupt
+      - Name: Floorfall
+        Start: 20
+        End: 20
+
+
+  - Animation: Shadow_Spear_Slash
+    FileName: s_spear_slash.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 70
+      - Name: Shadow_Move_Successful
+        Start: 29
+        End: 29
+      - Name: Shadow_Spear_Slash_Model_Creation
+        Start: 29
+        End: 29
+      - Name: Throwable
+        Start: 65
+      - Name: Blocking
+        Start: 71
+      - Type: Attack
+        Start: 26
+        End: 28
+        HitTags:
+          - Hit_Legs
+          - Unblockable
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 12000
+            Y: -3000
+        Slowmo:
+            Start: 20
+            End: 28
+            Distance: 275
+        Damage:
+            Attack: WeaponDamage
+            Defense: BodyDefense
+            BaseDamage: 0.04
+    Sounds:
+      - Common:
+          - shadow_moves/shadow_spear_slash/shadow_spear_slash_start
+        Frame: 5
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+
+  - Animation: Shadow_Spear_Slash_Model_Attack
+    FileName: s_spear_slash_bullet.bin
+    BlendingFrames: 0
+    FirstFrame: 6
+    #FirstFrame: 17
+    #EndFrame: 31
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: -50
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+        #Start: 6
+        End: 12
+        HitTags:
+          - Hit_Shadow_Spear_Slash_Hit
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 10000
+            Y: 25000
+        Slowmo:
+            Start: 0
+            End: 20
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            Defense: BodyDefense
+            BaseDamage: 0.15
+    Sounds:
+      - Common:
+          - shadow_moves/shadow_spear_slash/shadow_spear_slash_attack
+        Frame: 6
+
+  - Animation: Shadow_Spear_Slash_Passive
+    FileName: s_spear_slash_passive.bin
+    FirstFrame: 5
+    EndFrame: 50
+    Groups:
+      - SHADOW_MOVE_PASSIVE
+      - FALL
+      - FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+        #Pivot:
+        #    Object: Nodes
+        #    Part: pelvis
+        #Position:
+        #    Player: Enemy
+        #    Object: Nodes
+        #    Part: pelvis
+        #Shift:
+        #    X: -170
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+#      - Type: NoRepulsion
+      - Name: Uninterrupt
+      - Name: Floorfall
+        Start: 40
+        End: 40
+
+  - Animation: Shadow_Sabers_Blink_Start
+    FileName: s_dual_sabers_ability_2.bin
+    # BlendingFrames: 0
+    EndFrame: 39
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      #- SHADOW_MOVE_END
+      - WEAPON
+      - SABERS
+#    WeaponSwitchFrames:
+#      - Name: Main
+#        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Shadow_Sabers_Blink_FX
+        Start: 34
+        End: 34
+      - Type: Attack
+        Start: 17
+        End: 20
+        HitTags:
+          - Hit_Sabers_Blink
+          - Unblockable
+        AttackingParts:
+          - Saber_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Impulse:
+            X: 17000
+            Y: 15000
+        Slowmo:
+            Start: 11
+            End: 20
+            Distance: 400
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.08
+    Sounds:
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_out
+        Frame: 3
+
+  - Animation: Shadow_Sabers_Blink_End
+    FileName: s_dual_sabers_ability_2.bin
+    # BlendingFrames: 0
+    FirstFrame: 36
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - SABERS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: 400
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 73
+      - Name: Shadow_Move_Successful
+        Start: 60
+        End: 60
+      - Name: Shadow_Sabers_Blink_FX
+        Start: 40
+        End: 40
+      - Name: Throwable
+        Start: 68
+      - Name: Blocking
+        Start: 74
+        End: 45
+      - Type: Attack
+        Start: 54
+        End: 58
+        HitTags:
+          - Hit_Stomach_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Saber_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 52
+            End: 58
+            Distance: 400
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.08
+    Sounds:
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_out
+        Frame: 36
+
+  - Animation: Shadow_Sabers_Blink_End_Near_Wall
+    FileName: s_dual_sabers_ability_2.bin
+    # BlendingFrames: 0
+    FirstFrame: 36
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - SABERS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: 350
+    SetDirection:
+        From:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 73
+      - Name: Shadow_Move_Successful
+        Start: 60
+        End: 60
+      - Name: Throwable
+        Start: 68
+      - Name: Blocking
+        Start: 74
+        End: 45
+      - Type: Attack
+        Start: 54
+        End: 58
+        HitTags:
+          - Hit_Stomach_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Saber_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 52
+            End: 58
+            Distance: 400
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.08
+    Sounds:
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_out
+        Frame: 36
+
+  - Animation: Shadow_Sabers_Blink_Passive
+    FileName: h_chest_heavy_slow_39.bin
+    #FirstFrame: 4
+    Groups:
+      - SHADOW_MOVE_PASSIVE
+      - HIT
+      #- FALL_CRITICAL_ON_FACE
+      #- FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        #Shift:
+        #    X: -170
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+#      - Type: NoRepulsion
+      - Name: Uninterrupt
+      #- Name: Floorfall
+      #  Start: 40
+      #  End: 40
+
+  - Animation: Shadow_Axes_Throw
+    FileName: s_dual_axes_circular_saw.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - AXES
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 98
+      - Name: Shadow_Move_Successful
+        Start: 28
+        End: 28
+      - Name: Throwable
+        Start: 93
+      - Name: Blocking
+        Start: 99
+      - Type: Attack
+        Start: 16
+        End: 18
+        HitTags:
+          - Hit_Head_Heavy
+          #- Hit_Shadow_Axes_Throw
+          - Unblockable
+        AttackingParts:
+          - Axes_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 10
+            End: 18
+            Distance: 450
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.03
+      - Type: Attack
+        Start: 19
+        End: 23
+        HitTags:
+          - Hit_Stomach_Heavy
+          #- Hit_Shadow_Axes_Throw
+          - Unblockable
+        AttackingParts:
+          - Axes_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 13
+            End: 23
+            Distance: 450
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.03
+      - Type: Attack
+        Start: 24
+        End: 30
+        HitTags:
+          - Hit_Chest
+          #- Hit_Shadow_Axes_Throw
+          - Unblockable
+        AttackingParts:
+          - Axes_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 20
+            End: 30
+            Distance: 450
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.03
+      - Type: Attack
+        Start: 31
+        End: 40
+        HitTags:
+          - Hit_Chest
+          #- Hit_Shadow_Axes_Throw
+          - Unblockable
+        AttackingParts:
+          - Axes_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 28
+            End: 40
+            Distance: 450
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.03
+      #- Type: Attack
+      #  Start: 36
+      #  End: 40
+      #  HitTags:
+      #    - Hit_Chest
+      #    - Unblockable
+      #  AttackingParts:
+      #    - Axes_Attacking_Edge_r
+      #    - Hand_right
+      #    - Forearm_right
+      #  Impulse:
+      #      X: 22000
+      #      Y: 5000
+      #  Slowmo:
+      #      Start: 24
+      #      End: 37
+      #      Distance: 450
+      #  Damage:
+      #      Attack: MagicPower
+      #      Defense: BodyDefense
+      #      BaseDamage: 0.02
+      - Type: Attack
+        Start: 41
+        End: 44
+        HitTags:
+          - Hit_Head_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Axes_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 36
+            End: 44
+            Distance: 450
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.08
+      - Type: Attack
+        Start: 45
+        End: 53
+        HitTags:
+          - Hit_Legs_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Axes_Attacking_Edge_r
+          - Axes_Attacking_Edge_l
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 40
+            End: 53
+            Distance: 450
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.08
+    Sounds:
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 10
+      - Common:
+          - shadow_moves/sword_lonely_slash/rise
+        Frame: 26
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 43
+
+##  - Animation: Shadow_Axes_Throw_Passive
+##    FileName: s_dual_axes_circular_saw_passive_cycle.bin
+##    Groups:
+##      - SHADOW_MOVE_PASSIVE
+##      - FALL
+##      - FALL_CRITICAL_ON_FACE
+##      - FOLLOWED_BY
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: pelvis
+##        Position:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: weapon_r
+##        Shift:
+##            X: 45
+##    SetDirection:
+##        From:
+##            Player: Me
+##            Object: Nodes
+##            Part: pelvis
+##        To:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##    Intervals:
+###      - Type: NoRepulsion
+##      - Name: Uninterrupt
+##      - Name: Floorfall
+##        Start: 20
+##        End: 20
+
+  - Animation: Shadow_Sword_Ray
+    FileName: s_sword_ray.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 70
+      - Name: Shadow_Move_Successful
+        Start: 23
+        End: 23
+      - Name: Shadow_Sword_Ray_Model_Creation
+        Start: 23
+        End: 23
+      - Name: Throwable
+        Start: 65
+      - Name: Blocking
+        Start: 71
+      - Type: Attack
+        Start: 21
+        End: 23
+        HitTags:
+          - Hit_Chest
+          - Unblockable
+        AttackingParts:
+          - Sword_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Impulse:
+            X: 12000
+            Y: -3000
+        Slowmo:
+            Start: 15
+            End: 23
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.04
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+
+  - Animation: Shadow_Sword_Ray_Model_Attack
+    FileName: s_sword_ray_bullet.bin
+    BlendingFrames: 0
+    EndFrame: 20
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: 50
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+      - Type: Attack
+        #Start: 1
+        #End: 1
+        HitTags:
+          - Hit_Head_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Shadow_attacking_edge
+        Impulse:
+            X: 25000
+            Y: 4000
+        Slowmo:
+            Start: 0
+            End: 20
+            Distance: 250
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.1
+
+  - Animation: Shadow_Agile_Weapon_Tornado
+    FileName: s_agl_wpn_tornado.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - WEAPON
+      - AGILE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 73
+      - Name: Shadow_Move_Successful
+        Start: 60
+        End: 60
+      - Name: Throwable
+        Start: 68
+      - Name: Blocking
+        Start: 74
+      - Type: Attack
+        Start: 6
+        End: 9
+        HitTags:
+          - Hit_Head
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 2
+            End: 9
+            Distance: 400
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 10
+        End: 12
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 6
+            End: 12
+            Distance: 300  
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 11
+            End: 17
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 19
+        End: 23
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 15
+            End: 23
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 26
+        End: 28
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 22
+            End: 28
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 32
+        End: 35
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 28
+            End: 35
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 38
+        End: 41
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 34
+            End: 41
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 44
+        End: 46
+        HitTags:
+          - Hit_Head_Short
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 40
+            End: 46
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.02
+      - Type: Attack
+        Start: 52
+        End: 54
+        HitTags:
+          - Hit_Overhead
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 48
+            End: 54
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.04
+      - Type: Attack
+        Start: 59
+        End: 61
+        HitTags:
+          - Hit_Overhead_Critical_Fall
+          - Unblockable
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 10000
+            Y: 5000
+        Slowmo:
+            Start: 55
+            End: 61
+            Distance: 275
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.06
+    Sounds:
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_out
+        Frame: 3
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_1
+        Frame: 7
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_2
+        Frame: 15
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_3
+        Frame: 22
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_4
+        Frame: 32
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_5
+        Frame: 44
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_hit_6
+        Frame: 52
+      - Common:
+          - shadow_moves/staff_thresh/shadow_quaterstaff_in
+        Frame: 63
+
+
+##  - Animation: Shadow_Sabers_Throw_Start
+##    FileName: s_dual_sabers_active.bin
+##    Groups:
+##      - ATTACK
+##      - SHADOW_MOVE
+##      - SHADOW_MOVE_END
+##      #- WEAPON
+##    WeaponSwitchFrames:
+##      - Name: Main
+##        Frame: 1
+##    EndFrame: 44
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##    SetDirection:
+##        From:
+##            Player: Me
+##            Object: Nodes
+##            Part: pelvis
+##        To:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##    Intervals:
+##      - Name: Uninterrupt
+##        End: 70
+##      - Name: Shadow_Move_Successful
+##        Start: 29
+##        End: 29
+##      - Name: Shadow_Sabers_Throw_Model_Creation
+##        Start: 29
+##        End: 29
+##      - Name: Throwable
+##        Start: 65
+##      - Name: Blocking
+##        Start: 71
+##      - Type: Attack
+##        Start: 21
+##        End: 30
+##        HitTags:
+##          - Hit_Shadow_Sabers_Throw_Hit
+##          - Unblockable
+##        AttackingParts:
+##          - Saber_Attacking_Edge_l
+##          - Saber_Attacking_Edge_r
+##        Impulse:
+##            X: 20000
+##            Y: 4000
+##        Slowmo:
+##            Start: 20
+##            End: 28
+##            Distance: 275
+##        Damage:
+##            Attack: MagicPower
+##            Defense: BodyDefense
+##            BaseDamage: 0.04
+##    Sounds:
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 16
+##
+##  - Animation: Shadow_Sabers_Throw_End
+##    FileName: s_dual_sabers_active.bin
+##    Groups:
+##      - ATTACK
+##      - SHADOW_MOVE
+##      - SHADOW_MOVE_END
+##      #- WEAPON
+##    WeaponSwitchFrames:
+##      - Name: Main
+##        Frame: 1
+##    FirstFrame: 44
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##        Shift:
+##            X: -450
+##    SetDirection:
+##        From:
+##            Player: Me
+##            Object: Nodes
+##            Part: pelvis
+##        To:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##    Intervals:
+##      - Name: Uninterrupt
+##        End: 70
+##      - Name: Shadow_Move_Successful
+##        Start: 29
+##        End: 29
+##      - Name: Shadow_Sabers_Throw_Model_Creation
+##        Start: 29
+##        End: 29
+##      - Name: Throwable
+##        Start: 65
+##      - Name: Blocking
+##        Start: 71
+##    Sounds:
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 16
+##
+##  - Animation: Shadow_Sabers_Throw_Passive
+##    FileName: s_dual_sabers_passive.bin
+##    #FirstFrame: 5
+##    #EndFrame: 45
+##    Groups:
+##      - SHADOW_MOVE_PASSIVE
+##      - FALL
+##      - FALL_CRITICAL_ON_BACK
+##      - FOLLOWED_BY
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: pelvis
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##        #Pivot:
+##        #    Object: Nodes
+##        #    Part: pelvis
+##        #Position:
+##        #    Player: Enemy
+##        #    Object: Nodes
+##        #    Part: pelvis
+##        #Shift:
+##        #    X: -170
+##    SetDirection:
+##        From:
+##            Player: Me
+##            Object: Nodes
+##            Part: pelvis
+##        To:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##    Intervals:
+###      - Type: NoRepulsion
+##      - Name: Uninterrupt
+##      - Name: Floorfall
+##        Start: 40
+##        End: 40
+
+
+  - Animation: Shadow_Sabers_Throw_Miss
+    FileName: s_dual_sabers_active_miss.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      #- SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 88
+      - Name: Shadow_Move_Successful
+        Start: 33
+        End: 33
+      - Name: Shadow_Sabers_Throw_Hit
+        Start: 50
+        End: 50
+      - Name: Throwable
+        Start: 71
+      - Name: Blocking
+        Start: 77
+      - Name: DissolveWeapon
+        Start: 34
+        End: 75
+      - Name: Transitional
+        End: 33
+      - Type: Attack
+        Start: 19
+        End: 33
+        HitTags:
+          - Hit_Shadow_Sabers_Throw_Start
+          - Unblockable
+        AttackingParts:
+          - Saber_Attacking_Edge_l
+          - Saber_Attacking_Edge_r
+          - Hand_left
+          - Forearm_left
+        Impulse:
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 18
+            End: 30
+            Distance: 600
+        Damage:
+            Attack: MagicPower
+            BaseDamage: 0.05
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 6
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 10
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 17
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_hit
+        Frame: 22
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 49
+
+  - Animation: Shadow_Sabers_Throw_Hit
+    FileName: s_dual_sabers_active_hit.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: -200
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 76
+      - Name: Shadow_Move_Successful
+        Start: 30
+        End: 30
+      - Name: Throwable
+        Start: 71
+      - Name: Blocking
+        Start: 77
+      - Type: Attack
+        Start: 12
+        End: 20
+        HitTags:
+          - Hit_Chest_Heavy
+          - Unblockable
+        AttackingParts:
+          - Saber_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: steel
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 250
+        Damage:
+            Attack: MagicPower
+            BaseDamage: 0.05
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_hit
+        Frame: 22
+      - Common:
+          - shadow_moves/mind_throw/mind_throw_whoosh_1
+        Frame: 49
+
+  - Animation: Shadow_Sabers_Throw_Passive_Start
+    FileName: s_dual_sabers_passive_start.bin
+    #FirstFrame: 4
+    Groups:
+      - SHADOW_MOVE_PASSIVE
+      #- FALL
+      #- FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        #Pivot:
+        #    Object: Nodes
+        #    Part: pelvis
+        #Position:
+        #    Player: Enemy
+        #    Object: Nodes
+        #    Part: weapon_r
+        #Shift:
+        #    X: -170
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+#      - Type: NoRepulsion
+      - Name: Uninterrupt
+      #- Name: Floorfall
+      #  Start: 40
+      #  End: 40
+
+  - Animation: Shadow_Sabers_Throw_Passive_End
+    FileName: s_dual_sabers_passive_end.bin
+    Groups:
+      - SHADOW_MOVE_PASSIVE
+      - FALL
+      - FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        #Shift:
+        #    X: 45
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+#      - Type: NoRepulsion
+      - Name: Uninterrupt
+      - Name: Floorfall
+        Start: 20
+        End: 20
+
+  - Animation: Shadow_Sabers_Throw_Model_Attack
+    FileName: s_str_armor_uppercut_bullet.bin
+    BlendingFrames: 0
+    #FirstFrame: 1
+    ##FirstFrame: 7
+    #EndFrame: 31
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      - SHADOW_ATTACKING_EDGE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: magic_joint_root
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            Y: 10
+    SetDirection:
+        From:
+            Player: Parent
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoWallRepulsion
+
+
+  - Animation: Shadow_Agile_Helmet
+    FileName: s_agl_helm.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 66
+      - Name: Shadow_Move_Successful
+        Start: 56
+        End: 56
+      - Name: DissolveWeapon
+        End: 56
+      - Name: Shadow_Agile_Helmet_Model_Creation
+        Start: 7
+        End: 7
+      - Name: Throwable
+        Start: 53
+      - Name: Blocking
+        Start: 59
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+            
+  - Animation: Shadow_Vanish_Out
+    FileName: sf_teleport.bin
+    Groups:
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    FirstFrame: 17
+    BlendingFrames: 0
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: -150
+    SetDirection:
+        From:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 30
+      - Name: Shadow_Move_Successful
+        Start: 1
+        End: 1
+      - Name: Blocking
+        Start: 31
+      - Name: Throwable
+        Start: 31      
+      - Type: Attack
+        Start: 1
+        End: 2
+        HitTags:
+          - Unblockable
+        Slowmo:
+            Start: 25
+            End: 29
+            Distance: 300
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.01
+    Sounds:
+      - Common:
+          - shadow_moves/teleport/teleport_out
+        Frame: 17
+  #- Animation: Shadow_Agile_Helmet_Model_Attack
+  #  FileName: s_str_armor_uppercut_bullet.bin
+  #  BlendingFrames: 0
+  #  #FirstFrame: 1
+  #  ##FirstFrame: 7
+  #  #EndFrame: 31
+  #  Groups:
+  #    - ATTACK
+  #    - SHADOW_MOVE
+  #    - SHADOW_MOVE_END
+  #    - SHADOW_ATTACKING_EDGE
+  #  Align:
+  #      Rotation:
+  #          Y: 6
+  #      Axis:
+  #        - X
+  #      Pivot:
+  #          Object: Nodes
+  #          Part: magic_joint_root
+  #      Position:
+  #          Player: Enemy
+  #          Object: Nodes
+  #          Part: pelvis
+  #      Shift:
+  #          Y: 10
+  #  SetDirection:
+  #      From:
+  #          Player: Parent
+  #          Object: Nodes
+  #          Part: pelvis
+  #      To:
+  #          Player: Enemy
+  #          Object: Nodes
+  #          Part: pelvis
+  #  Intervals:
+  #    - Type: NoWallRepulsion
+  #    - Type: Attack
+  #      Start: 21
+  #      End: 30
+  #      HitTags:
+  #        - Hit_Shadow_Uppercut
+  #        - Unblockable
+  #      AttackingParts:
+  #        - Shadow_attacking_edge
+  #      Impulse:
+  #          X: -20000
+  #          Y: 29000
+  #      Slowmo:
+  #          Start: 18
+  #          End: 30
+  #          Distance: 600
+  #      Damage:
+  #          Attack: MagicPower
+  #          Defense: BodyDefense
+  #          BaseDamage: 0.2    
+
+  - Animation: Shadow_Strong_Armor
+    FileName: s_str_arm.bin
+    RepulsionScale:
+        X: 0.8
+    Groups:
+      - ATTACK
+      - WEAPON
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 32
+      - Name: Shadow_Move_Successful
+        Start: 32
+        End: 32
+      - Name: Shadow_Strong_Armor_FX
+        Start: 12
+        End: 12
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 33
+      #- Type: NoRepulsion
+      #  Start: 13
+      #  End: 27
+      - Type: TurnOffRepulsionBones
+        Start: 10
+        End: 27
+        Bones:
+          - foot_l
+        BonesMirrored:
+          - foot_r
+      - Type: Attack
+        HitTags:
+          #- Hit_Stomach_Heavy
+          - Hit_Stomach_Critical_Fall
+          - Unblockable
+        Start: 13
+        End: 27
+        AttackingParts:
+          - Stomach
+          - Forearm_left
+          #- Forearm_right
+          - Neck
+          - Head
+          - Thigh_left
+          #- Thigh_right
+          - Leg_left
+          #- Leg_right
+          #- Sword_Attacking_Edge_r
+          #- Sword_Attacking_Edge_l
+        Impulse:
+            X: 20000
+            Y: 15000
+        Slowmo:
+            Distance: 600
+            Start: 10
+            End: 27
+        Damage:
+            Attack: MagicPower
+            Defense: BodyDefense
+            BaseDamage: 0.15
+    Sounds:
+      - Common:
+          - shadow_moves/dash/dash_new
+        Frame: 1
+
+  - Animation: Shadow_Strong_Weapon
+    FileName: s_str_wpn.bin
+    Groups:
+      - ATTACK
+      - SHADOW_MOVE
+      - SHADOW_MOVE_END
+      #- WEAPON
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 58
+      - Name: Shadow_Move_Successful
+        Start: 30
+        End: 30
+      - Name: Shadow_Strong_Weapon_SFX
+        Start: 16
+        End: 16
+      - Name: Shadow_Strong_Weapon_Model_Creation
+        Start: 7
+        End: 7
+      - Name: Throwable
+        Start: 53
+      - Name: Blocking
+        Start: 59
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 8
+
+#  - Animation: Shadow_Strong_Weapon_Model_Attack
+#    FileName: s_str_armor_uppercut_bullet.bin
+#    Groups:
+#      - ATTACK
+#      - SHADOW_MOVE
+#      - SHADOW_MOVE_END
+#      - SHADOW_ATTACKING_EDGE
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#        Pivot:
+#            Object: Nodes
+#            Part: magic_joint_root
+#        Position:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#        Shift:
+#            Y: 10
+#            X: -30
+#    SetDirection:
+#        From:
+#            Player: Parent
+#            Object: Nodes
+#            Part: pelvis
+#        To:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#    Intervals:
+#      - Type: NoWallRepulsion
+#      - Type: Attack
+#        Start: 21
+#        End: 30
+#        HitTags:
+#          - Hit_Shadow_Strong_Weapon
+#          - Unblockable
+#          - No_FX_SFX
+#        AttackingParts:
+#          - Shadow_attacking_edge
+#        Impulse:
+#            X: -20000
+#            Y: 29000
+#        Slowmo:
+#            Start: 18
+#            End: 30
+#            Distance: 600
+#        Damage:
+#            Attack: MagicPower
+#            Defense: BodyDefense
+#            BaseDamage: 0.15

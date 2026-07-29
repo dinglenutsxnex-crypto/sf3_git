@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1643185849748451
+GameObject:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - component: {fileID: 4218625488214648}
+  - component: {fileID: 137504942859507265}
+  - component: {fileID: 114484593563566317}
+  m_Layer: 0
+  m_Name: helm__str_12_m
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4218625488214648
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1643185849748451}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &137504942859507265
+SkinnedMeshRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1643185849748451}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 7f0f944e68cffac49a53bdbb6bca827b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 4300000, guid: dcd84bb60ba08d64f920e3f341e33da8, type: 2}
+  m_Bones:
+  - {fileID: 0}
+  - {fileID: 0}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 0}
+  m_AABB:
+    m_Center: {x: -0.13835907, y: 20.889473, z: 0.30332947}
+    m_Extent: {x: 10.99775, y: 16.53106, z: 17.789574}
+  m_DirtyAABB: 0
+--- !u!114 &114484593563566317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1643185849748451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd192ea7c6d470ddf27f92fc3bde1df0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  _rootBoneName: neck
+  _bindBonesName:
+  - head
+  - neck
+  shadowFormMaterial: {fileID: 2100000, guid: 2d88a7959e871b048b8a88145d73e5c6, type: 2}
+  enemyMaskColor: {r: 1, g: 1, b: 1, a: 1}
+  playerMaskColor: {r: 1, g: 1, b: 1, a: 1}
+  simpleMaterial: {fileID: 0}
+  matcapMaterial: {fileID: 0}
+  gradientInfo:
+    gradientStartColor: {r: 0.7941176, g: 0.7656067, b: 0.75908303, a: 0}
+    gradientEndColor: {r: 1, g: 1, b: 1, a: 0}
+    gradientStart: 0
+    gradientEnd: 0.5
+  droppable: 0
+  isGradientSource: 1
+  updateGlowBoundsFromBone: 0
+  glowBoudsMeshExpansion: {x: 1, y: 1, z: 1}
+  glowBoundsMesh: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1643185849748451}
+  m_IsPrefabParent: 1

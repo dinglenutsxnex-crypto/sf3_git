@@ -1,0 +1,4355 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# KICKS #################################################
+###################################################### BASIC KICK (P)
+################################## PRECISE
+  - Animation: Kick_Precise
+    FileName: k_prc_kick.bin
+    Groups:
+      - ATTACK
+      - KICK_BASIC
+      - UNARMED
+      - KICK
+    RepulsionScale:
+        X: 0.6
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Transitional_Delay
+        End: 3
+#      - Name: Unstable
+#        Start: 9
+#        End: 22
+      - Name: Uninterrupt
+        End: 26
+      - Name: Transitional
+        End: 15
+      - Name: Blocking
+        Start: 27
+      - Name: Throwable
+        Start: 21
+      - Name: Perk_Parry
+        Start: 6
+        End: 12
+      - Type: Attack
+        Start: 10
+        End: 12
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 6
+            End: 12
+            Distance: 230
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle_Short
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 5
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 2
+
+################################## AGILE
+  - Animation: Kick_Agile
+    FileName: k_agl_kick.bin
+    Groups:
+      - ATTACK
+      - KICK_BASIC
+      - UNARMED
+      - KICK
+    RepulsionScale:
+        X: 0.6
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Transitional_Delay
+        End: 3
+#      - Name: Unstable
+#        Start: 12
+#        End: 23
+      - Name: Uninterrupt
+        End: 28
+      - Name: Transitional
+        End: 15
+      - Name: Blocking
+        Start: 29
+      - Name: Throwable
+        Start: 23
+      - Name: Riposte
+        End: 3
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 8
+            End: 14
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 190
+            Name:
+              - Block_High_Short
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 5
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 2
+
+################################## STRONG
+  - Animation: Kick_Strong
+    FileName: k_str_kick.bin
+    Groups:
+      - ATTACK
+      - KICK_BASIC
+      - UNARMED
+      - KICK
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 23
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Transitional_Delay
+        End: 3
+      - Name: Uninterrupt
+        End: 37
+      - Name: Blocking
+        Start: 38
+      - Name: Throwable
+        Start: 32
+      - Name: Perk_Parry
+        Start: 10
+        End: 18
+      - Type: Attack
+        Start: 16
+        End: 18
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 10
+            End: 18
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 190
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 10
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+
+###################################################### DOUBLE KICK (P + P)
+################################## PRECISE
+  - Animation: Kick_Double_Precise
+    FileName: k_prc_double_kick.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_DOUBLE
+    RepulsionScale:
+        X: 0.6
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Kick_Precise
+    Intervals:
+#      - Name: Unstable
+#        Start: 9
+#        End: 30
+      - Name: Uninterrupt
+        End: 33
+      - Name: Blocking
+        Start: 34
+      - Name: Throwable
+        Start: 28
+      - Name: Perk_Parry
+        Start: 4
+        End: 12
+      - Name: Perk_Parry
+        Start: 12
+        End: 20
+      - Type: Attack
+        Start: 10
+        End: 12
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 6
+            End: 12
+            Distance: 230
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 18
+        End: 20
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 20000
+            Y: 9000
+        Slowmo:
+            Start: 14
+            End: 20
+            Distance: 230
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 231
+            Name:
+              - Block_High_Short
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 5
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 2
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 13   
+
+################################## AGILE
+  - Animation: Kick_Double_Agile
+    FileName: k_agl_kick_double.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_DOUBLE
+      - AGILE
+    RepulsionScale:
+        X: 0.6
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Kick_Agile
+    Intervals:
+#      - Name: Unstable
+#        Start: 12
+#        End: 31
+      - Name: Uninterrupt
+        End: 38
+      - Name: Transitional
+        Start: 20
+        End: 30
+      - Name: Blocking
+        Start: 39
+      - Name: Throwable
+        Start: 33
+      - Name: Riposte
+        End: 3
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 16
+        End: 26
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 8
+            End: 14
+            Distance: 200
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 190
+            Name:
+              - Block_High_Short
+      - Type: Attack
+        Start: 22
+        End: 26
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 16000
+            Y: 9000
+        Slowmo:
+            Start: 20
+            End: 26
+            Distance: 200
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 190
+            Name:
+              - Block_Middle_Short
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 5
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 2
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 15
+
+################################### TRIPLE KICK (P + P + P)
+  - Animation: Kick_Triple_Agile
+    FileName: k_agl_kick_triple.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_TRIPLE
+      - AGILE
+    RepulsionScale:
+        X: 0.6
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Kick_Double_Agile
+    Intervals:
+#      - Name: Unstable
+#        Start: 12
+#        End: 45
+      - Name: Uninterrupt
+        End: 50
+      - Name: Blocking
+        Start: 51
+      - Name: Throwable
+        Start: 45
+      - Name: Riposte
+        End: 3
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 16
+        End: 26
+      - Name: Perk_Parry
+        Start: 28
+        End: 37
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 8
+            End: 14
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 190
+            Name:
+              - Block_High_Short
+      - Type: Attack
+        Start: 22
+        End: 26
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 16000
+            Y: 9000
+        Slowmo:
+            Start: 20
+            End: 26
+            Distance: 200
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 190
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 34
+        End: 37
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 17000
+            Y: 9000
+        Slowmo:
+            Start: 31
+            End: 37
+            Distance: 200
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 190
+            Name:
+              - Block_Low_Short
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 5
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 2
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 15
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 30
+
+#######################################  ############### SPINNING KICK (Back + P)
+################################## AGILE
+  - Animation: Kick_Spinning_Agile
+    FileName: k_dodge_kick.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_SPINNING
+      - HEAVY
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 33
+      - Name: Blocking
+        Start: 34
+      - Name: Throwable
+        Start: 28
+      - Name: Unstable
+        Start: 10
+        End: 18
+      - Name: Riposte
+        End: 6
+      - Name: Perk_Parry
+        Start: 9
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 25000
+            Y: 12000
+        Slowmo:
+            Start: 10
+            End: 17
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.11
+        Block:
+            Distance: 200
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 10
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+
+################################## PRECISE
+  - Animation: Kick_Spinning_Precise
+    FileName: k_prc_back_kick.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_SPINNING
+      - HEAVY
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 6
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Unstable
+        Start: 9
+        End: 26
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Riposte
+        End: 2
+      - Name: Perk_Parry
+        Start: 5
+        End: 14
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 17000
+            Y: 8000
+        Slowmo:
+            Start: 9
+            End: 14
+            Distance: 210
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.10
+        Block:
+            Distance: 197
+            Name:
+              - Block_High_Heavy
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 6
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 3
+        
+################################## STRONG
+  - Animation: Kick_Spinning_Strong
+    FileName: k_str_back_kick.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_SPINNING
+      - HEAVY
+    RepulsionScale:
+        X: 0.75
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 6
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+#      - Name: Unstable
+#        Start: 10
+#        End: 21
+      - Name: Uninterrupt
+        End: 33
+      - Name: Blocking
+        Start: 34
+      - Name: Throwable
+        Start: 28
+      - Name: Perk_Parry
+        Start: 4
+        End: 14
+      - Type: Attack
+        Start: 11
+        End: 13
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 17000
+            Y: 8000
+        Slowmo:
+            Start: 8
+            End: 13
+            Distance: 230
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.12
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 5
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 2
+
+############################################## UPPER KICK (UP + P)
+###################### AGILE
+  - Animation: Kick_Upper_Agile
+    FileName: k_agl_jump_kick.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_UPPER
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 36
+      - Name: Blocking
+        Start: 37
+      - Name: Throwable
+        Start: 31
+      - Name: Unstable
+        Start: 9
+        End: 21
+      - Name: Riposte
+        End: 6
+      - Name: Perk_Parry
+        Start: 9
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 18000
+            Y: 6000
+        Slowmo:
+            Start: 10
+            End: 17
+            Distance: 210
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.13
+        Block:
+            Distance: 200
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 9
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+        
+############## STRONG
+  - Animation: Kick_Upper_Strong
+    FileName: k_str_jump_kick.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_UPPER
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    RepulsionScale:
+        X: 0.8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 35
+      - Name: Blocking
+        Start: 36
+      - Name: Throwable
+        Start: 30
+      - Name: Unstable
+        Start: 10
+        End: 22
+      - Name: Perk_Parry
+        Start: 9
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 22000
+            Y: 6000
+        Slowmo:
+            Start: 9
+            End: 17
+            Distance: 275
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 200
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 9
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+        
+###################################################### LOW KICK (Down + P)
+  - Animation: Kick_Sweep_Precise
+    FileName: k_prc_sweep.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_LOW
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 10
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 32
+      - Name: Unstable
+        Start: 10
+        End: 22
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 27
+      - Name: Riposte
+        End: 4
+      - Name: Perk_Parry
+        Start: 7
+        End: 15
+      - Type: Attack
+        Start: 13
+        End: 15
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 15000
+            Y: -7000
+            Z: -7000
+        Slowmo:
+            Start: 9
+            End: 15
+            Distance: 230
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 219
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 10
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+
+  - Animation: Kick_Sweep_Strong
+    FileName: k_str_sweep.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_LOW
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 36
+      - Name: Blocking
+        Start: 37
+      - Name: Throwable
+        Start: 31
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 18000
+            Y: 8000
+        Slowmo:
+            Start: 6
+            End: 14
+            Distance: 250
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 250
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+  - Animation: Kick_Sweep_Agile
+    FileName: k_agl_sweep.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_LOW
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 10
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 37
+      - Name: Transitional
+        End: 18
+      - Name: Unstable
+        Start: 10
+        End: 27
+      - Name: Blocking
+        Start: 38
+      - Name: Throwable
+        Start: 32
+      - Name: Riposte
+        End: 7
+      - Name: Perk_Parry
+        Start: 10
+        End: 18
+      - Type: Attack
+        Start: 16
+        End: 18
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 15000
+            Y: -7000
+            Z: -7000
+        Slowmo:
+            Start: 11
+            End: 18
+            Distance: 260
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 260
+            Name:
+              - Block_Low_Short
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 10
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+
+  - Animation: Kick_Sweep_Double_Agile
+    FileName: k_agl_double_sweep.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_LOW_DOUBLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 10
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Kick_Sweep_Agile
+    Intervals:
+      - Name: Uninterrupt
+        End: 52
+      - Name: Unstable
+        Start: 10
+        End: 36
+      - Name: Blocking
+        Start: 53
+      - Name: Throwable
+        Start: 47
+      - Name: Riposte
+        End: 7
+      - Name: Perk_Parry
+        Start: 10
+        End: 18
+      - Name: Perk_Parry
+        Start: 22
+        End: 30
+      - Type: Attack
+        Start: 16
+        End: 18
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 15000
+            Y: -7000
+            Z: -7000
+        Slowmo:
+            Start: 11
+            End: 18
+            Distance: 260
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 260
+            Name:
+              - Block_Low_Short
+      - Type: Attack
+        Start: 28
+        End: 30
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 15000
+            Y: -7000
+            Z: -7000
+        Slowmo:
+            Start: 24
+            End: 30
+            Distance: 270
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 270
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 10
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 22
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+
+###################################################### HEAVY KICK (Forward + P)
+  - Animation: Kick_Front_Precise
+    FileName: k_prc_front_kick.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_HEAVY
+      - HEAVY
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 12
+    EndFrame: 47
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Unstable
+        Start: 11
+        End: 22
+      - Name: Riposte
+        End: 12
+      - Name: Perk_Parry
+        Start: 15
+        End: 24
+      - Type: Attack
+        Start: 21
+        End: 24
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 30000
+            Y: 10000
+        Slowmo:
+            Start: 15
+            End: 24
+            Distance: 310
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.12
+        Block:
+            Distance: 310
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 15
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Kick_Front_Agile
+    FileName: k_agl_front_kick.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_HEAVY
+      - HEAVY
+    RepulsionScale:
+        X: 0.7
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 12
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Unstable
+        Start: 12
+        End: 24
+      - Name: Perk_Parry
+        Start: 12
+        End: 20
+      - Type: Attack
+        Start: 18
+        End: 20
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 25000
+            Y: 10000
+        Slowmo:
+            Start: 12
+            End: 21
+            Distance: 320
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.13
+        Block:
+            Distance: 320
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 12
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+        Frame: 27
+
+  - Animation: Kick_Front_Strong
+    FileName: k_str_front_kick.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - KICK_HEAVY
+      - HEAVY
+    RepulsionScale:
+        X: 0.91
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+#      - Name: Unstable
+#        Start: 12
+#        End: 22
+      - Name: Uninterrupt
+        End: 35
+      - Name: Blocking
+        Start: 36
+      - Name: Throwable
+        Start: 30
+      - Name: Perk_Parry
+        Start: 9
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 27000
+            Y: 10000
+        Slowmo:
+            Start: 10
+            End: 17
+            Distance: 250
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.11
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 9
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+################################## SHORT
+  - Animation: Kick_Knee_Short
+    FileName: k_knee_kick.bin
+    Groups:
+      - ATTACK
+      - KICK_SHORT
+      - UNARMED
+      - KICK
+      - KICK_HEAVY
+      - SHORT
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    RepulsionScale:
+        X: 0.75
+    Intervals:
+#      - Name: Unstable
+#        Start: 11
+#        End: 13
+      - Name: Uninterrupt
+        End: 28
+      - Name: Blocking
+        Start: 29
+      - Name: Throwable
+        Start: 23
+      - Name: Perk_Parry
+        Start: 3
+        End: 11
+      - Type: Attack
+        Start: 9
+        End: 11
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 6
+            End: 11
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 190
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 5
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 2
+        
+################### SUPER
+  - Animation: Strong_Super_1_Kick_1
+    FileName: str_super_1_kick_1.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_1
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_STRONG_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 33
+      - Name: Blocking
+        Start: 34
+      - Name: Throwable
+        Start: 28
+      - Name: Transitional
+        End: 18
+      - Name: Perk_Parry
+        Start: 9
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Chest_Middle_Slow
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 9
+            End: 17
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 9
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Strong_Super_1_Kick_2
+    FileName: str_super_1_kick_2.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_2
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_STRONG_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Strong_Super_1_Kick_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 59
+      - Name: Blocking
+        Start: 60
+      - Name: Throwable
+        Start: 54
+      - Name: Perk_Parry
+        Start: 9
+        End: 17
+      - Name: Perk_Parry
+        Start: 33
+        End: 42
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Chest_Middle_Slow
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 9
+            End: 17
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle_Heavy
+      - Type: Attack
+        Start: 39
+        End: 42
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 33
+            End: 42
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 9
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 33
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Strong_Super_2_Kick_1
+    FileName: str_super_2_kick_1.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_1
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_STRONG_2
+    RepulsionScale:
+        X: 0.8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Transitional
+        End: 17
+      - Name: Perk_Parry
+        Start: 7
+        End: 15
+      - Type: Attack
+        Start: 13
+        End: 15
+        HitTags:
+          - Hit_Head_Middle_Slow
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 7
+            End: 15
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 220
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+  - Animation: Strong_Super_2_Kick_2
+    FileName: str_super_2_kick_2.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_2
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_STRONG_2
+    RepulsionScale:
+        X: 0.8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Strong_Super_2_Kick_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 54
+      - Name: Blocking
+        Start: 55
+      - Name: Throwable
+        Start: 49
+      - Name: Transitional
+        End: 37
+      - Name: Perk_Parry
+        Start: 9
+        End: 15
+      - Name: Perk_Parry
+        Start: 26
+        End: 36
+      - Type: NoRepulsion
+        Start: 32
+        End: 35
+      - Type: Attack
+        Start: 13
+        End: 15
+        HitTags:
+          - Hit_Head_Middle_Slow
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 7
+            End: 15
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 220
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 32
+        End: 36
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Chest
+          - Forearm_left
+          #- Forearm_right
+          - Neck
+          - Head
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 26
+            End: 36
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 25
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 22
+
+  - Animation: Strong_Super_2_Kick_3
+    FileName: str_super_2_kick_3.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_3
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_STRONG_2
+    RepulsionScale:
+        X: 0.8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Strong_Super_2_Kick_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 63
+      - Name: Blocking
+        Start: 64
+      - Name: Throwable
+        Start: 58
+      - Name: Perk_Parry
+        Start: 9
+        End: 15
+      - Name: Perk_Parry
+        Start: 26
+        End: 36
+      - Name: Perk_Parry
+        Start: 44
+        End: 53
+      - Type: NoRepulsion
+        Start: 32
+        End: 35
+      - Type: Attack
+        Start: 13
+        End: 15
+        HitTags:
+          - Hit_Head_Middle_Slow
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 7
+            End: 15
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 220
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 32
+        End: 36
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Chest
+          - Forearm_left
+          #- Forearm_right
+          - Neck
+          - Head
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 26
+            End: 36
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 50
+        End: 53
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Hand_left
+          - Forearm_left
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 44
+            End: 53
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 220
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 25
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 44
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 22
+
+  - Animation: Strong_Super_3_Kick_1
+    FileName: str_super_3_kick_1.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_1
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_STRONG_3
+    RepulsionScale:
+        X: 0.7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Transitional
+        End: 16
+      - Name: Perk_Parry
+        Start: 7
+        End: 16
+      - Type: Attack
+        Start: 13
+        End: 16
+        HitTags:
+          - Hit_Stomach
+          - Hit_Strong_Super_3_Kick
+          - Hit_No_Critical_Reaction
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 7
+            End: 16
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+  - Animation: Strong_Super_3_Kick_2
+    FileName: str_super_3_kick_2.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_2
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_STRONG_3
+    FirstFrame: 15
+    RepulsionScale:
+        X: 0.8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    #Transitions:
+    #  - FrameShift: 0
+    #    Animations:
+    #      - Strong_Super_3_Kick_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 160
+      - Name: Blocking
+        Start: 161
+      - Name: Throwable
+        Start: 155
+      - Name: Fall_Item_Sound
+        Start: 32
+        End: 32
+      - Type: Attack
+        Start: 13
+        End: 16
+        HitTags:
+          - Hit_Strong_Super_3_Kick
+          - Hit_No_Critical_Reaction
+          #- Hit_Stomach
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 7
+            End: 16
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 114
+        End: 116
+        HitTags:
+          - Unblockable
+        Material: flesh
+        Slowmo:
+            Start: 110
+            End: 116
+            Distance: 300
+        Damage:
+            Attack: UnarmedDamage
+            Defense: BodyDefense
+            BaseDamage: 0.1
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 29
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 48
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 22
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 86
+
+  - Animation: Strong_Super_3_Kick_2_Fists
+    FileName: str_super_3_kick_2_no_wpn.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_2
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_STRONG_3
+    FirstFrame: 13
+    RepulsionScale:
+        X: 0.8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    #Transitions:
+    #  - FrameShift: 0
+    #    Animations:
+    #      - Strong_Super_3_Kick_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 160
+      - Name: Blocking
+        Start: 161
+      - Name: Throwable
+        Start: 155
+      - Type: Attack
+        Start: 13
+        End: 16
+        HitTags:
+          - Hit_Strong_Super_3_Kick
+          - Hit_No_Critical_Reaction
+          #- Hit_Stomach
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 7
+            End: 16
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 114
+        End: 116
+        HitTags:
+          - Unblockable
+        Material: flesh
+        Slowmo:
+            Start: 110
+            End: 116
+            Distance: 300
+        Damage:
+            Attack: UnarmedDamage
+            Defense: BodyDefense
+            BaseDamage: 0.1
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 29
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 48
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 22
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 86
+
+  - Animation: Strong_Super_3_Kick_2_Passive
+    FileName: str_super_3_kick_2_loser.bin
+    Groups:
+      - THROW_FALL
+      - SUPER_FALL
+      - FALL
+      - FOLLOWED_BY
+      - FALL_CRITICAL_ON_BACK
+    FirstFrame: 15
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: 118
+    SetDirection:
+        From:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoRepulsion
+      - Name: Uninterrupt
+      - Name: Floorfall
+        Start: 112
+        End: 112
+    Sounds:
+      - Common:
+          - whoosh/throw/throw_whoosh
+        Frame: 85
+        
+  - Animation: Agile_Super_1_Kick_1
+    FileName: agl_super_1_kick_1.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_1
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_AGILE_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 30
+      - Name: Blocking
+        Start: 31
+      - Name: Throwable
+        Start: 25
+      - Name: Transitional
+        End: 20
+      - Name: Perk_Parry
+        Start: 8
+        End: 16
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 220
+            Name:
+              - Block_Low_Short
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 8
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Agile_Super_1_Kick_2
+    FileName: agl_super_1_kick_2.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_2
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_AGILE_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Agile_Super_1_Kick_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 47
+      - Name: Blocking
+        Start: 48
+      - Name: Throwable
+        Start: 42
+      - Name: Transitional
+        End: 35
+      - Name: Perk_Parry
+        Start: 8
+        End: 16
+      - Name: Perk_Parry
+        Start: 22
+        End: 30
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 6
+            End: 16
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 220
+            Name:
+              - Block_Low_Short
+      - Type: Attack
+        Start: 28
+        End: 30
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 22
+            End: 30
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 8
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 22
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Agile_Super_1_Kick_3
+    FileName: agl_super_1_kick_3.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_3
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_AGILE_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Agile_Super_1_Kick_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 62
+      - Name: Blocking
+        Start: 63
+      - Name: Throwable
+        Start: 57
+      - Name: Perk_Parry
+        Start: 8
+        End: 16
+      - Name: Perk_Parry
+        Start: 22
+        End: 30
+      - Name: Perk_Parry
+        Start: 33
+        End: 41
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 220
+            Name:
+              - Block_Low_Short
+      - Type: Attack
+        Start: 28
+        End: 30
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 22
+            End: 30
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 39
+        End: 41
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 33
+            End: 41
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 8
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 22
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 34
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Agile_Super_2_Kick_1
+    FileName: agl_super_2_kick_1.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_1
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_AGILE_2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Unstable
+        Start: 13
+        End: 25
+      - Name: Perk_Parry
+        Start: 18
+        End: 26
+      - Name: Transitional
+        End: 28
+      - Type: Attack
+        Start: 24
+        End: 26
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Material: flesh
+        Impulse:
+            X: 10000
+            Y: -6000
+        Slowmo:
+            Start: 18
+            End: 26
+            Distance: 250
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 6
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 18
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Agile_Super_2_Kick_2
+    FileName: agl_super_2_kick_2.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_2
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_AGILE_2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Agile_Super_2_Kick_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 57
+      - Name: Blocking
+        Start: 58
+      - Name: Throwable
+        Start: 52
+      - Name: Transitional
+        End: 38
+      - Name: Unstable
+        Start: 13
+        End: 25
+      - Name: Perk_Parry
+        Start: 18
+        End: 37
+      - Type: Attack
+        Start: 24
+        End: 26
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Material: flesh
+        Impulse:
+            X: 10000
+            Y: -6000
+        Slowmo:
+            Start: 18
+            End: 26
+            Distance: 250
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead
+      - Type: Attack
+        Start: 35
+        End: 37
+        HitTags:
+          - Hit_Head_Middle_Slow
+          #- Hit_Head
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Material: flesh
+        Impulse:
+            X: 15000
+            Y: 6000
+        Slowmo:
+            Start: 29
+            End: 37
+            Distance: 230
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 230
+            Name:
+              - Block_High_Heavy
+              #- Block_High
+    Sounds:
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 6
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 18
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 29
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Agile_Super_2_Kick_3
+    FileName: agl_super_2_kick_3.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_3
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_AGILE_2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Agile_Super_2_Kick_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 89
+      - Name: Blocking
+        Start: 90
+      - Name: Throwable
+        Start: 84
+      - Name: Unstable
+        Start: 13
+        End: 25
+      - Name: Unstable
+        Start: 55
+        End: 72
+      - Name: Perk_Parry
+        Start: 18
+        End: 37
+      - Name: Perk_Parry
+        Start: 39
+        End: 47
+      - Name: Perk_Parry
+        Start: 59
+        End: 71
+      - Type: Attack
+        Start: 24
+        End: 26
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Material: flesh
+        Impulse:
+            X: 10000
+            Y: -6000
+        Slowmo:
+            Start: 18
+            End: 26
+            Distance: 250
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead
+      - Type: Attack
+        Start: 35
+        End: 37
+        HitTags:
+          - Hit_Head_Middle_Slow
+          #- Hit_Head
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Material: flesh
+        Impulse:
+            X: 15000
+            Y: 6000
+        Slowmo:
+            Start: 29
+            End: 37
+            Distance: 230
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 230
+            Name:
+              - Block_High_Heavy
+              #- Block_High
+      - Type: Attack
+        Start: 60
+        End: 62
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Material: flesh
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 54
+            End: 62
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_Overhead
+      - Type: Attack
+        Start: 65
+        End: 67
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Material: flesh
+        Impulse:
+            X: 20000
+            Y: 6000
+        Slowmo:
+            Start: 59
+            End: 67
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 6
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 18
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 29
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 45
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 55
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 64
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Agile_Super_3_Kick_1
+    FileName: agl_super_3_kick_1.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_1
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_AGILE_3
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 33
+      - Name: Blocking
+        Start: 34
+      - Name: Throwable
+        Start: 28
+      - Name: Transitional
+        End: 25
+      - Name: Unstable
+        Start: 16
+        End: 20
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 16
+        End: 24
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 6
+            End: 14
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 22
+        End: 24
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 19000
+            Y: 10000
+        Slowmo:
+            Start: 16
+            End: 24
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle_Short
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 17
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Agile_Super_3_Kick_2
+    FileName: agl_super_3_kick_2.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_2
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_AGILE_3
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Agile_Super_3_Kick_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 60
+      - Name: Blocking
+        Start: 61
+      - Name: Throwable
+        Start: 55
+      - Name: Unstable
+        Start: 16
+        End: 20
+      - Name: Transitional
+        End: 38
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 16
+        End: 24
+      - Name: Perk_Parry
+        Start: 28
+        End: 37
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 6
+            End: 14
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 22
+        End: 24
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 19000
+            Y: 10000
+        Slowmo:
+            Start: 16
+            End: 24
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 32
+        End: 34
+        HitTags:
+          - Hit_Head_Middle_Slow
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 22000
+            Y: 11000
+        Slowmo:
+            Start: 26
+            End: 34
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 220
+            Name:
+              - Block_High_Heavy
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 17
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 27
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Agile_Super_3_Kick_3
+    FileName: agl_super_3_kick_3.bin
+    Groups:
+      - ATTACK
+      - KICK_SUPER_3
+      - UNARMED
+      - KICK
+      - SUPER_ARMOR_AGILE_3
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Agile_Super_3_Kick_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 84
+      - Name: Blocking
+        Start: 85
+      - Name: Throwable
+        Start: 79
+      - Name: Unstable
+        Start: 16
+        End: 20
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 16
+        End: 24
+      - Name: Perk_Parry
+        Start: 28
+        End: 37
+      - Name: Perk_Parry
+        Start: 63
+        End: 56
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 6
+            End: 14
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 22
+        End: 24
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 19000
+            Y: 10000
+        Slowmo:
+            Start: 15
+            End: 23
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 32
+        End: 34
+        HitTags:
+          - Hit_Head_Middle_Slow
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 22000
+            Y: 11000
+        Slowmo:
+            Start: 26
+            End: 34
+            Distance: 220
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 220
+            Name:
+              - Block_High_Heavy
+      - Type: Attack
+        Start: 61
+        End: 63
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Impulse:
+            X: 18000
+            Y: 7000
+        Slowmo:
+            Start: 56
+            End: 63
+            Distance: 260
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 260
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 7
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 17
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 27
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 56
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5

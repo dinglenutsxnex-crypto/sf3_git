@@ -1,0 +1,2879 @@
+####################################################################################
+####################################################################################
+#                  ВАЖНО!
+#                  ПРОЧЕСТЬ ПЕРЕД РЕДАКТИРОВАНИЕМ!
+####################################################################################
+#  Механика срабатывания триггеров такова:
+#  Получаем эвент, пробегаем по всем триггерам с ним
+#  Проверяем их условия ПО ОЧЕРЕДИ, и если они выполнились, то
+#  Запускаем все экшены, после чего идём к следующему триггеру
+#  
+#  Таким образом, несколько правил работы с триггерами:
+#  1. УСЛОВИЯ ДОЛЖНЫ ИДТИ В ПОРЯДКЕ ЧАСТОТЫ ИХ ВЫПОЛНЕНИЯ (чтобы отсечь лишние проверки триггеров). Например, событие блока случается в 50% случаев (допустим) - значит, ставим его самой первой строчкой.
+#  2. ТРИГГЕР НАДО ПИСАТЬ С УЧЁТОМ ТОГО, ЧТО ВСЕ ДРУГИЕ ТРИГГЕРЫ, СРАБАТЫВАЮЩИЕ НА ЭТОТ ЭВЕНТ УЖЕ МОГЛИ ЧТО-ТО ПОМЕНЯТЬ. Соответственно, лучше всего пользоваться шаблонами приоритета (пока их нет :) ) - всё, что изменяет 
+#     запускается на эвент Hit и чему важен параметр удара Critical, должно идти первым, а хитэффекты - последними (потому что им уже не нужно что-то менять, только отреагировать)
+#
+#  UPD: Вскоре стэк триггеров будет срабатывать в пределах одного эвента для всех моделек
+
+################################################################################### FILES ###################################################################################
+
+########################################## A LIST OF INCLUDED FILES
+
+Files:
+  - Name: triggers_fists
+  - Name: triggers_kicks
+  - Name: triggers_swords
+  - Name: triggers_twohanded_sword
+  - Name: triggers_sword_lonely
+  - Name: triggers_nunchaku
+  - Name: triggers_staff
+  - Name: triggers_shadow_moves
+  - Name: triggers_axes
+  - Name: triggers_hammers
+  - Name: triggers_guandao
+  - Name: triggers_spear
+  - Name: tactics
+  - Name: reactions_effects
+  - Name: gameplay
+  - Name: tutorials
+  - Name: rules
+  - Name: triggers_unique_moves
+  - Name: triggers_inventory
+  - Name: quests
+  - Name: reward_bonuses
+
+################################################################################### TRIGGERS THEMSELVES #####################################################################
+
+TriggerSets:
+######################################################################################################## LOCKS
+############################ ITEMS
+  - Name: LOCK_SKELETON
+    Type: Template
+    Locks: 
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SKELETON"}
+
+############################ PLAYERS
+  - Name: LOCK_PLAYER
+    Templates: [LOCK_SKELETON]
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PLAYER"}
+ 
+  - Name: LOCK_NOT_PLAYER
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "PLAYER"}
+
+  - Name: LOCK_NOT_INVISIBLE
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "INVISIBLE"}
+
+  - Name: LOCK_SHADOWLESS
+    Templates: [LOCK_SKELETON]
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOWLESS"}
+
+############################ LOCATIONS
+  - Name: LOCK_LOCATION_DOJO
+    Type: Template
+    Locks: 
+      - Equal: {Value1: "?Fight[].BattleType", Value2: "Dojo"}
+
+  - Name: LOCK_LOCATION_NOT_DOJO
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Fight[].BattleType", Value2: "Dojo"}
+
+############################ FLOOR MATERIALS (FOR SFX)
+  - Name: LOCK_FLOOR_WOODEN
+    Type: Template
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Fight[].Location", Value2: "Dojo"}
+        - Equal: {Value1: "?Fight[].Location", Value2: "chinatown"}
+        - Equal: {Value1: "?Fight[].Location", Value2: "dojo_fight"}
+
+  - Name: LOCK_FLOOR_STONE
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Fight[].Location", Value2: "bamboo"}
+      - Equal: {Value1: "?Fight[].Location", Value2: "temple"}
+      - Equal: {Value1: "?Fight[].Location", Value2: "backstreets"}
+
+############################ ARMOR MATERIALS (FOR SFX)
+  - Name: LOCK_ARMOR_METAL
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ARMOR_METAL"}
+
+  - Name: LOCK_ARMOR_NONMETAL
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "ARMOR_METAL"}
+
+############################ VISUAL WEAPON TYPES - FOR BLOCKS ETC. (WEAPONS)
+  - Name: LOCK_WEAPON_TYPE_SLASHING
+    Type: Template
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SWORDS"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SABERS"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SWORD_LONELY"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "KNIVES"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "TWOHANDED_SWORD"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "KATANA"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "AXES"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "GUANDAO"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SAI"}
+        
+
+  - Name: LOCK_WEAPON_TYPE_BLUNT
+    Type: Template
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "STAFF"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "STAFF3"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "NUNCHAKU"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SPEAR"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "HAMMERS"}
+
+  - Name: LOCK_WEAPON_TYPE_DUALS
+    Type: Template
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SWORDS"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SABERS"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SWORD_LONELY"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "KNIVES"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "AXES"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SAI"}
+
+  - Name: LOCK_WEAPON_TYPE_POLEARM
+    Type: Template
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "STAFF"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "STAFF3"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "GUANDAO"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "NAGINATA"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SPEAR"}
+
+############################ SUBTYPES (WEAPONS)
+  - Name: LOCK_SUBTYPE_FISTS
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "FISTS"}
+
+  - Name: LOCK_SUBTYPE_NOT_FISTS
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "FISTS"}
+
+  - Name: LOCK_SUBTYPE_SWORDS
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SWORDS"}
+
+  - Name: LOCK_SUBTYPE_SABERS
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SABERS"}
+
+  - Name: LOCK_SUBTYPE_STAFF
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "STAFF"}
+
+  - Name: LOCK_SUBTYPE_SWORD
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SWORD_LONELY"}
+
+  - Name: LOCK_SUBTYPE_KATANA
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "KATANA"}
+
+  - Name: LOCK_SUBTYPE_TWOHANDED_SWORD
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "TWOHANDED_SWORD"}
+
+  - Name: LOCK_SUBTYPE_TWOHANDED_HAMMER
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "TWOHANDED_HAMMER"}
+
+  - Name: LOCK_SUBTYPE_KNIVES
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "KNIVES"}
+
+  - Name: LOCK_SUBTYPE_NUNCHAKU
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "NUNCHAKU"}
+
+  - Name: LOCK_SUBTYPE_AXES
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "AXES"}
+
+  - Name: LOCK_SUBTYPE_AXES_HAMMERS
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "AXES_HAMMERS"}
+  
+  - Name: LOCK_SUBTYPE_HAMMERS
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "HAMMERS"}
+
+  - Name: LOCK_SUBTYPE_GUANDAO
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "GUANDAO"}
+
+  - Name: LOCK_SUBTYPE_NAGINATA
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "NAGINATA"}
+
+  - Name: LOCK_SUBTYPE_SHURIKEN
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHURIKEN"}
+
+  - Name: LOCK_SUBTYPE_SAI
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SAI"}
+
+  - Name: LOCK_SUBTYPE_SPEAR
+    Type: Template
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SPEAR"}
+############################ LOCK FOR SUPER WEAPON
+  - Name: LOCK_SUPER_WEAPON
+    Templates: [LOCK_SKELETON]
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_WEAPON"}
+
+  - Name: LOCK_NOT_SUPER_WEAPON
+    Templates: [LOCK_SKELETON]
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_WEAPON"}
+
+############################ LOCK FOR SUPER ARMOR
+  - Name: LOCK_SUPER_ARMOR
+    Templates: [LOCK_SKELETON]
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR"}
+
+  - Name: LOCK_NOT_SUPER_ARMOR
+    Templates: [LOCK_SKELETON]
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_ARMOR"}
+
+############################ FIGHTING STYLES (AGILE, STRONG, PRECISE)
+  - Name: LOCK_STYLE_STRONG
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "STRONG"}
+
+  - Name: LOCK_STYLE_NOT_STRONG
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "STRONG"}
+
+  - Name: LOCK_STYLE_AGILE
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "AGILE"}
+
+  - Name: LOCK_STYLE_NOT_AGILE
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "AGILE"}
+
+  - Name: LOCK_STYLE_PRECISE
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PRECISE"}
+
+  - Name: LOCK_STYLE_NOT_PRECISE
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "PRECISE"}
+
+############################ MAGIC
+#  - Name: LOCK_MAGIC_FIRE_RAIN
+#    Type: Template
+#    Locks: 
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "FIRE_RAIN"}
+#
+#  - Name: LOCK_MAGIC_FLAME_BALL
+#    Type: Template
+#    Locks: 
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "FLAME_BALL"}
+
+############################## SHADOW MOVES
+
+  - Name: LOCK_DESTROYABLE_MODELS
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "DESTROYABLE"}
+
+  - Name: LOCK_NOT_SHADOW_MODEL
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_ATTACKING_EDGE"}
+
+  - Name: LOCK_SHADOW_TWOHANDED_SWORD_SLASH_MODEL
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_TWOHANDED_SWORD_SLASH_MODEL"}
+
+  - Name: LOCK_SHADOW_CARAPACE_MODEL
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_CARAPACE_MODEL"}
+
+  - Name: LOCK_SHADOW_THUD_MODEL
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_THUD_MODEL"}
+      
+  - Name: LOCK_SHADOW_EVAPORATION_MODEL
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_EVAPORATION_MODEL"}
+
+  - Name: LOCK_SHADOW_MINE_MODEL
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_MINE_MODEL"}
+
+  - Name: LOCK_SHADOW_VANISH_MODEL
+    Type: Template
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_VANISH_MODEL"}
+
+######################################################################################################## STATES
+  - Name: STATE
+    Type: Template
+    Triggers:
+      - Name: SHADOW_FORM
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+
+      - Name: ALIVE
+        Conditions:
+          - Not:
+            - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+
+
+######################################################################################################## BASE MOVE TEMPLATES
+############################ CONTROLLED
+
+############################ ATTACKS
+  - Name: ATTACK
+    Type: Template
+    Triggers:
+
+      - Name: BASIC
+        Priority: 200
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Up]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]"}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]"}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]"}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]"}
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Down|Up)]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Up|Unhold)]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Up|Unhold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+      - Name: DOUBLE
+        Priority: 210
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_BASIC", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: TRIPLE
+        Priority: 220
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_DOUBLE", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: QUADRUPLE
+        Priority: 220
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_TRIPLE", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: QUINTUPLE
+        Priority: 220
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_QUADRUPLE", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: SPINNING
+        Priority: 220
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+          - KeyPress: {Player: Me, Key: Back, States: [Down]}
+          - KeyPress: {Player: Me, Key: Down_Back, States: [Down]}
+          - KeyPress: {Player: Me, Key: Up_Back, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back(Down|Hold)]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_BACK", IgnoredByAI: 1}
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Down|Hold)]"}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - And:
+                  - Not:
+                    - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                    - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                  - Or:
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]"}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back(Down|Hold)]"}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back(Down|Hold)]"}
+            - And:
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+              - Or:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+
+      - Name: SPINNING_DOUBLE
+        Priority: 230
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SPINNING", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+          
+      - Name: SPINNING_TRIPLE
+        Priority: 230
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SPINNING_DOUBLE", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: UPPER
+        Priority: 220
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+          - KeyPress: {Player: Me, Key: Up, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Down)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "JUMP_UP"}
+                  - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+
+            - And:
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+              - Or:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+
+      - Name: UPPER_DOUBLE
+        Priority: 230
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_UPPER", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: LOW
+        Priority: 220
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+          - KeyPress: {Player: Me, Key: Down, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Down)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE"}
+                  - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+            - And:
+              #- Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down]"}
+              - Or:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+
+      - Name: LOW_2
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Priority: 230
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_LOW", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: LOW_3
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Priority: 240
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_LOW_2", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+
+      - Name: HEAVY
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Hold]}
+          - KeyPress: {Player: Me, Key: Forward, States: [Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Priority: 240
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_NO_HEAVY].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP"}
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Hold)]", IgnoredByAI: 1}
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Hold)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Hold)]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+
+      - Name: SUPER_1
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Up]}
+          - KeyPress: {Player: Me, Key: Forward, States: [Down]}
+          - KeyPress: {Player: Me, Key: Down_Forward, States: [Down]}
+          - KeyPress: {Player: Me, Key: Up_Forward, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Priority: 220
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_NO_SUPER].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Up|UnHold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_FORWARD"}
+                - And:
+                  - Or:
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]"}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]"}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]"}
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_BACK"}
+                - And:
+                  - Or:
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]", IgnoredByAI: 1}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]", IgnoredByAI: 1}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - And:
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch(Up|UnHold)]"}
+              - Or:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+
+      - Name: SUPER_2
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Priority: 230
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SUPER_1", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: SUPER_3
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Priority: 240
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SUPER_2", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: SUPER_4
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Priority: 241
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SUPER_3", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: SUPER_5
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+        Priority: 242
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SUPER_4", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: THROW
+        Events:
+          - KeyPress: {Player: Me, Key: Punch, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Throwable"}
+          - Not:
+            - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Unstable"}
+          - Or:
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_NO_THROWS].Value", Value2: "1"}
+
+#      - Name: OFF_WALL
+#        Templates: [KEY.PUNCH, OFFENSE.COMBO]
+#        Priority: 300
+#        Conditions:
+#          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Hit_Wall", IgnoredByAI: 1}
+
+
+  - Name: KICK
+    Type: Template
+    Triggers:
+      - Name: BASIC
+        Priority: 200
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Up]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]", IgnoredByAI: 1}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]", IgnoredByAI: 1}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]", IgnoredByAI: 1}
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Down|Up)]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Up|Unhold)]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Up|Unhold)]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+      - Name: DOUBLE
+        Priority: 210
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_BASIC", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: TRIPLE
+        Priority: 220
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_DOUBLE", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: LOW
+        Priority: 220
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Down]}
+          - KeyPress: {Player: Me, Key: Down, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]", IgnoredByAI: 1}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Down)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE"}
+                  - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+      - Name: LOW_DOUBLE
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Down]}
+        Priority: 220
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_LOW", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: SPINNING
+        Priority: 220
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Down]}
+          - KeyPress: {Player: Me, Key: Back, States: [Down]}
+          - KeyPress: {Player: Me, Key: Down_Back, States: [Down]}
+          - KeyPress: {Player: Me, Key: Up_Back, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]", IgnoredByAI: 1}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back(Down|Hold)]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Down)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_BACK"}               
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+      - Name: UPPER
+        Priority: 210
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Down]}
+          - KeyPress: {Player: Me, Key: Up, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]", IgnoredByAI: 1}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Down)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "JUMP_UP"}
+                  - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+      - Name: HEAVY
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Hold]}
+          - KeyPress: {Player: Me, Key: Forward, States: [Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Priority: 240
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_NO_HEAVY].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              #- Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP"}
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Hold)]", IgnoredByAI: 1}
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Hold)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Hold)]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+
+      - Name: SUPER_1
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Up]}
+          - KeyPress: {Player: Me, Key: Forward, States: [Down]}
+          - KeyPress: {Player: Me, Key: Down_Forward, States: [Down]}
+          - KeyPress: {Player: Me, Key: Up_Forward, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Priority: 220
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Up|UnHold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_FORWARD"}
+                - And:
+                  - Or:
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]"}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]"}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]"}
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_BACK"}
+                - And:
+                  - Or:
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]", IgnoredByAI: 1}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]", IgnoredByAI: 1}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - And:
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick(Up|UnHold)]"}
+              - Or:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+
+      - Name: SUPER_2
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Down]}
+        Priority: 230
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_SUPER_1", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+      - Name: SUPER_3
+        Events:
+          - KeyPress: {Player: Me, Key: Kick, States: [Down]}
+        Priority: 240
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_SUPER_2", IgnoredByAI: 1}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional", IgnoredByAI: 1}
+
+############################ TRANSITIONS
+  - Name: TRANSITION
+    Type: Template
+    Triggers:
+      - Name: COMMON
+        Priority: 30
+        Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].NeedsWeaponSwitch", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[ANY]"}
+
+
+########################################## MOVES ##########################################
+
+################################### STANCE
+  - Name: STANCE
+    Type: Template
+    Triggers:
+      - Name: IDLE
+        Templates: [STATE.ALIVE]
+        Events:
+          - AnimationEnd: {Player: Me}
+        Priority: 10
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightEnd"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_START_ROUND"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_START_IDLE"}
+
+      - Name: START_BIRTH
+        Priority: 50
+        Events:
+          - Birth: {Player: Me}
+
+      - Name: START_ROUND_PLAYER
+        Priority: 10000
+        Events:
+          - StageChange: {Stage: RoundStart}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_START_BIRTH"}
+        Actions:
+          - SetVariable: {Name: START_ROUND_NOT_PLAYER, Value: 1, ApplyTo: Enemy, Frames: 20}
+
+      - Name: START_ROUND_NOT_PLAYER
+        Priority: 10000
+        Events:
+          - VariableDestruction: {Player: Me, Name: START_ROUND_NOT_PLAYER}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_START_BIRTH"}
+
+      - Name: START_IDLE
+        Priority: 12
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_START_ROUND"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_START_IDLE"}
+
+      - Name: WIN_ROUND
+        Templates: [STATE.ALIVE]
+        Priority: 10500
+        Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+          - EveryFrame: {Step: 10}
+        Conditions:
+          - Or:
+            - And:
+              - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightEnd"}
+              - Equal: {Value1: "?GetVariable[Me, Winner].Value", Value2: "1"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_WIN_POSE"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_WIN_IDLE"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP_KICK"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "EveryFrame"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "EveryFrame"}
+              - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightEnd"}
+              - Equal: {Value1: "?GetVariable[Me, Winner].Value", Value2: "1"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_WIN_POSE"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_WIN_IDLE"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP_KICK"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+
+
+      - Name: FINISHING_ROUND_IDLE
+        Templates: [STATE.ALIVE]
+        Events:
+          - AnimationEnd: {Player: Me}
+        Priority: 9400
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightEnd"}
+            - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundEnd"}
+            - Equal: {Value1: "?Fight[].CurrentStage", Value2: "FightEnd"}
+            - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundStart"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_WIN_POSE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_WIN_IDLE"}
+
+
+  - Name: STANCE_IDLE_Common
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [STANCE.IDLE]
+        Priority: 0
+        Actions:
+          - Animation: {Name: Stance_Idle}
+
+  - Name: STANCE_START_BIRTH_Common
+    Templates: [LOCK_SKELETON, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Priority: 49
+        Actions:
+          - Animation: {Name: Stance_Start_Birth}
+
+  - Name: STANCE_START_BIRTH_Dojo
+    Templates: [LOCK_SKELETON, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Priority: 49
+        Actions:
+          - Animation: {Name: Stance_Idle}
+
+  - Name: STANCE_START_ROUND_PLAYER_Common
+    Templates: [LOCK_SKELETON, LOCK_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Priority: 9999
+        Actions:
+          - Animation: {Name: Stance_Start_Round}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Common
+    Templates: [LOCK_SKELETON, LOCK_NOT_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Priority: 9999
+        Actions:
+          - Animation: {Name: Stance_Start_Round}
+
+  - Name: STANCE_START_IDLE_Common
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Priority: 11
+        Actions:
+          - Animation: {Name: Stance_Start_Idle}
+
+  - Name: STANCE_WIN_ROUND_Common
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [STANCE.WIN_ROUND]
+        Priority: 10490
+        Actions:
+          - Animation: {Name: Stance_Win}
+
+  - Name: STANCE_FINISHING_ROUND_IDLE_Common
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+        Priority: 9390
+        Actions:
+          - Animation: {Name: Stance_Win_Idle}
+
+############################ GIZMO STANCE
+  - Name: STANCE_START_ROUND_GIZMO
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD, LOCK_NOT_PLAYER]
+    ### change to Tag GIZMO
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Fight[].BattleType", Value2: "Dojo"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_CHEAT"}
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Priority: 10003
+        Actions:
+          - Animation: {Name: Gizmo_Stance_Start_Round}
+
+  - Name: STANCE_START_IDLE_GIZMO
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD, LOCK_NOT_PLAYER]
+    ### change to Tag GIZMO
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Fight[].BattleType", Value2: "Dojo"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_CHEAT"}
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Priority: 13
+        Actions:
+          - Animation: {Name: Gizmo_Stance_Start_Idle}
+
+############################ LOSS
+  - Name: LOSS_LastHit
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 10501
+        Events:
+          - PostHit: {Player: Me}
+          - AnimationEnd: {Player: Me}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - Slowdown: {Player: Me}
+          - VariableDestruction: {Player: Me, Name: InPhysics}
+          - StageChange: {Stage: RoundFightEnd}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Loss"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS"}
+      #    - Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Global, Timeout].Value", Value2: "1"}
+        Actions:
+          - Disarm: {ApplyTo: Me}
+          - Animation: {Name: Stance_Loss}
+
+      - Priority: 10500
+        Events:
+          - PostHit: {Player: Me}
+          - AnimationEnd: {Player: Me}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - Slowdown: {Player: Me}
+          - VariableDestruction: {Player: Me, Name: InPhysics}
+          - StageChange: {Stage: RoundFightEnd}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Loss"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+          - Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Global, Timeout].Value", Value2: "1"}
+        Actions:
+          - Disarm: {ApplyTo: Me}
+
+#  - Name: LOSS_ON_BACK
+#    Templates: [LOCK_SKELETON]
+#    Triggers:
+#      - Priority: 10501
+#        Events:
+#          - AnimationEnd: {Player: Me}
+#        Conditions:
+#          - Or:
+#            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Loss"}
+#            - And:
+#              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+#              - Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+#              - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+#          - Equal: {Value1: "?Player[Me].Direction", Value2: "Upward"}
+#          - Or:
+#            - And:
+#              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+#              - Not:
+#                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+#            - And:
+#              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+#              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+#        Actions:
+#          - Animation: {Name: Loss_on_back}
+#
+#      - Priority: 10501
+#        Events:
+#          - AnimationEnd: {Player: Me}
+#        Conditions:
+#          - Or:
+#            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Loss"}
+#            - And:
+#              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+#              - Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+#              - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+#          - Equal: {Value1: "?Player[Me].Direction", Value2: "Upward"}
+#          - Or:
+#            - And:
+#              - GreaterEqual: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+#              - Not:
+#                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+#            - And:
+#              - LessEqual: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+#              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+#        Actions:
+#          - Animation: {Name: Loss_on_back_Reverse}
+
+  - Name: LOSS_ON_BACK
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 10501
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Loss"}
+            - And:
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+              - Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+              - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Equal: {Value1: "?Player[Me].Direction", Value2: "Upward"}
+          - Less: {Value1: "?Coordinate[?Player[Me],Nodes,toe_l].X", Value2: "?Coordinate[?Player[Me],Nodes,neck].X"}
+        Actions:
+          - Animation: {Name: Loss_on_back}
+          #- Animation: {Name: Loss_on_back_Reverse}
+  
+      - Priority: 10501
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Loss"}
+            - And:
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+              - Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+              - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Equal: {Value1: "?Player[Me].Direction", Value2: "Upward"}
+          - GreaterEqual: {Value1: "?Coordinate[?Player[Me],Nodes,toe_l].X", Value2: "?Coordinate[?Player[Me],Nodes,neck].X"}
+        Actions:
+          - Animation: {Name: Loss_on_back_Reverse}
+          #- Animation: {Name: Loss_on_back}
+
+
+  - Name: LOSS_Loop_Back
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Priority: 10502
+        Conditions:
+           - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Loss_on_back"}
+        Actions:
+          - Animation: {Name: Loss_on_back_idle}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Priority: 10502
+        Conditions:
+           - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS_ON_BACK_REVERSE"}
+        Actions:
+          - Animation: {Name: Loss_on_back_idle_Reverse}
+
+  - Name: LOSS_ON_FACE
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 10501
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Loss"}
+            - And:
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+              - Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+              - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Equal: {Value1: "?Player[Me].Direction", Value2: "Downward"}
+          - Less: {Value1: "?Coordinate[?Player[Me],Nodes,toe_l].X", Value2: "?Coordinate[?Player[Me],Nodes,neck].X"}
+        Actions:
+          - Animation: {Name: Loss_on_face_Reverse}
+          #- Animation: {Name: Loss_on_face}
+
+      - Priority: 10501
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Loss"}
+            - And:
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+              - Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+              - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Equal: {Value1: "?Player[Me].Direction", Value2: "Downward"}
+          - GreaterEqual: {Value1: "?Coordinate[?Player[Me],Nodes,toe_l].X", Value2: "?Coordinate[?Player[Me],Nodes,neck].X"}
+        Actions:
+          - Animation: {Name: Loss_on_face}
+          #- Animation: {Name: Loss_on_face_Reverse}
+
+  - Name: LOSS_Loop_Face
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Priority: 10502
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Loss_on_face"}
+        Actions:
+          - Animation: {Name: Loss_on_face_idle}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Priority: 10502
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Loss_on_face_Reverse"}
+        Actions:
+          - Animation: {Name: Loss_on_face_idle_Reverse}
+
+
+
+  - Name: TIMEOUT_Common
+    Templates: [LOCK_PLAYER]
+    Triggers:
+      - Priority: 15000
+        Events:
+          - AnimationEnd: {Player: Me}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - EveryFrame: {Step: 10}
+        Conditions:
+          - Or:
+            - And:
+              - Equal: {Value1: "?GetVariable[Global, Timeout].Value", Value2: "1"}
+              - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightEnd"}
+              #- Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+              - Greater: {Value1: "?Player[Enemy].Health", Value2: "0"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout_Idle"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS_IDLE"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "EveryFrame"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "EveryFrame"}
+              - Equal: {Value1: "?GetVariable[Global, Timeout].Value", Value2: "1"}
+              - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightEnd"}
+              #- Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+              - Greater: {Value1: "?Player[Enemy].Health", Value2: "0"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout_Idle"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS_IDLE"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+        Actions:
+          - Animation: {Name: Stance_Timeout}
+
+################### Crutch for timeout, triggers => code
+  - Name: TIMEOUT_Postpone
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 15002
+        Events:
+          - TimeOut
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Timeout_Postpone_On].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Timeout_Postpone_On, Value: 1, ApplyTo: Me}
+
+      - Priority: 15001
+        Events:
+          - AnimationEnd: {Player: Me}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Greater: {Value1: "?Player[Me].Health", Value2: "0"}
+          #- Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Timeout_Postpone_On].Value", Value2: "1"}
+          - Greater: {Value1: "?Player[Enemy].Health", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout_Idle"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS_IDLE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+            - Equal: {Value1: "?GetVariable[Me, Timeout_Postpone].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Timeout_Postpone, Value: 1, ApplyTo: Me}
+################### Crutch for timeout
+
+  - Name: LOSS_RULE_Common
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 14999
+        Events:
+          - AnimationEnd: {Player: Me}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Greater: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Equal: {Value1: "?GetVariable[Enemy, Winner].Value", Value2: "1"}
+          - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightEnd"}
+          - Greater: {Value1: "?Player[Enemy].Health", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout_Idle"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOSS_IDLE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+        Actions:
+          - Animation: {Name: Stance_Timeout}
+
+  - Name: TIMEOUT_Loop
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 14999
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Timeout_Idle"}
+        Actions:
+          - Animation: {Name: Stance_Timeout_Idle}
+
+
+################################### CONTROLLED
+############################ LOW STANCE
+  - Name: LOW_STANCE
+    Type: Template
+    Triggers:
+      - Name: IN
+        Priority: 206
+        Events:
+          - KeyPress: {Player: Me, Key: Down, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down]"}
+          - Or:
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "KeyPress"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_OUT"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_OUT"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+      - Name: LOOP
+        Events:
+          - AnimationEnd: {Player: Me}
+        Priority: 206
+        Conditions:
+          - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Hold)]"}
+          - Not:
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Inventory"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_IN"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_LOOP"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_DODGE"}
+
+      - Name: OUT
+        Events:
+          - KeyPress: {Player: Me, Key: Down, States: [Up]}
+          - KeyPress: {Player: Me, Key: Down, States: [Unhold]}
+          - AnimationEnd: {Player: Me}
+        Priority: 101
+        Conditions:
+          - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down]"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Hold)]"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_IN"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_LOOP"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_DODGE"}
+
+
+  - Name: LOW_STANCE_COMMON
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [LOW_STANCE.IN]
+        Priority: 205
+        Actions:
+          - Animation: {Name: Low_Stance_In}
+
+      - Templates: [LOW_STANCE.LOOP]
+        Priority: 205
+        Actions:
+          - Animation: {Name: Low_Stance_Idle}
+
+      - Templates: [LOW_STANCE.OUT]
+        Priority: 100
+        Actions:
+          - Animation: {Name: Low_Stance_Out}
+
+  - Name: LOW_STANCE_Dodge
+    Templates: [LOCK_SKELETON]
+    Priority: 1000
+    Triggers:
+      - Events:
+          - DodgeCheck: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Dodging"}
+        Actions:
+          - Animation: {Name: Low_Stance_Dodge}
+
+############################ JUMP UP-S
+  - Name: JUMP_Up
+    Templates: [LOCK_STYLE_NOT_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Up, States: [Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Jump_Up}
+
+
+  - Name: JUMP_Up_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Up, States: [Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Jump_Up_Strong}
+
+
+############################ FLIPS
+  - Name: FLIP_Front
+    Templates: [LOCK_STYLE_NOT_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [TACTICS.APPROACH_AFAR]
+        Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Up_Forward, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Flip_Front}
+
+
+  - Name: FLIP_Front_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [TACTICS.APPROACH_AFAR]
+        Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Up_Forward, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Jump_Front_Strong}
+
+
+  - Name: FLIP_Back
+    Templates: [LOCK_STYLE_NOT_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [TACTICS.RETREAT]
+        Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Up_Back, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_NO_FLIP_BACK].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Flip_Back}
+
+
+  - Name: FLIP_Back_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      - Templates: [TACTICS.RETREAT]
+        Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Up_Back, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_NO_FLIP_BACK].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Jump_Back_Strong}
+
+
+############################ ROLLS
+  - Name: ROLL_Back
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [TACTICS.RETREAT]
+        Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Down_Back, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_NO_ROLL_BACK].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Roll_Back}
+
+      - Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Down_Back, States: [Down]}
+          - KeyPress: {Player: Me, Key: Back, States: [Down]}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_IN"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_LOOP"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_NO_ROLL_BACK].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Roll_Back}
+
+
+  - Name: ROLL_Front
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [TACTICS.APPROACH_AFAR]
+        Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Down_Forward, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Roll_Front}
+
+      - Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Down_Forward, States: [Down]}
+          - KeyPress: {Player: Me, Key: Forward, States: [Down]}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_IN"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE_LOOP"}
+        Actions:
+          - Animation: {Name: Roll_Front}
+
+
+############################ STEPS
+
+  - Name: STEP_FORWARD
+    Type: Template
+    Triggers:
+      - Templates: [TACTICS.APPROACH_CLOSE]
+        Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Forward, States: [Down, Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]"}
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Up|Unhold)]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Up|Unhold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+
+  - Name: STEP_BACK
+    Type: Template
+    Triggers:
+      - Templates: [TACTICS.RETREAT]
+        Priority: 100
+        Events:
+          - KeyPress: {Player: Me, Key: Back, States: [Down, Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]"}
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Up|Unhold)]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Up|Unhold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+
+  - Name: STEP_FORWARD_Common
+    Templates: [STEP_FORWARD, LOCK_SKELETON]
+    Triggers:
+      - Priority: 90
+        Actions:
+          - Animation: {Name: Step_Forward}
+
+
+  - Name: STEP_BACK_Common
+    Templates: [STEP_BACK, LOCK_SKELETON]
+    Triggers:
+      - Priority: 90
+        Actions:
+          - Animation: {Name: Step_Back}
+
+
+  - Name: HOP_BACK
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [TACTICS.RETREAT]
+        Events:
+          - KeyPress: {Player: Me, Key: Back, States: [Down]}
+        Priority: 110
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_BACK", IgnoredByAI: 1}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_HOP_BLOCK].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Hop_Back}
+
+
+  - Name: HOP_FRONT
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [TACTICS.APPROACH_AFAR]
+        Events:
+          - KeyPress: {Player: Me, Key: Forward, States: [Down]}
+        Priority: 110
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_FORWARD", IgnoredByAI: 1}
+          #- Not:
+          #  - Equal: {Value1: "?GetVariable[Me, TUTORIAL_HOP_BLOCK].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Hop_Front}
+
+
+  - Name: HOP_DODGE
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [TACTICS.ESCAPE]
+        Priority: 120
+        Events:
+          - KeyPress: {Player: Me, Key: Forward, States: [Down]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_FORWARD", IgnoredByAI: 1}
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "160"}
+          - Greater: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Me],Wall,Front].X)", Value2: "100"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Hop_Dodge}
+
+############################ SHADOW KEYS
+
+  - Name: SHADOW_KEY
+    Type: Template
+    Triggers:
+
+      - Name: DOWN
+        Priority: 300
+        Events:
+          - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Down, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Down_Back, States: [Down, Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]", IgnoredByAI: 1}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow(Down)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE"}
+                  - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Up|Unhold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+
+      - Name: DOWN_BREAKER
+        Priority: 300
+        Events:
+          - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Down, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Down_Back, States: [Down, Hold]}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]", IgnoredByAI: 1}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow(Down)]", IgnoredByAI: 1}
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE"}
+                  - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Back]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+      - Name: FORWARD
+        Events:
+          - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Forward, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Down_Forward, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Up_Forward, States: [Down, Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+          - AnimationEnd: {Player: Me}
+        Priority: 300
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]", IgnoredByAI: 1}
+              - Or:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_FORWARD", IgnoredByAI: 1}
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_BACK", IgnoredByAI: 1}
+                  - Or:
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]", IgnoredByAI: 1}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]", IgnoredByAI: 1}
+                    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Down_Forward(Down|Hold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Forward(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Up|Unhold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+            
+      - Name: UP
+        Priority: 300
+        Events:
+          - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Up, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Up_Back, States: [Down, Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]", IgnoredByAI: 1}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow(Down|Hold)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+                - And:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "JUMP_UP"}
+                  - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Down|Hold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up(Up|Unhold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+
+      - Name: BACK
+        Priority: 300
+        Events:
+          - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold]}
+          - KeyPress: {Player: Me, Key: Back, States: [Down, Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]", IgnoredByAI: 1}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+              - Or:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_BACK"}
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow(Down|Hold)]", IgnoredByAI: 1}
+                  - Not:
+                    - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Shadow]"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Up|Unhold)]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+
+
+############################ RANGED
+  - Name: RANGED
+    Type: Template
+    Triggers:
+      - Name: BASIC
+        Priority: 190
+        Events:
+          - KeyPress: {Player: Me, Key: Missile, States: [Down, Hold]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Missile]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Missile]"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Missile]"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+
+
+############################ WALL JUMPS
+  - Name: WALL_JUMP
+    Templates: [LOCK_SKELETON, LOCK_STYLE_NOT_STRONG]
+    Triggers:
+      - Templates: [TACTICS.ESCAPE]
+        Priority: 150
+        Events:
+          - KeyPress: {Player: Me, Key: Back, States: [Down]}
+          - KeyPress: {Player: Me, Key: Up_Back, States: [Down]}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Less: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "45"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]", IgnoredByAI: 1}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back]", IgnoredByAI: 1}
+              - Not:
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+              - Or:
+                - And:
+                  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down)]", IgnoredByAI: 1}
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_BACK"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]", IgnoredByAI: 1}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "IntervalEnd"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Up_Back]"}
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back]"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back]"}
+        Actions:
+          - Animation: {Name: Wall_Jump}
+        Tactics:
+          Conditions:
+            - Less: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "45"}
+
+
+######################################## STAND UP
+  - Name: STAND_UP
+    Type: Template
+    Triggers:
+      - Name: FROM_PHYSICS
+        Priority: 1000
+        Events:
+          - Slowdown: {Player: Me}
+          - VariableDestruction: {Player: Me, Name: InPhysics}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "PHYSICS"}
+          
+      # FACE UP
+      - Name: UPWARD
+        Conditions:
+          - Equal: {Value1: "?Player[Me].Direction", Value2: "Upward"}
+          
+      # FACE DOWN
+      - Name: DOWNWARD
+        Conditions:
+          - Equal: {Value1: "?Player[Me].Direction", Value2: "Downward"}
+          
+      - Name: AFTER_THROW
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+          
+      - Name: FROM_BACK
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stand_Up_Back_With_Kick"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stand_Up_Back_With_Kick_After_Throw"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL_ON_BACK"}
+            
+      - Name: FROM_FACE
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stand_Up_Face_With_Kick"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL_ON_FACE"}
+            
+      - Name: FROM_BACK_AFTER_CRITICAL
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL_ON_BACK"}
+            
+      - Name: FROM_FACE_AFTER_CRITICAL
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL_ON_FACE"}
+
+
+  - Name: STAND_UP_Any
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      # FACE UP
+      - Templates: [STAND_UP.FROM_PHYSICS, STAND_UP.UPWARD]
+        Priority: 1000
+        Actions:
+          - Animation: {Name: Stand_Up_Back}
+
+      - Templates: [STAND_UP.FROM_PHYSICS, STAND_UP.UPWARD]
+        Priority: 1100
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, PERK_BASHER].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+        Actions:
+          - Animation: {Name: Stand_Up_Back_With_Kick}
+
+      - Templates: [STAND_UP.FROM_PHYSICS, STAND_UP.DOWNWARD]
+        Priority: 1000
+        Actions:
+          - Animation: {Name: Stand_Up_Face}
+
+      - Templates: [STAND_UP.FROM_PHYSICS, STAND_UP.DOWNWARD]
+        Priority: 1100
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, PERK_BASHER].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+        Actions:
+          - Animation: {Name: Stand_Up_Face_With_Kick}
+
+      - Templates: [STAND_UP.AFTER_THROW]
+        Priority: 1001
+        Actions:
+          - Animation: {Name: Stand_Up_Back_After_Throw}
+
+      - Templates: [STAND_UP.AFTER_THROW]
+        Priority: 1101
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, PERK_BASHER].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+        Actions:
+          - Animation: {Name: Stand_Up_Back_With_Kick_After_Throw}
+
+      - Templates: [STAND_UP.FROM_FACE_AFTER_CRITICAL]
+        Priority: 1020
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, PERK_BASHER].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+        Actions:
+          - Animation: {Name: Stand_Up_Face_With_Kick}
+          
+      - Templates: [STAND_UP.FROM_BACK_AFTER_CRITICAL]
+        Priority: 1020
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, PERK_BASHER].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Punch]"}
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Kick]"}
+        Actions:
+          - Animation: {Name: Stand_Up_Back_With_Kick}
+
+      - Templates: [STAND_UP.FROM_BACK]
+        Priority: 1000
+        Actions:
+          - Animation: {Name: Stand_Up_Back}
+
+      - Templates: [STAND_UP.FROM_FACE]
+        Priority: 1000
+        Actions:
+          - Animation: {Name: Stand_Up_Face}
+
+      - Templates: [STAND_UP.AFTER_THROW]
+        Priority: 1110
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL_ON_FACE"}
+        Actions:
+          - Animation: {Name: Stand_Up_Face}
+
+  - Name: STAND_UP_Any_Strong
+    Templates: [LOCK_STYLE_STRONG, LOCK_SKELETON]
+    Triggers:
+      # FACE UP
+      - Templates: [STAND_UP.FROM_PHYSICS, STAND_UP.UPWARD]
+        Priority: 1010
+        Actions:
+          - Animation: {Name: Stand_Up_Back_Strong}
+
+      - Templates: [STAND_UP.AFTER_THROW]
+        Priority: 1011
+        Actions:
+          - Animation: {Name: Stand_Up_Back_After_Throw_Strong}
+
+      - Templates: [STAND_UP.FROM_BACK]
+        Priority: 1010
+        Actions:
+          - Animation: {Name: Stand_Up_Back_Strong}
+
+######################################## THROWS
+  - Name: THROW
+    Type: Template
+    Triggers:
+      - Name: ACTIVE
+        Templates: [ATTACK.THROW, TACTICS.ATTACK_CLOSE]
+        Priority: 250
+      - Name: PASSIVE
+        Priority: 2000
+        Events:
+          - AnimationStart: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "THROW"}
+
+
+############################ THROW BASIC
+  - Name: THROW_Basic_Active
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [THROW.ACTIVE, TACTICS.ATTACK_VERY_CLOSE]
+        Priority: 300
+        Conditions:
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "155"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+            - And: 
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]", IgnoredByAI: 1}
+              - LessEqual: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Me],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Throw_Simple}
+
+
+  - Name: THROW_Basic_Passive
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [THROW.PASSIVE]
+        Priority: 2000
+        Conditions:
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Throw_Simple"}
+        Actions:
+          - Animation: {Name: Throw_Passive}
+
+################## THROW BACKWARD
+
+  - Name: THROW_Forward_Active
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [THROW.ACTIVE, TACTICS.ATTACK_VERY_CLOSE]
+        Priority: 300
+        Conditions:
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "155"}
+          - Or:
+            - And:
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]", IgnoredByAI: 1}
+              - Greater: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Me],Wall,Front].X)", Value2: "150"}
+            - And:
+              - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+              - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],Wall,Front].X)", Value2: "100"}
+        Actions:
+          - Animation: {Name: Throw_Forward_Active}
+
+
+  - Name: THROW_Forward_Passive
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [THROW.PASSIVE]
+        Priority: 2000
+        Conditions:
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Throw_Forward_Active"}
+        Actions:
+          - Animation: {Name: Throw_Forward_Passive}
+
+########################################## DESTROY
+#  - Name: DESTROY_Ranged_On_Strike
+#    Locks:
+#      - Or:
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "shuriken"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "Flameball"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball2"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball3"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball4"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball5"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball6"}
+#    Triggers:
+#      - Events:
+#          - Strike: {Player: Me}
+#        Priority: 1000
+#        Actions:
+#          - DestroyMe
+#
+#
+  - Name: FALL_Ranged_On_Hit
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "IM_A_SHURIKEN"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Parent}
+        Priority: 1000
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "RANGED_CREATE"}
+        Actions:
+          - ActivateColliders
+          - Animation: {Name: Physics}
+          - SetVariable:
+              Name: DestroyMe
+              Value: 1
+              ApplyTo: Me
+              Frames: 300
+          - WallReaction: {Type: Repulse}
+#
+#
+#  - Name: DESTROY_Ranged_On_Hit
+#    Locks:
+#      - Or:
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "Flameball"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball2"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball3"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball4"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball5"}
+#        - Equal: {Value1: "?Player[Me].ItemEquipped", Value2: "snowball6"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Parent}
+#        Priority: 1000
+#        Conditions:
+#          - Or:
+#            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shuriken_Missile_Fly_Start"}
+#            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Flameball_Missiles_Fly_Start"}
+#        Actions:
+#          - DestroyMe
+#
+  - Name: DESTROY_Ranged_On_BorderHitCoroutine
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "IM_A_SHURIKEN"}
+    Triggers:
+      - Events:
+          - WallHit: {Player: Me}
+        Priority: 1000
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "RANGED_ATTACK"}
+        Actions:
+          - ActivateColliders
+          - SetVariable:
+              Name: DestroyMe
+              Value: 1
+              ApplyTo: Me
+              Frames: 300
+          - SetVariable: {Name: WallHit, Value: 1, ApplyTo: Me, Frames: 1}
+
+  - Name: DESTROY_Me_On_Timer
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "IM_A_SHURIKEN"}
+    Triggers:
+      - Events:
+          - VariableDestruction: {Player: Me, Name: DestroyMe}
+        Actions:
+          - DestroyMe
+
+########################################## WALL REACTIONS
+  - Name: WALL_REACTION_Ranged
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "IM_A_SHURIKEN"}
+    Triggers:
+      - Events:
+          - WallHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?WallHit[].Type", Value2: "Sticky"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "RANGED_ATTACK"}
+        Actions:
+          - Animation: {Name: Shuriken_Model_Stop}
+          - WallReaction: {Type: Stop}
+      - Events:
+          - WallHit: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?WallHit[].Type", Value2: "Sticky"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "RANGED_ATTACK"}
+        Actions:
+          - Animation: {Name: Physics_Wall_Recoil}
+          - WallReaction: {Type: Repulse}
+
+#      - Events:
+#          - VariableDestruction: {Player: Me, Name: WallHit}
+##        Conditions:
+##          - Equal: {Value1: "?WallHit[].Type", Value2: "Sticky"}
+#        Actions:
+#          - WallReaction: {Type: Stop}
+#      - Events:
+#          - VariableDestruction: {Player: Me, Name: WallHit}
+#        Conditions:
+#          - Or:
+#            - Not:
+#              - Equal: {Value1: "?WallHit[].Type", Value2: "Sticky"}
+##            - GreaterEqual: {Value1: "?Random[].Value", Value2: "0.75"}
+#        Actions:
+#          - Animation: {Name: Physics_Wall_Recoil}
+#          - WallReaction: {Type: Repulse}
+
+########################################## QUESTS DIALOGS
+  - Name: ROUND_1_LOAD_DIALOG
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Events:
+          - RoundLoad
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+        Actions:
+          - Call: {ID: ROUND_1_LOAD_DIALOG}
+
+  - Name: ROUND_2_LOAD_DIALOG
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Events:
+          - RoundLoad
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "2"}
+        Actions:
+          - Call: {ID: ROUND_2_LOAD_DIALOG}
+
+########################################## DOJO TACTICS
+  - Name: DOJO_MODE_TACTICS
+    Templates: [LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+#      - Priority: -99999
+#        Events:
+#          - StageChange: {Stage: RoundFightStart}
+#        Actions:
+#          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+
+      - Priority: -99999
+        Events:
+          - PostHit: {Player: Enemy}
+        Actions:
+          - SwitchTactics: {ApplyTo: Enemy, Mode: DojoMode}
+          - SetVariable: {Name: DOJO_MODE_TACTICS_OFF, Value: 1, ApplyTo: Me, Frames: 300}
+ 
+      - Priority: 99999
+        Events:
+          - VariableDestruction: {Name: DOJO_MODE_TACTICS_OFF}
+          - ModulePreEnter: {Name: Inventory}
+          - ModulePreEnter: {Name: Shop}
+          - ModulePreEnter: {Name: CharacterCreation}
+          - ModulePreEnter: {Name: Map}
+          - ModulePreEnter: {Name: BoosterpacksScreen}
+          - ModuleEnter: {Name: Inventory}
+          - ModuleEnter: {Name: Shop}
+          - ModuleEnter: {Name: CharacterCreation}
+          - ModuleEnter: {Name: BoosterpacksScreen}
+        Actions:
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+
+
+########################################## CLEAR STATUSES
+  - Name: CLEAR_STATUSES_ON_ROUND_CHANGE
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_SKELETON]
+    Triggers:
+      - Priority: 99999
+        Events:
+          - StageChange: {Stage: RoundFightEnd}
+          - PostHit
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "PostHit"}
+              - Or:
+                - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+                - LessEqual: {Value1: "?Player[Enemy].Health", Value2: "0"}
+        Actions:
+          - ClearStatus: {ApplyTo: Me}
+          - ClearStatusIcon: {ApplyTo: Me}
+
+
+########################################## DOJO INVULNERABILITY
+  - Name: Invulnerability
+    Templates: [LOCK_LOCATION_DOJO, LOCK_SKELETON]
+    Triggers:
+      - Events:
+          - Hit: {Player: Me}
+        Actions:
+          - SetHit: {DealsDamage: 0}

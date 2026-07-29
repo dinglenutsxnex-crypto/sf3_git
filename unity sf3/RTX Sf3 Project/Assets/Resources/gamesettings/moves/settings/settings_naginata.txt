@@ -1,0 +1,1763 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCE, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# NAGINATA #################################################
+  - Animation: Naginata_Slash_1
+    FileName: guandao_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_BASIC
+      - WEAPON
+      - NAGINATA
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 25
+      - Name: Blocking
+        Start: 26
+      - Name: Throwable
+        Start: 20
+      - Name: Transitional
+        End: 16
+      - Name: Perk_Parry
+        Start: 5
+        End: 13
+      - Type: Attack
+        Start: 11
+        End: 13
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 5
+            End: 14
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Short
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Naginata_Slash_2
+    FileName: guandao_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_DOUBLE
+      - WEAPON
+      - NAGINATA
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Naginata_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 51
+      - Name: Blocking
+        Start: 52
+      - Name: Throwable
+        Start: 46
+      - Name: Transitional
+        Start: 10
+        End: 36
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 22
+        End: 30
+      - Type: Attack
+        Start: 11
+        End: 13
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 5
+            End: 14
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 32
+        End: 34
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 26
+            End: 34
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 28
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Naginata_Slash_3
+    FileName: guandao_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_TRIPLE
+      - WEAPON
+      - NAGINATA
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Naginata_Slash_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 64
+      - Name: Blocking
+        Start: 65
+      - Name: Throwable
+        Start: 59
+      - Name: Perk_Parry
+        Start: 5
+        End: 13
+      - Name: Perk_Parry
+        Start: 26
+        End: 35
+      - Name: Perk_Parry
+        Start: 38
+        End: 46
+      - Type: Attack
+        Start: 11
+        End: 13
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 5
+            End: 14
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 32
+        End: 34
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 26
+            End: 34
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 44
+        End: 46
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 38
+            End: 46
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_High    
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 28
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 40
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Naginata_Super_1_Slash_1
+    FileName: guandao_super_1_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - NAGINATA
+      - SUPER_NAGINATA_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 43
+      - Name: Blocking
+        Start: 44
+      - Name: Throwable
+        Start: 38
+      - Name: Transitional
+        End: 21
+      - Name: Perk_Parry
+        Start: 10
+        End: 19
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: 6000
+        Slowmo:
+            Start: 10
+            End: 19
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Naginata_Super_1_Slash_2
+    FileName: guandao_super_1_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - NAGINATA
+      - SUPER_NAGINATA_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Naginata_Super_1_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 56
+      - Name: Blocking
+        Start: 57
+      - Name: Throwable
+        Start: 51
+      - Name: Transitional
+        End: 43
+      - Name: Perk_Parry
+        Start: 10
+        End: 19
+      - Name: Perk_Parry
+        Start: 35
+        End: 42
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: 6000
+        Slowmo:
+            Start: 10
+            End: 19
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 40
+        End: 42
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 35
+            End: 42
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 35
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Naginata_Super_1_Slash_3
+    FileName: guandao_super_1_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_3
+      - WEAPON
+      - NAGINATA
+      - SUPER_NAGINATA_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Naginata_Super_1_Slash_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 80
+      - Name: Blocking
+        Start: 81
+      - Name: Throwable
+        Start: 75
+      - Name: Perk_Parry
+        Start: 10
+        End: 19
+      - Name: Perk_Parry
+        Start: 35
+        End: 42
+      - Name: Perk_Parry
+        Start: 50
+        End: 60
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: 6000
+        Slowmo:
+            Start: 10
+            End: 19
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 40
+        End: 42
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 35
+            End: 42
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead
+      - Type: Attack
+        Start: 55
+        End: 60
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 28000
+            Y: 11000
+        Slowmo:
+            Start: 50
+            End: 60
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 35
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 50
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Naginata_Spinning_Slash_1
+    FileName: guandao_spinning_slash_1.bin
+    Groups: [ATTACK, ATTACK_SPINNING, WEAPON, NAGINATA]
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+      Rotation: {Y: 6}
+      Axis: [X]
+      Pivot: {Object: Nodes, Part: foot_l}
+      Position: {Player: Me, Object: Pivot}
+    SetDirection:
+      From: {Player: Me, Object: Nodes, Part: pelvis}
+      To: {Player: Enemy, Object: Nodes, Part: pelvis}
+    Intervals:
+      - Name: Uninterrupt
+        End: 51
+      - Name: Blocking
+        Start: 52
+      - Name: Throwable
+        Start: 46
+      - Name: Transitional
+        End: 28
+      - Name: Riposte
+        End: 14
+      - Name: Perk_Parry
+        Start: 17
+        End: 34
+      - Name: Perk_Parry
+        Start: 37
+        End: 45
+      - Type: Attack
+        Start: 23
+        End: 25
+        HitTags:
+          - Hit_Head
+        AttackingParts: [Naginata_Attacking_Edge_l]
+        Impulse: 
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 17
+            End: 25
+            Distance: 350
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.13
+        Block:
+          Distance: 350
+          Name: [Block_High]
+      - Type: Attack
+        Start: 32
+        End: 34
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts: [Naginata_Attacking_Edge_l]
+        Impulse: 
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 26
+            End: 34
+            Distance: 250
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.04
+        Block:
+          Distance: 250
+          Name: [Block_High_Short]
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 16
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Naginata_Spinning_Slash_2
+    FileName: guandao_spinning_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SPINNING_DOUBLE
+      - WEAPON
+      - NAGINATA
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+      Rotation: {Y: 6}
+      Axis: [X]
+      Pivot: {Object: Nodes, Part: foot_l}
+      Position: {Player: Me, Object: Pivot}
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Naginata_Spinning_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 68
+      - Name: Blocking
+        Start: 69
+      - Name: Throwable
+        Start: 63
+      - Name: Riposte
+        End: 14
+      - Name: Perk_Parry
+        Start: 17
+        End: 34
+      - Name: Perk_Parry
+        Start: 37
+        End: 45
+      - Type: Attack
+        Start: 23
+        End: 25
+        HitTags:
+          - Hit_Head
+        AttackingParts: [Naginata_Attacking_Edge_l]
+        Impulse: 
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 17
+            End: 25
+            Distance: 350
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.13
+        Block:
+          Distance: 350
+          Name: [Block_High]
+      - Type: Attack
+        Start: 32
+        End: 34
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts: [Naginata_Attacking_Edge_l]
+        Impulse: 
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 26
+            End: 34
+            Distance: 250
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.04
+        Block:
+          Distance: 250
+          Name: [Block_High_Short]
+      - Type: Attack
+        Start: 43
+        End: 45
+        HitTags:
+          - Hit_Legs
+        AttackingParts: [Naginata_Attacking_Edge_l]
+        Impulse: 
+            X: 25000
+            Y: 13000
+        Slowmo:
+            Start: 37
+            End: 45
+            Distance: 400
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.13
+        Block:
+          Distance: 400
+          Name: [Block_Low]
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 16
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 35
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Naginata_Low_Slash_1
+    FileName: guandao_low_slash_1.bin
+    Groups: 
+      - ATTACK
+      - ATTACK_LOW
+      - WEAPON
+      - NAGINATA
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 43
+      - Name: Blocking
+        Start: 44
+      - Name: Throwable
+        Start: 38
+      - Name: Transitional
+        End: 21
+      - Name: Perk_Parry
+        Start: 12
+        End: 20
+      - Type: Attack
+        Start: 18
+        End: 20
+        HitTags:
+          - Hit_Legs
+        AttackingParts: 
+          - Guandao_Attacking_Edge_l
+        Impulse: 
+            X: 25000
+            Y: 8000
+        Slowmo:
+            Start: 12
+            End: 20
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 350
+            Name: 
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+
+  - Animation: Naginata_Low_Slash_2
+    FileName: guandao_low_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_LOW_2
+      - WEAPON
+      - NAGINATA
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Naginata_Low_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 66
+      - Name: Unstable
+        Start: 37
+        End: 55
+      - Name: Blocking
+        Start: 67
+      - Name: Riposte
+        End: 9
+      - Name: Throwable
+        Start: 61
+      - Name: Transitional
+        End: 36
+      - Name: Perk_Parry
+        Start: 12
+        End: 20
+      - Name: Perk_Parry
+        Start: 27
+        End: 35
+      - Type: Attack
+        Start: 18
+        End: 20
+        HitTags:
+          - Hit_Legs
+        AttackingParts: 
+          - Naginata_Attacking_Edge_l
+        Impulse: 
+            X: 25000
+            Y: 8000
+        Slowmo:
+            Start: 12
+            End: 20
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 350
+            Name: 
+              - Block_Low
+      - Type: Attack
+        Start: 33
+        End: 35
+        HitTags:
+          - Hit_Legs
+        AttackingParts: 
+          - Naginata_Attacking_Edge_l
+        Impulse: 
+            X: 25000
+            Y: 8000
+        Slowmo:
+            Start: 27
+            End: 35
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 350
+            Name: 
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 26
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+
+  - Animation: Naginata_Low_Slash_3
+    FileName: guandao_low_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_LOW_3
+      - WEAPON
+      - NAGINATA
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Naginata_Low_Slash_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 85
+      - Name: Unstable
+        Start: 37
+        End: 71
+      - Name: Blocking
+        Start: 86
+      - Name: Throwable
+        Start: 80
+      - Name: Perk_Parry
+        Start: 12
+        End: 20
+      - Name: Perk_Parry
+        Start: 27
+        End: 35
+      - Name: Perk_Parry
+        Start: 51
+        End: 59
+      - Type: Attack
+        Start: 18
+        End: 20
+        HitTags:
+          - Hit_Legs
+        AttackingParts: 
+          - Naginata_Attacking_Edge_l
+        Impulse: 
+            X: 25000
+            Y: 8000
+        Slowmo:
+            Start: 12
+            End: 20
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 350
+            Name: 
+              - Block_Low
+      - Type: Attack
+        Start: 33
+        End: 35
+        HitTags:
+          - Hit_Legs
+        AttackingParts: 
+          - Naginata_Attacking_Edge_l
+        Impulse: 
+            X: 25000
+            Y: 8000
+        Slowmo:
+            Start: 27
+            End: 35
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 350
+            Name: 
+              - Block_Low
+      - Type: Attack
+        Start: 57
+        End: 59
+        HitTags:
+          - Hit_Legs
+        AttackingParts: 
+          - Naginata_Attacking_Edge_l
+        Impulse: 
+            X: 25000
+            Y: 8000
+        Slowmo:
+            Start: 51
+            End: 59
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 350
+            Name: 
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 26
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 50
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 58
+
+  - Animation: Naginata_Heavy_Slash_1
+    FileName: guandao_heavy_slash.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - ATTACK
+      - ATTACK_HEAVY
+      - WEAPON
+      - NAGINATA
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - {Name: Uninterrupt, End: 50}
+      - {Name: Blocking, Start: 51}
+      - {Name: Throwable, Start: 45}
+      - Name: Unstable
+        Start: 19
+        End: 31
+      - Name: Riposte
+        End: 22
+      - Name: Perk_Parry
+        Start: 26
+        End: 35
+      - Type: Attack
+        Start: 32
+        End: 35
+        HitTags:
+          - Hit_Overhead_Heavy
+        AttackingParts:
+          - Naginata_Attacking_Edge_l
+        Impulse:
+            X: 26000
+            Y: -8000
+        Slowmo:
+            Start: 26
+            End: 35
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.15
+        Block:
+            Distance: 300
+            Name:
+              - Block_Overhead_Heavy
+    Sounds:
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 18
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 25
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+
+  - Animation: Naginata_Upper_Slash_1
+    FileName: guandao_upper_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_UPPER
+      - WEAPON
+      - NAGINATA
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+      Rotation: {Y: 6}
+      Axis: [X]
+      Pivot: {Object: Nodes, Part: foot_l}
+      Position: {Player: Me, Object: Pivot}
+    SetDirection:
+      From: {Player: Me, Object: Nodes, Part: pelvis}
+      To: {Player: Enemy, Object: Nodes, Part: pelvis}
+    Intervals:
+      - Name: Uninterrupt
+        End: 39
+      - Name: Blocking
+        Start: 40
+      - Name: Throwable
+        Start: 34
+      - Name: Perk_Parry
+        Start: 9
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Stomach
+        AttackingParts: [Naginata_Attacking_Edge_l]
+        Impulse: 
+            X: 25000
+            Y: 13000
+        Slowmo:
+            Start: 9
+            End: 17
+            Distance: 280
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.1
+        Block:
+          Distance: 280
+          Name: [Block_Middle]
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 10
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 6
+
+  - Animation: Naginata_Idle
+    FileName: staff_idle.bin
+    Groups:
+      - STANCE_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Naginata_Step_Forward
+    FileName: staff_step_forward.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_FORWARD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+  - Animation: Naginata_Step_Back
+    FileName: staff_step_back.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_BACK
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+########################################################################Stances
+#########################################Stances_Round_Start
+  - Animation: Naginata_Stance_Birth
+    FileName: guandao_stance_birth.bin
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Naginata_Stance_Start_Round
+    FileName: guandao_stance.bin
+    Groups:
+      - STANCE_START_ROUND
+    EndsStage:
+      - RoundStart
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Common:
+          - strike/wood/light/2_Wood_Hits_A_V25_bip
+        Frame: 14
+
+  - Animation: Naginata_Stance_Idle
+    FileName: guandao_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    SelfNoMirroring: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+#########################################Stance_Win
+  - Animation: Naginata_Stance_Win
+    FileName: guandao_stance_win.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - STANCE_WIN_POSE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 4
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+
+  - Animation: Naginata_Stance_Win_Idle
+    FileName: guandao_stance_win_idle.bin
+    Groups:
+      - STANCE_WIN_IDLE
+    Intervals:
+      - Name: Uninterrupt
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot

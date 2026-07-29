@@ -1,0 +1,22 @@
+Configs:
+    DistanceIncrement: 5
+    Offsets:
+      - Name: Slowmo
+        StartOffset: 1
+        EndOffset: -2
+      - Name: Block_High
+        StartOffset: 12
+        EndOffset: 7
+      - Name: Block_High_Hit
+        StartOffset: 1
+        EndOffset: 2
+      - Name: Block_High_Short
+        StartOffset: 2
+        EndOffset: 1
+      - Name: Block_High_Short_Hit
+        StartOffset: 15
+        EndOffset: 22
+      - Name: Block_High_InOut
+        StartOffset: 0
+        EndOffset: 0
+...

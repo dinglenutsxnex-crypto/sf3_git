@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: DarkFire_Trail_04_01
+  m_Shader: {fileID: 4800000, guid: f5122dda74c2ee8459cdae9165bfcf4a, type: 3}
+  m_ShaderKeywords: ANIMATE_UV
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 4000
+  stringTagMap:
+    QUEUE: Overlay
+    RenderType: Transparent
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: a5691ea7cdd015d419c2adf6341dadb5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _BumpScale
+      second: 1
+    - first:
+        name: _ColorSplashMult
+      second: 3.9
+    - first:
+        name: _Cutoff
+      second: 0.5
+    - first:
+        name: _DetailNormalMapScale
+      second: 1
+    - first:
+        name: _DstBlend
+      second: 10
+    - first:
+        name: _FireMult
+      second: 2.42
+    - first:
+        name: _FireUp
+      second: 0
+    - first:
+        name: _FresnelExp
+      second: 2
+    - first:
+        name: _FresnelMult
+      second: 1
+    - first:
+        name: _FresnelPower
+      second: 3
+    - first:
+        name: _Glossiness
+      second: 0.5
+    - first:
+        name: _InvFade
+      second: 1
+    - first:
+        name: _Metallic
+      second: 0
+    - first:
+        name: _Mode
+      second: 0
+    - first:
+        name: _OcclusionStrength
+      second: 1
+    - first:
+        name: _Parallax
+      second: 0.02
+    - first:
+        name: _ScrollX
+      second: 0
+    - first:
+        name: _ScrollY
+      second: -1
+    - first:
+        name: _SineAmplX
+      second: 0
+    - first:
+        name: _SineAmplY
+      second: 0
+    - first:
+        name: _SineFreqX
+      second: 0
+    - first:
+        name: _SineFreqY
+      second: 0
+    - first:
+        name: _SpeedMultipler
+      second: 3
+    - first:
+        name: _SrcBlend
+      second: 1
+    - first:
+        name: _UVSec
+      second: 0
+    - first:
+        name: _U_SpeedFire
+      second: 0
+    - first:
+        name: _U_SpeedFire1
+      second: 1
+    - first:
+        name: _U_SpeedSplash
+      second: 0
+    - first:
+        name: _U_SpeedSplash1
+      second: -1.14
+    - first:
+        name: _U_SpeedSplash2
+      second: -0.5
+    - first:
+        name: _V_SpeedFire
+      second: 0
+    - first:
+        name: _V_SpeedFire1
+      second: 0
+    - first:
+        name: _V_SpeedSplash
+      second: -1
+    - first:
+        name: _V_SpeedSplash1
+      second: 0
+    - first:
+        name: _V_SpeedSplash2
+      second: 0
+    - first:
+        name: _ZWrite
+      second: 1
+    - first:
+        name: _vertexAlphaMult
+      second: 136.24
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _Color_Fire
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _EmissionColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _TintColor
+      second: {r: 0, g: 0, b: 0, a: 1}

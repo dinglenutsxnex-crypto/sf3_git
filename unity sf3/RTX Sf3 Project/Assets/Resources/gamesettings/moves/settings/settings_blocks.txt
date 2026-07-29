@@ -1,0 +1,1907 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+################################################################################# UNARMED
+################################################# OVERHEAD
+  - Animation: Block_Overhead_InOut
+    FileName: b_overhead_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Overhead_Hit
+    FileName: b_overhead_block.bin
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    FirstFrame: 13
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 30
+      - Name: Blocking
+      - Name: Throwable
+        Start: 31
+
+################################################# HIGH
+  - Animation: Block_High_InOut
+    FileName: b_high_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_High_Hit
+    FileName: b_high_block.bin
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    FirstFrame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 23
+      - Name: Blocking
+      - Name: Throwable
+        Start: 24
+
+  - Animation: Block_High_Short_Hit
+    FileName: b_high_block_short.bin
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    FirstFrame: 6
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 15
+      - Name: Blocking
+      - Name: Throwable
+        Start: 16
+
+################################################# MIDDLE
+  - Animation: Block_Middle_InOut
+    FileName: b_mid_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Middle_Hit
+    FileName: b_mid_block.bin
+    FirstFrame: 2
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 14
+      - Name: Blocking
+      - Name: Throwable
+        Start: 15
+
+  - Animation: Block_Middle_Heavy_Hit
+    FileName: b_mid_block_heavy.bin
+    FirstFrame: 2
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 20
+      - Name: Blocking
+      - Name: Throwable
+        Start: 21
+
+  - Animation: Block_Middle_Short_Hit
+    FileName: b_mid_block_short.bin
+    FirstFrame: 2
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 11
+      - Name: Blocking
+      - Name: Throwable
+        Start: 12
+
+################################################# LOW
+  - Animation: Block_Low_InOut
+    FileName: b_low_block_inout.bin
+    FirstFrame: 4
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Low_Hit
+    FileName: b_low_block.bin
+    FirstFrame: 15
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 34
+      - Name: Blocking
+      - Name: Throwable
+        Start: 35
+
+
+
+################################################################################# WEAPONS
+
+####################################################################### DUALS
+############################################### OVER HEAD
+  - Animation: Block_Overhead_Duals_InOut
+    FileName: b_dualweapon_overhead_block_in_out.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Overhead_Duals_Hit
+    FileName: b_dualweapon_overhead_block.bin
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    FirstFrame: 13
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 29
+      - Name: Blocking
+      - Name: Throwable
+        Start: 30
+
+  - Animation: Block_Overhead_Duals_Hit_Heavy
+    FileName: b_dualweapon_overhead_block_heavy.bin
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    FirstFrame: 15
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 38
+      - Name: Blocking
+      - Name: Throwable
+        Start: 39
+
+################################################# MIDDLE
+  - Animation: Block_Duals_InOut
+    FileName: b_dualweapon_mid_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Duals_Hit
+    FileName: b_dualweapon_mid_block.bin
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    FirstFrame: 12
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 29
+      - Name: Blocking
+      - Name: Throwable
+        Start: 30
+
+################################################# HIGH
+  - Animation: Block_High_Duals_InOut
+    FileName: b_dualweapon_high_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_High_Duals_Hit
+    FileName: b_dualweapon_high_block.bin
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    FirstFrame: 15
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 31
+      - Name: Blocking
+      - Name: Throwable
+        Start: 32
+
+  - Animation: Block_High_Heavy_Duals_Hit
+    FileName: b_dualweapon_high_block_heavy.bin
+    FirstFrame: 10
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 35
+      - Name: Blocking
+
+  - Animation: Block_High_Short_Duals_Hit
+    FileName: b_dualweapon_high_block_short.bin
+    FirstFrame: 12
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Blocking
+
+################################################# LOW
+  - Animation: Block_Low_Duals_InOut
+    FileName: b_low_dualweapon_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Low_Duals_Hit
+    FileName: b_low_dualweapon_block.bin
+    FirstFrame: 16
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 34
+      - Name: Blocking
+      - Name: Throwable
+        Start: 35
+
+  - Animation: Block_Low_Short_Duals_Hit
+    FileName: b_dualweapon_low_block_short.bin
+    FirstFrame: 24
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 37
+      - Name: Blocking
+
+####################################################################### POLEARM
+############################ OVER HEAD
+  - Animation: Block_Overhead_Polearm_InOut
+    FileName: b_polearm_overhead_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Overhead_Polearm_Hit
+    FileName: b_polearm_overhead_block.bin
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 24
+      - Name: Blocking
+      - Name: Throwable
+        Start: 25
+
+############################ HIGH
+  - Animation: Block_High_Polearm_InOut
+    FileName: b_polearm_high_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_High_Polearm_Hit
+    FileName: b_polearm_high_block.bin
+    BlendingFrames: 0
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+      
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 16
+      - Name: Blocking
+      - Name: Throwable
+        Start: 17
+
+  - Animation: Block_High_Short_Polearm_Hit
+    FileName: b_polearm_high_block_short.bin
+    #FirstFrame: 12
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 10
+        #End: 22
+      - Name: Blocking
+
+  - Animation: Block_High_Heavy_Polearm_Hit
+    FileName: b_polearm_high_block_heavy.bin
+    #FirstFrame: 10
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        #End: 35
+        End: 25
+      - Name: Blocking
+
+############################ MIDDLE
+  - Animation: Block_Mid_Polearm_InOut
+    FileName: b_polearm_mid_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Mid_Polearm_Hit
+    FileName: b_polearm_mid_block.bin
+    FirstFrame: 2
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 16
+      - Name: Blocking
+      - Name: Throwable
+        Start: 17
+
+  - Animation: Block_Mid_Heavy_Polearm_Hit
+    FileName: b_polearm_mid_block_heavy.bin
+    #FirstFrame: 2
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Blocking
+      - Name: Throwable
+        Start: 23
+
+  - Animation: Block_Mid_Short_Polearm_Hit
+    FileName: b_polearm_mid_block_short.bin
+    BlendingFrames: 0
+    #FirstFrame: 2
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 11
+      - Name: Blocking
+      - Name: Throwable
+        Start: 12
+
+############################ LOW
+  - Animation: Block_Low_Polearm_InOut
+    FileName: b_polearm_low_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Low_Polearm_Hit
+    FileName: b_polearm_low_block.bin
+    BlendingFrames: 0
+    FirstFrame: 1
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 20
+      - Name: Blocking
+      - Name: Throwable
+        Start: 21
+
+  - Animation: Block_Low_Short_Polearm_Hit
+    FileName: b_polearm_low_block_short.bin
+    #FirstFrame: 14
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        #End: 27
+        End: 13
+      - Name: Blocking
+        
+####################################################################### TWOHANDED_SWORD
+############################ OVER HEAD
+  - Animation: Block_Overhead_Twohanded_Sword_InOut
+    FileName: b_twohanded_sword_overhead_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Overhead_Twohanded_Sword_Hit
+    FileName: b_twohanded_sword_overhead_block.bin
+    FirstFrame: 15
+#    EndFrame: 30
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 33
+      - Name: Blocking
+      - Name: Throwable
+        Start: 34
+
+############################ HIGH
+  - Animation: Block_High_Twohanded_Sword_InOut
+    FileName: b_twohanded_sword_high_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_High_Twohanded_Sword_Hit
+    FileName: b_twohanded_sword_high_block.bin
+    FirstFrame: 11
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 27
+      - Name: Blocking
+
+  - Animation: Block_High_Short_Twohanded_Sword_Hit
+    FileName: b_twohanded_sword_high_block_short.bin
+    FirstFrame: 12
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Blocking
+
+  - Animation: Block_High_Heavy_Twohanded_Sword_Hit
+    FileName: b_twohanded_sword_high_block_heavy.bin
+    FirstFrame: 10
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 35
+      - Name: Blocking
+############################ LOW
+  - Animation: Block_Low_Twohanded_Sword_InOut
+    FileName: b_twohanded_sword_low_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Low_Twohanded_Sword_Hit
+    FileName: b_twohanded_sword_low_block.bin
+    FirstFrame: 14
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 33
+      - Name: Blocking
+
+  - Animation: Block_Low_Short_Twohanded_Sword_Hit
+    FileName: b_twohanded_sword_low_block_short.bin
+    FirstFrame: 14
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 27
+      - Name: Blocking
+############################ MIDDLE
+  - Animation: Block_Middle_Twohanded_Sword_InOut
+    FileName: b_twohanded_sword_mid_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Middle_Twohanded_Sword_Hit
+    FileName: b_twohanded_sword_mid_block.bin
+    FirstFrame: 15
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 32
+      - Name: Blocking
+      
+  - Animation: Block_Middle_Short_Twohanded_Sword_Hit
+    FileName: b_twohanded_sword_mid_block_short.bin
+    FirstFrame: 13
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Blocking
+
+  - Animation: Block_Middle_Heavy_Twohanded_Sword_Hit
+    FileName: b_twohanded_sword_mid_block_heavy.bin
+    FirstFrame: 22
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 46
+      - Name: Blocking
+
+####################################################################### KATANA
+  - Animation: Block_Overhead_Katana_InOut
+    FileName: b_katana_Overhead_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Overhead_Katana_Hit
+    FileName: b_katana_Overhead_block.bin
+    FirstFrame: 4
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 19
+      - Name: Blocking
+      - Name: Throwable
+        Start: 20
+
+  - Animation: Block_High_Katana_InOut
+    FileName: b_katana_high_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_High_Katana_Hit
+    FileName: b_katana_high_block.bin
+#    FirstFrame: 4
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 17
+      - Name: Blocking
+      
+  - Animation: Block_Middle_Katana_InOut
+    FileName: b_katana_mid_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Middle_Katana_Hit
+    FileName: b_katana_mid_block.bin
+#    FirstFrame: 8
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 17
+      - Name: Blocking
+
+  - Animation: Block_Low_Katana_InOut
+    FileName: b_katana_low_block_inout.bin
+    FirstFrame: 3
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      
+  - Animation: Block_Low_Katana_Hit
+    FileName: b_katana_low_block.bin
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 20
+      - Name: Blocking
+
+
+############################## universal weapon short blocks
+
+  - Animation: Block_Middle_Weapon_InOut
+    FileName: b_weapon_mid_block_short_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_Middle_Weapon_Short_Hit
+    FileName: b_weapon_mid_block_short.bin
+    FirstFrame: 4
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 13
+      - Name: Blocking
+      - Name: Throwable
+        Start: 14
+
+  - Animation: Block_High_Weapon_InOut
+    FileName: b_high_block_inout.bin
+    Groups:
+      - BLOCK
+      - BLOCK_IN_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+
+  - Animation: Block_High_Weapon_Short_Hit
+    FileName: h_weapon_high_block_short.bin
+    FirstFrame: 5
+    Groups:
+      - BLOCK
+      - BLOCK_HIT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 15
+      - Name: Blocking
+      - Name: Throwable
+        Start: 16
+

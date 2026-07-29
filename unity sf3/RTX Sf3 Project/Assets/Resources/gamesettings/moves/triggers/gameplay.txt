@@ -1,0 +1,1557 @@
+TriggerSets:
+############################## Иконка с параметром Frames: 0 она мигает один раз и все. Если вы хотите иконку до конца раунда не ставьте параметр Frames вообще.
+######################################## COMBO COUNTER 
+  - Name: COMBO_COUNTER
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 9000
+        Events:
+          - Hit: {Player: Enemy}
+        Conditions: 
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "RANGED"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_No_Combo_Count"}
+        Actions:
+          - SetVariable: {Name: COMBO_COUNTER, Value: "?GetVariable[Me, COMBO_COUNTER].Value + 1", ApplyTo: Me, Frames: 90}
+      - Events:
+          - Hit: {Player: Me}
+        Conditions: 
+          - Greater: {Value1: "?GetVariable[Me, COMBO_COUNTER].Value", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, PERK_PARRY].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: COMBO_COUNTER, Value: "0", ApplyTo: Me}
+          - DestroyEffect: {Name: GUIEffect_Combo, ApplyTo: Me}
+          - DestroyEffect: {Name: GUIEffect_Combo_Counter, ApplyTo: Me}
+      - Priority: -9999
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions: 
+          - GreaterEqual: {Value1: "?GetVariable[Me, COMBO_COUNTER].Value", Value2: "3"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "RANGED"}
+        Actions:
+          - DestroyEffect: {Name: GUIEffect_Combo, ApplyTo: Me}
+          - DestroyEffect: {Name: GUIEffect_Combo_Counter, ApplyTo: Me}
+          - GUIEffect: {Name: GUIEffect_Combo, ApplyTo: Me, PoolQuantity: 1, SingleInstance: 1}
+          - GUIEffect: {Name: GUIEffect_Combo_Counter, ApplyTo: Me, Text: {Alias: substitution, Value1: "?GetVariable[Me, COMBO_COUNTER].Value"}, PoolQuantity: 1, SingleInstance: 1}
+
+######################################## HITS
+  - Name: Set_Hit_Critical
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 9999
+        Events:
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Hit[].Critical", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Blocking"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "SHADOW_MOVE"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_No_Critical"}
+        Actions:
+          - SetVariable: {Name: CRITICAL, Value: 1, ApplyTo: Me, Frames: 1}
+
+  - Name: Set_Hit_Block
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 9999
+        Events:
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Blocking"}
+          - Not:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Unblockable"}
+#            - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Unblockable"}
+            - Equal: {Value1: "?GetVariable[Me, PERK_INTERFERENCE_MOD].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: BLOCK, Value: 1, ApplyTo: Me, Frames: 1}
+
+  - Name: Hit_Critical_DM
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Events:
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: CRITICAL_FACTOR, Value: 0.75, ApplyTo: Enemy, Frames: 1}
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "1 + ?GetVariable[Enemy, CRITICAL_FACTOR].Value", ApplyTo: Enemy}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "1 + ?GetVariable[Enemy, CRITICAL_FACTOR].Value", ApplyTo: Enemy}
+
+  - Name: Hit_Block_DM
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Events:
+          - Hit: {Player: Me}
+        Conditions: 
+          - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK_BROKEN].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: BLOCK_FACTOR, Value: -0.8, ApplyTo: Enemy, Frames: 1}
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "1 + ?GetVariable[Enemy, BLOCK_FACTOR].Value", ApplyTo: Enemy}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "1 + ?GetVariable[Enemy, BLOCK_FACTOR].Value", ApplyTo: Enemy}
+
+  - Name: SetUnarmedFactor
+    Templates: [LOCK_LOCATION_DOJO, LOCK_SKELETON]
+    Triggers:
+      - Priority: 10000
+        Events:
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "UNARMED"}
+        Actions:
+          - SetVariable: {Name: UNARMED_FACTOR, Value: 1, ApplyTo: Me, Frames: 1}
+          
+  - Name: SetHeadFactor
+    Templates: [LOCK_LOCATION_DOJO, LOCK_SKELETON]
+    Triggers:
+      - Priority: 10000
+        Events:
+          - Hit: {Player: Me, Defense: HeadDefense}
+        Actions:
+          - SetVariable: {Name: HEAD_FACTOR, Value: 0.6, ApplyTo: Me, Frames: 1}
+
+  - Name: Hit_Shock
+    Templates: [LOCK_SUBTYPE_NOT_FISTS, LOCK_LOCATION_NOT_DOJO]
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT"}
+    Triggers:
+      - Priority: 9999
+        Events:
+          - PostHit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, UNSHOCKABLE].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "100 * 0.5 * ?Hit[].Damage"}
+          #- LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, SHOCK, ShockChanceCoefficient] * ?Hit[].Damage"}
+          - Greater: {Value1: "?Player[Me].Health", Value2: "0"}
+        Actions:
+          - SetVariable:
+              Name: SHOCK
+              Value: 1
+              ApplyTo: Me
+              Frames: 1
+############# REMEMBER! Priority: 9998 used to modify variable SHOCK for perks, magic and other.
+      - Priority: 9997
+        Events:
+          - PostHit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, PERK_IRON_GRIP].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, SHOCK].Value", Value2: "1"}
+        Actions:
+          - Disarm: {ApplyTo: Me}
+          - SetVariable:
+              Name: SHOCKED
+              Value: 1
+              ApplyTo: Me
+
+      - Priority: 9999
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, UNSHOCKABLE].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SUPER_FALL"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "100 * 0.5 * ?Hit[].Damage"}
+          - Greater: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+        Actions:
+          - SetVariable:
+              Name: SHOCK
+              Value: 1
+              ApplyTo: Me
+              Frames: 1
+############# REMEMBER! Priority: 9998 used to modify variable SHOCK for perks, magic and other.
+      - Priority: 9997
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, PERK_IRON_GRIP].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+          - Equal: {Value1: "?GetVariable[Me, SHOCK].Value", Value2: "1"}
+        Actions:
+          - Disarm: {ApplyTo: Me}
+          - SetVariable:
+              Name: SHOCKED
+              Value: 1
+              ApplyTo: Me
+
+######################################## SHADOW FORM
+  - Name: ShadowForm_Toggle_On
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_NOT_INVISIBLE, LOCK_SHADOWLESS]
+    Triggers:
+      - Templates: [TACTICS.SHADOW_TOGGLE]
+        Priority: 500
+        Events:
+          - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold]}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "0"}
+          - GreaterEqual: {Value1: "?GetShadowCharge[Me]", Value2: "1"}
+        Actions:
+          - ToggleShadowForm: {Value: 1, EffectName: "shadow_fire"}
+          - PlaySound: {Sounds: [shadow_form/shadow start]}
+          #- CustomEffect: {Name: sf_head, ApplyTo: Me, AttachToBone: head, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          #- CustomEffect: {Name: sf_arm_l, ApplyTo: Me, AttachToBone: arm_l, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          #- CustomEffect: {Name: sf_arm_r, ApplyTo: Me, AttachToBone: arm_r, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          #- CustomEffect: {Name: sf_forearm_l, ApplyTo: Me, AttachToBone: forearm_l, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          #- CustomEffect: {Name: sf_forearm_r, ApplyTo: Me, AttachToBone: forearm_r, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          #- CustomEffect: {Name: sf_thigh_l, ApplyTo: Me, AttachToBone: thigh_l, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          #- CustomEffect: {Name: sf_thigh_r, ApplyTo: Me, AttachToBone: thigh_r, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          #- CustomEffect: {Name: sf_calf_l, ApplyTo: Me, AttachToBone: calf_l, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          #- CustomEffect: {Name: sf_calf_r, ApplyTo: Me, AttachToBone: calf_r, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          
+          #- CustomEffect: {Name: shadow_fire, ApplyTo: Me, AttachToBone: pelvis, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+
+  - Name: ShadowForm_Toggle_Off
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_NOT_INVISIBLE, LOCK_SHADOWLESS]
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Rule[Me, SargeSF].HasRule", Value2: "1"}
+    Triggers:
+      - Priority: 500
+        Events:
+          - ShadowChargeBurndown: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+            - Equal: {Value1: "?GetVariable[Me, TestShadowForm].Value", Value2: "1"}
+        Actions:
+          - ToggleShadowForm: {Value: 0}
+          #- DestroyEffect: {Name: sf_head, ApplyTo: Me}
+          #- DestroyEffect: {Name: sf_arm_l, ApplyTo: Me}
+          #- DestroyEffect: {Name: sf_arm_r, ApplyTo: Me}
+          #- DestroyEffect: {Name: sf_forearm_l, ApplyTo: Me}
+          #- DestroyEffect: {Name: sf_forearm_r, ApplyTo: Me}
+          #- DestroyEffect: {Name: sf_thigh_l, ApplyTo: Me}
+          #- DestroyEffect: {Name: sf_thigh_r, ApplyTo: Me}
+          #- DestroyEffect: {Name: sf_calf_l, ApplyTo: Me}
+          #- DestroyEffect: {Name: sf_calf_r, ApplyTo: Me}
+          - DestroyEffect: {Name: shadow_fire, ApplyTo: Me}
+           
+          - PlaySound: {Sounds: [shadow_form/shadow end]}
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: SHADOW_SPURT, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: ShadowFormUpSFX, Value: 0, ApplyTo: Me, Frames: 1}
+      - Priority: 500
+        Events:
+          - ShadowChargeBurndown: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, TestShadowForm].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: ShadowForm_Toggle_Off_Postpone, Value: 1, ApplyTo: Me}
+      - Priority: 500
+        Events:
+          - AnimationEnd: {Player: Me}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE_END"}
+          - Equal: {Value1: "?GetVariable[Me, ShadowForm_Toggle_Off_Postpone].Value", Value2: "1"}
+        Actions:
+          - ToggleShadowForm: {Value: 0}
+          - DestroyEffect: {Name: shadow_fire, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_head, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_r, ApplyTo: Me}
+          - PlaySound: {Sounds: [shadow_form/shadow end]}
+          - SetVariable: {Name: ShadowForm_Toggle_Off_Postpone, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: SHADOW_SPURT, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: ShadowFormUpSFX, Value: 0, ApplyTo: Me, Frames: 1}
+      - Priority: 500
+        Events:
+          - AnimationEnd: {Player: Me}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+          - Equal: {Value1: "?GetVariable[Me, ShadowForm_Toggle_Off_Postpone].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_ATTACKING_EDGE].Value", Value2: "1"}
+        Actions:
+          - ToggleShadowForm: {Value: 0}
+          - DestroyEffect: {Name: shadow_fire, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_head, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_r, ApplyTo: Me}
+          - PlaySound: {Sounds: [shadow_form/shadow end]}
+          - SetVariable: {Name: ShadowForm_Toggle_Off_Postpone, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: SHADOW_SPURT, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: ShadowFormUpSFX, Value: 0, ApplyTo: Me, Frames: 1}
+      - Priority: 500
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE_END"}
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, ShadowForm_Toggle_Off_Postpone].Value", Value2: "1"}
+        Actions:
+          - ToggleShadowForm: {Value: 0}
+          - DestroyEffect: {Name: shadow_fire, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_head, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_r, ApplyTo: Me}
+          - PlaySound: {Sounds: [shadow_form/shadow end]}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: ShadowForm_Toggle_Off_Postpone, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: SHADOW_SPURT, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: ShadowFormUpSFX, Value: 0, ApplyTo: Me, Frames: 1}
+      - Priority: 500
+        Events:
+          - StageChange
+        Conditions:
+          - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightEnd"}
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+        Actions:
+          - SetShadowCharge: {Value: "0"}
+          - ToggleShadowForm: {Value: 0}
+          - DestroyEffect: {Name: shadow_fire, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_head, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_r, ApplyTo: Me}
+          - PlaySound: {Sounds: [shadow_form/shadow end]}
+  
+  - Name: ShadowForm_Toggle_Off_From_Model
+    #Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_NOT_INVISIBLE, LOCK_SHADOWLESS]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_ATTACKING_EDGE"}
+    Triggers:
+      - Priority: 500
+        Events:
+          - AnimationEnd: {Player: Me, Name: SHADOW_MOVE_END}
+        Conditions:
+        #TODO ?Player[*Parent*].ShadowForm
+          #- Equal: {Value1: "?Player[Parent].ShadowForm", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Parent, SHADOW_ATTACKING_EDGE].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Parent, ShadowForm_Toggle_Off_Postpone].Value", Value2: "1"}
+        Actions:
+          - ToggleShadowForm: {Value: 0, ApplyTo: Parent}
+          - DestroyEffect: {Name: shadow_fire, ApplyTo: Parent}
+         #- DestroyEffect: {Name: sf_head, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_r, ApplyTo: Me}
+          - PlaySound: {Sounds: [shadow_form/shadow end]}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 0, ApplyTo: Parent, Frames: 1}
+          - SetVariable: {Name: ShadowForm_Toggle_Off_Postpone, Value: 0, ApplyTo: Parent, Frames: 1}
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 0, ApplyTo: Parent, Frames: 1}
+          - SetVariable: {Name: SHADOW_SPURT, Value: 0, ApplyTo: Parent, Frames: 1}
+          - SetVariable: {Name: ShadowFormUpSFX, Value: 0, ApplyTo: Parent, Frames: 1}
+      - Priority: 500
+        Events:
+          - PostHit: {Player: Parent}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE_END"}
+          #- Equal: {Value1: "?Player[Parent].ShadowForm", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Parent, ShadowForm_Toggle_Off_Postpone].Value", Value2: "1"}
+        Actions:
+          - ToggleShadowForm: {Value: 0, ApplyTo: Parent}
+          - DestroyEffect: {Name: shadow_fire, ApplyTo: Parent}
+         #- DestroyEffect: {Name: sf_head, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_arm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_forearm_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_thigh_r, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_l, ApplyTo: Me}
+         #- DestroyEffect: {Name: sf_calf_r, ApplyTo: Me}
+          - PlaySound: {Sounds: [shadow_form/shadow end]}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 0, ApplyTo: Parent, Frames: 1}
+          - SetVariable: {Name: ShadowForm_Toggle_Off_Postpone, Value: 0, ApplyTo: Parent, Frames: 1}
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 0, ApplyTo: Parent, Frames: 1}
+          - SetVariable: {Name: SHADOW_SPURT, Value: 0, ApplyTo: Parent, Frames: 1}
+          - SetVariable: {Name: ShadowFormUpSFX, Value: 0, ApplyTo: Parent, Frames: 1}
+
+  - Name: ShadowForm_TakeHit_Charge
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_NOT_INVISIBLE, LOCK_SHADOWLESS]
+    Triggers:
+      - Priority: -120
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "0"}
+        Actions:
+          - SetShadowCharge: {Value: "?GetShadowCharge[Me] + 0.5 * ?Hit[].BaseDamage * (1 + ?GetVariable[Enemy, CRITICAL_FACTOR].Value) * (1 + ?GetVariable[Enemy, BLOCK_FACTOR].Value) * (1 + ?GetVariable[Enemy, HEAD_FACTOR].Value) * (1 + ?GetVariable[Enemy, WEAPON].Value)"}
+
+  - Name: ShadowForm_DealHit_Charge
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_NOT_INVISIBLE, LOCK_SHADOWLESS]
+    Triggers:
+      - Priority: -110
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "0"}
+        Actions:
+          - SetShadowCharge: {Value: "?GetShadowCharge[Me] + 0.3 * ?Hit[].BaseDamage * (1 + ?GetVariable[Me, CRITICAL_FACTOR].Value) * (1 + ?GetVariable[Me, BLOCK_FACTOR].Value) * (1 + ?GetVariable[Me, HEAD_FACTOR].Value) * (1 + ?GetVariable[Me, WEAPON].Value)"}
+
+#  - Name: ShadowForm_Hit_Depletion
+#    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_NOT_INVISIBLE, LOCK_SHADOWLESS]
+#    Priority: -110
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+#        Actions:
+#          - SetShadowCharge: {Value: "?GetShadowCharge[Me] - ?Hit[].Damage * 2"}
+
+  - Name: ShadowForm_Hit_Amplify_Damage
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_NOT_INVISIBLE, LOCK_SHADOWLESS]
+    Priority: -100
+    Triggers:
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: 1.25, ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: 1.25, ApplyTo: Me}
+
+  - Name: ShadowForm_Start_Fight
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_SHADOWLESS]
+    Triggers:
+      - Priority: -120
+        Events:
+          - Birth: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].RoundCounter", Value2: "1"}
+        Actions:
+          - SetShadowCharge: {Value: "0.5"}
+
+######################################## PRE-BETA PERKS
+  - Name: PERK
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_SKELETON]
+    Triggers:
+      - Templates: [STATE.ALIVE]
+
+################################## LEGION
+
+############################ WEAPON
+
+###################### BASHER
+
+  - Name: PERK_BASHER
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "PERK_BASHER"}
+    Triggers:
+      - Priority: 200
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Enemy, 1001, Chance] * ?Hit[].Damage"}
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "WEAPON"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, PERK_BASHER].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: PERK_BASHER, Value: 1, ApplyTo: Me}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BASHER, BackgroundColor: "#2f4668", Icon: ICON_PERK_BASHER, Stackable: 0}
+          - SetVariable: {Name: PERK_BASHER_WEAKNESS, Value: 0, ApplyTo: Me}
+
+      - Priority: 5000
+        Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_BASHER].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stun"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Invincible"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+        Actions:
+          - Animation: {Name: Stun}
+          # NEED DIFFERENT STUNS!
+          - ClearStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BASHER}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BASHER, BackgroundColor: "#9f1c03", Icon: ICON_PERK_BASHER, Frames: "?GetPerkVariable[Enemy, 1001, StunDuration]", ShowExpiration: 1, Stackable: 0}
+
+      - Priority: 5001
+        Events:
+          - PostHit: {Player: Me}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stun"}
+        Actions:
+          - SetVariable: {Name: PERK_BASHER, Value: 0, ApplyTo: Me}
+          - ClearStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BASHER}
+
+###################### BREACHER
+
+  - Name: PERK_BREACHER
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_BREACHER"}
+    Triggers:
+      - Priority: 9990
+        Events:
+          - Hit: {Player: Enemy}
+        Conditions: 
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1002, Chance]"}
+        Actions:
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BREACHER, BackgroundColor: "#2f4668", Icon: ICON_PERK_BREACHER, Frames: 90, ShowExpiration: 0, Stackable: 0}
+          - ShakeCamera: {Frames: 20, AmpX: 3, AmpY: 10, PeriodX: 5.7, PeriodY: 6.3}
+          - SetVariable: {Name: BLOCK_BROKEN, Value: 1, ApplyTo: Enemy, Frames: 1}
+
+###################### BERSERK
+
+  - Name: PERK_BERSERK
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_BERSERK"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1003, Chance]"}
+          - Greater: {Value1: "?Player[Me].Health - ?Hit[].Damage * ?GetPerkVariable[Me, 1003, Health]", Value2: "0"}
+        Actions:
+          - SetHit: {DealsDamage: 0}
+          - ApplyStatus: {ApplyTo: Enemy, Name: PERK_BERSERK_DAMAGE, Frames: 1, Type: ModHP, HPPerFrame: "-?Hit[].Damage * ?GetPerkVariable[Me, 1003, AdditionDamage]"}
+          - ApplyStatus: {ApplyTo: Me, Name: PERK_BERSERK_DAMAGE, Frames: 1, Type: ModHP, HPPerFrame: "-(((?Hit[].Damage * ?GetPerkVariable[Me, 1003, AdditionDamage]) - ?Hit[].Damage) * ?GetPerkVariable[Me, 1003, Health])"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BERSERK, BackgroundColor: "#2f4668", Icon: ICON_PERK_BERSERK, Frames: 90, ShowExpiration: 0, Stackable: 0}
+
+##################### IRON GRIP
+
+  - Name: PERK_IRON_GRIP
+    Templates: [PERK, LOCK_SUBTYPE_NOT_FISTS]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_IRON_GRIP"}
+    Triggers:
+      - Priority: 9998
+        Events:
+          - PostHit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, SHOCK].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, PERK_IRON_GRIP].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1004, Chance]"}
+          - Greater: {Value1: "?Player[Me].Health", Value2: "0"}
+        Actions:
+          - SetVariable: {Name: PERK_IRON_GRIP, Value: 1, ApplyTo: Me, Frames: 1}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_IRON_GRIP, BackgroundColor: "#2f4668", Icon: ICON_PERK_IRON_GRIP, Frames: 90, ShowExpiration: 0, Stackable: 0}
+
+############################ ARMOR
+
+###################### STEEL FOOT
+
+  - Name: PERK_STEEL_FOOT
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_STEEL_FOOT"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Enemy}
+        Priority: 3100
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1005, Chance]"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "SUPER_FALL"}
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: PERK_STEEL_FOOT_FALL, Value: 1, ApplyTo: Enemy, Frames: 1}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_STEEL_FOOT, BackgroundColor: "#2f4668", Icon: ICON_PERK_STEEL_FOOT, Frames: 90, ShowExpiration: 0, Stackable: 0}
+          - ShakeCamera: {Frames: 20, AmpX: 3, AmpY: 10, PeriodX: 5.7, PeriodY: 6.3}
+
+
+###################### DWAYNE JOHNSON
+
+  - Name: PERK_ROCK
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_ROCK"}
+    Triggers:
+      - Events:
+          - Hit: {Player: Me}
+        Priority: 3100
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1006, Chance]"}
+          - Not: 
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Unstable"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "PHYSICS"}
+        Actions:
+          - SetVariable: {Name: PERK_ROCK_NO_FALL, Value: 1, ApplyTo: Me, Frames: 1}
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 1006, EnemyDamagefactor]", ApplyTo: Enemy}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 1006, EnemyDamagefactor]", ApplyTo: Enemy}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_ROCK, BackgroundColor: "#2f4668", Icon: ICON_PERK_ROCK, Frames: 90, ShowExpiration: 0, Stackable: 0}
+
+###################### STONE SKIN
+
+  - Name: PERK_STONE_SKIN
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_STONE_SKIN"}
+    Triggers:
+      - Events:
+          - Hit: {Player: Me}
+        Priority: -4000
+        Conditions:
+          - Greater: {Value1: "?Hit[].Damage", Value2: "?GetPerkVariable[Me, 1007, Health]"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1007, Chance]"}
+        Actions:
+          - SetHit: {DealsDamage: 0}
+          - ApplyStatus: {ApplyTo: Me, Name: PERK_STONE_SKIN_DAMAGE_REDUCTION, Frames: 1, Type: ModHP, HPPerFrame: "-?GetPerkVariable[Me, 1007, Health]"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_STONE_SKIN, BackgroundColor: "#2f4668", Icon: ICON_PERK_STONE_SKIN, Frames: 90, ShowExpiration: 1, Stackable: 0}
+
+###################### REVENGE
+
+  - Name: PERK_REVENGE
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_REVENGE"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1008, Chance]"}
+        Actions:
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_REVENGE, BackgroundColor: "#2f4668", Icon: ICON_PERK_REVENGE, Frames: "?GetPerkVariable[Me, 1008, Duration]", ShowExpiration: 1, Stackable: 0}
+          - SetVariable: {Name: PERK_REVENGE, Frames: "?GetPerkVariable[Me, 1008, Duration]", Value: 1, ApplyTo: Me}
+
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions: 
+          - Equal: {Value1: "?GetVariable[Me, PERK_REVENGE].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "1 + ?GetPerkVariable[Me, 1008, AdditionDamage]", ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "1 + ?GetPerkVariable[Me, 1008, AdditionDamage]", ApplyTo: Me}
+
+###################### REPELLER
+
+  - Name: PERK_REPELLER
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_REPELLER"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1009, Chance]"}
+        Actions:
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_REPELLER, BackgroundColor: "#2f4668", Icon: ICON_PERK_REPELLER, Frames: "?GetPerkVariable[Me, 1009, Duration]", ShowExpiration: 1, Stackable: 0}
+          - SetVariable: {Name: PERK_REPELLER, Frames: "?GetPerkVariable[Me, 1009, Duration]", Value: 1, ApplyTo: Me}
+
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions: 
+          - Equal: {Value1: "?GetVariable[Me, PERK_REPELLER].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 1009, AdditionDamage]", ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 1009, AdditionDamage]", ApplyTo: Me}
+
+###################### PREDATOR
+
+  - Name: PERK_PREDATOR
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_PREDATOR"}
+    Triggers:
+      - Events:
+          - EveryFrame: {Step: 5}
+        Conditions:
+          - LessEqual: {Value1: "?Player[Enemy].Health", Value2: "?GetPerkVariable[Me, 1011, Health]"}
+          - Equal: {Value1: "?GetVariable[Me, PERK_PREDATOR].Value", Value2: "0"}
+        Actions:
+          - SetVariable: {Name: PERK_PREDATOR, Value: 1, ApplyTo: Me}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_PREDATOR, BackgroundColor: "#2f4668", Icon: ICON_PERK_PREDATOR, ShowExpiration: 0, Stackable: 0}
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_PREDATOR].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "1 + ?GetPerkVariable[Me, 1011, AdditionDamage]", ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "1 + ?GetPerkVariable[Me, 1011, AdditionDamage]", ApplyTo: Me}
+      - Events:
+          - EveryFrame: {Step: 5}
+        Conditions:
+          - Greater: {Value1: "?Player[Enemy].Health", Value2: "?GetPerkVariable[Me, 1011, Health]"}
+        Actions:
+          - SetVariable: {Name: PERK_PREDATOR, Value: 0, ApplyTo: Me}
+          - ClearStatusIcon: {ApplyTo: Me, Name: ICON_PERK_PREDATOR}
+
+############################ HELMET
+
+###################### RETRIBUTION
+
+  - Name: PERK_RETRIBUTION
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_RETRIBUTION"}
+    Triggers:
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions:
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, PERK_RETRIBUTION].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 1012, AdditionDamage]", ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 1012, AdditionDamage]", ApplyTo: Me}
+      - Priority: 100
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, SHOCKED].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, PERK_RETRIBUTION].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: PERK_RETRIBUTION, Value: 1, ApplyTo: Me}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_RETRIBUTION, BackgroundColor: "#2f4668", Icon: ICON_PERK_RETRIBUTION, ShowExpiration: 0, Stackable: 0}
+
+###################### RECOLLECTION
+
+  - Name: PERK_RECOLLECTION
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_RECOLLECTION"}
+    Triggers:
+      - Events:
+          - Hit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1013, Chance]"}
+        Actions:
+        #?
+          - SetShadowCharge: {Value: "?GetShadowCharge[Me] +  ?GetPerkVariable[Me, 1013, ShadowChargeValue] * ?Hit[].BaseDamage * (1 + ?GetVariable[Me, CRITICAL_FACTOR].Value) * (1 + ?GetVariable[Me, BLOCK_FACTOR].Value) * (1 + ?GetVariable[Me, HEAD_FACTOR].Value) * (1 + ?GetVariable[Me, WEAPON].Value)"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_RECOLLECTION, BackgroundColor: "#2f4668", Icon: ICON_PERK_RECOLLECTION, Frames: 90, ShowExpiration: 0, Stackable: 0}
+
+################################### DYNASTY
+############################# WEAPON
+###################### PLUCK
+
+  - Name: PERK_PLUCK
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_PLUCK"}
+    Triggers:
+      - Priority: 9997
+        Events:
+          - PostHit: {Player: Enemy, Defense: HeadDefense}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - GreaterEqual: {Value1: "?GetVariable[Me, COMBO_COUNTER].Value", Value2: "?GetPerkVariable[Me, 1016, ComboCounterValue]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, PERK_IRON_GRIP].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1016, ShockChanceValue]"}
+        Actions:
+          - Disarm: {ApplyTo: Enemy}
+          - SetVariable:
+              Name: SHOCKED
+              Value: 1
+              ApplyTo: Enemy
+          - SetVariable:
+              Name: SHOCK
+              Value: 1
+              ApplyTo: Enemy
+              Frames: 1
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_PLUCK, Icon: ICON_PERK_PLUCK, BackgroundColor: "#2f4668", ShowExpiration: 0, Stackable: 0}
+
+###################### BACKSTABBER
+
+  - Name: PERK_BACKSTABBER
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_BACKSTABBER"}
+    Triggers:
+      - Events:
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Greater: {Value1: "abs(?Coordinate[?Player[Me],Wall,Front].X - ?Coordinate[?Player[Me],COM].X) - abs(?Coordinate[?Player[Enemy],Wall,Front].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "0"}
+          - Equal: {Value1: "abs(?Coordinate[?Player[Me],Wall,Front].X - ?Coordinate[?Player[Enemy],Wall,Front].X)", Value2: "0"} 
+        Actions:
+          - SetVariable: {Name: PERK_BACKSTABBER, Value: 1, ApplyTo: Me, Frames: 180}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BACKSTABBER, BackgroundColor: "#2f4668", Icon: ICON_PERK_BACKSTABBER, Frames: 180, ShowExpiration: 1, Stackable: 0}
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, PERK_BACKSTABBER].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 1017, AdditionDamage]", ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 1017, AdditionDamage]", ApplyTo: Me}
+          - SetVariable: {Name: PERK_BACKSTABBER, Value: 0, ApplyTo: Me, Frames: 1}
+          - ClearStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BACKSTABBER}
+      - Priority: 9990
+        Events:
+          - Hit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1017, Chance]"}
+        Actions:
+          - ShakeCamera: {Frames: 20, AmpX: 3, AmpY: 10, PeriodX: 5.7, PeriodY: 6.3}
+          - SetVariable: {Name: BLOCK, Value: 0, ApplyTo: Enemy, Frames: 1}
+
+###################### WOLVERINE
+
+  - Name: PERK_WOLVERINE
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_WOLVERINE"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Enemy}
+        Conditions: 
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1019, Chance]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: PERK_WOLVERINE, Value: 1, Frames: "?GetPerkVariable[Me, 1019, Duration]", ApplyTo: Me}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_WOLVERINE, BackgroundColor: "#2f4668", Icon: ICON_PERK_WOLVERINE, Frames: "?GetPerkVariable[Me, 1019, Duration]", ShowExpiration: 1, Stackable: 0}
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions: 
+          - Equal: {Value1: "?GetVariable[Me, PERK_WOLVERINE].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 1019, AdditionDamage]", ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 1019, AdditionDamage]", ApplyTo: Me}
+
+############################ ARMOR
+###################### FLURRY
+
+  - Name: PERK_FLURRY
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_FLURRY"}
+    Triggers:
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions:
+          - GreaterEqual: {Value1: "?GetVariable[Me, COMBO_COUNTER].Value", Value2: "?GetPerkVariable[Me, 1014, ComboCounterValue]"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 1014, AdditionDamage]", ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 1014, AdditionDamage]", ApplyTo: Me}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_FLURRY, Icon: ICON_PERK_FLURRY, BackgroundColor: "#2f4668", Frames: 90, ShowExpiration: 1, Stackable: 0}
+
+###################### CORNERED_CAT
+
+  - Name: PERK_CORNERED_CAT
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_CORNERED_CAT"}
+    Triggers:
+      - Events:
+          - EveryFrame: {Step: 5}
+        Conditions:
+          - LessEqual: {Value1: "?Player[Me].Health", Value2: "?GetPerkVariable[Me, 1018, Health]"}
+          - Equal: {Value1: "?GetVariable[Me, PERK_CORNERED_CAT].Value", Value2: "0"}
+        Actions:
+          - SetVariable: {Name: PERK_CORNERED_CAT, Value: 1, ApplyTo: Me}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_CORNERED_CAT, BackgroundColor: "#2f4668", Icon: ICON_PERK_CORNERED_CAT, ShowExpiration: 0, Stackable: 0}
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_CORNERED_CAT].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 1018, AdditionDamage]", ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 1018, AdditionDamage]", ApplyTo: Me}
+      - Events:
+          - EveryFrame: {Step: 5}
+        Conditions:
+          - Greater: {Value1: "?Player[Me].Health", Value2: "?GetPerkVariable[Me, 1018, Health]"}
+        Actions:
+          - SetVariable: {Name: PERK_CORNERED_CAT, Value: 0, ApplyTo: Me}
+          - ClearStatusIcon: {ApplyTo: Me, Name: ICON_PERK_CORNERED_CAT}
+
+###################### SPURT
+
+  - Name: PERK_SPURT
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_SPURT"}
+    Triggers:
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions: 
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "JUMP"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "DASH_DODGE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ROLL"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "DASH"}
+        Actions:
+          - SetShadowCharge: {Value: "?GetShadowCharge[Me] + ?GetPerkVariable[Me, 1020, ShadowChargeValue]"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_SPURT, BackgroundColor: "#2f4668", Icon: ICON_PERK_SPURT, Frames: 90, ShowExpiration: 0, Stackable: 0}
+
+############################ HELMET
+###################### VENGEFUL_TIGER
+
+  - Name: PERK_VENGEFUL_TIGER
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_VENGEFUL_TIGER"}
+    Triggers:
+      - Priority: 9997
+        Events:
+          - PostHit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, SHOCKED].Value", Value2: "1"}
+        Actions:
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_VENGEFUL_TIGER, BackgroundColor: "#2f4668", Icon: ICON_PERK_VENGEFUL_TIGER, ShowExpiration: 0, Stackable: 0}
+      - Priority: 9997
+        Events:
+          - PostHit: {Player: Enemy, Defense: HeadDefense}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, SHOCKED].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, SHOCKED].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, PERK_IRON_GRIP].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 1021, ShockChanceValue]"}
+        Actions:
+          - Disarm: {ApplyTo: Enemy}
+          - SetVariable: {Name: SHOCKED, Value: 1, ApplyTo: Enemy}
+          - SetVariable: {Name: SHOCK, Value: 1, ApplyTo: Enemy, Frames: 1}
+          - ClearStatusIcon: {ApplyTo: Me, Name: ICON_PERK_VENGEFUL_TIGER}
+
+###################### RISING_TIDE
+
+  - Name: PERK_RISING_TIDE
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_RISING_TIDE"}
+    Triggers:
+      - Priority: -120
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions: 
+          - GreaterEqual: {Value1: "?GetVariable[Me, COMBO_COUNTER].Value", Value2: "?GetPerkVariable[Me, 1022, ComboCounterValue]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetShadowCharge: {Value: "?GetShadowCharge[Me] + ?GetPerkVariable[Me, 1022, ShadowChargeValue] * ?Hit[].Damage"} 
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_RISING_TIDE, BackgroundColor: "#2f4668", Icon: ICON_PERK_RISING_TIDE, Frames: 90, ShowExpiration: 0, Stackable: 0}
+
+########################################################### HARBINGERS
+  - Name: PERK_BREAKING_POINT
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_BREAKING_POINT"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Enemy, Defense: HeadDefense}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - Equal: {Value1: "?GetVariable[Me, PERK_BREAKING_POINT_DEFENSE].Value", Value2: "0"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "25"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: PERK_BREAKING_POINT_DEFENSE, Value: "2", Frames: 180, ApplyTo: Me}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BREAKING_POINT, BackgroundColor: "#2f4668", Icon: ICON_PERK_BREAKING_POINT_HEAD, ShowExpiration: 1, Frames: 180}
+      - Events:
+          - Hit: {Player: Enemy, Defense: HeadDefense}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_BREAKING_POINT_DEFENSE].Value", Value2: "2"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: 1.4, ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: 1.4, ApplyTo: Me}
+      - Events:
+          - PostHit: {Player: Enemy, Defense: BodyDefense}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - Equal: {Value1: "?GetVariable[Me, PERK_BREAKING_POINT_DEFENSE].Value", Value2: "0"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "25"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: PERK_BREAKING_POINT_DEFENSE, Value: "1", Frames: 180, ApplyTo: Me}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BREAKING_POINT, BackgroundColor: "#2f4668", Icon: ICON_PERK_BREAKING_POINT_BODY, ShowExpiration: 1, Frames: 180}
+      - Events:
+          - Hit: {Player: Enemy, Defense: BodyDefense}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_BREAKING_POINT_DEFENSE].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: 1.4, ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: 1.4, ApplyTo: Me}
+
+
+#  - Name: PERK_INTERFERENCE
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_INTERFERENCE"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Enemy, Defense: HeadDefense}
+#        Conditions:
+#          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "15"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Enemy, PERK_INTERFERENCE_MOD].Value", Value2: "1"}
+#        Actions:
+#          - SetVariable: {Name: PERK_INTERFERENCE_MOD, Value: "1", Frames: 240, ApplyTo: Enemy}
+#          #- ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_PERK_INTERFERENCE, BackgroundColor: "#9f1c03", Icon: ICON_REDCAT, ShowExpiration: 1, Frames: 240}
+#
+#
+#  - Name: PERK_COBRA
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_COBRA"}
+#    Triggers:
+#      - Events:
+#          - StageChange: {Stage: RoundFightStart}
+#        Conditions:
+#          - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightStart"}
+#        Actions:
+#          #- ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_COBRA, BackgroundColor: "#2f4668", Icon: ICON_PERK_COBRA, ShowExpiration: 1, Frames: 180}
+#          - SetVariable: {Name: PERK_COBRA_FLAG, Value: "1", ApplyTo: Me, Frames: 180}
+#      - Events:
+#          - PostHit: {Player: Enemy}
+#        Conditions:
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+#          - Equal: {Value1: "?GetVariable[Me, PERK_COBRA_FLAG].Value", Value2: "1"}
+#        Actions:
+#          - ApplyStatus: {ApplyTo: Enemy, Name: PERK_COBRA_DAMAGE, Frames: 1, Type: ModHP, HPPerFrame: "-0.15"}
+#          - ClearStatusIcon: {Name: ICON_PERK_COBRA, ApplyTo: Me}
+#          - SetVariable: {Name: PERK_COBRA_FLAG, Value: "0", ApplyTo: Me}
+
+
+#  - Name: PERK_PULSATION
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_PULSATION"}
+#    Triggers:
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Priority: -290
+#        Conditions:
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+#        Actions:
+#          - SetVariable: {Name: PERK_PULSATION_COUNT, Value: "?GetVariable[Me, PERK_PULSATION_COUNT].Value + 1", ApplyTo: Me, Frames: 300}
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Priority: -300
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, PERK_PULSATION_COUNT].Value", Value2: "3"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+#        Actions:
+#          - SetVariable: {Name: PERK_PULSATION_COUNT, Value: "0", ApplyTo: Me}
+#          - SetVariable: {Name: CRITICAL, Value: 1, ApplyTo: Enemy, Frames: 1}
+#          #- ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_PULSATION, BackgroundColor: "#2f4668", Icon: ICON_PERK_PULSATION, Frames: 90}
+#      - Events:
+#          - PostHit: {Player: Me}
+#        Conditions:
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+#        Actions:
+#          - SetVariable: {Name: PERK_PULSATION_COUNT, Value: "0", ApplyTo: Me}
+#
+#
+#  - Name: PERK_AMPLIFICATION
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_AMPLIFICATION"}
+#    Triggers:
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+#        Actions:
+#          - SetAttribute: {Name: Factor_UnarmedDamage, Value: (5 / 3), ApplyTo: Me}
+#          - SetAttribute: {Name: Factor_WeaponDamage, Value: (5 / 3), ApplyTo: Me}
+#          #- ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_AMPLIFICATION, BackgroundColor: "#2f4668", Icon: ICON_REDCAT, Frames: 90}
+
+
+#  - Name: PERK_ACCUMULATION
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "PERK_ACCUMULATION"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+#        Actions:
+#          - SetShadowCharge: {Value: "?GetShadowCharge[Me] + ?Hit[].Damage"}
+#          #- ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_ACCUMULATION, BackgroundColor: "#2f4668", Icon: ICON_REDCAT, Frames: 90}
+
+
+########################################################### ENCHANTMENTS
+################################## LEGION
+  - Name: ENCHANTMENT_LIFESTEAL
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_LIFESTEAL"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2001, Chance]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - ApplyStatus: {ApplyTo: Me, Name: ENCHANTMENT_LIFESTEAL_REGEN, Frames: 1, Type: ModHP, HPPerFrame: "?GetPerkVariable[Me, 2001, LifestealPower] * ?Hit[].Damage"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_LIFESTEAL, BackgroundColor: "#2f4668", Icon: ICON_ENCHANTMENT_LIFESTEAL, Frames: 90}
+
+
+  - Name: ENCHANTMENT_BLEEDING
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_BLEEDING"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2002, Chance]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_BLEEDING].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: ENCHANTMENT_BLEEDING, Value: 1, ApplyTo: Me, Frames: "?GetPerkVariable[Me, 2002, Frames]"}
+          - ApplyStatus: {ApplyTo: Enemy, Name: ENCHANTMENT_BLEEDING_DAMAGE, Frames: "?GetPerkVariable[Me, 2002, Frames]", Type: ModHP, HPPerFrame: "-?GetPerkVariable[Me, 2002, BleedingPower] * ?Hit[].Damage / ?GetPerkVariable[Me, 2002, Frames]"}
+          - ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_BLEEDING, Icon: ICON_ENCHANTMENT_BLEEDING, BackgroundColor: "#9f1c03", ShowExpiration: 1, Frames: "?GetPerkVariable[Me, 2002, Frames]"}
+
+#  - Name: ENCHANTMENT_SHADOW_BURN
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_SHADOW_BURN"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2011, Chance]"}
+#          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "0"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+#        Actions:
+#          - SetVariable: {Name: ENCHANTMENT_SHADOW_BURN_AMOUNT, Value: "?GetShadowCharge[Enemy]", ApplyTo: Me, Frames: 1}
+#          - SetShadowCharge: {ApplyTo: Enemy, Value: "?GetShadowCharge[Enemy] - ?GetPerkVariable[Me, 2011, ShadowBurnPower] * ?Hit[].Damage"}
+#          - SetVariable: {Name: ENCHANTMENT_SHADOW_BURN_AMOUNT, Value: "?GetVariable[Me, ENCHANTMENT_SHADOW_BURN_AMOUNT].Value - ?GetShadowCharge[Enemy]", ApplyTo: Me, Frames: 1}
+#          - ApplyStatus: {ApplyTo: Enemy, Name: ENCHANTMENT_SHADOW_BURN_REGEN, Frames: 1, Type: ModHP, HPPerFrame: "-?GetVariable[Me, ENCHANTMENT_SHADOW_BURN_AMOUNT].Value"}
+#          #- ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_SHADOW_BURN, Icon: ICON_ENCHANTMENT_SHADOW_BURN, BackgroundColor: "#9f1c03", Frames: 90}
+  # - Name: ENCHANTMENT_SHADOW_DRAIN
+    # Templates: [PERK]
+    # Locks:
+      # - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_SHADOW_DRAIN"}
+    # Triggers:
+      # - Events:
+          # - PostHit: {Player: Enemy}
+        # Conditions:
+          # - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          # - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2003, Chance]"}
+          # - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "0"}
+          # - Not:
+            # - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        # Actions:
+          # - SetVariable: {Name: ENCHANTMENT_SHADOW_DRAIN_AMOUNT, Value: "?GetShadowCharge[Enemy]", ApplyTo: Me, Frames: 1}
+          # - SetShadowCharge: {ApplyTo: Enemy, Value: "?GetShadowCharge[Enemy] - ?GetPerkVariable[Me, 2003, ShadowDrainPower] * ?Hit[].Damage"}
+          # - SetVariable: {Name: ENCHANTMENT_SHADOW_DRAIN_AMOUNT, Value: "?GetVariable[Me, ENCHANTMENT_SHADOW_DRAIN_AMOUNT].Value - ?GetShadowCharge[Enemy]", ApplyTo: Me, Frames: 1}
+          # - SetShadowCharge: {Value: "?GetShadowCharge[Me] + ?GetVariable[Me, ENCHANTMENT_SHADOW_DRAIN_AMOUNT].Value"}
+          # - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_SHADOW_DRAIN, Icon: ICON_ENCHANTMENT_SHADOW_DRAIN, BackgroundColor: "#9f1c03", Frames: 90}
+
+
+  - Name: ENCHANTMENT_DAMAGE_RETURN_BODY
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_DAMAGE_RETURN_BODY"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Me, Defense: BodyDefense}
+        Conditions:
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2004, Chance]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - ApplyStatus: {ApplyTo: Enemy, Name: ENCHANTMENT_DAMAGE_RETURN, Frames: 1, Type: ModHP, HPPerFrame: "-?GetPerkVariable[Me, 2004, DamageReturnPower] * ?Hit[].Damage"}
+          - ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_DAMAGE_RETURN_BODY, Icon: ICON_ENCHANTMENT_DAMAGE_RETURN, BackgroundColor: "#9f1c03", Frames: 90}
+
+  - Name: ENCHANTMENT_DAMAGE_RETURN_HEAD
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_DAMAGE_RETURN_HEAD"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2007, Chance]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - ApplyStatus: {ApplyTo: Enemy, Name: ENCHANTMENT_DAMAGE_RETURN, Frames: 1, Type: ModHP, HPPerFrame: "-?GetPerkVariable[Me, 2007, DamageReturnPower] * ?Hit[].Damage"}
+          - ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_DAMAGE_RETURN_BODY, Icon: ICON_ENCHANTMENT_DAMAGE_RETURN, BackgroundColor: "#9f1c03", Frames: 90}
+
+#  - Name: ENCHANTMENT_SHIELDING_HEAD
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_SHIELDING_HEAD"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Me, Defense: HeadDefense}
+#        Conditions:
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2013, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_SHIELDING_HEAD].Value", Value2: "1"}
+#        Actions:
+#          #- ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_SHIELDING_HEAD, BackgroundColor: "#9f1c03", Icon: ICON_ENCHANTMENT_SHIELDING_HEAD, Frames: "?GetPerkVariable[Me, 2013, Frames]", ShowExpiration: 1, Stackable: 0}
+#          - SetVariable: {Name: ENCHANTMENT_SHIELDING_HEAD, Frames: "?GetPerkVariable[Me, 2013, Frames]", Value: 1, ApplyTo: Me}
+#
+#      - Events:
+#          - Hit: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_SHIELDING_HEAD].Value", Value2: "1"}
+#        Actions:
+#          - SetAttribute: {Name: Factor_HeadDefense, Value: "?GetPerkVariable[Me, 2013, ShieldingPower]", ApplyTo: Me}
+#          - SetAttribute: {Name: Factor_BodyDefense, Value: "?GetPerkVariable[Me, 2013, ShieldingPower]", ApplyTo: Me}
+#
+#  - Name: ENCHANTMENT_SHIELDING_BODY
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_SHIELDING_BODY"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Me, Defense: BodyDefense}
+#        Conditions:
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2014, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_SHIELDING_BODY].Value", Value2: "1"}
+#        Actions:
+#          #- ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_SHIELDING_BODY, BackgroundColor: "#9f1c03", Icon: ICON_ENCHANTMENT_SHIELDING_BODY, Frames: "?GetPerkVariable[Me, 2014, Frames]", ShowExpiration: 1, Stackable: 0}
+#          - SetVariable: {Name: ENCHANTMENT_SHIELDING_BODY, Frames: "?GetPerkVariable[Me, 2014, Frames]", Value: 1, ApplyTo: Me}
+#
+#      - Events:
+#          - Hit: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_SHIELDING_BODY].Value", Value2: "1"}
+#        Actions:
+#          - SetAttribute: {Name: Factor_HeadDefense, Value: "?GetPerkVariable[Me, 2014, ShieldingPower]", ApplyTo: Me}
+#          - SetAttribute: {Name: Factor_BodyDefense, Value: "?GetPerkVariable[Me, 2014, ShieldingPower]", ApplyTo: Me}
+
+  - Name: ENCHANTMENT_DAMAGE_ABSORPTION_BODY
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_DAMAGE_ABSORPTION_BODY"}
+    Triggers:
+      - Events:
+          - Hit: {Player: Me, Defense: BodyDefense}
+        Conditions:
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2005, Chance]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "1 - ?GetPerkVariable[Me, 2005, DamageAbsorptionPower]", ApplyTo: Enemy}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "1 - ?GetPerkVariable[Me, 2005, DamageAbsorptionPower]", ApplyTo: Enemy}
+          - SetAttribute: {Name: Factor_RangedDamage, Value: "1 - ?GetPerkVariable[Me, 2005, DamageAbsorptionPower]", ApplyTo: Enemy}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_DAMAGE_ABSORPTION, Icon: ICON_ENCHANTMENT_DAMAGE_ABSORPTION, BackgroundColor: "#2f4668", Frames: 90}
+  
+  - Name: ENCHANTMENT_DAMAGE_ABSORPTION_HEAD
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_DAMAGE_ABSORPTION_HEAD"}
+    Triggers:
+      - Events:
+          - Hit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2008, Chance]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "1 - ?GetPerkVariable[Me, 2008, DamageAbsorptionPower]", ApplyTo: Enemy}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "1 - ?GetPerkVariable[Me, 2008, DamageAbsorptionPower]", ApplyTo: Enemy}
+          - SetAttribute: {Name: Factor_RangedDamage, Value: "1 - ?GetPerkVariable[Me, 2008, DamageAbsorptionPower]", ApplyTo: Enemy}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_DAMAGE_ABSORPTION, Icon: ICON_ENCHANTMENT_DAMAGE_ABSORPTION, BackgroundColor: "#2f4668", Frames: 90}
+
+#  - Name: ENCHANTMENT_ELECTRO_SHOCK_HEAD
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_ELECTRO_SHOCK_HEAD"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Me, Defense: HeadDefense}
+#        Conditions:
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2017, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_ELECTRO_SHOCK_HEAD].Value", Value2: "1"}
+#        Actions:
+#          #- ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_ELECTRO_SHOCK_HEAD, BackgroundColor: "#9f1c03", Icon: ICON_ENCHANTMENT_ELECTRO_SHOCK_HEAD, Frames: "?GetPerkVariable[Me, 2017, Frames]", ShowExpiration: 1, Stackable: 0}
+#          - SetVariable: {Name: ENCHANTMENT_ELECTRO_SHOCK_HEAD, Frames: "?GetPerkVariable[Me, 2017, Frames]", Value: 1, ApplyTo: Me}
+#
+#      - Events:
+#          - Hit: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_ELECTRO_SHOCK_HEAD].Value", Value2: "1"}
+#        Actions:
+#          - SetAttribute: {Name: Factor_BodyDefense, Value: "?GetPerkVariable[Me, 2017, ElectroShockPower]", ApplyTo: Enemy}
+#          - SetAttribute: {Name: Factor_HeadDefense, Value: "?GetPerkVariable[Me, 2017, ElectroShockPower]", ApplyTo: Enemy}
+#
+#  - Name: ENCHANTMENT_ELECTRO_SHOCK_BODY
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_ELECTRO_SHOCK_BODY"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Me, Defense: BodyDefense}
+#        Conditions:
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2018, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_ELECTRO_SHOCK_BODY].Value", Value2: "1"}
+#        Actions:
+#          #- ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_ELECTRO_SHOCK_BODY, BackgroundColor: "#9f1c03", Icon: ICON_ENCHANTMENT_ELECTRO_SHOCK_BODY, Frames: "?GetPerkVariable[Me, 2018, Frames]", ShowExpiration: 1, Stackable: 0}
+#          - SetVariable: {Name: ENCHANTMENT_ELECTRO_SHOCK_BODY, Frames: "?GetPerkVariable[Me, 2018, Frames]", Value: 1, ApplyTo: Me}
+#
+#      - Events:
+#          - Hit: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_ELECTRO_SHOCK_BODY].Value", Value2: "1"}
+#        Actions:
+#          - SetAttribute: {Name: Factor_BodyDefense, Value: "?GetPerkVariable[Me, 2018, ElectroShockPower]", ApplyTo: Enemy}
+#          - SetAttribute: {Name: Factor_HeadDefense, Value: "?GetPerkVariable[Me, 2018, ElectroShockPower]", ApplyTo: Enemy}
+
+################################## DINASTY
+
+  - Name: ENCHANTMENT_SHADOW_DRAIN
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_SHADOW_DRAIN"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2003, Chance]"}
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: ENCHANTMENT_SHADOW_DRAIN_AMOUNT, Value: "?GetShadowCharge[Enemy]", ApplyTo: Me, Frames: 1}
+          - SetShadowCharge: {ApplyTo: Enemy, Value: "?GetShadowCharge[Enemy] - ?GetPerkVariable[Me, 2003, ShadowDrainPower] * ?Hit[].Damage"}
+          - SetVariable: {Name: ENCHANTMENT_SHADOW_DRAIN_AMOUNT, Value: "?GetVariable[Me, ENCHANTMENT_SHADOW_DRAIN_AMOUNT].Value - ?GetShadowCharge[Enemy]", ApplyTo: Me, Frames: 1}
+          - ApplyStatus: {ApplyTo: Me, Name: ENCHANTMENT_SHADOW_DRAIN_REGEN, Frames: 1, Type: ModHP, HPPerFrame: "?GetVariable[Me, ENCHANTMENT_SHADOW_DRAIN_AMOUNT]"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_SHADOW_DRAIN, Icon: ICON_ENCHANTMENT_SHADOW_DRAIN, BackgroundColor: "#2f4668", Frames: 90}
+
+#  - Name: ENCHANTMENT_POISON
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_POISON"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2010, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_POISON].Value", Value2: "1"}
+#        Actions:
+#          - SetVariable: {Name: ENCHANTMENT_POISON, Value: 1, ApplyTo: Me, Frames: "?GetPerkVariable[Me, 2010, Frames]"}
+#          - ApplyStatus: {ApplyTo: Enemy, Name: ENCHANTMENT_POISON_DAMAGE, Frames: "?GetPerkVariable[Me, 2010, Frames]", Type: ModHP, Step: "?GetPerkVariable[Me, 2010, Step]", HPPerFrame: "-?GetPerkVariable[Me, 2010, PoisonPower] * ?Hit[].Damage / (?GetPerkVariable[Me, 2010, Frames] / ?GetPerkVariable[Me, 2010, Step])"}
+#          #- ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_POISON, Icon: ICON_ENCHANTMENT_POISON, BackgroundColor: "#9f1c03", ShowExpiration: 1, Frames: "?GetPerkVariable[Me, 2010, Frames]"}
+
+
+#  - Name: ENCHANTMENT_WEAKNESS
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_WEAKNESS"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2012, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_WEAKNESS].Value", Value2: "1"}
+#        Actions:
+#          #- ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_WEAKNESS, BackgroundColor: "#9f1c03", Icon: ICON_ENCHANTMENT_WEAKNESS, Frames: "?GetPerkVariable[Me, 2012, Frames]", ShowExpiration: 1, Stackable: 0}
+#          - SetVariable: {Name: ENCHANTMENT_WEAKNESS, Frames: "?GetPerkVariable[Me, 2012, Frames]", Value: 1, ApplyTo: Me}
+#
+#      - Events:
+#          - Hit: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_WEAKNESS].Value", Value2: "1"}
+#        Actions:
+#          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 2012, Weakness]", ApplyTo: Enemy}
+#          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 2012, Weakness]", ApplyTo: Enemy}
+
+  - Name: ENCHANTMENT_REGENERATION_BODY
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_REGENERATION_BODY"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Me, Defense: BodyDefense}
+        Conditions:
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2006, Chance]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - ApplyStatus: {ApplyTo: Me, Name: ENCHANTMENT_REGENERATION_BODY, Frames: "?GetPerkVariable[Me, 2006, Frames]", Type: ModHP, HPPerFrame: "?GetPerkVariable[Me, 2006, RegenerationPower] * ?Hit[].Damage / ?GetPerkVariable[Me, 2006, Frames]"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_REGENERATION, Icon: ICON_ENCHANTMENT_REGENERATION, BackgroundColor: "#2f4668", ShowExpiration: 1, Frames: "?GetPerkVariable[Me, 2006, Frames]"}
+  
+  - Name: ENCHANTMENT_REGENERATION_HEAD
+    Templates: [PERK]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_REGENERATION_HEAD"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2009, Chance]"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - ApplyStatus: {ApplyTo: Me, Name: ENCHANTMENT_REGENERATION_HEAD, Frames: "?GetPerkVariable[Me, 2009, Frames]", Type: ModHP, HPPerFrame: "?GetPerkVariable[Me, 2009, RegenerationPower] * ?Hit[].Damage / ?GetPerkVariable[Me, 2009, Frames]"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_REGENERATION, Icon: ICON_ENCHANTMENT_REGENERATION, BackgroundColor: "#2f4668", ShowExpiration: 1, Frames: "?GetPerkVariable[Me, 2009, Frames]"}
+
+#  - Name: ENCHANTMENT_FORTIFICATION_HEAD
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_FORTIFICATION_HEAD"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Me, Defense: HeadDefense}
+#        Conditions:
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2015, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_FORTIFICATION_HEAD].Value", Value2: "1"}
+#        Actions:
+#          #- ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_FORTIFICATION_HEAD, BackgroundColor: "#9f1c03", Icon: ICON_ENCHANTMENT_FORTIFICATION_HEAD, Frames: "?GetPerkVariable[Me, 2015, Frames]", ShowExpiration: 1, Stackable: 0}
+#          - SetVariable: {Name: ENCHANTMENT_FORTIFICATION_HEAD, Frames: "?GetPerkVariable[Me, 2015, Frames]", Value: 1, ApplyTo: Me}
+#
+#      - Events:
+#          - Hit: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_FORTIFICATION_HEAD].Value", Value2: "1"}
+#        Actions:
+#          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 2015, FortificationPower]", ApplyTo: Enemy}
+#          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 2015, FortificationPower]", ApplyTo: Enemy}
+#
+#  - Name: ENCHANTMENT_FORTIFICATION_BODY
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_FORTIFICATION_BODY"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Me, Defense: BodyDefense}
+#        Conditions:
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2016, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_FORTIFICATION_BODY].Value", Value2: "1"}
+#        Actions:
+#          #- ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_FORTIFICATION_BODY, BackgroundColor: "#9f1c03", Icon: ICON_ENCHANTMENT_FORTIFICATION_BODY, Frames: "?GetPerkVariable[Me, 2016, Frames]", ShowExpiration: 1, Stackable: 0}
+#          - SetVariable: {Name: ENCHANTMENT_FORTIFICATION_BODY, Frames: "?GetPerkVariable[Me, 2016, Frames]", Value: 1, ApplyTo: Me}
+#
+#      - Events:
+#          - Hit: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_FORTIFICATION_BODY].Value", Value2: "1"}
+#        Actions:
+#          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "?GetPerkVariable[Me, 2016, FortificationPower]", ApplyTo: Enemy}
+#          - SetAttribute: {Name: Factor_WeaponDamage, Value: "?GetPerkVariable[Me, 2016, FortificationPower]", ApplyTo: Enemy}
+
+#  - Name: ENCHANTMENT_POISON_SKIN_HEAD
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_POISON_SKIN_HEAD"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Me, Defense: HeadDefense}
+#        Conditions:
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2019, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_POISON_SKIN_HEAD].Value", Value2: "1"}
+#        Actions:
+#          - SetVariable: {Name: ENCHANTMENT_POISON_SKIN_HEAD, Value: 1, ApplyTo: Me, Frames: "?GetPerkVariable[Me, 2019, Frames]"}
+#          - ApplyStatus: {ApplyTo: Enemy, Name: ENCHANTMENT_POISON_SKIN_HEAD, Frames: "?GetPerkVariable[Me, 2019, Frames]", Type: ModHP, Step: "?GetPerkVariable[Me, 2019, Step]", HPPerFrame: "-?GetPerkVariable[Me, 2019, PoisonPower] * ?Hit[].Damage / (?GetPerkVariable[Me, 2019, Frames] / ?GetPerkVariable[Me, 2019, Step])"}
+#          #- ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_POISON_SKIN_HEAD, Icon: ICON_ENCHANTMENT_POISON_SKIN_HEAD, BackgroundColor: "#9f1c03", ShowExpiration: 1, Frames: "?GetPerkVariable[Me, 2019, Frames]"}
+#
+#  - Name: ENCHANTMENT_POISON_SKIN_BODY
+#    Templates: [PERK]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "ENCHANTMENT_POISON_SKIN_BODY"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Me, Defense: BodyDefense}
+#        Conditions:
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetPerkVariable[Me, 2020, Chance]"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?GetVariable[Me, ENCHANTMENT_POISON_SKIN_BODY].Value", Value2: "1"}
+#        Actions:
+#          - SetVariable: {Name: ENCHANTMENT_POISON_SKIN_BODY, Value: 1, ApplyTo: Me, Frames: "?GetPerkVariable[Me, 2020, Frames]"}
+#          - ApplyStatus: {ApplyTo: Enemy, Name: ENCHANTMENT_POISON_SKIN_BODY, Frames: "?GetPerkVariable[Me, 2020, Frames]", Type: ModHP, Step: "?GetPerkVariable[Me, 2020, Step]", HPPerFrame: "-?GetPerkVariable[Me, 2020, PoisonPower] * ?Hit[].Damage / (?GetPerkVariable[Me, 2020, Frames] / ?GetPerkVariable[Me, 2020, Step])"}
+#          #- ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_ENCHANTMENT_POISON_SKIN_BODY, Icon: ICON_ENCHANTMENT_POISON_SKIN_BODY, BackgroundColor: "#9f1c03", ShowExpiration: 1, Frames: "?GetPerkVariable[Me, 2020, Frames]"}

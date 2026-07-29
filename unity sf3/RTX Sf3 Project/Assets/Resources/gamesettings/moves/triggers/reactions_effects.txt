@@ -1,0 +1,2136 @@
+TriggerSets:
+########Пожалуйста, не прикрепляйте (Follow: 1) эффекты, приявязанные к центру масс (AttachToBone: centerOfMass). Это вызывает ошибки в unity.
+  - Name: EFFECT__Hit_FirstStrike
+    Templates: [LOCK_SKELETON, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Priority: -1300
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, FirstStrike].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, FirstStrike].Value", Value2: "1"}
+        Actions:
+          - GUIEffect: {Name: GUIEffect_FirstStrike, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          - SetVariable: {Name: FirstStrike, Value: 1, ApplyTo: Enemy}
+
+
+######################################## REACTIONS
+  - Name: REACTION
+    Type: Template
+    Triggers:
+      - Name: BLOCK_IN
+        Priority: 90
+        Events:
+          - BlockCheck: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Blocking"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Dodging"}
+#            - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Unblockable"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Invincible"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "BLOCK"}
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+
+      - Name: BLOCK_HIT
+        Priority: 1100
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+
+      - Name: HIT
+        Priority: 1000
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+                - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Unstable"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "PHYSICS"}
+                - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+            - And:
+              - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, PERK_ROCK_NO_FALL].Value", Value2: "1"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Unstable"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "PHYSICS"}
+            - And:
+              - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+              - Equal: {Value1: "?Hit[].Name", Value2: "Hit_No_Critical_Reaction"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+                - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Unstable"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "PHYSICS"}
+                - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+
+      - Name: HIT_TO_ENEMY
+        Priority: 450
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Greater: {Value1: "?Player[Enemy].Health", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, PERK_STEEL_FOOT_FALL].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+                - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+                - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "THROW_FALL"}
+                - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Unstable"}
+                - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+                - Equal: {Value1: "?GetVariable[Enemy, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+            - And:    
+              - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Enemy, PERK_ROCK_NO_FALL].Value", Value2: "1"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+                - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "THROW_FALL"}
+                - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Unstable"}
+                - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+            - And:
+              - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+              - Equal: {Value1: "?Hit[].Name", Value2: "Hit_No_Critical_Reaction"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+                - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "THROW_FALL"}
+                - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Unstable"}
+                - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+                - Equal: {Value1: "?GetVariable[Enemy, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+
+      - Name: HIT_ROLL
+        Priority: 1001
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+#            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Throw_Forward_Passive"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP_KICK"}
+            - And:
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP"}
+              - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Unstable"}
+            - And:
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL"}
+              - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Unstable"}
+
+      - Name: HIT_HEAD_CRIT
+        Priority: 3010
+        Events:
+          - PostHit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?GetVariable[Me, SHOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Unstable"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP_ROLL"}
+            - Equal: {Value1: "?GetVariable[Me, PERK_ROCK_NO_FALL].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_No_Critical_Reaction"}
+              
+      - Name: HIT_CRIT
+        Priority: 3010
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?GetVariable[Me, SHOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Unstable"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP_ROLL"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP_KICK"}
+            - Equal: {Value1: "?GetVariable[Me, PERK_ROCK_NO_FALL].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_No_Critical_Reaction"}
+
+      - Name: HIT_HEAD_CRIT_TO_ENEMY
+        Priority: 450
+        Events:
+          - PostHit: {Player: Enemy, Defense: HeadDefense}
+        Conditions:
+          - Greater: {Value1: "?Player[Enemy].Health", Value2: "0"}
+          - Or:
+            - Equal: {Value1: "?GetVariable[Enemy, SHOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "THROW_FALL"}
+            - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Unstable"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "STAND_UP_ROLL"}
+            - Equal: {Value1: "?GetVariable[Enemy, PERK_ROCK_NO_FALL].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_No_Critical_Reaction"}
+              
+      - Name: HIT_CRIT_TO_ENEMY
+        Priority: 450
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Greater: {Value1: "?Player[Enemy].Health", Value2: "0"}
+          - Or:
+            - Equal: {Value1: "?GetVariable[Enemy, SHOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "THROW_FALL"}
+            - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Unstable"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "STAND_UP_ROLL"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "STAND_UP_KICK"}
+            - Equal: {Value1: "?GetVariable[Enemy, PERK_ROCK_NO_FALL].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_No_Critical_Reaction"}
+
+      - Name: TO_PHYSICS
+        Priority: 3000
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+            - Or:
+              - And:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP"}
+                - Not:
+                  - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+              - And:
+                - Or:
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL"}
+                  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL"}
+                - Not:
+                  - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+              - And:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+                - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?GetVariable[Me, PERK_STEEL_FOOT_FALL].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Unstable"}
+            - Equal: {Value1: "?GetVariable[Me, SHOCK].Value", Value2: "1"}
+            - And:
+              - Equal: {Value1: "?GetVariable[Me, CRITICAL].Value", Value2: "1"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, PERK_ROCK_NO_FALL].Value", Value2: "1"}
+                - Equal: {Value1: "?Hit[].Name", Value2: "Hit_No_Critical_Reaction"}
+
+############################ HITS
+  - Name: REACTION__Hit_Wall
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1100
+        Conditions:
+          - Less: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "50"}
+          - Not:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead_Heavy"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Wall}
+      - Events:
+          - BorderHit: {Player: Me}
+        Priority: 3011
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HIT"}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Hit_Wall"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP_ROLL"}
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Hit_Wall}
+
+  - Name: REACTION__Hit_Wall_Middle_Heavy
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1100
+        Conditions:
+          - Less: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "50"}
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead_Heavy"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Wall_Middle_Heavy}
+      - Events:
+          - BorderHit: {Player: Me}
+        Priority: 3011
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional_To_Heavy"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Hit_Overhead_Heavy"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Hit_Stomach_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Wall_Middle_Heavy}
+
+  - Name: REACTION__Hit_Wall_High_Heavy
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1100
+        Conditions:
+          - Less: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "50"}
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Wall_High_Heavy}
+      - Events:
+          - BorderHit: {Player: Me}
+        Priority: 3011
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional_To_Heavy"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Hit_Head_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Wall_High_Heavy}
+
+  - Name: REACTION__Hit_Wall_Critical
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT_CRIT]
+        Priority: 3011
+        Conditions:
+          - Less: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "50"}
+        Actions:
+          - Animation: {Name: Hit_Wall_Critical_Fall}
+
+      - Templates: [REACTION.HIT_HEAD_CRIT]
+        Priority: 3011
+        Conditions:
+          - Less: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "50"}
+        Actions:
+          - Animation: {Name: Hit_Wall_Critical_Fall}
+
+      - Events:
+          - BorderHit: {Player: Me}
+        Priority: 3011
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL"}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Hit_Wall_Critical_Fall"}
+            #- Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL_CRITICAL"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP_ROLL"}
+        Actions:
+          - Animation: {Name: Hit_Wall_Critical_Fall}
+
+  - Name: REACTION__Hit_Wall_Roll_Back
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT_ROLL]
+        Priority: 1100
+        Conditions:
+          - Less: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "150"}
+          #- Not:
+          #  - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead_Heavy"}
+          #  - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Heavy"}
+        Actions:
+          - Animation: {Name: Roll_Hit_Wall_Back}
+      - Events:
+          - BorderHit: {Player: Me}
+        Priority: 3011
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP_ROLL"}
+          #Roll_Back_Hit
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+        Actions:
+          - Animation: {Name: Roll_Hit_Wall_Back}
+
+  - Name: REACTION__Hit_Head
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head"}
+        Actions:
+          - Animation: {Name: Hit_Head}
+
+  - Name: REACTION__Hit_Head_Middle_Slow
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head_Middle_Slow"}
+        Actions:
+          - Animation: {Name: Hit_Head_Middle_Slow}
+          
+  - Name: REACTION__Hit_Head_Short
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head_Short"}
+        Actions:
+          - Animation: {Name: Hit_Head_Short}
+
+  - Name: REACTION__Hit_Head_Heavy
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Head_Heavy}
+
+      - Templates: [REACTION.HIT]
+        Priority: 1001
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_HEAVY_REACTION].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head_Short"}
+        Actions:
+          - Animation: {Name: Hit_Head_Heavy}
+          
+
+  - Name: REACTION__Hit_Overhead
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead"}
+        Actions:
+          - Animation: {Name: Hit_Overhead}
+
+  - Name: REACTION__Hit_Overhead_Short
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead_Short"}
+        Actions:
+          - Animation: {Name: Hit_Overhead_Short}
+          
+  - Name: REACTION__Hit_Overhead_Heavy
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Overhead_Heavy}
+
+      - Templates: [REACTION.HIT]
+        Priority: 1001
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_HEAVY_REACTION].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead_Short"}
+        Actions:
+          - Animation: {Name: Hit_Overhead_Heavy}
+
+
+  - Name: REACTION__Hit_Chest
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest"}
+        Actions:
+          - Animation: {Name: Hit_Chest}
+
+  - Name: REACTION__Hit_Chest_Short_Average
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Short_Average"}
+        Actions:
+          - Animation: {Name: Hit_Chest_Short_Average}
+
+  - Name: REACTION__Hit_Chest_Short
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Short"}
+        Actions:
+          - Animation: {Name: Hit_Chest_Short}
+
+  - Name: REACTION__Hit_Chest_Heavy_Slow_39
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Heavy_Slow_39"}
+        Actions:
+          - Animation: {Name: Hit_Chest_Heavy_Slow_39}
+
+  - Name: REACTION__Hit_Chest_Heavy
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Chest_Heavy}
+
+      - Templates: [REACTION.HIT]
+        Priority: 1001
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_HEAVY_REACTION].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Short"}
+        Actions:
+          - Animation: {Name: Hit_Chest_Heavy}
+
+  - Name: REACTION__Hit_Chest_Middle-Short_Average
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Middle_Short_Average"}
+        Actions:
+          - Animation: {Name: Hit_Chest_Middle_Short_Average}
+
+  - Name: REACTION__Hit_Chest_Middle_Slow
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Middle_Slow"}
+        Actions:
+          - Animation: {Name: Hit_Chest_Middle_Slow}
+
+  - Name: REACTION__Hit_Stomach
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach"}
+        Actions:
+          - Animation: {Name: Hit_Stomach}
+
+  - Name: REACTION__Hit_Stomach_Short
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Short"}
+        Actions:
+          - Animation: {Name: Hit_Stomach_Short}
+
+  - Name: REACTION__Hit_Stomach_Heavy
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Stomach_Heavy}
+
+      - Templates: [REACTION.HIT]
+        Priority: 1001
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_HEAVY_REACTION].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Short"}
+        Actions:
+          - Animation: {Name: Hit_Stomach_Heavy}
+
+  - Name: REACTION__Hit_Stomach_Chest_Heavy_Slow_40
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Chest_Heavy_Slow_40"}
+        Actions:
+          - Animation: {Name: Hit_Stomach_Chest_Heavy_Slow_40}
+
+  - Name: REACTION__Hit_Stomach_Heavy_Slow_41
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Heavy_Slow_41"}
+        Actions:
+          - Animation: {Name: Hit_Stomach_Heavy_Slow_41}
+
+  - Name: REACTION__Hit_Legs
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Legs"}
+        Actions:
+          - Animation: {Name: Hit_Legs}
+
+  - Name: REACTION__Hit_Legs_Short
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Legs_Short"}
+        Actions:
+          - Animation: {Name: Hit_Legs_Short}
+
+
+  - Name: REACTION__Hit_Legs_Heavy
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Legs_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Legs_Heavy}
+
+      - Templates: [REACTION.HIT]
+        Priority: 1001
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_HEAVY_REACTION].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Legs"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Legs_Short"}
+        Actions:
+          - Animation: {Name: Hit_Legs_Heavy}
+
+
+  - Name: REACTION__Hit_Head_Critical_Fall
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT_HEAD_CRIT]
+        Priority: 3011
+        Actions:
+          - Animation: {Name: Hit_Head_Critical_Fall}
+      - Templates: [REACTION.HIT_CRIT]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head_Short"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Head_Critical_Fall}
+
+  - Name: REACTION__Hit_Head_Critical_Fall_Force
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_AXES_THROW"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_SWORD_RAY"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Head_Critical_Fall"}
+        Actions:
+          - Animation: {Name: Hit_Head_Critical_Fall}
+          
+  - Name: REACTION__Hit_Overhead_Critical_Fall
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT_CRIT]
+        Priority: 3011
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Overhead_Critical_Fall}
+
+  - Name: REACTION__Hit_Overhead_Critical_Fall_Force
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_GUANDAO_SPINNING_SLASH_2"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_DUAL_SWORDS_SLASH"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_NUNCHAKU_SPINNING_SLASH"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_AGILE_WEAPON_TORNADO"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_STAFF_SPINNING_SLASH"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_SWORD_LONELY_SPINNING_SLASH"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Overhead_Critical_Fall"}
+        Actions:
+          - Animation: {Name: Hit_Overhead_Critical_Fall}
+
+  - Name: REACTION__Hit_Legs_Critical_Fall
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT_CRIT]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Legs"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Legs_Short"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Legs_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Legs_Critical_Fall}
+
+  - Name: REACTION__Hit_Legs_Critical_Fall_Force
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_THUD"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_TWOHANDED_SWORD_SLASH"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_AXES_THROW"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_MINE"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Legs_Critical_Fall"}
+        Actions:
+          - Animation: {Name: Hit_Legs_Critical_Fall}
+
+
+  - Name: REACTION__Hit_Chest_Critical_Fall
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT_CRIT]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Short"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Chest_Critical_Fall}
+
+  - Name: REACTION__Hit_Chest_Critical_Fall_Force
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_RANDOM_ABILITY"}
+############################################################## crutch lock
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Chest_Critical_Fall"}
+        Actions:
+          - Animation: {Name: Hit_Chest_Critical_Fall}
+
+  - Name: REACTION__Hit_Stomach_Critical_Fall
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT_CRIT]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Short"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Heavy"}
+        Actions:
+          - Animation: {Name: Hit_Stomach_Critical_Fall}
+
+  - Name: REACTION__Hit_Stomach_Critical_Fall_Force
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "MAGIC_FIREBALL"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_GUANDAO_SPINNING_SLASH_1"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_SABERS_BLINK"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_STRONG_ARMOR"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Stomach_Critical_Fall"}
+        Actions:
+          - Animation: {Name: Hit_Stomach_Critical_Fall}
+
+  - Name: REACTION__Hit_Stand_Up_Roll_Back
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT_ROLL]
+        Priority: 1100
+        Conditions:
+          - Or:
+            - And:
+              - Equal: {Value1: "?Player[Me].Direction", Value2: "Upward"}
+              - GreaterEqual: {Value1: "?Coordinate[?Player[Me],Nodes,head].X", Value2: "?Coordinate[?Player[Me],Nodes,toe_r].X"}
+              - GreaterEqual: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+            - And:
+              - Equal: {Value1: "?Player[Me].Direction", Value2: "Upward"}
+              - Less: {Value1: "?Coordinate[?Player[Me],Nodes,head].X", Value2: "?Coordinate[?Player[Me],Nodes,toe_r].X"}
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+            - And:
+              - Equal: {Value1: "?Player[Me].Direction", Value2: "Downward"}
+              - Less: {Value1: "?Coordinate[?Player[Me],Nodes,head].X", Value2: "?Coordinate[?Player[Me],Nodes,toe_r].X"}
+              - GreaterEqual: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+            - And:
+              - Equal: {Value1: "?Player[Me].Direction", Value2: "Downward"}
+              - GreaterEqual: {Value1: "?Coordinate[?Player[Me],Nodes,head].X", Value2: "?Coordinate[?Player[Me],Nodes,toe_r].X"}
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+        Actions:
+          - Animation: {Name: Roll_Back_Hit}
+
+  - Name: REACTION__Hit_Stand_Up_Roll_Front
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.HIT_ROLL]
+        Priority: 1100
+        Conditions:
+          - Or:
+            - And:
+              - Equal: {Value1: "?Player[Me].Direction", Value2: "Upward"}
+              - GreaterEqual: {Value1: "?Coordinate[?Player[Me],Nodes,head].X", Value2: "?Coordinate[?Player[Me],Nodes,toe_r].X"}
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+            - And:
+              - Equal: {Value1: "?Player[Me].Direction", Value2: "Upward"}
+              - Less: {Value1: "?Coordinate[?Player[Me],Nodes,head].X", Value2: "?Coordinate[?Player[Me],Nodes,toe_r].X"}
+              - GreaterEqual: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+            - And:
+              - Equal: {Value1: "?Player[Me].Direction", Value2: "Downward"}
+              - Less: {Value1: "?Coordinate[?Player[Me],Nodes,head].X", Value2: "?Coordinate[?Player[Me],Nodes,toe_r].X"}
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+            - And:
+              - Equal: {Value1: "?Player[Me].Direction", Value2: "Downward"}
+              - GreaterEqual: {Value1: "?Coordinate[?Player[Me],Nodes,head].X", Value2: "?Coordinate[?Player[Me],Nodes,toe_r].X"}
+              - GreaterEqual: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+        Actions:
+          - Animation: {Name: Roll_Front_Hit}
+
+
+######################################## BLOCKS
+############################ OVER HEAD BLOCKS
+  - Name: REACTION__Block_Overhead
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Hit}
+
+############################ HIGH BLOCKS
+  - Name: REACTION__Block_High
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+        Actions:
+          - Animation: {Name: Block_High_Short_Hit}
+
+############################ MID BLOCKS
+  - Name: REACTION__Block_Middle
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Middle_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+        Actions:
+          - Animation: {Name: Block_Middle_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+        Actions:
+          - Animation: {Name: Block_Middle_Short_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Middle_Heavy_Hit}
+
+############################ LOW BLOCKS
+  - Name: REACTION__Block_Low
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Low_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Low_Hit}
+
+############################ DUALS BLOCKS
+  - Name: REACTION__Block_Overhead_Duals
+    Templates: [LOCK_WEAPON_TYPE_DUALS, LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Duals_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Duals_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Duals_Hit_Heavy}
+
+  - Name: REACTION__Block_Middle_Duals
+    Templates: [LOCK_WEAPON_TYPE_DUALS, LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Duals_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Duals_Hit}
+
+  - Name: REACTION__Block_High_Duals
+    Templates: [LOCK_WEAPON_TYPE_DUALS, LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Duals_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+        Actions:
+          - Animation: {Name: Block_High_Duals_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+        Actions:
+          - Animation: {Name: Block_High_Short_Duals_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Heavy_Duals_Hit}
+
+  - Name: REACTION__Block_Low_Duals
+    Templates: [LOCK_WEAPON_TYPE_DUALS, LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Duals_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+        Actions:
+          - Animation: {Name: Block_Low_Duals_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Duals_Hit}
+
+############################ POLEARM BLOCKS
+  - Name: REACTION__Block_Overhead_Polearm
+    Templates: [LOCK_WEAPON_TYPE_POLEARM, LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Polearm_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Polearm_Hit}
+
+  - Name: REACTION__Block_Mid_Polearm
+    Templates: [LOCK_WEAPON_TYPE_POLEARM, LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Mid_Polearm_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+        Actions:
+          - Animation: {Name: Block_Mid_Polearm_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Mid_Heavy_Polearm_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+        Actions:
+          - Animation: {Name: Block_Mid_Short_Polearm_Hit}
+
+  - Name: REACTION__Block_High_Polearm
+    Templates: [LOCK_WEAPON_TYPE_POLEARM, LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Polearm_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+        Actions:
+          - Animation: {Name: Block_High_Polearm_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+        Actions:
+          - Animation: {Name: Block_High_Short_Polearm_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Heavy_Polearm_Hit}
+
+  - Name: REACTION__Block_Low_Polearm
+    Templates: [LOCK_WEAPON_TYPE_POLEARM, LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Polearm_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+        Actions:
+          - Animation: {Name: Block_Low_Polearm_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Short_Polearm_Hit}
+
+################## TWOHANDED SWORD BLOCKS
+  - Name: REACTION__Block_Overhead_Twohanded_Sword
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Twohanded_Sword_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Twohanded_Sword_Hit}
+
+  - Name: REACTION__Block_High_Twohanded_Sword
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Twohanded_Sword_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+        Actions:
+          - Animation: {Name: Block_High_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+        Actions:
+          - Animation: {Name: Block_High_Short_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Heavy_Twohanded_Sword_Hit}
+
+  - Name: REACTION__Block_Middle_Twohanded_Sword
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 102
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Middle_Twohanded_Sword_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+        Actions:
+          - Animation: {Name: Block_Middle_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+        Actions:
+          - Animation: {Name: Block_Middle_Short_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Middle_Heavy_Twohanded_Sword_Hit}
+
+  - Name: REACTION__Block_Low_Twohanded_Sword
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Twohanded_Sword_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+        Actions:
+          - Animation: {Name: Block_Low_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Short_Twohanded_Sword_Hit}
+
+################## TWOHANDED HAMMER BLOCKS
+  - Name: REACTION__Block_Overhead_Twohanded_Hammer
+    Templates: [LOCK_SUBTYPE_TWOHANDED_HAMMER]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Twohanded_Sword_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Twohanded_Sword_Hit}
+
+  - Name: REACTION__Block_High_Twohanded_Hammer
+    Templates: [LOCK_SUBTYPE_TWOHANDED_HAMMER]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Twohanded_Sword_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+        Actions:
+          - Animation: {Name: Block_High_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+        Actions:
+          - Animation: {Name: Block_High_Short_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Heavy_Twohanded_Sword_Hit}
+
+  - Name: REACTION__Block_Middle_Twohanded_Hammer
+    Templates: [LOCK_SUBTYPE_TWOHANDED_HAMMER]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 102
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Middle_Twohanded_Sword_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+        Actions:
+          - Animation: {Name: Block_Middle_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+        Actions:
+          - Animation: {Name: Block_Middle_Short_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Middle_Heavy_Twohanded_Sword_Hit}
+
+  - Name: REACTION__Block_Low_Twohanded_Hammer
+    Templates: [LOCK_SUBTYPE_TWOHANDED_HAMMER]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Twohanded_Sword_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+        Actions:
+          - Animation: {Name: Block_Low_Twohanded_Sword_Hit}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1202
+        Conditions:
+          - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Short_Twohanded_Sword_Hit}
+          
+################## KATANA BLOCKS
+          
+  - Name: REACTION__Block_Overhead_Katana
+    Templates: [LOCK_SUBTYPE_KATANA]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Katana_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Overhead_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Overhead_Katana_Hit}
+
+  - Name: REACTION__Block_High_Katana
+    Templates: [LOCK_SUBTYPE_KATANA]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Katana_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_High_Heavy"}
+        Actions:
+          - Animation: {Name: Block_High_Katana_Hit}
+
+  - Name: REACTION__Block_Middle_Katana
+    Templates: [LOCK_SUBTYPE_KATANA]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Middle_Katana_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Short"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Middle_Heavy"}
+        Actions:
+          - Animation: {Name: Block_Middle_Katana_Hit}
+
+  - Name: REACTION__Block_Low_Katana
+    Templates: [LOCK_SUBTYPE_KATANA]
+    Triggers:
+      - Templates: [REACTION.BLOCK_IN]
+        Priority: 100
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Katana_InOut}
+
+      - Templates: [REACTION.BLOCK_HIT]
+        Priority: 1200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low"}
+            - Equal: {Value1: "?Block[].BlockName", Value2: "Block_Low_Short"}
+        Actions:
+          - Animation: {Name: Block_Low_Katana_Hit}
+
+############################ TO PHYSICS
+  - Name: REACTION__Hit_ToPhysics
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.TO_PHYSICS]
+        Actions:
+          - Animation: {Name: Physics}
+          - SetVariable:
+              Name: InPhysics
+              Value: 1
+              ApplyTo: Me
+              Frames: 200
+
+######################################## HIT EFFECTS
+  - Name: EFFECT
+    Type: Template
+    Triggers:
+      - Name: HIT
+        Priority: -1000
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Hit[].Name", Value2: "No_FX_SFX"}
+            - Equal: {Value1: "?GetVariable[Enemy, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+      - Name: HIT_ME
+        Priority: -1000
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Hit[].Name", Value2: "No_FX_SFX"}
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+      - Name: HIT_COMMON
+        Priority: -1000
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+            - Equal: {Value1: "?Hit[].Name", Value2: "No_FX_SFX"}
+            - Equal: {Value1: "?GetVariable[Enemy, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+
+
+  - Name: EFFECT__Hit_Fists
+    Templates: [LOCK_SUBTYPE_FISTS]
+    Triggers:
+      - Templates: [EFFECT.HIT_COMMON]
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FISTS"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Basic, ParticlesCount: 100, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 6, AmpX: 5, AmpY: 12, PeriodX: 10.5, PeriodY: 10.5}
+
+      - Templates: [EFFECT.HIT_COMMON]
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FISTS"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Basic, ParticlesCount: 110, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 9, AmpX: 6, AmpY: 12, PeriodX: 9, PeriodY: 9}
+
+
+  - Name: EFFECT__Hit_Kicks
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [EFFECT.HIT_COMMON]
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Basic, ParticlesCount: 120, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 8, AmpX: 5, AmpY: 12, PeriodX: 10.5, PeriodY: 10.5}
+
+      - Templates: [EFFECT.HIT_COMMON]
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Basic, ParticlesCount: 130, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 10, AmpX: 7, AmpY: 12, PeriodX: 9, PeriodY: 9}
+
+
+  - Name: EFFECT__Hit_Slashing
+    Templates: [LOCK_WEAPON_TYPE_SLASHING]
+    Triggers:
+      - Templates: [EFFECT.HIT_COMMON]
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"} 
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Weapon, ParticlesCount: 140, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 10, AmpX: 6, AmpY: 12, PeriodX: 9, PeriodY: 9}
+
+      - Templates: [EFFECT.HIT_COMMON]
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Weapon, ParticlesCount: 150, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 12, AmpX: 8, AmpY: 12, PeriodX: 7.8, PeriodY: 7.8}
+
+
+  - Name: EFFECT__Hit_Blunt
+    Templates: [LOCK_WEAPON_TYPE_BLUNT]
+    Triggers:
+      - Templates: [EFFECT.HIT_COMMON]
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Staff, ParticlesCount: 140, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 10, AmpX: 6, AmpY: 12, PeriodX: 9, PeriodY: 9}
+
+      - Templates: [EFFECT.HIT_COMMON]
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Staff, ParticlesCount: 150, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 12, AmpX: 8, AmpY: 12, PeriodX: 7.8, PeriodY: 7.8}
+
+
+  - Name: EFFECT__Hit_Critical
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [EFFECT.HIT]
+        Priority: -1200
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+        Actions:
+          - PlaySound: {Sounds: [strike/critical/crit2-metal, strike/critical/crit-metal_2]}
+          - HitEffect: {Name: HitEffect_Critical_Basic, ParticlesCount: 1000, PoolQuantity: 1, SingleInstance: 1}
+          - GUIEffect: {Name: GUIEffect_Critical, ApplyTo: Me, PoolQuantity: 1, SingleInstance: 1}
+          - FreezeFrame: {Frames: 55}
+          - ShakeCamera: {Frames: 55, AmpX: 5, AmpY: 15, PeriodX: 5.7, PeriodY: 6.3}
+
+  - Name: EFFECT__Hit_Critical_Slashing
+    Templates: [LOCK_WEAPON_TYPE_SLASHING]
+    Triggers:
+      - Templates: [EFFECT.HIT]
+        Priority: -1200
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+        Actions:
+          - PlaySound: {Sounds: [strike/critical/crit2-metal, strike/critical/crit-metal_2]}
+          - HitEffect: {Name: HitEffect_Critical_Weapon, ParticlesCount: 1000, PoolQuantity: 1, SingleInstance: 1}
+          - GUIEffect: {Name: GUIEffect_Critical, ApplyTo: Me, PoolQuantity: 1, SingleInstance: 1}
+          - FreezeFrame: {Frames: 55}
+          - ShakeCamera: {Frames: 55, AmpX: 5, AmpY: 15, PeriodX: 5.7, PeriodY: 6.3}
+          - SetVariable: {Name: Critical, Value: 1, ApplyTo: Me, Frames: 1}
+
+  - Name: EFFECT__Hit_Critical_Blunt
+    Templates: [LOCK_WEAPON_TYPE_BLUNT]
+    Triggers:
+      - Templates: [EFFECT.HIT]
+        Priority: -1200
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+        Actions:
+          - PlaySound: {Sounds: [strike/critical/crit2-metal, strike/critical/crit-metal_2]}
+          - HitEffect: {Name: HitEffect_Critical_Staff, ParticlesCount: 1000, PoolQuantity: 1, SingleInstance: 1}
+          - GUIEffect: {Name: GUIEffect_Critical, ApplyTo: Me, PoolQuantity: 1, SingleInstance: 1}
+          - FreezeFrame: {Frames: 55}
+          - ShakeCamera: {Frames: 55, AmpX: 5, AmpY: 15, PeriodX: 5.7, PeriodY: 6.3}
+
+  - Name: EFFECT__Hit_Block
+    Templates: [LOCK_SUBTYPE_FISTS]
+    Triggers:
+      - Templates: [EFFECT.HIT_ME]
+        Conditions: 
+          - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Block_Basic, ParticlesCount: 1000, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 6, AmpX: 3, AmpY: 9, PeriodX: 5.7, PeriodY: 6.3}
+
+  - Name: EFFECT__Hit_Block_With_Slashing
+    Templates: [LOCK_WEAPON_TYPE_SLASHING]
+    Triggers:
+      - Templates: [EFFECT.HIT_ME]
+        Conditions: 
+          - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Block_Weapon, ParticlesCount: 1000, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 7, AmpX: 4, AmpY: 10, PeriodX: 5.7, PeriodY: 6.3}
+
+  - Name: EFFECT__Hit_Block_With_Blunt
+    Templates: [LOCK_WEAPON_TYPE_BLUNT]
+    Triggers:
+      - Templates: [EFFECT.HIT_ME]
+        Conditions: 
+          - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - HitEffect: {Name: HitEffect_Block_Staff, ParticlesCount: 1000, PoolQuantity: 1, SingleInstance: 1}
+          - ShakeCamera: {Frames: 7, AmpX: 4, AmpY: 10, PeriodX: 5.7, PeriodY: 6.3}
+
+
+  - Name: EFFECT__Hit_HeadHit
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: -1100
+        Events:
+          - PostHit: {Player: Me, Defense: HeadDefense}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - GUIEffect: {Name: GUIEffect_HeadHit, ApplyTo: Enemy, PoolQuantity: 1, SingleInstance: 1}
+          #- ShakeCamera: {Frames: 20, AmpX: 4, AmpY: 11, PeriodX: 5.7, PeriodY: 6.3}
+          - ShakeCamera: {Frames: 35, AmpX: 6, AmpY: -11, PeriodX: 6, PeriodY: 7}
+
+####################  SHOCK
+  - Name: EFFECT__Hit_Shock
+    Templates: [LOCK_LOCATION_NOT_DOJO]
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "FISTS"}
+    Triggers:
+      - Templates: [EFFECT.HIT]
+        Priority: -1200
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Enemy, SHOCK].Value", Value2: "1"}
+        Actions:
+          - GUIEffect: {Name: GUIEffect_Shock, ApplyTo: Me, PoolQuantity: 1, SingleInstance: 1}
+         # - HitEffect: {Name: HitEffect_Shock, ParticlesCount: 1000, PoolQuantity: 1, SingleInstance: 1}
+          - PlaySound: {Sounds: [strike/shock/shock_2]}
+          - FreezeFrame: {Frames: 55}
+          - ShakeCamera: {Frames: 55, AmpX: 5, AmpY: 15, PeriodX: 5.7, PeriodY: 6.3}
+
+
+######################################## ENVIRONMENTAL
+  - Name: FLOOR
+    Type: Template
+    Triggers:
+      - Name: FALL
+        Events:
+          - FloorHit: {Player: Me}
+          - IntervalStart: {Player: Me, Name: Floorfall}
+
+
+  - Name: EFFECT__Dust_Down
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [FLOOR.FALL]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "PHYSICS"} 
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FALL"}
+        Actions:
+          - CustomEffect: {Name: Dust_down_2, ApplyTo: Me, AttachToBone: centerOfMass, Looped: 0, Follow: 0, Shift: {X: 0, Y: 0, Z: 0}}
+          - PlaySound: {Sounds: [fall/body layer/6_Body_Fall_V1_bip, fall/body layer/6_Body_Fall_V3_bip, fall/body layer/6_Body_Fall_V5_bip, fall/body layer/6_Body_Fall_V8_bip, fall/body layer/6_Body_Fall_V13_bip, fall/body layer/6_Body_Fall_V15_bip, fall/body layer/6_Body_Fall_V16_bip]}
+
+
+  - Name: EFFECT__Dust_Down_From_Throw
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [FLOOR.FALL]
+        Conditions: 
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW_FALL"} 
+        Actions:
+          - ShakeCamera: {Frames: 30, AmpX: 5, AmpY: 15, PeriodX: 5.7, PeriodY: 6.3}
+          - CustomEffect: {Name: Dust_down_2, ApplyTo: Me, AttachToBone: centerOfMass, Looped: 0, Follow: 0, Shift: {X: 0, Y: 0, Z: 0}}
+          - PlaySound: {Sounds: [fall/body layer/throw_fall]}
+
+
+  - Name: SFX__Fall_Floor_Wooden
+    Templates: [LOCK_FLOOR_WOODEN, LOCK_SKELETON]
+    Triggers:
+      - Templates: [FLOOR.FALL]
+        Actions:
+          - PlaySound: {Sounds: [fall/floor layer/wood/4_Wooden_Floor_Texture_Of_The_Body_Fall_V1_bip, fall/floor layer/wood/4_Wooden_Floor_Texture_Of_The_Body_Fall_V2_bip, fall/floor layer/wood/4_Wooden_Floor_Texture_Of_The_Body_Fall_V3_bip, fall/floor layer/wood/4_Wooden_Floor_Texture_Of_The_Body_Fall_V8_bip]}
+
+
+  - Name: SFX__Fall_Armor_Metal
+    Templates: [LOCK_ARMOR_METAL]
+    Triggers:
+      - Templates: [FLOOR.FALL]
+        Actions:
+          - PlaySound: {Sounds: [fall/armor layer/metal/5_Armored_Fall_Layer_V3_bip, fall/armor layer/metal/5_Armored_Fall_Layer_V4_bip, fall/armor layer/metal/5_Armored_Fall_Layer_V5_bip, fall/armor layer/metal/5_Armored_Fall_Layer_V6_bip, fall/armor layer/metal/5_Armored_Fall_Layer_V12_bip]}
+
+
+  - Name: SFX__Fall_Floor_Stone
+    Templates: [LOCK_FLOOR_STONE, LOCK_SKELETON]
+    Triggers:
+      - Templates: [FLOOR.FALL]
+        Actions:
+          - PlaySound: {Sounds: [fall/floor layer/stone/1_Stone_Floor_Texture_Of_The_Body_Fall_V1, fall/floor layer/stone/1_Stone_Floor_Texture_Of_The_Body_Fall_V5, fall/floor layer/stone/1_Stone_Floor_Texture_Of_The_Body_Fall_V9, fall/floor layer/stone/1_Stone_Floor_Texture_Of_The_Body_Fall_V11]}
+
+
+  - Name: SFX__Equip_Armor_Metal
+    Templates: [LOCK_ARMOR_METAL]
+    Triggers:
+      - Events:
+          - Equip: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Module[].CurrentTab", Value2: "Inventory_Weapon"}
+        Actions:
+          - PlaySound: {Sounds: [items/equip/plates_equip]}
+
+
+  - Name: SFX__Equip_Armor_NonMetal
+    Templates: [LOCK_ARMOR_NONMETAL]
+    Triggers:
+      - Events:
+          - Equip: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Module[].CurrentTab", Value2: "Inventory_Weapon"}
+        Actions:
+          - PlaySound: {Sounds: [items/equip/leather_equip]}
+
+
+  - Name: SFX__Equip_Weapon
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Events:
+          - Equip: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Module[].CurrentTab", Value2: "Inventory_Weapon"}
+        Actions:
+          - PlaySound: {Sounds: [items/equip/plates_equip]}
+
+
+####################################### SOUNDS
+######################### STRIKES
+  - Name: SFX__Strike_Unarmed
+    Templates: [LOCK_NOT_SHADOW_MODEL]
+    Triggers:
+      - Events:
+          - Strike: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+          - Or:
+            - Equal: {Value1: "?Strike[].Material", Value2: "flesh"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "UNARMED"}
+        Actions:
+          - PlaySound: {Sounds: [strike/fists/light/3_Hand_Slap_Hits_A_V1_bip, strike/fists/light/3_Hand_Slap_Hits_V7_bip, strike/fists/light/3_Hand_Slap_Hits_V8_bip, strike/fists/light/3_Hand_Slap_Hits_V14_bip, strike/fists/light/3_Hand_Slap_Hits_V15_bip, strike/fists/light/3_Hand_Slap_Hits_V16_bip, strike/fists/light/3_Hand_Slap_Hits_V28_bip]}
+
+      - Events:
+          - Strike: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+          - Or:
+            - Equal: {Value1: "?Strike[].Material", Value2: "flesh"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "UNARMED"}
+        Actions:
+          - PlaySound: {Sounds: [strike/fists/heavy/3_Hand_Slap_Hits_V12_bip, strike/fists/heavy/3_Hand_Slap_Hits_V31_bip, strike/fists/heavy/3_Hand_Slap_Hits_V33_bip, strike/fists/heavy/3_Hand_Slap_Hits_V36_bip, strike/fists/heavy/3_Hand_Slap_Hits_V38_bip, strike/fists/heavy/3_Hand_Slap_Hits_V39_bip]}
+
+
+  - Name: SFX__Strike_Wood
+    Templates: [LOCK_NOT_SHADOW_MODEL]
+    Triggers:
+      - Events:
+          - Strike: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Strike[].Material", Value2: "wood"}
+            - Equal: {Value1: "?Strike[].Material", Value2: "nunchaku"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "UNARMED"}
+        Actions:
+          - PlaySound: {Sounds: [strike/wood/heavy/2_Wood_Hits_A_V4_bip, strike/wood/heavy/2_Wood_Hits_A_V19_bip, strike/wood/heavy/2_Wood_Hits_B_V2_bip, strike/wood/heavy/2_Wood_Hits_C_V33_bip, strike/wood/heavy/2_Wood_Hits_V28_bip]}
+
+      - Events:
+          - Strike: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Strike[].Material", Value2: "wood"}
+            - Equal: {Value1: "?Strike[].Material", Value2: "nunchaku"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "HEAVY"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "UNARMED"}
+        Actions:
+          - PlaySound: {Sounds: [strike/wood/light/2_Wood_Hits_A_V24_bip_1, strike/wood/light/2_Wood_Hits_A_V25_bip, strike/wood/light/2_Wood_Hits_V12_bip, strike/wood/light/2_Wood_Hits_V23_bip, strike/wood/light/2_Wood_Hits_V30 _bip,]}
+
+
+  - Name: SFX__Strike_Steel
+    Templates: [LOCK_NOT_SHADOW_MODEL]
+    Triggers:
+      - Events:
+          - Strike: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Strike[].Material", Value2: "steel"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "UNARMED"}
+        Actions:
+          - PlaySound: {Sounds: [strike/fists/light/3_Hand_Slap_Hits_V14_bip, strike/fists/light/3_Hand_Slap_Hits_V15_bip, strike/fists/heavy/3_Hand_Slap_Hits_V31_bip, strike/fists/heavy/3_Hand_Slap_Hits_V39_bip]}
+
+
+  - Name: SFX__Strike_Katana
+    Templates: [LOCK_NOT_SHADOW_MODEL, LOCK_SUBTYPE_KATANA]
+    Triggers:
+      - Events:
+          - Strike: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Strike[].Material", Value2: "katana"}
+        Actions:
+          - PlaySound: {Sounds: [strike/katana/popadanie1, strike/katana/popadanie2, strike/katana/popadanie3, strike/katana/popadanie4]}
+
+  - Name: SFX__Strike_Axe
+    Templates: [LOCK_NOT_SHADOW_MODEL, LOCK_SUBTYPE_AXES]
+    Triggers:
+      - Events:
+          - Strike: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Strike[].Material", Value2: "axe"}
+        Actions:
+          - PlaySound: {Sounds: [strike/axe/hit1, strike/axe/hit2, strike/axe/hit3, strike/axe/hit4, strike/axe/hit5]}
+
+  - Name: SFX__Strike_Hammer
+    Templates: [LOCK_NOT_SHADOW_MODEL, LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Events:
+          - Strike: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Strike[].Material", Value2: "hammer"}
+        Actions:
+          - PlaySound: {Sounds: [strike/hammer/hit1, strike/hammer/hit2, strike/hammer/hit3, strike/hammer/hit4, strike/hammer/hit5]}
+
+######################### HITS
+  - Name: SFX__Hit_Flesh
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Events:
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Hit[].ArmorMaterial", Value2: "flesh"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - PlaySound: {Sounds: [hit/flesh/2_Body_Damage_Impact_V16, hit/flesh/2_Body_Damage_Impact_V18, hit/flesh/2_Body_Damage_Impact_V26, hit/flesh/2_Body_Damage_Impact_V32, hit/flesh/2_Body_Damage_Impact_V33]}
+
+
+  - Name: SFX__Hit_Steel
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Events:
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Hit[].ArmorMaterial", Value2: "steel"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          #- PlaySound: {Sounds: [hit/steel/3_Metalic_Armor_Damage_Impact_V24, hit/steel/3_Metalic_Armor_Damage_Impact_V26]}
+          - PlaySound: {Sounds: [hit/flesh/2_Body_Damage_Impact_V16, hit/flesh/2_Body_Damage_Impact_V18, hit/flesh/2_Body_Damage_Impact_V26, hit/flesh/2_Body_Damage_Impact_V32, hit/flesh/2_Body_Damage_Impact_V33]}
+
+#  - Name: SFX__VO_Hit_Heavy_Male
+#    Triggers:
+#      - Events:
+#          - Hit: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "HEAVY"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+#        Actions:
+#          - PlaySound: {Sounds: [voice/hit/heavy/m/m_heavy_dmg_1, voice/hit/heavy/m/m_heavy_dmg_2, voice/hit/heavy/m/m_heavy_dmg_3, voice/hit/heavy/m/m_heavy_dmg_4, voice/hit/heavy/m/m_heavy_dmg_5, voice/hit/heavy/m/m_heavy_dmg_6]}
+#  
+#
+#  - Name: SFX__VO__Hit_Light_Male
+#    Triggers:
+#      - Events:
+#          - Hit: {Player: Me}
+#        Conditions:
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+#            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "HEAVY"}
+#        Actions:
+#          - PlaySound: {Sounds: [voice/hit/light/m/m_light_dmg_1, voice/hit/light/m/m_light_dmg_2, voice/hit/light/m/m_light_dmg_3, voice/hit/light/m/m_light_dmg_4, voice/hit/light/m/m_light_dmg_5, voice/hit/light/m/m_light_dmg_6, voice/hit/light/m/m_light_dmg_7, voice/hit/light/m/m_light_dmg_8, voice/hit/light/m/m_light_dmg_9]}
+
+
+######################### BLOCKS
+  - Name: SFX__Block_Unarmed
+    Templates: [LOCK_SKELETON, LOCK_SUBTYPE_FISTS]
+    Triggers:
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].WeaponMaterial", Value2: "flesh"}
+        Actions:
+          - PlaySound: {Sounds: [block/flesh/12_Block_Body_Leather_Surface_Layer_V9, block/flesh/12_Block_Body_Leather_Surface_Layer_V22, block/flesh/12_Block_Body_Leather_Surface_Layer_V27, block/flesh/12_Block_Body_Leather_Surface_Layer_V29, block/flesh/12_Block_Body_Leather_Surface_Layer_V38]}
+
+
+  - Name: SFX__Block_Wood
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].WeaponMaterial", Value2: "wood"}
+        Actions:
+          - PlaySound: {Sounds: [block/wood/14_Block_Body_Wood_Surface_Layer_V5, block/wood/14_Block_Body_Wood_Surface_Layer_V16, block/wood/14_Block_Body_Wood_Surface_Layer_V18, block/wood/14_Block_Body_Wood_Surface_Layer_V22, block/wood/14_Block_Body_Wood_Surface_Layer_V26]}
+
+  - Name: SFX__Block_Steel
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "WEAPON"}
+          - Equal: {Value1: "?Hit[].WeaponMaterial", Value2: "steel"}
+          - Or:
+            - Equal: {Value1: "?Strike[].Material", Value2: "steel"}
+            - Equal: {Value1: "?Strike[].Material", Value2: "katana"}
+            - Equal: {Value1: "?Strike[].Material", Value2: "axe"}
+            - Equal: {Value1: "?Strike[].Material", Value2: "hammer"}
+        Actions:
+          - PlaySound: {Sounds: [strike/metal/1_Sword_Hits_D_V5_bip, strike/metal/1_Sword_Hits_D_V4_bip]}
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "WEAPON"}
+          - Equal: {Value1: "?Hit[].WeaponMaterial", Value2: "steel"}
+          - Equal: {Value1: "?Strike[].Material", Value2: "flesh"}
+        Actions:
+          - PlaySound: {Sounds: [block/metal/13_Block_Body_Metal_Surface_Layer_V2, block/metal/13_Block_Body_Metal_Surface_Layer_V5, block/metal/13_Block_Body_Metal_Surface_Layer_V10, block/metal/13_Block_Body_Metal_Surface_Layer_V17, block/metal/13_Block_Body_Metal_Surface_Layer_V24]}
+
+
+  - Name: SFX__Block_Katana
+    Templates: [LOCK_SKELETON, LOCK_SUBTYPE_KATANA]
+    Triggers:
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].WeaponMaterial", Value2: "katana"}
+        Actions:
+          - PlaySound: {Sounds: [block/katana/block1, block/katana/block2]}
+
+  - Name: SFX__Block_Axe
+    Templates: [LOCK_SKELETON, LOCK_SUBTYPE_AXES]
+    Triggers:
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].WeaponMaterial", Value2: "axe"}
+        Actions:
+          - PlaySound: {Sounds: [block/axe/block1, block/axe/block2, block/axe/block3, block/axe/block4, block/axe/block5]}
+
+  - Name: SFX__Block_Hammer
+    Templates: [LOCK_SKELETON, LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].WeaponMaterial", Value2: "hammer"}
+        Actions:
+          - PlaySound: {Sounds: [block/axe/block1, block/axe/block2, block/axe/block3, block/axe/block4, block/axe/block5]}
+
+  - Name: SFX__Block_Nunchaku
+    Templates: [LOCK_SKELETON, LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [REACTION.BLOCK_HIT]
+        Conditions:
+          - Equal: {Value1: "?Hit[].WeaponMaterial", Value2: "nunchaku"}
+        Actions:
+          - PlaySound: {Sounds: [block/nunchaku/nunchak_block_1, block/nunchaku/nunchak_block_2, block/nunchaku/nunchak_block_3, block/nunchaku/nunchak_block_4, block/nunchaku/nunchak_block_5]}
+
+######################### ITEM FLOOR DROP
+  - Name: SFX__ItemFloorFall
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Events:
+          - ItemFloorHit: {Player: Me}
+          - IntervalStart: {Player: Me, Name: Fall_Item_Sound}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "steel"}
+            - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "katana"}
+        Actions:
+          - PlaySound: {Sounds: [items/fall/steel/Fall_Metalic_Weapon]}
+
+      - Events:
+          - ItemFloorHit: {Player: Me}
+          - IntervalStart: {Player: Me, Name: Fall_Item_Sound}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "steel"}
+            - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "katana"}
+            - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "axe"}
+            - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "hammer"}
+            - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "nunchaku"}
+        Actions:
+          - PlaySound: {Sounds: [items/fall/wood/18b_WeaponDrop_Wood_Surface_V33]}
+
+      - Events:
+          - ItemFloorHit: {Player: Me}
+          - IntervalStart: {Player: Me, Name: Fall_Item_Sound}
+        Conditions:
+          - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "axe"}
+        Actions:
+          - PlaySound: {Sounds: [items/fall/axe/fall_axe]}
+
+      - Events:
+          - ItemFloorHit: {Player: Me}
+          - IntervalStart: {Player: Me, Name: Fall_Item_Sound}
+        Conditions:
+          - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "nunchaku"}
+        Actions:
+          - PlaySound: {Sounds: [items/fall/nunchaku/nunchaku_fall]}
+
+      - Events:
+          - ItemFloorHit: {Player: Me}
+          - IntervalStart: {Player: Me, Name: Fall_Item_Sound}
+        Conditions:
+          - Equal: {Value1: "?ItemFloorHit[].WeaponMaterial", Value2: "hammer"}
+        Actions:
+          - PlaySound: {Sounds: [items/fall/hammer/hammer_fall]}
+
+######################### ROLL SOUNDS
+  - Name: SFX__Roll_Leather
+    Templates: [LOCK_ARMOR_NONMETAL]
+    Triggers:
+      - Events:
+          - IntervalStart: {Player: Me, Name: Roll_Sound}
+        Actions:
+          - PlaySound: {Sounds: [step/roll/leather/perekat_leather, step/roll/leather/perekat_leather_3]}
+
+  - Name: SFX__Roll_Metal
+    Templates: [LOCK_ARMOR_METAL]
+    Triggers:
+      - Events:
+          - IntervalStart: {Player: Me, Name: Roll_Sound}
+        Actions:
+          - PlaySound: {Sounds: [step/roll/metal/perekat_plates_pewpew, step/roll/metal/perekat_plates_2]}
+
+################################ SHADOW FORM SOUNDS
+
+  - Name: SFX__ShadowForm_Up
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_NOT_INVISIBLE, LOCK_SHADOWLESS, LOCK_PLAYER]
+    Triggers:
+      - Priority: -120
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - GreaterEqual: {Value1: "?GetShadowCharge[Me]", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, ShadowFormUpSFX].Value", Value2: "1"}
+        Actions:
+          - PlaySound: {Sounds: [shadow_form/shadowcollect_v1(1)]}
+          - SetVariable: {Name: ShadowFormUpSFX, Value: 1, ApplyTo: Me}
+
+      - Priority: -120
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - GreaterEqual: {Value1: "?GetShadowCharge[Me]", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, ShadowFormUpSFX].Value", Value2: "1"}
+        Actions:
+          - PlaySound: {Sounds: [shadow_form/shadowcollect_v1(1)]}
+          - SetVariable: {Name: ShadowFormUpSFX, Value: 1, ApplyTo: Me}

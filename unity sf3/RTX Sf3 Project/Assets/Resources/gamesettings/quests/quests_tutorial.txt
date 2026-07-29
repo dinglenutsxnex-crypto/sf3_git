@@ -1,0 +1,806 @@
+TriggerSets:
+  - Name: QUESTS_TUTORIAL
+    Triggers:
+      - Name: TUTORIAL_SKIP
+        Events:
+          - SessionStart
+        Unresumable: 1
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetUserVariable[FirstRun].Value", Value2: "1"}
+            - GreaterEqual: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "1"}
+        Actions:
+          - SetUserVariable: {Name: FirstRun, Value: 1}
+          - SetUserVariable: {Name: STATE_tutorial, Value: 1}
+          - GoToModule: {Module: Fight, ID: "10.1"}
+
+
+      - Name: TUTORIAL_RESTART_FIGHT_10
+        Events:
+          - FightEnd: {ID: 10.1, Result: Loss}
+          - FightEnd: {ID: 10.1, Result: Surrender}
+          - SessionStart
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[FirstRun].Value", Value2: "1"}
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "1"}
+        Actions:
+          - GoToModule: {Module: Fight, ID: "10.1"}
+
+
+      - Name: TUTORIAL_WIN_10
+        Events:
+          - FightEnd: {ID: 10.1, Result: Win}
+        AllowInFight: 1
+        Actions:
+          - SetUserVariable: {Name: STATE_tutorial, Value: 2}
+          - Call: {ID: TUTORIAL_GO_INVENTORY_MENU}
+
+
+      - Name: TUTORIAL_INVENTORY_HIGHLIGHT_MENU
+        Events:
+          - Call: {ID: TUTORIAL_GO_INVENTORY_MENU}
+          - SessionStart
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "2"}
+        Actions:
+          - GoToModule: {Module: DojoInterface, Type: Jump}
+          - Dialog:
+             Type: Dialog
+             Content:
+              Title:
+                  Alias: CHAR_SARGE
+              Images:
+                - Sprite: Content/Avatars/man_Sarge
+              Labels:
+                - Alias: tutorial_first_fight_congrats
+              Buttons:
+                - Alias: continue
+          - Wait: {Frames: 20, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [0]
+              Description: tutorial_dojo_menu
+
+
+      - Name: TUTORIAL_INVENTORY_HIGHLIGHT_INVENTORY
+        Events:
+          - ButtonPressed: {ID: 0}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "2"}
+        Actions:
+          - Wait: {Frames: 20, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [1]
+              Description: tutorial_inventory
+
+
+      - Name: TUTORIAL_INVENTORY_EQUIP_ARMOR
+        Events:
+          - ButtonPressed: {ID: 1}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "2"}
+          - Not:
+            - Equal: {Value1: "?GetUserVariable[TUTORIAL_Armor_Equipped].Value", Value2: "1"}
+        Actions:
+          - GoToModule: {Module: Inventory, Tab: Armor, Type: Float}
+          - Wait: {Frames: 130, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [10]
+              Description: tutorial_equip_armor
+
+
+      - Name: TUTORIAL_INVENTORY_HIGHLIGHT_WEAPON_SLOT
+        Events:
+          - ButtonPressed: {ID: 10}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "2"}
+          - Not:
+            - Equal: {Value1: "?GetUserVariable[TUTORIAL_Armor_Equipped].Value", Value2: "1"}
+        Actions:
+          - SetUserVariable: {Name: TUTORIAL_Armor_Equipped, Value: 1}
+          - Wait: {Frames: 280, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [15]
+              Description: tutorial_go_equip_weapon
+
+
+      - Name: TUTORIAL_INVENTORY_EQUIP_WEAPON
+        Events:
+          - ButtonPressed: {ID: 15}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "2"}
+          - Equal: {Value1: "?GetUserVariable[TUTORIAL_Armor_Equipped].Value", Value2: "1"}
+        Actions:
+          - GoToModule: {Module: Inventory, Tab: Weapon, Type: Jump}
+          - Wait: {Frames: 15, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial 
+              Clickable: [10]
+              Description: tutorial_equip_weapon
+
+
+      - Name: TUTORIAL_INVENTORY_EQUIP_WEAPON_RESTART
+        Events:
+          - ButtonPressed: {ID: 1}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "2"}
+          - Equal: {Value1: "?GetUserVariable[TUTORIAL_Armor_Equipped].Value", Value2: "1"}
+        Actions:
+          - GoToModule: {Module: Inventory, Tab: Weapon, Type: Float}
+          - Wait: {Frames: 110, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [10]
+              Description: tutorial_equip_weapon
+
+
+      - Name: TUTORIAL_INVENTORY_GO_FREEFIGHT_DIALOG
+        Events:
+          - ButtonPressed: {ID: 10}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "2"}
+          - Equal: {Value1: "?GetUserVariable[TUTORIAL_Armor_Equipped].Value", Value2: "1"}
+        Actions:
+          - Wait: {Frames: 215, ScreenLock: 1}
+          - SetUserVariable: {Name: STATE_tutorial, Value: 3}
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: tutorial_go_to_freefight
+                Buttons:
+                  - Alias: continue
+                    CallID: TUTORIAL_FREE_FIGHT
+
+
+      - Name: TUTORIAL_RESTART_FIGHT_20
+        Events:
+          - FightEnd: {ID: 20.1, Result: Loss}
+          - FightEnd: {ID: 20.1, Result: Surrender}
+          - SessionStart
+          - Call: {ID: TUTORIAL_FREE_FIGHT}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "3"}
+        Actions:
+          - GoToModule: {Module: Fight, ID: "20.1"}
+
+
+      - Name: TUTORIAL_DLG_SARGE_MOVEMENT
+        Events:
+          - Call: {ID: DLG_SARGE_MOVEMENT}
+        Unresumable: 1
+        AllowInFight: 1
+        Actions:
+          - Dialog:
+             Type: Dialog
+             Content:
+              Title:
+                  Alias: CHAR_SARGE
+              Images:
+                - Sprite: Content/Avatars/man_Sarge
+              Labels:
+                - Alias: tutorial_inFight_start
+              Buttons:
+                - Alias: yes_sir
+          - Dialog:
+             Type: Dialog
+             Content:
+              Title:
+                  Alias: CHAR_GIZMO
+              Images:
+                - Sprite: Content/Avatars/man_Gizmo
+              Labels:
+                - Alias: tutorial_inFight_start_2
+              Buttons:
+                - Alias: continue
+
+
+      - Name: TUTORIAL_DLG_SARGE_HIT_HIM
+        Events:
+          - Call: {ID: DLG_SARGE_HIT_HIM}
+        Unresumable: 1
+        AllowInFight: 1
+        Actions:
+          #We want to show dialog DLG_SARGE_HIT_HIM with 30 frames delay as well. This fixes bug with ShowTutorialPanel on blured background of the dialog.
+          #2nd part is in tutorials.yaml
+          - Wait: {Frames: 30, ScreenLock: 1}
+          - Dialog:
+             Type: Dialog
+             Content:
+              Title:
+                  Alias: CHAR_SARGE
+              Images:
+                - Sprite: Content/Avatars/man_Sarge
+              Labels:
+                - Alias: tutorial_inFight_HitGizmoWhileHeBlocks
+              Buttons:
+                - Alias: understood
+
+
+      - Name: TUTORIAL_DLG_GIZMO_AGGRO
+        Events:
+          - Call: {ID: DLG_GIZMO_AGGRO}
+        Unresumable: 1
+        AllowInFight: 1
+        Actions:
+          - Dialog:
+             Type: Dialog
+             Content:
+              Title:
+                  Alias: CHAR_GIZMO
+              Images: 
+                - Sprite: Content/Avatars/man_Gizmo
+              Labels:
+                - Alias: tutorial_gizmo_aggro
+              Buttons:
+                - Alias: continue
+
+
+      - Name: TUTORIAL_DLG_GIZMO_BLOCK
+        Events:
+          - Call: {ID: DLG_GIZMO_BLOCK}
+        Unresumable: 1
+        AllowInFight: 1
+        Actions:
+          - Wait: {Frames: 360, ScreenLock: 1}
+          - Dialog:
+             Type: Dialog
+             Content:
+              Title:
+                  Alias: CHAR_GIZMO
+              Images:
+                - Sprite: Content/Avatars/man_Gizmo
+              Labels:
+                - Alias: tutorial_inFight_block_1
+              Buttons:
+                - Alias: continue
+
+
+      - Name: TUTORIAL_WIN_20
+        Events:
+          - FightEnd: {ID: 20.1, Result: Win}
+        AllowInFight: 1
+        Actions:
+          - SetUserVariable: {Name: SelectedBattle, Value: 30}
+          - SetUserVariable: {Name: STATE_tutorial, Value: 4}
+          - Call: {ID: TUTORIAL_GO_SHOP_MENU}
+
+
+      - Name: TUTORIAL_SHOP_HIGHLIGHT_MENU
+        Events:
+          - Call: {ID: TUTORIAL_GO_SHOP_MENU}
+          - SessionStart
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "4"}
+        Actions:
+          - GoToModule: {Module: DojoInterface, Type: Jump}
+          - Dialog:
+             Type: Dialog
+             Content:
+              Title:
+                  Alias: CHAR_SARGE
+              Images:
+                - Sprite: Content/Avatars/man_Sarge
+              Labels:
+                - Alias: beta_Tutorial_FreeFight_Win_Praise_Hint_SA
+              Buttons:
+                - Alias: understood
+          - Wait: {Frames: 20, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial 
+              Clickable: [0]
+              Description: tutorial_dojo_menu
+
+
+      - Name: TUTORIAL_SHOP_HIGHLIGHT_SHOP
+        Events:
+          - ButtonPressed: {ID: 0}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "4"}
+        Actions:
+          - Wait: {Frames: 20, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial 
+              Clickable: [2]
+              Description: tutorial_shop
+
+
+      - Name: TUTORIAL_SHOP_HIGHLIGHT_TRY_ON
+        Events:
+          - ButtonPressed: {ID: 2}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "4"}
+        Actions:
+          - GoToModule: {Module: Shop, Tab: Equipment, Type: Jump}
+          - Wait: {Frames: 80, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial 
+              Clickable: [31]
+              Description: tutorial_tryon_helmet
+
+
+      - Name: TUTORIAL_SHOP_HIGHLIGHT_PURCHASE
+        Events:
+          #- ButtonPressed: {ID: 31}
+          - Call: {ID: TUTORIAL_TRY_ON_HELMET}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "4"}
+        Actions:
+          - Wait: {Frames: 60, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [20]
+              NonClickable: [card_400]
+              Description: tutorial_purchase_helm
+
+
+      - Name: TUTORIAL_MAP_START
+        Events:
+          - ButtonPressed: {ID: 20}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "4"}
+        Actions:
+          - Wait: {Frames: 60, ScreenLock: 1}
+          - SetUserVariable: {Name: STATE_tutorial, Value: 5}
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: tutorial_go_to_map
+                Buttons:
+                  - Alias: continue
+                    CallID: TUTORIAL_MAP
+
+
+      - Name: TUTORIAL_MAP_HIGHLIGHT_MENU
+        Events:
+          - Call: {ID: TUTORIAL_MAP}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "5"}
+        Actions:
+          - GoToModule: {Module: Shop, Tab: Equipment, Type: Jump}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [0]
+              Description: tutorial_dojo_menu
+
+
+      - Name: TUTORIAL_MAP_HIGHLIGHT_MENU_RESTART
+        Events:
+          - SessionStart
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "5"}
+        Actions:
+          - GoToModule: {Module: DojoInterface}
+          - Wait: {Frames: 20, ScreenLock: 1}
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: tutorial_go_to_map
+                Buttons:
+                  - Alias: continue
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [0]
+              Description: tutorial_dojo_menu
+
+
+      - Name: TUTORIAL_MAP_HIGHLIGHT_MAP
+        Events:
+          - ButtonPressed: {ID: 0}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "5"}
+        Actions:
+          - Wait: {Frames: 60, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [3]
+              Description: tutorial_map
+          - GoToModule: {Module: Map, Type: Float}
+          - Wait: {Frames: 40, ScreenLock: 1}
+
+
+      - Name: TUTORIAL_MAP_BATTLE_PRE_SELECT
+        Events:
+          - MapOpened
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "5"}
+        Actions:
+          - CenterCameraToMapPoint: {Position: {X: 1205, Y: 690}}
+          - SetUserVariable: {Name: STATE_tutorial, Value: 6}
+          - ShowSelectedBattleInfo: {Show: 0}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [BattleID_30]
+              Description: tutorial_press_battle_icon
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: tutorial_sf_fightenter
+                Buttons:
+                  - Alias: continue
+                    CallID: TUTORIAL_FIGHTENTER
+          - ShowSelectedBattleInfo: {Show: 1}
+          - Wait: {Frames: 45, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [30]
+              Description: tutorial_press_fight
+
+
+      - Name: TUTORIAL_MAP_FIGHT_AFTER_RESTART
+        Events:
+          - SessionStart
+          - FightEnd: {ID: 30.1, Result: Loss}
+          - FightEnd: {ID: 30.1, Result: Surrender}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "6"}
+        Actions:
+          - GoToModule: {Module: Map}
+          - SelectBattle: {ID: "30", InstantFocus: 1}
+          - ShowSelectedBattleInfo: {Show: 1}
+          - Wait: {Frames: 25}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [30]
+              Description: tutorial_press_fight
+
+
+      - Name: TUTORIAL_PROPERTIES_START
+        Events:
+          - FightEnd: {ID: 30.1, Result: Win}
+        AllowInFight: 1
+        Actions:
+          - SetUserVariable: {Name: STATE_tutorial, Value: 7}
+
+
+      - Name: TUTORIAL_PROPERTIES_START
+        Events:
+          - FightEnd: {ID: 30.1, Result: Win}
+        Actions:
+          - GoToModule: {Module: Inventory, Tab: Weapon, Type: Float}
+          - Wait: {Frames: 120, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [11]
+              Description: tutorial_press_properties
+
+
+      - Name: TUTORIAL_PROPERTIES_AFTER_RESTART
+        Events:
+          - SessionStart
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "7"}
+        Actions:
+          - GoToModule: {Module: Inventory, Tab: Weapon}
+          - Wait: {Frames: 120, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial 
+              Clickable: [11]
+              Description: tutorial_press_properties
+
+
+      - Name: TUTORIAL_PROPERTIES_IMBUE
+        Events:
+          - ButtonPressed: {ID: 11}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "7"}
+        Actions:
+          #- GoToModule: {Module: Inventory, SubModule: PerkScreen, Tab: Weapon}
+          - Wait: {Frames: 40, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [12]
+              #Draggable: {From: card_3003, To: itemCard_slot_1}
+              NonClickable: [card_3003]
+              Description: tutorial_imbue_perk
+
+
+      - Name: TUTORIAL_PROPERTIES_IMBUE_TRY_OUT_HIGHLIGHT_MENU
+        Events:
+          - ButtonPressed: {ID: 12}
+          #- DragEnd: {DraggableID: card_3003, TargetID: itemCard_slot_1}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "7"}
+        Actions:
+          - SetUserVariable: {Name: STATE_tutorial, Value: 8}
+          - Wait: {Frames: 130, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial 
+              Clickable: [0]
+              Description: tutorial_dojo_menu
+
+
+      - Name: TUTORIAL_PROPERTIES_IMBUE_TRY_OUT_HIGHLIGHT_DOJO
+        Events:
+          - ButtonPressed: {ID: 0}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "8"}
+        Actions:
+          - Wait: {Frames: 20, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [4]
+              Description: tutorial_dojo
+
+
+      - Name: TUTORIAL_PROPERTIES_IMBUE_TRY_OUT_START_TRY_OUT
+        Events:
+          - ButtonPressed: {ID: 4}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "8"}
+        Actions:
+          - Wait: {Frames: 40, ScreenLock: 1}
+          - GoToModule: {Module: DojoInterface}
+          - SetUserVariable: {Name: Tutorial_SUPER_Training, Value: 1}
+
+
+      - Name: TUTORIAL_PROPERTIES_IMBUE_TRY_OUT_START_TRY_OUT_RESTART
+        Events:
+          - SessionStart
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "8"}
+        Actions:
+          - GoToModule: {Module: DojoInterface}
+          - SetUserVariable: {Name: Tutorial_SUPER_Training, Value: 1}
+
+
+      - Name: TUTORIAL_PROPERTIES_IMBUE_TRY_OUT_END_TRY_OUT
+        Events:
+          - Call: {ID: TUTORIAL_END}
+        Unresumable: 1
+        Actions:
+          - SetUserVariable: {Name: STATE_tutorial, Value: 99}
+          - ShowDummyBattle: {ID: 40}
+          - SetUserVariable: {Name: SelectedBattle, Value: 40}
+
+
+      - Name: TUTORIAL_END_ON_MAP
+        Priority: -99999
+        Events:
+          - PreSceneChange
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "99"}
+          - Equal: {Value1: "?GetUserVariable[TUTORIAL].Value", Value2: "1"}
+        Actions:
+          - RemoveUserVariable: {Name: TUTORIAL}
+          - TutorialComplete
+          - GoToModule: {Module: "?QuestEvent[PreSceneChange, ModuleTo]", Tab: "?QuestEvent[PreSceneChange, TabTo]"}
+
+
+      - Name: TUTORIAL_GIZMO_GO_TO_MAP_HIGHLIGHT_MENU
+        Events:
+          - Call: {ID: GIZMO_GO_TO_MAP}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[Gizmo_go_to_map_variable].Value", Value2: "2"}
+          - Not:
+            - Equal: {Value1: "?GetUserVariable[June_in_Dojo].Value", Value2: "1"}
+        Actions:
+          - SetUserVariable: {Name: Gizmo_go_to_map_variable, Value: 3}
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: dojo_gotomap_Gizmo_1
+                Buttons:
+                  - Alias: ok
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [0]
+              Description: tutorial_dojo_menu
+
+
+      - Name: TUTORIAL_GIZMO_GO_TO_MAP_HIGHLIGHT_MAP
+        Events:
+          - ButtonPressed: {ID: 0}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[Gizmo_go_to_map_variable].Value", Value2: "3"}
+        Actions:
+          - Wait: {Frames: 60, ScreenLock: 1}
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [3]
+              Description: tutorial_map
+
+
+      - Name: TUTORIAL_GIZMO_GO_TO_MAP_ACTION
+        Events:
+          - ButtonPressed: {ID: 3}
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[Gizmo_go_to_map_variable].Value", Value2: "3"}
+        Actions:
+          - GoToModule: {Module: Map, Type: Float}
+          - Wait: {Frames: 55, ScreenLock: 1}
+          - SetUserVariable: {Name: Gizmo_go_to_map_variable, Value: 4}
+
+
+################################################################# BATTLE TYPES
+
+      - Name: TUTORIAL_BATTLE_GO_TO_MAP
+        Priority: -100000
+        Unresumable: 1
+        Events:
+          - SessionStart
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?GetUserVariable[TUTORIAL_SURVIVALS].Value", Value2: "1"}
+            - Equal: {Value1: "?GetUserVariable[TUTORIAL_MISSIONS].Value", Value2: "1"}
+        Actions:
+          - GoToModule: {Module: Map, Type: Jump}
+
+############################################# SURVIVAL
+
+      - Name: TUTORIAL_SURVIVALS_SHOW_DUMMY
+        Events:
+          - FightEnd: {ID: 40.2, Result: Loss}
+          - FightEnd: {ID: 40.3, Result: Loss}
+          - FightEnd: {ID: 40.4, Result: Loss}
+          - FightEnd: {ID: 40.4, Result: Win}
+        AllowInFight: 1
+        Unresumable: 1
+        Actions:
+          - SetUserVariable: {Name: TUTORIAL_SURVIVALS, Value: 1}
+          - ShowDummyBattle: {ID: 10000}
+          - SetUserVariable: {Name: SelectedBattle, Value: 10000}
+
+      - Name: TUTORIAL_SURVIVALS
+        Priority: -100
+        Events:
+          - MapOpened
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[TUTORIAL_SURVIVALS].Value", Value2: "1"}
+        Actions:
+          - SetUserVariable: {Name: TUTORIAL_SURVIVALS, Value: 2}
+          - ShowSelectedBattleInfo: {Show: 0}
+          - CenterCameraToMapPoint: {Position: {X: 1205, Y: 690}}
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: tutorial_survivals_Sarge
+                Buttons:
+                  - Alias: continue
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [BattleID_10000]
+              Description: tutorial_survivals
+          #- SelectBattle: {ID: "10000"}
+          - ShowSelectedBattleInfo: {Show: 1}
+
+############################################# MISSION
+
+      - Name: TUTORIAL_MISSIONS_SHOW_DUMMY
+        Events:
+          - FightEnd: {ID: 40.2, Result: Win}
+        AllowInFight: 1
+        Unresumable: 1
+        Actions:
+          - SetUserVariable: {Name: TUTORIAL_MISSIONS, Value: 1}
+          - ShowDummyBattle: {ID: 30021}
+          - SetUserVariable: {Name: SelectedBattle, Value: 30021}
+
+      - Name: TUTORIAL_MISSIONS
+        Priority: -100
+        Events:
+          - MapOpened
+        Unresumable: 1
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[TUTORIAL_MISSIONS].Value", Value2: "1"}
+        Actions:
+          - SetUserVariable: {Name: TUTORIAL_MISSIONS, Value: 2}
+          - ShowSelectedBattleInfo: {Show: 0}
+          - CenterCameraToMapPoint: {Position: {X: 1450, Y: 390}}
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: tutorial_missions_Sarge
+                Buttons:
+                  - Alias: continue
+          - HighlightUI:
+              Type: UITutorial
+              Clickable: [BattleID_30021]
+              Description: tutorial_missions
+          #- SelectBattle: {ID: "30021"}
+          - ShowSelectedBattleInfo: {Show: 1}
+
+############################################# TUTORIAL
+
+  #- Name: TUTORIAL_SHADOW_NEW_ABILITY_COOLDOWN
+  #  Triggers:
+      - Name: TUTORIAL_SHADOW_COOLDOWN_HELMET
+        Events:
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_HELMET}
+        AllowInFight: 1
+        Unresumable: 1
+        Actions:
+          - SwitchHighlightUIElement: {ID: 12345}
+          #- SwitchHighlightUIElement: {ID: 12345, Description: Tutorial_Shadow_Form_Cooldown}
+
+  
+      - Name: TUTORIAL_SHADOW_COOLDOWN_WEAPON
+        Events:
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_WEAPON}
+        AllowInFight: 1
+        Unresumable: 1
+        Actions:
+          - SwitchHighlightUIElement: {ID: 12347}
+  
+      - Name: TUTORIAL_SHADOW_COOLDOWN_ARMOR
+        Events:
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_ARMOR}
+        AllowInFight: 1
+        Unresumable: 1
+        Actions:
+          - SwitchHighlightUIElement: {ID: 12348}
+  
+      - Name: TUTORIAL_SHADOW_COOLDOWN_HIDE
+        Events:
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_HIDE}
+        AllowInFight: 1
+        Unresumable: 1
+        Actions:
+          - SwitchHighlightUIElement

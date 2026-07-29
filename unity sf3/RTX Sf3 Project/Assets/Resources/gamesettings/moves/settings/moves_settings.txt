@@ -1,0 +1,2789 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+
+# ################################################# STANCES #################################################
+# ########################### IDLE
+  - Animation: Stance_Idle
+    FileName: m_idle.bin
+    Groups:
+      - STANCE_IDLE
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        
+# ########################### START ROUND (BIRTH-ROUND-IDLE)
+  - Animation: Stance_Start_Birth
+    FileName: m_idle.bin
+    BlendingFrames: 0
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+            
+  - Animation: Stance_Start_Birth_Agile_Fists
+    FileName: m_agl_stance_birth.bin
+#    BlendingFrames: 0
+    EndFrame: 30
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+        Shift:
+            X: 40
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Stance_Start_Round
+    FileName: m_2h_stance.bin
+    Groups:
+      - STANCE_START_ROUND
+    RepulsionScale:
+        X: 0.5
+    BlendingFrames: 0
+    EndsStage:
+      - RoundStart
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+        
+  - Animation: Stance_Start_Round_Agile_Fists
+    FileName: m_agl_stance.bin
+    Groups:
+      - STANCE_START_ROUND
+    RepulsionScale:
+        X: 0.5
+    BlendingFrames: 0
+#    FirstFrame: 31
+    EndsStage:
+      - RoundStart
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 20
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 48
+
+  - Animation: Stance_Start_Idle
+    FileName: m_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    RepulsionScale:
+        X: 0.7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+        
+  - Animation: Stance_Start_Idle_Agile_Fists
+    FileName: m_agl_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    RepulsionScale:
+        X: 0.7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+
+### strong
+  - Animation: Stance_Start_Birth_Strong_Fists
+    FileName: m_str_stance_birth.bin
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Stance_Start_Round_Strong_Fists
+    FileName: m_str_stance.bin
+    Groups:
+      - STANCE_START_ROUND
+    RepulsionScale:
+        X: 0.5
+    EndsStage:
+      - RoundStart
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+        Frame: 16
+
+  - Animation: Stance_Start_Idle_Strong_Fists
+    FileName: m_str_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    RepulsionScale:
+        X: 0.7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+
+# ########################### WIN ROUND
+  - Animation: Stance_Win
+    FileName: shop_stance.bin
+    Groups:
+      - STANCE_WIN_POSE
+    BlendingFrames: 6
+    EndFrame: 38
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+            
+  - Animation: Stance_Win_Agile_Fists
+    FileName: m_agl_win_stance.bin
+    Groups:
+      - STANCE_WIN_POSE
+#    BlendingFrames: 6
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 20
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 48
+
+  - Animation: Stance_Win_Idle
+    FileName: shop_idle.bin
+    Groups:
+      - STANCE_WIN_IDLE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+            
+  - Animation: Stance_Win_Idle_Agile_Fists
+    FileName: m_agl_stance_idle.bin
+    Groups:
+      - STANCE_WIN_IDLE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+
+# ########################### TIMEOUT - LOSE ROUND
+  - Animation: Stance_Timeout
+    FileName: m_lose_time_out.bin
+    Groups:
+      - STANCE_TIMEOUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Stance_Timeout_Idle
+    FileName: m_lose_time_out_idle.bin
+    Groups:
+      - STANCE_TIMEOUT_IDLE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+
+# ################################################# BASIC MOVES #################################################
+# ########################### JUMPS
+  - Animation: Jump_Up
+    FileName: m_jump_up.bin
+    Groups:
+      - MOVE
+      - JUMP_UP
+      - JUMP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    EndFrame: 54
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Transitional
+        End: 6
+      - Name: Unstable
+        Start: 11
+        End: 30
+      - Name: Uninterrupt
+        End: 35
+      - Name: Blocking
+        Start: 36
+      - Name: Throwable
+        Start: 36
+    Sounds:
+      - Gender:
+          Male:
+            - voice/jump/m/m_jump_1
+            - voice/jump/m/m_jump_2
+            - voice/jump/m/m_jump_3
+            - voice/jump/m/m_jump_4
+            - voice/jump/m/m_jump_5
+            - voice/jump/m/m_jump_6
+          Female:
+            - voice/jump/f/f_jump_1
+            - voice/jump/f/f_jump_2
+            - voice/jump/f/f_jump_3
+            - voice/jump/f/f_jump_4
+            - voice/jump/f/f_jump_5
+            - voice/jump/f/f_jump_6
+        Frame: 8
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 3
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 30
+
+  - Animation: Jump_Up_Strong
+    FileName: m_str_jump_up.bin
+    Groups:
+      - MOVE
+      - JUMP_UP
+      - JUMP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 18
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Transitional
+        End: 6
+      - Name: Unstable
+        Start: 13
+        End: 25
+      - Name: Uninterrupt
+        End: 35
+      - Name: Blocking
+        Start: 36
+      - Name: Throwable
+        Start: 36
+    Sounds:
+      - Gender:
+          Male:
+            - voice/jump/m/m_jump_1
+            - voice/jump/m/m_jump_2
+            - voice/jump/m/m_jump_3
+            - voice/jump/m/m_jump_4
+            - voice/jump/m/m_jump_5
+            - voice/jump/m/m_jump_6
+          Female:
+            - voice/jump/f/f_jump_1
+            - voice/jump/f/f_jump_2
+            - voice/jump/f/f_jump_3
+            - voice/jump/f/f_jump_4
+            - voice/jump/f/f_jump_5
+            - voice/jump/f/f_jump_6
+        Frame: 9
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 4
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 26
+
+# ########################### FLIPS
+
+# ############### FRONT FLIPS
+  - Animation: Flip_Front
+    FileName: m_fron_flip.bin
+    Groups:
+      - MOVE
+      - FLIP_FRONT
+      - JUMP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 11
+    EndFrame: 54
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Unstable
+        Start: 12
+        End: 39
+      - Name: Blocking
+        Start: 44
+      - Name: Throwable
+        Start: 44
+      - Name: Uninterrupt
+        End: 43
+    Sounds:
+      - Gender:
+          Male:
+            - voice/jump/m/m_jump_1
+            - voice/jump/m/m_jump_2
+            - voice/jump/m/m_jump_3
+            - voice/jump/m/m_jump_4
+            - voice/jump/m/m_jump_5
+            - voice/jump/m/m_jump_6
+          Female:
+            - voice/jump/f/f_jump_1
+            - voice/jump/f/f_jump_2
+            - voice/jump/f/f_jump_3
+            - voice/jump/f/f_jump_4
+            - voice/jump/f/f_jump_5
+            - voice/jump/f/f_jump_6
+        Frame: 10
+      - Common:
+          - whoosh/doublejump/19b_DoubleJump_Wooshes_V3
+          - whoosh/doublejump/19b_DoubleJump_Wooshes_V6
+          - whoosh/doublejump/19b_DoubleJump_Wooshes_V9
+        Frame: 8
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 40
+
+  - Animation: Jump_Front_Strong
+    FileName: m_str_front_jump.bin
+    Groups:
+      - MOVE
+      - FLIP_FRONT
+      - JUMP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 16
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 25
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 4
+    Intervals:
+      - Name: Unstable
+        Start: 14
+        End: 28
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 33
+      - Name: Uninterrupt
+        End: 32
+
+# ############### BACK FLIPS
+  - Animation: Flip_Back
+    FileName: m_back_flip.bin
+    Groups:
+      - MOVE
+      - FLIP_BACK
+      - JUMP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 20
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Unstable
+        Start: 10
+        End: 38
+      - Name: Blocking
+        Start: 44
+      - Name: Throwable
+        Start: 44
+      - Name: Uninterrupt
+        End: 43
+    Sounds:
+      - Gender:
+          Male:
+            - voice/jump/m/m_jump_1
+            - voice/jump/m/m_jump_2
+            - voice/jump/m/m_jump_3
+            - voice/jump/m/m_jump_4
+            - voice/jump/m/m_jump_5
+            - voice/jump/m/m_jump_6
+          Female:
+            - voice/jump/f/f_jump_1
+            - voice/jump/f/f_jump_2
+            - voice/jump/f/f_jump_3
+            - voice/jump/f/f_jump_4
+            - voice/jump/f/f_jump_5
+            - voice/jump/f/f_jump_6
+        Frame: 10
+      - Common:
+          - whoosh/doublejump/19b_DoubleJump_Wooshes_V3
+          - whoosh/doublejump/19b_DoubleJump_Wooshes_V6
+          - whoosh/doublejump/19b_DoubleJump_Wooshes_V9
+        Frame: 8
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 37
+
+  - Animation: Jump_Back_Strong
+    FileName: m_str_back_jump.bin
+    Groups:
+      - MOVE
+      - FLIP_BACK
+      - JUMP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 17
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 25
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 4
+    Intervals:
+      - Name: Unstable
+        Start: 13
+        End: 25
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 33
+      - Name: Uninterrupt
+        End: 32
+
+# ########################### ROLLS
+
+# ############### FRONT ROLLS
+  - Animation: Roll_Front
+    FileName: m_front_roll.bin
+    Groups:
+      - MOVE
+      - ROLL_FRONT
+      - ROLL
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 13
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Roll_Sound
+        Start: 4
+        End: 4
+      - Name: Unstable
+        Start: 8
+        End: 26
+      - Name: Blocking
+        Start: 30
+      - Name: Throwable
+        Start: 30
+      - Name: Uninterrupt
+        End: 29
+
+# ############### BACK ROLLS
+  - Animation: Roll_Back
+    FileName: m_back_roll.bin
+    Groups:
+      - MOVE
+      - ROLL_BACK
+      - ROLL
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 13
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+    Intervals:
+      - Name: Roll_Sound
+        Start: 4
+        End: 4
+      - Name: Unstable
+        Start: 8
+        End: 26
+      - Name: Blocking
+        Start: 30
+      - Name: Throwable
+        Start: 30
+      - Name: Uninterrupt
+        End: 29
+
+# ########################### STEPS
+  - Animation: Step_Forward
+    FileName: m_step_forward.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_FORWARD
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds: 
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 9
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+      - Name: Transition_To_Heavy
+        Start: 15
+
+  - Animation: Step_Back
+    FileName: m_step_back.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_BACK
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds: 
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 9
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+
+# ########################### DASH STEPS
+  - Animation: Hop_Back
+    FileName: m_backward_hop.bin
+    Groups:
+      - MOVE
+      - DASH
+      - DASH_BACK
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds: 
+      - Floor:
+          Stone:
+            - step/light_land/stone/stone_otskok_1
+            - step/light_land/stone/stone_otskok_2
+            - step/light_land/stone/stone_otskok_3
+          Wood:
+            - step/light_land/wood/wood_otskok_1
+            - step/light_land/wood/wood_otskok_2
+            - step/light_land/wood/wood_otskok_3
+        Frame: 17
+    Intervals:
+      - Name: Blocking
+        Start: 18
+      - Name: Throwable
+        Start: 18
+#      - Name: Unstable
+#        Start: 9
+#        End: 15
+      - Name: Uninterrupt
+        End: 17
+
+  - Animation: Hop_Front
+    FileName: m_forward_hop.bin
+    Groups:
+      - MOVE
+      - DASH
+      - DASH_FORWARD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds: 
+      - Floor:
+          Stone:
+            - step/light_land/stone/stone_otskok_1
+            - step/light_land/stone/stone_otskok_2
+            - step/light_land/stone/stone_otskok_3
+          Wood:
+            - step/light_land/wood/wood_otskok_1
+            - step/light_land/wood/wood_otskok_2
+            - step/light_land/wood/wood_otskok_3
+        Frame: 14
+    Intervals:
+      - Name: Blocking
+        Start: 15
+      - Name: Throwable
+        Start: 15
+#      - Name: Unstable
+#        Start: 8
+#        End: 14
+      - Name: Uninterrupt
+        End: 14
+
+  - Animation: Hop_Dodge
+    FileName: m_dodgehop.bin
+    Groups:
+      - MOVE
+      - DASH
+      - DASH_FORWARD
+      - DASH_DODGE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 15
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds: 
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 13
+    Intervals:
+      - Name: Blocking
+        Start: 27
+      - Name: Throwable
+        Start: 27
+      - Name: Uninterrupt
+        End: 26
+      - Type: NoRepulsion
+        Start: 7
+        End: 24
+      - Type: Invincible
+        Start: 7
+        End: 24
+
+# ########################### WALL JUMPS
+  - Animation: Wall_Jump
+    FileName: m_walljump.bin
+    Groups:
+      - MOVE
+      - WALL_JUMP
+    RepulsionScale:
+        X: 0.8
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 14
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Wall
+            Part: Back
+        Shift:
+            X: 54
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 50
+      - Name: Blocking
+        Start: 51
+      - Name: Throwable
+        Start: 51
+      - Name: Unstable
+        Start: 13
+        End: 50
+      - Type: NoWallRepulsion
+        End: 25
+      - Type: NoRepulsion
+        End: 25
+    Sounds:
+      - Gender:
+          Male:
+          - voice/jump/m/m_jump_1
+          - voice/jump/m/m_jump_2
+          - voice/jump/m/m_jump_3
+          - voice/jump/m/m_jump_4
+          - voice/jump/m/m_jump_5
+          - voice/jump/m/m_jump_6
+          Female:
+          - voice/jump/f/f_jump_1
+          - voice/jump/f/f_jump_2
+          - voice/jump/f/f_jump_3
+          - voice/jump/f/f_jump_4
+          - voice/jump/f/f_jump_5
+          - voice/jump/f/f_jump_6
+        Frame: 10
+      - Common:
+          - step/wood/8_Footsteps_Wood_Surface_V9
+          - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 23
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 23
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 44
+
+# ################################################# LOW STANCE #################################################
+  - Animation: Low_Stance_In
+    FileName: m_low_stance_in_out.bin
+    EndFrame: 13
+    Groups:
+      - LOW_STANCE_IN
+      - LOW_STANCE
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+ #     - Name: Uninterrupt
+      - Name: Transitional
+      - Name: Dodging
+
+  - Animation: Low_Stance_Idle
+    FileName: m_low_stance_idle.bin
+    Groups:
+      - LOW_STANCE_LOOP
+      - LOW_STANCE
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+  #    - Name: Uninterrupt
+      - Name: Transitional
+      - Name: Dodging
+
+  - Animation: Low_Stance_Out
+    FileName: m_low_stance_in_out.bin
+    FirstFrame: 22
+    Groups:
+      - LOW_STANCE_OUT
+      - LOW_STANCE
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+  #    - Name: Uninterrupt
+  #      End: 26
+      - Name: Dodging
+
+  - Animation: Low_Stance_Dodge
+    FileName: m_low_stance_dodge.bin
+    Groups:
+      - LOW_STANCE
+      - LOW_STANCE_DODGE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Throwable
+      - Name: Uninterrupt
+      #- Name: Unstable
+      - Name: Dodging
+
+# ################################################# STAND UPS #################################################
+  - Animation: Stand_Up_Back
+    FileName: m_stand_up_from_back.bin
+    Groups:
+      - STAND_UP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    EndFrame: 50
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Front
+    Intervals:
+      - Name: Uninterrupt
+        End: 30
+      - Name: Blocking
+        Start: 31
+      - Name: Throwable
+        Start: 31
+      - Name: Unstable
+        End: 26
+    Sounds:
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 20
+
+  - Animation: Stand_Up_Back_After_Throw
+    FileName: m_stand_up_from_back.bin
+    Groups:
+      - STAND_UP
+    EndFrame: 50
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Wall
+            Part: Back
+    Intervals:
+      - Name: Uninterrupt
+        End: 30
+      - Name: Blocking
+        Start: 31
+      - Name: Throwable
+        Start: 35
+      - Name: Unstable
+        End: 26
+    Sounds:
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 20
+
+  - Animation: Stand_Up_Back_Strong
+    FileName: m_stand_up_from_back_str.bin
+    Groups:
+      - STAND_UP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Front
+    Intervals:
+      - Name: Uninterrupt
+        End: 24
+      - Name: Blocking
+        Start: 25
+      - Name: Throwable
+        Start: 25
+      - Name: Unstable
+        End: 24
+
+  - Animation: Stand_Up_Back_After_Throw_Strong
+    FileName: m_stand_up_from_back_str.bin
+    Groups:
+      - STAND_UP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 24
+      - Name: Blocking
+        Start: 25
+      - Name: Throwable
+        Start: 30
+      - Name: Unstable
+        End: 24
+
+  - Animation: Stand_Up_Face
+    FileName: m_stand_up_from_front.bin
+    Groups:
+      - STAND_UP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    EndFrame: 50
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Front
+    Intervals:
+      - Name: Uninterrupt
+        End: 20
+      - Name: Blocking
+        Start: 21
+      - Name: Throwable
+        Start: 21
+      - Name: Unstable
+        End: 20
+
+  - Animation: Stand_Up_Back_With_Kick
+    FileName: k_lying_kick_from_back.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - STAND_UP
+      - STAND_UP_KICK
+      - FOLLOWED_BY
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Front
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Unstable
+      - Name: Perk_Parry
+        Start: 3
+        End: 12
+      - Type: Attack
+        Start: 9
+        End: 12
+        HitTags:
+          - Hit_Legs
+          - Unblockable
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 15000
+        Slowmo:
+            Start: 7
+            End: 12
+            Distance: 200
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 6
+
+  - Animation: Stand_Up_Back_With_Kick_After_Throw
+    FileName: k_lying_kick_from_back.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - STAND_UP
+      - STAND_UP_KICK
+      - FOLLOWED_BY
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Wall
+            Part: Back
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Unstable
+      - Name: Perk_Parry
+        Start: 3
+        End: 12
+      - Type: Attack
+        Start: 9
+        End: 12
+        HitTags:
+          - Hit_Legs
+          - Unblockable
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 15000
+        Slowmo:
+            Start: 7
+            End: 12
+            Distance: 200
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 6
+
+  - Animation: Stand_Up_Face_With_Kick
+    FileName: k_lying_kick_from_front.bin
+    Groups:
+      - ATTACK
+      - UNARMED
+      - KICK
+      - STAND_UP
+      - STAND_UP_KICK
+      - FOLLOWED_BY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Front
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Unstable
+      - Name: Perk_Parry
+        Start: 3
+        End: 14
+      - Type: Attack
+        Start: 9
+        End: 14
+        HitTags:
+          - Hit_Legs
+          - Unblockable
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Impulse:
+            X: 15000
+        Slowmo:
+            Start: 7
+            End: 14
+            Distance: 200
+        Damage:
+            Attack: UnarmedDamage
+            BaseDamage: 0.05
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 6
+
+# ################################################# THROWS #################################################
+  - Animation: Throw_Simple
+    FileName: throw_p.bin
+    Groups:
+      - THROW
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 17
+    EndFrame: 53
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 44
+      - Type: Attack
+        Start: 28
+        End: 32
+        HitTags:
+          - Unblockable
+        Slowmo:
+            Start: 25
+            End: 29
+            Distance: 300
+        Damage:
+            Attack: UnarmedDamage
+            Defense: BodyDefense
+            BaseDamage: 0.18
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+
+  - Animation: Throw_Passive
+    FileName: throw_e.bin
+    Groups:
+      - THROW_FALL
+      - FALL
+      - FOLLOWED_BY
+      - FALL_CRITICAL_ON_BACK
+    EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: foot_l
+        Shift:
+            X: 50
+    SetDirection:
+        From:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoRepulsion
+      - Name: Uninterrupt
+      - Name: Floorfall
+        Start: 27
+        End: 27
+    Sounds:
+      - Common:
+          - whoosh/throw/bone_crunching
+        Frame: 12
+      - Common:
+          - whoosh/throw/throw_whoosh
+        Frame: 18
+
+  - Animation: Throw_Forward_Active
+    FileName: throw_front_a.bin
+    Groups:
+      - THROW
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+ #       End: 44
+      - Type: Attack
+        Start: 47
+        End: 48
+        HitTags:
+          - Unblockable
+        Slowmo:
+            Start: 42
+            End: 46
+            Distance: 300
+        Damage:
+            Attack: UnarmedDamage
+            Defense: BodyDefense
+            BaseDamage: 0.18
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 16
+
+  - Animation: Throw_Forward_Passive
+    FileName: throw_front_b.bin
+    Groups:
+      - THROW_FALL
+      - FALL
+      - FOLLOWED_BY
+      - FALL_CRITICAL_ON_FACE
+#    EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: foot_l
+        Shift:
+            X: -168
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoRepulsion
+      - Name: Uninterrupt
+      - Name: Floorfall
+        Start: 44
+        End: 44
+    Sounds:
+      - Common:
+          - whoosh/throw/bone_crunching
+        Frame: 12
+      - Common:
+          - whoosh/throw/throw_whoosh
+        Frame: 18
+
+# ################################################# STATES #################################################
+  - Animation: Stun
+    FileName: h_stun.bin
+    Groups:
+      - STATE
+      - STUN
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Uninterrupt
+
+# ################################################# LOSSES #################################################
+  - Animation: Stance_Loss
+    EndFrame: 50
+
+  - Animation: Loss_on_back
+    FileName: m_lose_on_back.bin
+    EndFrame: 132
+    Mirrored: 0
+    Groups:
+      - LOSS
+      - LOSS_ON_BACK
+      - FOLLOWED_BY
+    BlendingFrames: 5
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    EndsStage:
+      - RoundFightEnd
+
+  - Animation: Loss_on_back_Reverse
+    FileName: m_lose_on_back_mirrored.bin
+    EndFrame: 132
+    Mirrored: 0
+    Groups:
+      - LOSS
+      - LOSS_ON_BACK_REVERSE
+      - FOLLOWED_BY
+    BlendingFrames: 5
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    EndsStage:
+      - RoundFightEnd
+
+
+  #- Animation: Loss_on_back_idle
+  #  FileName: m_lose_on_back_idle.bin
+  #  BlendingFrames: 0
+  #  Groups:
+  #    - LOSS_IDLE
+  #    - LOSS_ON_BACK
+  #  Align:
+  #      Rotation:
+  #          Y: 6
+  #      Axis:
+  #        - X
+  #      Pivot:
+  #          Object: Nodes
+  #          Part: pelvis
+  #      Position:
+  #          Player: Me
+  #          Object: Pivot
+  - Animation: Loss_on_back_idle
+    FileName: m_lose_on_back.bin
+    #BlendingFrames: 0
+    FirstFrame: 133
+    Mirrored: 0
+    Groups:
+      - LOSS_IDLE
+      - LOSS_ON_BACK
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+            
+  - Animation: Loss_on_back_idle_Reverse
+    FileName: m_lose_on_back_mirrored.bin
+    #BlendingFrames: 0
+    FirstFrame: 133
+    Mirrored: 0
+    Groups:
+      - LOSS_IDLE
+      - LOSS_ON_BACK_REVERSE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Loss_on_face
+    FileName: m_lose_on_chest.bin
+    Mirrored: 0
+    EndFrame: 99
+    Groups:
+      - LOSS
+      - LOSS_ON_FACE
+      - FOLLOWED_BY
+    BlendingFrames: 5
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    EndsStage:
+      - RoundFightEnd
+
+  - Animation: Loss_on_face_Reverse
+    FileName: m_lose_on_chest_mirrored.bin
+    Mirrored: 0
+    EndFrame: 99
+    Groups:
+      - LOSS
+      - LOSS_ON_FACE_REVERSE
+      - FOLLOWED_BY
+    BlendingFrames: 5
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    EndsStage:
+      - RoundFightEnd
+
+  #- Animation: Loss_on_face_idle
+  #  FileName: m_lose_on_chest_idle.bin
+  #  BlendingFrames: 0
+  #  #Mirrored: -1
+  #  Groups:
+  #    - LOSS_IDLE
+  #    - LOSS_ON_FACE
+  #  Align:
+  #      Rotation:
+  #          Y: 6
+  #      Axis:
+  #        - X
+  #      Pivot:
+  #          Object: Nodes
+  #          Part: pelvis
+  #      Position:
+  #          Player: Me
+  #          Object: Pivot
+  
+  - Animation: Loss_on_face_idle
+    FileName: m_lose_on_chest.bin
+    #BlendingFrames: 0
+    FirstFrame: 100
+    Mirrored: 0
+    Groups:
+      - LOSS_IDLE
+      - LOSS_ON_FACE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+            
+  - Animation: Loss_on_face_idle_Reverse
+    FileName: m_lose_on_chest_mirrored.bin
+    #BlendingFrames: 0
+    FirstFrame: 100
+    Mirrored: 0
+    Groups:
+      - LOSS_IDLE
+      - LOSS_ON_FACE_REVERSE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+  
+
+# ################################################# PHYSICS #################################################
+  - Animation: Physics
+    Groups:
+      - PHYSICS
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Unstable
+
+  - Animation: Physics_Wall_Recoil
+    Intervals:
+      - Name: Uninterrupt
+      - Type: NoWallRepulsion
+
+# ################################################# RANGED #################################################
+# ######################################### SHURIKEN
+#  - Animation: Shuriken_Player_Throw
+#    FileName: rt_shuriken_throw.bin
+#    EndFrame: 35
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#        Pivot:
+#            Object: Nodes
+#            Part: foot_l
+#        Position:
+#            Player: Me
+#            Object: Pivot
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: pelvis
+#        To:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#    Sounds:
+#      - Name:
+#          - shuriken_fly
+#        Frame: 34
+#    Intervals:
+#      - Name: Uninterrupt
+#        End: 32
+#  - Animation: Shuriken_Missile_Fly_Start
+#    FileName: rt_shuriken_throw_bullet.bin
+#    EndFrame: 23
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Parent
+#            Object: Nodes
+#            Part: pelvis
+#        Shift:
+#            Y: 45
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Parent
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#  - Animation: Shuriken_Missile_Fly
+#    FileName: shuriken.bin
+#    Groups:
+#      - ATTACK
+#      - WEAPON
+#      - RANGED
+#    Velocity:
+#        X: 25
+#    Looped: 1
+#    BlendingFrames: 0
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Me
+#            Object: Pivot
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Me
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#      - Type: Attack
+#        HitTags:
+#          - Hit_Chest
+#          - Hit_High_Short
+#        Slowmo:
+#            Distance: 250
+#        AttackingParts:
+#          - Shuriken_attacking_edge
+#        Impulse:
+#            X: 15000
+#        Damage:
+#            Attack:
+#              - RangedDamage
+#            BaseDamage: 0.03
+#        Dodge:
+#            Distance: 350
+## ################################################# MAGIC #################################################
+## ######################################### TEST
+#  - Animation: Fireball_Missile_Fly
+#    FileName: shuriken.bin
+#    Groups:
+#      - ATTACK
+#      - WEAPON
+#      - RANGED
+#    Velocity:
+#        Y: -10
+#    Looped: 1
+#    BlendingFrames: 0
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Me
+#            Object: Pivot
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Me
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#      - Type: Attack
+#        HitTags:
+#          - Hit_Chest
+#          - Hit_High_Strong
+#        Slowmo:
+#            Distance: 100
+#        AttackingParts:
+#          - Shuriken_attacking_edge
+#        Impulse:
+#            X: 1000
+#            Y: -5000
+#        Damage:
+#            Attack:
+#              - WeaponDamage
+#            BaseDamage: 0.2
+#        Dodge:
+#            Distance: 350
+#  - Animation: Fireball_Missile_Fly_Start
+#    FileName: rt_shuriken_throw_bullet.bin
+#    EndFrame: 23
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#        Shift:
+#            X: -300
+#            Y: 250
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Parent
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#  - Animation: Fireball_Missile_Fly_Start2
+#    FileName: rt_shuriken_throw_bullet.bin
+#    EndFrame: 23
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#        Shift:
+#            X: -200
+#            Y: 350
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Parent
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#  - Animation: Fireball_Missile_Fly_Start3
+#    FileName: rt_shuriken_throw_bullet.bin
+#    EndFrame: 23
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#        Shift:
+#            X: -100
+#            Y: 275
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Parent
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#  - Animation: Fireball_Missile_Fly_Start4
+#    FileName: rt_shuriken_throw_bullet.bin
+#    EndFrame: 23
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#        Shift:
+#            X: -75
+#            Y: 225
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Parent
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#  - Animation: Fireball_Missile_Fly_Start5
+#    FileName: rt_shuriken_throw_bullet.bin
+#    EndFrame: 23
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#        Shift:
+#            X: 0
+#            Y: 300
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Parent
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#  - Animation: Fireball_Missile_Fly_Start6
+#    FileName: rt_shuriken_throw_bullet.bin
+#    EndFrame: 23
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#        Shift:
+#            X: 75
+#            Y: 350
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Parent
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#  - Animation: Flameball_Missiles_Fly_Start
+#    FileName: rt_shuriken_throw_bullet.bin
+#    EndFrame: 23
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Parent
+#            Object: Nodes
+#            Part: pelvis
+#        Shift:
+#            Y: 45
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Parent
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#  - Animation: Flameball_Missile_Fly
+#    FileName: shuriken.bin
+#    Groups:
+#      - ATTACK
+#      - WEAPON
+#      - RANGED
+#    Velocity:
+#        X: 15
+#    Looped: 1
+#    BlendingFrames: 0
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#          - Y
+#        Pivot:
+#            Object: Nodes
+#            Part: bullet_joint
+#        Position:
+#            Player: Me
+#            Object: Pivot
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: bullet_joint
+#        To:
+#            Player: Me
+#            Object: Front
+#    Intervals:
+#      - Type: NoWallRepulsion
+#      - Type: Attack
+#        HitTags:
+#          - Hit_Chest
+#          - Hit_High_Strong
+#        Slowmo:
+#            Distance: 250
+#        AttackingParts:
+#          - Shuriken_attacking_edge
+#        Impulse:
+#            X: 15000
+#        Damage:
+#            Attack:
+#              - WeaponDamage
+#            BaseDamage: 0.1
+#        Dodge:
+#            Distance: 350
+#  - Animation: Stance_Idle
+#    FileName: m_idle.bin
+#    Groups:
+#      - STANCE_IDLE
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#        Pivot:
+#            Object: Nodes
+#            Part: foot_l
+#        Position:
+#            Player: Me
+#            Object: Pivot
+#    Intervals:
+#      - Name: Blocking
+#      - Name: Throwable
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: pelvis
+#        To:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#    RepulsionScale:
+#        X: 0.5

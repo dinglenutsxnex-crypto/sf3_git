@@ -1,0 +1,2049 @@
+TriggerSets:
+  - Name: DISABLE_FIGHT_START_MESSAGE_IN_FIRST_TUTORIAL_FIGHT
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_PLAYER]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+        Actions:
+          - FightSettings: {ShowFightStart: 0}
+########################################################## MOVEMENT TUTORIAL (ROUND 1)
+
+  - Name: beta_TUTORIAL_MOVEMENT_COMBOS
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+        Actions:
+          - UIElements: {ids: [996, 997, 998, 999], Show: false}
+          - SetVariable: {Name: TUTORIAL, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_THROWS, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_CONTROLS_DISABLED, Value: 1, ApplyTo: Enemy}
+          - SetVariable: {Name: CHEAT_NULL_PLAYER_DAMAGE, Value: 1, ApplyTo: Enemy}
+          - SetVariable: {Name: UNSHOCKABLE, Value: 1, ApplyTo: Enemy}
+          - RepulsionType: {ApplyTo: Enemy, State: 1}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: show_tutorial_dialog}
+       #Conditions:
+       #  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Start_Birth_Tutorial"}
+        Actions:
+          - Call: {ID: DLG_SARGE_MOVEMENT}
+
+############################################## BASIC ATTACK
+      - Events:
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_Start_Dialog].Value", Value2: "1"}
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_Start_Dialog, Value: 1, ApplyTo: Me}
+          - UIElements: {ids: [996, 997, 998, 999], Show: false}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Basic_AttackCloser, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          - HighlightKey: {Keys: [Forward, Punch], Toggle: On}
+          - SetVariable: {Name: Tutorial_MovementShown, Value: 1, ApplyTo: Me}
+          - SwitchKey: {Keys: [Kick], State: Off}
+
+################ skip basic attack tutorial count {
+      - Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          #- Or:
+          #  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_BASIC"}
+          #  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_DOUBLE"}
+          #  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_HEAVY"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_MovementShown].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BasicAttackShown_3].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_BasicAttackShown_3, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_MovementShown].Value", Value2: "1"}
+          - Less: {Value1: "?GetVariable[Me, Tutorial_BasicAttackShown_3_Combo].Value", Value2: "11"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BasicAttackShown_3].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_BasicAttackShown_3_Combo, Value: "?GetVariable[Me, Tutorial_BasicAttackShown_3_Combo].Value + 1", ApplyTo: Me}
+################ skip basic attack tutorial count }
+
+############################################## LOW KICK
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+          #- EveryFrame: {Step: 10}
+        Priority: 1000
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_MovementShown].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_LowKickShown].Value", Value2: "1"}
+          - Or:
+
+            ####### skip basic attack {
+            - And:
+              - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_BasicAttackShown_3_Combo].Value", Value2: "10"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            ####### skip basic attack }
+
+            - And:
+              - Equal: {Value1: "?GetVariable[Me, Tutorial_BasicAttackShown_3].Value", Value2: "1"}
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+              #- Or:
+              #  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_BASIC"}
+              #  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_DOUBLE"}
+              #  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_HEAVY"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "BasicAttack", Log: "BattleID: 10", Params: {"Unskiped": "?GetVariable[Me, Tutorial_BasicAttackShown_3].Value" , "AnimationsToSkip" : "?GetVariable[Me, Tutorial_BasicAttackShown_3_Combo].Value"} }
+          - HideTutorialPanel
+          - UIElements: {ids: [996, 997, 998, 999], Show: false}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Low_KickCloser, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          #- DestroyEffect: {Name: Tutorial_Basic_Attack, ApplyTo: Me}
+          #- GUIEffect: {Name: Tutorial_Low_Kick, ApplyTo: Me, PoolQuantity: 1, SingleInstance: 1}
+          - HighlightKey: {Keys: [Punch, Forward], Toggle: Off}
+          - HighlightKey: {Keys: [Down, Kick], Toggle: On}
+          - SetVariable: {Name: Tutorial_LowKickShown, Value: 1, ApplyTo: Me}
+          - SwitchKey: {Keys: [Kick], State: On}
+          - SwitchKey: {Keys: [Punch], State: Off}
+          - SetVariable: {Name: Tutorial_NO_KNEE_KICK, Value: 1, ApplyTo: Me}
+
+
+################ low kick successful kick {
+      - Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_LOW"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_LowKickShown].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_GizmoWillBlockDialog_3].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_GizmoWillBlockDialog_3, Value: 1, ApplyTo: Me}
+################ low kick successful kick }
+
+################ skip low kick tutorial count {
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK"}
+          - Less: {Value1: "?GetVariable[Me, Tutorial_GizmoWillBlockDialog_3_Combo].Value", Value2: "7"}
+          - Or:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_LowKickShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_LowKickShown_1].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_GizmoWillBlockDialog_3].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_GizmoWillBlockDialog_3_Combo, Value: "?GetVariable[Me, Tutorial_GizmoWillBlockDialog_3_Combo].Value + 1", ApplyTo: Me}
+################ skip low kick tutorial count }
+
+############################################## THROW
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          #- Equal: {Value1: "?GetVariable[Me, Tutorial_LowKickShown].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+          - Or:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_GizmoWillBlockDialog_3].Value", Value2: "1"}
+            - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_GizmoWillBlockDialog_3_Combo].Value", Value2: "6"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ThrowShown_1].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "LowKick", Log: "BattleID: 10", Params: {"Unskiped": "?GetVariable[Me, Tutorial_GizmoWillBlockDialog_3].Value" , "AnimationsToSkip" : "?GetVariable[Me, Tutorial_GizmoWillBlockDialog_3_Combo].Value"} }
+          #- DestroyEffect: {Name: Tutorial_Low_Kick, ApplyTo: Me}
+#          - DestroyEffect: {Name: Tutorial_Low_KickCloser, ApplyTo: Me}
+          - HideTutorialPanel
+          ##- UIElements: {ids: [996, 997, 998, 999], Show: true}
+          - HighlightKey: {Keys: [Down, Kick], Toggle: Off}
+          - HighlightKey: {Keys: [Forward], Toggle: On}
+          - SetVariable: {Name: Tutorial_ThrowShown_1, Value: 1, ApplyTo: Me}
+          #- SetVariable: {Name: TUTORIAL_NO_THROWS, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_GizmoWillBlockDialog, Value: "1", ApplyTo: Me}
+          #- GUIEffect: {Name: Tutorial_Combos_StepCloser, ApplyTo: Me, PoolQuantity: 1, SingleInstance: 1}
+
+          - SetVariable: {Name: TUTORIAL_NO_THROWS, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_HEAVY, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_SUPER, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_Throw_Count_On, Value: "1", ApplyTo: Me}
+          #- SwitchKey: {Keys: [Punch], State: On}
+          - SetVariable: {Name: Tutorial_NO_KNEE_KICK, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: Tutorial_THROW_GIZMO_DIALOG, Value: 1, ApplyTo: Me, Frames: 20}
+
+################ throw HighlightKey {
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+          - EveryFrame: {Step: 10}
+        Priority: 1000
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_GizmoWillBlockDialog].Value", Value2: "1"}
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "155"}
+          - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Throwable"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ThrowShown].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+        Actions:
+          - HighlightKey: {Keys: [Forward, Punch], Toggle: On}
+          - SetVariable: {Name: Tutorial_ThrowShown, Value: 1, ApplyTo: Me}
+################ throw HighlightKey }
+
+################ throw dialog {
+      - Events:
+          - VariableDestruction: {Player: Me, Name: Tutorial_THROW_GIZMO_DIALOG}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_THROW_GIZMO_DIALOG_SHOWN].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_THROW_GIZMO_DIALOG_SHOWN, Value: 1, ApplyTo: Me}
+          #31 frames delay instead of 1 because we want to show dialog DLG_SARGE_HIT_HIM with 30 frames delay as well. This fixes bug with ShowTutorialPanel on blured background of the dialog.
+          #2nd part is in quests_tutorial.yaml
+          - SetVariable: {Name: Tutorial_THROW_GUI, Value: 1, ApplyTo: Me, Frames: 31}
+          - Call: {ID: DLG_SARGE_HIT_HIM}
+################ throw dialog }
+
+################ after throw dialog showGUI {
+      - Events:
+          - VariableDestruction: {Player: Me, Name: Tutorial_THROW_GUI}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_THROW_GUI_SHOWN].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_THROW_GUI_SHOWN, Value: 1, ApplyTo: Me}
+          - SwitchKey: {Keys: [Punch], State: On}
+          - UIElements: {ids: [996, 997, 998, 999], Show: false}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Combos_StepCloser, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+
+################ after throw dialog showGUI  }
+
+#################### THROW CUSTOM EFFECT ON  {
+          ###- CustomEffect: {Name: Frame_OFF, ApplyTo: Enemy, AttachToBone: pelvis, Looped: 1, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 55, Y: -65, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+          - EveryFrame: {Step: 10}
+        Priority: 1000
+        Conditions:
+          ###- Equal: {Value1: "?GetVariable[Me, Tutorial_GizmoWillBlockDialog].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_THROW_GIZMO_DIALOG_SHOWN].Value", Value2: "1"}
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "155"}
+          - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Throwable"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_THROW_GUI].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_FrameEffect_ON].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_FrameEffect_END].Value", Value2: "1"}
+        Actions:
+          - DestroyEffect: {Name: Frame_OFF, ApplyTo: Enemy}
+          #- CustomEffect: {Name: Frame_ON, ApplyTo: Enemy, AttachToBone: pelvis, Looped: 1, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: -80, Y: -75, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: Frame_ON, ApplyTo: Enemy, AttachToBone: toe_l, Looped: 1, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: -110, Y: 5, Z: 25}, PoolQuantity: 1}
+          - SetVariable: {Name: Tutorial_FrameEffect_ON, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_FrameEffect_OFF, Value: 0, ApplyTo: Me, Frames: 1}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+          - EveryFrame: {Step: 10}
+        Priority: 1000
+        Conditions:
+          ###- Equal: {Value1: "?GetVariable[Me, Tutorial_GizmoWillBlockDialog].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_THROW_GIZMO_DIALOG_SHOWN].Value", Value2: "1"}
+          - Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "155"}
+          #- Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Throwable"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_THROW_GUI].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_FrameEffect_OFF].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_FrameEffect_END].Value", Value2: "1"}
+        Actions:
+          - DestroyEffect: {Name: Frame_ON, ApplyTo: Enemy}
+          #- CustomEffect: {Name: Frame_OFF, ApplyTo: Enemy, AttachToBone: pelvis, Looped: 1, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: -80, Y: -75, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: Frame_OFF, ApplyTo: Enemy, AttachToBone: toe_l, Looped: 1, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: -110, Y: 5, Z: 25}, PoolQuantity: 1}
+          - SetVariable: {Name: Tutorial_FrameEffect_OFF, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_FrameEffect_ON, Value: 0, ApplyTo: Me, Frames: 1}
+
+      - Events:
+          - AnimationStart: {Player: Enemy}
+          #- IntervalEnd: {Player: Enemy, Name: Uninterrupt}
+        Priority: 99999
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_FrameEffect_OFF].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_FrameEffect_ON].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "THROW_FALL"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_FrameEffect_END].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_FrameEffect_END, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_FrameEffect_ON, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: Tutorial_FrameEffect_OFF, Value: 0, ApplyTo: Me, Frames: 1}
+          - DestroyEffect: {Name: Frame_ON, ApplyTo: Enemy}
+          - DestroyEffect: {Name: Frame_OFF, ApplyTo: Enemy}
+
+#################### THROW CUSTOM EFFECT OFF  }
+
+################ skip throw tutorial count {
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+         ## - Less: {Value1: "?GetVariable[Me, Tutorial_Throw_Count].Value", Value2: "3"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_Throw_Count_On].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_Throw_Count, Value: "?GetVariable[Me, Tutorial_Throw_Count].Value + 1", ApplyTo: Me}
+################ skip throw tutorial count }
+
+################ block keys after skip throw tutorial count {
+      - Events:
+          - PostHit: {Player: Enemy}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+         ## - Less: {Value1: "?GetVariable[Me, Tutorial_Throw_Count].Value", Value2: "3"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_Throw_Count_On].Value", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_Throw_Count].Value", Value2: "20"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockKeys_On].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "ThrowFail_Start", Log: "BattleID: 10", Params: {"AnimationsToSkip" : "?GetVariable[Me, Tutorial_Throw_Count].Value"} }
+          - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Down_Forward, Up_Back, Down_Back], State: Off}
+          - SetVariable: {Name: Tutorial_BlockKeys_On, Value: 1, ApplyTo: Me}
+          
+          - DestroyEffect: {Name: Frame_OFF, ApplyTo: Enemy}
+          - DestroyEffect: {Name: Frame_ON, ApplyTo: Enemy}
+################ block keys after skip throw tutorial count }
+
+############################################## THROW tutorial end
+      - Events:
+          - AnimationStart: {Player: Enemy}
+          #- IntervalEnd: {Player: Enemy, Name: Uninterrupt}
+        Priority: 99999
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ThrowShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ThrowShown_1].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "STAND_UP"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "ThrowSuccess", Log: "BattleID: 10", Params: {"AnimationsToSkip" : "?GetVariable[Me, Tutorial_Throw_Count].Value"} }
+          #- DestroyEffect: {Name: Tutorial_Combos_Throw, ApplyTo: Me}
+          - HideTutorialPanel
+          ##############- UIElements: {ids: [996, 997, 998, 999], Show: true}
+          - HighlightKey: {Keys: [Forward, Punch], Toggle: Off}
+          - SetVariable: {Name: Tutorial_BlockShown, Value: 1, ApplyTo: Me}
+          - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Down_Forward, Up_Back, Down_Back], State: Off}
+          #- SetVariable: {Name: TUTORIAL_HOP_BLOCK, Value: 1, ApplyTo: Me}
+
+          - SetVariable: {Name: TUTORIAL_NO_THROWS, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_HEAVY, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_SUPER, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: CHEAT_NULL_PLAYER_DAMAGE, Value: 0, ApplyTo: Enemy, Frames: 1}
+          - SwitchTactics: {ApplyTo: Enemy, Mode: DojoMode}
+
+################ skip throw tutorial {
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationEnd: {Player: Me}
+        Priority: 99999
+        Conditions:
+          - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_Throw_Count].Value", Value2: "20"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "ThrowFail_End", Log: "BattleID: 10", Params: {"AnimationsToSkip" : "?GetVariable[Me, Tutorial_Throw_Count].Value"} }
+          #- DestroyEffect: {Name: Tutorial_Combos_Throw, ApplyTo: Me}
+          - HideTutorialPanel
+          ################- UIElements: {ids: [996, 997, 998, 999], Show: true}
+          - HighlightKey: {Keys: [Forward, Punch], Toggle: Off}
+          - SetVariable: {Name: Tutorial_BlockShown, Value: 1, ApplyTo: Me}
+          - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Down_Forward, Up_Back, Down_Back], State: Off}
+          - SetVariable: {Name: Tutorial_ThrowShown, Value: 1, ApplyTo: Me}
+
+          - SetVariable: {Name: TUTORIAL_NO_THROWS, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_HEAVY, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_SUPER, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: CHEAT_NULL_PLAYER_DAMAGE, Value: 0, ApplyTo: Enemy, Frames: 1}
+          - SwitchTactics: {ApplyTo: Enemy, Mode: DojoMode}
+          
+          - DestroyEffect: {Name: Frame_OFF, ApplyTo: Enemy}
+          - DestroyEffect: {Name: Frame_ON, ApplyTo: Enemy}
+################ skip throw tutorial }
+
+
+################ disarm Gizmo crutch {
+      - Events:
+          - PostHit: {Player: Enemy}
+        Priority: 99999
+        Conditions:
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Gizmo_Cast_Start"}
+          - Or:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ThrowShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ThrowShown_1].Value", Value2: "1"}
+          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, Gizmo_DISARM].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "GizmoDisarmCrutch", Log: "BattleID: 10", Params: {"GizmoDisarmCrutch" : "1"} }
+          - Disarm: {ApplyTo: Enemy}
+          - SetVariable: {Name: Gizmo_DISARM, Value: 1, ApplyTo: Enemy}
+          - SetVariable: {Name: TUTORIAL_CONTROLS_DISABLED, Value: 0, ApplyTo: Enemy, Frames: 1}
+          - UIElements: {ids: [996, 997, 998, 999], Show: true}
+          - SetVariable:
+              Name: SHOCKED
+              Value: 1
+              ApplyTo: Enemy
+          - SetVariable:
+              Name: SHOCK
+              Value: 1
+              ApplyTo: Enemy
+              Frames: 1
+          - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Down_Forward, Up_Back, Down_Back], State: On}
+          - RepulsionType: {ApplyTo: Enemy, State: 0}
+################ disarm Gizmo crutch }
+
+############################################## GIZMO Disarm
+  - Name: beta_TUTORIAL_MOVEMENT_COMBOS_Disarm
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - EveryFrame: {Step: 10}
+        Priority: 99999
+        Conditions:
+          - Or:
+            - And:
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STAND_UP"}
+              - Or:
+                - Equal: {Value1: "?GetVariable[Enemy, Tutorial_ThrowShown].Value", Value2: "1"}
+                - Equal: {Value1: "?GetVariable[Enemy, Tutorial_ThrowShown_1].Value", Value2: "1"}
+            - And:
+              - GreaterEqual: {Value1: "?GetVariable[Enemy, Tutorial_Throw_Count].Value", Value2: "20"}
+              - Not:
+                - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Uninterrupt"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Gizmo_DISARM].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_Gizmo_Disarm].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "GizmoDisarmUse", Log: "BattleID: 10", Params: {"AnimationsToSkip" : "?GetVariable[Me, Tutorial_Throw_Count].Value"} }
+          - Animation: {Name: Gizmo_Cast_Start}
+          - SetVariable: {Name: TUTORIAL_CONTROLS_DISABLED, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: UNSHOCKABLE, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: Tutorial_Gizmo_Disarm, Value: 1, ApplyTo: Me}
+
+          - SetVariable: {Name: Tutorial_Gizmo_SHOWDIALOGDisarm, Value: 1, ApplyTo: Me, Frames: 5}
+
+################ Gizmo rage dialog {
+      - Events:
+          - VariableDestruction: {Player: Me, Name: Tutorial_Gizmo_SHOWDIALOGDisarm}
+        Actions:
+          - Call: {ID: DLG_GIZMO_AGGRO}
+################ Gizmo rage dialog }
+
+################ Gizmo disarm {
+      - Events:
+          - IntervalStart: {Player: Me, Name: DisarmMe}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "GizmoDisarm", Log: "BattleID: 10", Params: {"GizmoDisarm" : "1"} }
+          - SetVariable: {Name: Gizmo_DISARM, Value: 1, ApplyTo: Me}
+          - UIElements: {ids: [996, 997, 998, 999], Show: true}
+          - Disarm: {ApplyTo: Me, InstantFreeze: 1}
+          - SetVariable:
+              Name: SHOCKED
+              Value: 1
+              ApplyTo: Me
+          - SetVariable:
+              Name: SHOCK
+              Value: 1
+              ApplyTo: Me
+              Frames: 1
+          - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Down_Forward, Up_Back, Down_Back], State: On}
+          - RepulsionType: {ApplyTo: Me, State: 0}
+################ Gizmo disarm }
+
+       
+############################################ BLOCK FIGHT
+  - Name: beta_TUTORIAL_BLOCK_GIZMO
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "TUTORIAL_BLOCK"}
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Priority: 10003
+        Actions:
+          - Animation: {Name: Twohanded_Sword_Birth_ShiftForTutorialBlock}
+
+      - Priority: 5000
+        Events:
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown_GIZMOSTART].Value", Value2: "1"}
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+        Actions:
+          - Animation: {Name: Twohanded_Sword_Super_1_Slash_2}
+          - SetVariable: {Name: Tutorial_BlockShown_GIZMOSTART, Value: 1, ApplyTo: Me}
+
+
+  - Name: beta_TUTORIAL_BLOCK
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_BLOCK"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+        Actions:
+          - UIElements: {ids: [996, 997, 998, 999], Show: false}
+          - SetVariable: {Name: TUTORIAL, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_THROWS, Value: 1, ApplyTo: Enemy}
+          - SetVariable: {Name: CHEAT_NULL_PLAYER_DAMAGE, Value: 1, ApplyTo: Enemy}
+          - SwitchTactics: {ApplyTo: Enemy, Mode: DojoMode}
+          - SetVariable: {Name: UNSHOCKABLE, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: UNSHOCKABLE, Value: 1, ApplyTo: Enemy}
+
+          - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Down_Forward, Up_Back, Down_Back, Forward, Back, Down], State: Off, Hide: 1}
+
+      - Events:
+          - RoundLoad
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+        Actions:
+          - Call: {ID: DLG_GIZMO_BLOCK}
+
+      - Priority: 5000
+        Events:
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_BlockShown, Value: 1, ApplyTo: Me}
+          - UIElements: {ids: [996, 997, 998, 999], Show: false}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Combos_Block, Replace: ["0"], Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation }
+
+      - Priority: 5000
+        Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Block_Duals_Hit"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown_BlockInOut_Crutch].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Block_High_Duals_InOut}
+          - SetVariable: {Name: Tutorial_BlockShown_BlockInOut_Crutch, Value: 1, ApplyTo: Me}
+          
+      - Priority: 5000
+        Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockCombo].Value", Value2: "2"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown_BlockInOut_Crutch_2].Value", Value2: "1"}
+        Actions:
+          - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Down_Forward, Up_Back, Down_Back, Forward, Back, Down], State: On, Hide: 0} 
+          - SetVariable: {Name: Tutorial_BlockShown_BlockInOut_Crutch_2, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - PostHit: {Player: Me}
+        Priority: 500
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_Block_PauseAnimation].Value", Value2: "1"}
+        Actions:
+          - PauseAnimation: {ApplyTo: Me, InOutFrames: 62, Frames: 130}
+          - PauseAnimation: {ApplyTo: Enemy, InOutFrames: 62, Frames: 130}
+          - SetVariable: {Name: Tutorial_Block_PauseAnimation, Value: 1, ApplyTo: Me}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Combos_Block, Replace: ["1"], Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation }
+
+      #- Events:
+      #    - PostHit: {Player: Me}
+      #  Priority: 500
+      #  Conditions:
+      #    - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockCombo].Value", Value2: "2"}
+      #    - Not:
+      #      - Equal: {Value1: "?GetVariable[Me, Tutorial_Block_ControlsEnable].Value", Value2: "1"}
+      #  Actions:
+      #    - SetVariable: {Name: Tutorial_Block_ControlsEnable, Value: 1, ApplyTo: Me}
+      #    - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Down_Forward, Up_Back, Down_Back, Forward, Back, Down], State: On, Hide: 0} 
+
+      - Events:
+          - PostHit: {Player: Me}
+        Priority: 500
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockCombo].Value", Value2: "3"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown_2].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_BlockCombo, Value: "?GetVariable[Me, Tutorial_BlockCombo].Value + 1", ApplyTo: Me}
+          - UpdateTutorialPanel: {Message: Tutorial_Combos_Block, Replace: ["?GetVariable[Me, Tutorial_BlockCombo].Value"]}
+          - SetVariable: {Name: Tutorial_BlockCombo_Destuction, Value: "1", ApplyTo: Me, Frames: 60}
+
+      - Events:
+          - PostHit: {Player: Me}
+          - PostHit: {Player: Enemy}
+        Priority: 500
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown_2].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_NOBlockCombo, Value: "?GetVariable[Me, Tutorial_NOBlockCombo].Value + 1", ApplyTo: Me}
+
+      - Events:
+          - PostHit: {Player: Me}
+          - PostHit: {Player: Enemy}
+          - VariableDestruction: {Player: Me, Name: Tutorial_BlockCombo_Destuction}
+        Conditions:
+          - Or:
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "PostHit"}
+              - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+              - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_NOBlockCombo].Value", Value2: "25"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown_2].Value", Value2: "1"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "VariableDestruction"}
+              - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+              - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_BlockCombo].Value", Value2: "3"}
+              - Not:
+                - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown_2].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "Block", Log: "BattleID: 20", Params: {"BlockCombo": "?GetVariable[Me, Tutorial_BlockCombo].Value" , "UnblockableCombo" : "?GetVariable[Me, Tutorial_NOBlockCombo].Value" } }
+          - HideTutorialPanel 
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Praise, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          - UIElements: {ids: [996, 997, 998, 999], Show: true}
+          - SetVariable: {Name: CHEAT_NULL_PLAYER_DAMAGE, Value: 0, ApplyTo: Enemy, Frames: 1}
+          - SetVariable: {Name: Tutorial_BlockShown_2, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL, Value: 0, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_THROWS, Value: 0, ApplyTo: Enemy, Frames: 1}
+          - SetVariable: {Name: UNSHOCKABLE, Value: 0, ApplyTo: Enemy, Frames: 1}
+          - SetVariable: {Name: Tutorial_Praise, Value: 1, ApplyTo: Me, Frames: 160}
+
+      - Events:
+          - VariableDestruction: {Name: Tutorial_Praise}
+        Actions:
+          - HideTutorialPanel
+
+      ########### CHEATS
+  - Name: beta_TUTORIAL_CHEAT
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Or:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_CHEAT"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_BLOCK"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_SF"}
+    Triggers:
+      - Events:
+          - EveryFrame: {Step: 10}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, CHEAT_LOW_DAMAGE].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Player[Me].Health", Value2: "0.5"}
+          - GreaterEqual: {Value1: "?Player[Enemy].Health", Value2: "0.5"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "CheatLowDamage", Params: {"ID: 10": "?GetVariable[Me, Tutorial_MovementShown].Value" , "ID: 20": "?GetVariable[Me, Tutorial_BlockShown].Value" , "ID: 30": "?GetVariable[Me, Tutorial_ShadowFormShown].Value" } }
+          - SetVariable: {Name: CHEAT_LOW_DAMAGE, Value: 1, ApplyTo: Enemy}
+
+      - Events:
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Enemy, CHEAT_LOW_DAMAGE].Value", Value2: "1"}
+        Actions:
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: 0.5, ApplyTo: Enemy}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: 0.5, ApplyTo: Enemy}
+
+      - Events:
+          - EveryFrame: {Step: 10}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Player[Me].Health", Value2: "0.25"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "CheatAttacksDisabled", Params: {"ID: 10": "?GetVariable[Me, Tutorial_MovementShown].Value" , "ID: 20": "?GetVariable[Me, Tutorial_BlockShown].Value" , "ID: 30": "?GetVariable[Me, Tutorial_ShadowFormShown].Value" } }
+          - SetVariable: {Name: CHEAT_ATTACKS_DISABLED, Value: 1, ApplyTo: Enemy}
+          - SetVariable: {Name: TUTORIAL_NO_FLIP_BACK, Value: 1, ApplyTo: Enemy}
+          - SetVariable: {Name: TUTORIAL_NO_ROLL_BACK, Value: 1, ApplyTo: Enemy}
+          - SetVariable: {Name: TUTORIAL_HOP_BLOCK, Value: 1, ApplyTo: Enemy}
+
+      - Events:
+          - Hit: {Player: Enemy}
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Enemy, CHEAT_NULL_PLAYER_DAMAGE].Value", Value2: "1"}
+        Actions:
+          - SetHit: {DealsDamage: 0}
+
+  - Name: STANCE_START_BIRTH_Tutorial_NOT_PLAYER
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Priority: 10003
+        Actions:
+          - Animation: {Name: Stance_Start_Birth_Twohanded_Sword_Tutorial}
+
+  - Name: STANCE_START_ROUND_Tutorial_NOT_PLAYER
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Priority: 10003
+        Actions:
+          - Animation: {Name: Stance_Start_Round_Twohanded_Sword_Tutorial}
+
+  - Name: STANCE_START_IDLE_Tutorial_NOT_PLAYER
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Priority: 13
+        Actions:
+          - Animation: {Name: Stance_Start_Idle_Twohanded_Sword_Tutorial}
+
+  - Name: STANCE_START_BIRTH_Tutorial
+    Templates: [LOCK_STYLE_STRONG]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Priority: 10003
+        Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Stance_Start_Birth_Tutorial}
+
+  - Name: STANCE_START_BIRTH_Tutorial
+    Templates: [LOCK_STYLE_STRONG]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Priority: 10003
+        Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Stance_Start_Birth_Tutorial}
+
+  - Name: STANCE_START_IDLE_Tutorial
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Priority: 13
+        Actions:
+          - Animation: {Name: Stance_Start_Idle_Tutorial}
+
+  - Name: STANCE_START_ROUND_Strong_Fists_Tutorial
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Priority: 10003
+        Actions:
+          - Animation: {Name: Stance_Start_Birth_Tutorial_2}
+
+  - Name: STANCE_START_ROUND_Strong_Fists_Tutorial_2
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+    Triggers:
+      - Priority: 10003
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stance_Start_Birth_Tutorial_2"}
+        Actions:
+          - Animation: {Name: Stance_Start_Round_Tutorial}
+
+####################################################################################################################
+########################################################## TRY ON TUTORIAL
+####################################################################################################################
+  - Name: SHOP_Tutorial
+    Templates: [LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Name: EXIT_TUTORIAL
+        Priority: 100000
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "TRY_ON"}
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "4"}
+        Actions:
+          - EndTryOn
+          - Call: {ID: TUTORIAL_TRY_ON_HELMET}
+
+####################################################################################################################
+########################################################## SHADOW FORM TUTORIAL
+####################################################################################################################
+
+  - Name: beta_TUTORIAL_SF
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_SF"}
+    Triggers:
+      - Priority: -99998
+        Events:
+          - PostHit
+        Conditions:
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "0"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+        Actions:
+          - SetShadowCharge: {Value: "?GetShadowCharge[Me] + 2 * ?Hit[].Damage"}
+
+      - Priority: -99999
+        Events:
+          - PostHit
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetShadowCharge[Me]", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "ShadowChargeMax", Log: "BattleID: 30"}
+          - SetVariable: {Name: Tutorial_ShadowFormShown, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_ShadowForm_CD, Value: 1, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: TUTORIAL_CONTROLS_DISABLED, Value: 1, ApplyTo: Enemy}
+          - SetVariable: {Name: CHEAT_NULL_PLAYER_DAMAGE, Value: 1, ApplyTo: Enemy}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Skill_Helmet, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          - HighlightKey: {Keys: [Shadow], Toggle: On}
+          - SwitchKey: {Keys: [Punch, Kick], State: Off}
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+
+          ###- SetVariable: {Name: Tutorial_Delay, Value: 1, Frames: 70, ApplyTo: Me}
+
+      - Events:
+          - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold, Up, UnHold]}
+        Conditions:
+          - Not:
+            #- Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown].Value", Value2: "1"}
+            #- Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowChargeUnlimited_On].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "ShadowChargeBurnDown", Log: "BattleID: 30", Params: {"On": "1"} }
+          - ShadowChargeBurnDown: {Enable: 0}
+          - SetVariable: {Name: Tutorial_ShadowChargeUnlimited_On, Value: 1, ApplyTo: Me}
+          
+      ###- Events:
+      ###    - IntervalEnd: {Player: Me, Name: Uninterrupt}
+      ###    - AnimationEnd: {Player: Me}
+      ###    - AnimationEnd: {Player: Enemy}
+      ###    - EveryFrame: {Step: 10}
+      ###  Conditions:
+      ###    - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+      ###    - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+      ###    - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+      ###    - Not:
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_Delay].Value", Value2: "1"}
+      ###  Actions:
+      ###    - HideTutorialPanel
+      ###    - ShowTutorialPanel: {Message: Tutorial_Shadow_Form_Skill_Helmet}
+      ###    - SetVariable: {Name: Tutorial_ShadowFormMoveShown, Value: 1, ApplyTo: Me}
+
+
+
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+          - Less: {Value1: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value", Value2: "17"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowSkill_Count, Value: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value + 1", ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value", Value2: "16"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_Off].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "ShadowTutorialFailed", Log: "BattleID: 30", Params: {"AnimationsToSkip" : "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value"} }
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}
+          - SetVariable: {Name: CHEAT_NULL_PLAYER_DAMAGE, Value: 0, Frames: 1, ApplyTo: Enemy}
+          - ShadowChargeBurnDown: {Enable: 1}
+          - SwitchKey: {Keys: [Punch, Kick], State: On}
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_Off, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_CONTROLS_DISABLED, Value: 0, Frames: 1, ApplyTo: Enemy}
+          - SwitchTactics: {ApplyTo: Enemy, Mode: DojoMode}
+
+      - Events:
+          - AnimationStart: {Player: Me, Name: SHADOW_MOVE}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "ShadowMoveAnimationStart", Log: "BattleID: 30"}
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}
+          ##- SetVariable: {Name: CHEAT_NULL_PLAYER_DAMAGE, Value: 0, Frames: 1, ApplyTo: Enemy}
+          ##- ShadowChargeBurnDown: {Enable: 1}
+          - SetVariable: {Name: CHEAT_NULL_PLAYER_DAMAGE, Value: 0, Frames: 1, ApplyTo: Enemy}
+          - SwitchKey: {Keys: [Punch, Kick], State: On}
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_2, Value: 1, ApplyTo: Me}
+          ##- SwitchTactics: {ApplyTo: Enemy, Mode: DojoMode}
+
+      ####- Events:
+      ####    - AnimationEnd: {Player: Me, Name: SHADOW_MOVE_END}
+      ####    #- StageChange: {Stage: RoundFightEnd}
+      ####  Conditions:
+      ####    - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+      ####    - Not:
+      ####      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_3].Value", Value2: "1"}
+      ####  Actions:
+      ####    - SetVariable: {Name: Tutorial_ShadowFormMoveShown_3, Value: 1, ApplyTo: Me}
+      ####    #- Call: {ID: TUTORIAL_SHADOW_COOLDOWN_HELMET}
+      ####    ##stub
+      ####    #- ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Cooldown, Offset: {X: 0, Y: -320}}
+      ####
+      ####    ###- PauseAnimation: {ApplyTo: Enemy, InOutFrames: 45, Frames: 45}
+      ####    ###- PauseAnimation: {ApplyTo: Me, InOutFrames: 45, Frames: 45}
+      ####
+      ####- Events:
+      ####    - AnimationEnd: {Player: Enemy, Name: physics}
+      ####    #- StageChange: {Stage: RoundFightEnd}
+      ####  Conditions:
+      ####    - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_3].Value", Value2: "1"}
+      ####    - Not:
+      ####      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_4].Value", Value2: "1"}
+      ####      ###################- Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "physics"}
+      ####  Actions:
+      ####    - PauseAnimation: {ApplyTo: Enemy, InOutFrames: 120, Frames: 180}
+      ####    - PauseAnimation: {ApplyTo: Me, InOutFrames: 120, Frames: 180}
+      ####    - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY, Value: 1, Frames: 320, ApplyTo: Me}
+      ####    - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_SHOW_UI, Value: 1, Frames: 100, ApplyTo: Me}
+      ####    - SetVariable: {Name: Tutorial_ShadowFormMoveShown_4, Value: 1, ApplyTo: Me}
+
+      - Priority: 3500
+        Events:
+          - AnimationEnd: {Player: Me, Name: SHADOW_MOVE_END}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_3].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_3, Value: 1, ApplyTo: Me}
+          - PauseAnimation: {ApplyTo: Enemy, InOutFrames: 120, Frames: 180}
+          - PauseAnimation: {ApplyTo: Me, InOutFrames: 120, Frames: 180}
+          - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY, Value: 1, Frames: 320, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_SHOW_UI, Value: 1, Frames: 100, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_4, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - VariableDestruction: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_SHOW_UI}
+        Actions:
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_HELMET}
+          #stub
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Cooldown, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+
+      ###- Events:
+      ###    - PostHit
+      ###    #- StageChange: {Stage: RoundFightEnd}
+      ###  Conditions:
+      ###    - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_4].Value", Value2: "1"}
+      ###    #- Not:
+      ###    #  - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_4].Value", Value2: "1"}
+      ###  Actions:
+      ###    - PauseAnimation: {ApplyTo: Enemy, InOutFrames: "?GetVariable[Me, TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY].Value / 2", Frames: "?GetVariable[Me, TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY].Value / 2"}
+      ###    - PauseAnimation: {ApplyTo: Me, InOutFrames: "?GetVariable[Me, TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY].Value / 2", Frames: "?GetVariable[Me, TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY].Value / 2"}
+      ###    #- SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_2, Value: 1, Frames: 45, ApplyTo: Me}
+      ###    #- SetVariable: {Name: Tutorial_ShadowFormMoveShown_4, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - VariableDestruction: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY}
+        Actions:
+          #- FreezeFrame: {Frames: 120}
+          - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_2, Value: 1, Frames: 2, ApplyTo: Me}
+          - ShadowChargeBurnDown: {Enable: 1}
+          - SwitchTactics: {ApplyTo: Enemy, Mode: DojoMode}
+          - HideTutorialPanel
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_HIDE}
+          - SetVariable: {Name: TUTORIAL_CONTROLS_DISABLED, Value: 0, Frames: 1, ApplyTo: Enemy}
+          
+      #- Events:
+      #    - VariableDestruction: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_2}
+      #  Actions:
+      #    - HideTutorialPanel
+      #    - SetVariable: {Name: TUTORIAL_CONTROLS_DISABLED, Value: 0, Frames: 1, ApplyTo: Enemy}
+
+####################################################################################################################
+########################################################## SUPER WEAPON SLASH TUTORIAL
+####################################################################################################################
+
+  - Name: beta_TUTORIAL_SUPER_WEAPON_SLASH
+    Templates: [LOCK_PLAYER, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Events:
+          - AnimationStart: {Player: Me}
+          - ModuleEnter: {Name: DojoInterface}
+          #- VariableDestruction: {Player: Me, Name: Tutorial_SUPER_Training}
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[Tutorial_SUPER_Training].Value", Value2: "1"}
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "8"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY_OUT"}
+            - Equal: {Value1: "?Trigger[].Event", Value2: "ModuleEnter"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Shown].Value", Value2: "1"}
+        Actions:
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+          - UIElements: {ids: [0, 900, 901], Show: false}
+          #- ShowTutorialPanel: {Type: UiTutorial, Message: Tutorial_Super_Slash}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Super_Slash, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          - HighlightKey: {Keys: [Forward, Punch], Toggle: On}
+          - SetVariable: {Name: Tutorial_SUPER_Training_Count_ON, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_NO_THROWS, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_SUPER_Training_Shown, Value: 1, ApplyTo: Me}
+
+          - SetVariable: {Name: Tutorial_Super_Slash_NOReverse, Value: 1, ApplyTo: Me}
+
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[Tutorial_SUPER_Training].Value", Value2: "1"}
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "8"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count_ON].Value", Value2: "1"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_Super_Slash_NOReverse].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Inventory"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "CharacterCreation"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "PerkScreen"}
+          - Or:
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_Super_Slash_NOReverse, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_Super_Slash_YESReverse, Value: 0, ApplyTo: Me, Frames: 1}
+          - HideTutorialPanel
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+          - UIElements: {ids: [0, 900, 901], Show: false}
+          #- ShowTutorialPanel: {Type: UiTutorial, Message: Tutorial_Super_Slash}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Super_Slash, Offset: {X: 0, Y: -320}}
+          - HighlightKey: {Keys: [Back], Toggle: Off}
+          - HighlightKey: {Keys: [Forward], Toggle: On}
+
+          
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[Tutorial_SUPER_Training].Value", Value2: "1"}
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "8"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count_ON].Value", Value2: "1"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_Super_Slash_YESReverse].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Inventory"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "CharacterCreation"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "PerkScreen"}
+          - Or:
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_Super_Slash_YESReverse, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_Super_Slash_NOReverse, Value: 0, ApplyTo: Me, Frames: 1}
+          - HideTutorialPanel
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+          - UIElements: {ids: [0, 900, 901], Show: false}
+          #- ShowTutorialPanel: {Type: UiTutorial, Message: Tutorial_Super_Slash_Reverse}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Super_Slash_Reverse, Offset: {X: 0, Y: -320}}
+          - HighlightKey: {Keys: [Forward], Toggle: Off}
+          - HighlightKey: {Keys: [Back], Toggle: On}
+
+
+
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count_ON].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+        Actions:
+          - SetVariable: {Name: Tutorial_SUPER_Training_Count, Value: "?GetVariable[Me, Tutorial_SUPER_Training_Count].Value + 1", ApplyTo: Me}
+
+      - Priority: -100000
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count_ON].Value", Value2: "1"}
+        Actions:
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+
+      #- Events:
+      #    - AnimationEnd: {Player: Me}
+      #  Conditions:
+      #    - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count_ON].Value", Value2: "1"}
+      #    - Or:
+      #      - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SUPER_1"}
+      #      - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count].Value", Value2: "15"}
+      #  Actions:
+      #    - SetVariable: {Name: Tutorial_SUPER_1, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count_ON].Value", Value2: "1"}
+          - Or:
+          #  - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SUPER_1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SUPER_2"}
+            - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count].Value", Value2: "15"}
+            #- Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_1].Value", Value2: "1"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "SuperWeapon", Params: {"AnimationsToSkip" : "?GetVariable[Me, Tutorial_SUPER_Training_Count].Value"} }
+          - HideTutorialPanel
+          - UIElements: {ids: [0, 900, 901], Show: true}
+          - HighlightKey: {Keys: [Forward, Back, Punch], Toggle: Off}
+          - SetVariable: {Name: Tutorial_SUPER_Training_Count_ON, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: TUTORIAL_NO_THROWS, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetUserVariable: {Name: Tutorial_SUPER_Training, Value: 2}
+          - SetUserVariable: {Name: SelectedBattle, Value: 40}
+          - Call: {ID: TUTORIAL_END}
+
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Praise, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          - SetVariable: {Name: Tutorial_Praise_After_Super_Weapon, Value: 1, ApplyTo: Me, Frames: 160}
+
+      - Events:
+          - VariableDestruction: {Name: Tutorial_Praise_After_Super_Weapon}
+        Actions:
+          - HideTutorialPanel
+          
+
+####################################################################################################################
+########################################################## SUPER ARMOR SLASH TUTORIAL
+####################################################################################################################
+
+  - Name: beta_TUTORIAL_SUPER_ARMOR_SLASH_In_Dojo
+    Templates: [LOCK_PLAYER, LOCK_SUPER_ARMOR, LOCK_LOCATION_DOJO] 
+    Triggers:
+      - Events:
+          - AnimationStart: {Player: Me}
+          - ModuleEnter: {Name: DojoInterface}
+        Conditions:
+          - Or:
+            - And:
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY_OUT"}
+              - Equal: {Value1: "?Module[].CurrentModule", Value2: "DojoInterface"}
+            - Equal: {Value1: "?Trigger[].Event", Value2: "ModuleEnter"}
+            - Equal: {Value1: "?Trigger[].Event", Value2: "StageChange"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+            - Equal: {Value1: "?GetUserVariable[Tutorial_SUPER_ARMOR_Training].Value", Value2: "1"}
+        Actions:
+          - UIElements: {ids: [0, 900, 901], Show: false}
+          - ShowTutorialPanel: {Type: UiTutorial, Message: Tutorial_Super_Slash_Armor}
+          - HighlightKey: {Keys: [Forward, Kick], Toggle: On}
+          - SetVariable: {Name: Tutorial_SUPER_ARMOR_Training_ON, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_Super_Slash_NOReverse, Value: 1, ApplyTo: Me}
+          - SetUserVariable: {Name: Tutorial_SUPER_ARMOR_Training, Value: 1}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_Super_Slash_NOReverse].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Inventory"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "CharacterCreation"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "PerkScreen"}
+          - Or:
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_Super_Slash_NOReverse, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_Super_Slash_YESReverse, Value: 0, ApplyTo: Me, Frames: 1}
+          - HideTutorialPanel
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+          - UIElements: {ids: [0, 900, 901], Show: false}
+          - ShowTutorialPanel: {Type: UiTutorial, Message: Tutorial_Super_Slash_Armor}
+          - HighlightKey: {Keys: [Back], Toggle: Off}
+          - HighlightKey: {Keys: [Forward], Toggle: On}
+
+          
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_Super_Slash_YESReverse].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STANCE_INVENTORY"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Inventory"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "Shop"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "CharacterCreation"}
+            - Equal: {Value1: "?Module[].CurrentModule", Value2: "PerkScreen"}
+          - Or:
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_Super_Slash_YESReverse, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_Super_Slash_NOReverse, Value: 0, ApplyTo: Me, Frames: 1}
+          - HideTutorialPanel
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+          - UIElements: {ids: [0, 900, 901], Show: false}
+          - ShowTutorialPanel: {Type: UiTutorial, Message: Tutorial_Super_Slash_Armor_Reverse}
+          - HighlightKey: {Keys: [Forward], Toggle: Off}
+          - HighlightKey: {Keys: [Back], Toggle: On}
+
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+        Actions:
+          - SetVariable: {Name: Tutorial_SUPER_Training_Count, Value: "?GetVariable[Me, Tutorial_SUPER_Training_Count].Value + 1", ApplyTo: Me}
+
+      - Priority: -100000
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+        Actions:
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+
+      #- Events:
+      #    - AnimationEnd: {Player: Me}
+      #  Conditions:
+      #    - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+      #    - Or:
+      #      - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK_SUPER_1"}
+      #      - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count].Value", Value2: "15"}
+      #  Actions:
+      #    - SetVariable: {Name: Tutorial_SUPER_1, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_SUPER_1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_SUPER_2"}
+            - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count].Value", Value2: "15"}
+            #- Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_1].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - UIElements: {ids: [0, 900, 901], Show: true}
+          - HighlightKey: {Keys: [Forward, Back, Kick], Toggle: Off}
+          - SetVariable: {Name: Tutorial_SUPER_ARMOR_Training_ON, Value: 0, ApplyTo: Me, Frames: 1}
+
+
+########## IN Fight
+  - Name: beta_TUTORIAL_SUPER_ARMOR_SLASH_In_Fight
+    Templates: [LOCK_PLAYER, LOCK_SUPER_ARMOR, LOCK_LOCATION_NOT_DOJO] 
+    Triggers:
+      - Events:
+          - StageChange: {Stage: RoundFightStart}
+        Conditions:
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+            - Equal: {Value1: "?GetUserVariable[Tutorial_SUPER_ARMOR_Training].Value", Value2: "1"}
+        Actions:
+          - UIElements: {ids: [0, 900, 901], Show: false}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Super_Slash_Armor, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          - HighlightKey: {Keys: [Forward, Kick], Toggle: On}
+          - SetVariable: {Name: Tutorial_SUPER_ARMOR_Training_ON, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_Super_Slash_NOReverse, Value: 1, ApplyTo: Me}
+          - SetUserVariable: {Name: Tutorial_SUPER_ARMOR_Training, Value: 1}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_Super_Slash_NOReverse].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_Super_Slash_NOReverse, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_Super_Slash_YESReverse, Value: 0, ApplyTo: Me, Frames: 1}
+          - HideTutorialPanel
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Super_Slash_Armor, Offset: {X: 0, Y: -320}}
+          - HighlightKey: {Keys: [Back], Toggle: Off}
+          - HighlightKey: {Keys: [Forward], Toggle: On}
+
+          
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - Not: 
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_Super_Slash_YESReverse].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_Super_Slash_YESReverse, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_Super_Slash_NOReverse, Value: 0, ApplyTo: Me, Frames: 1}
+          - HideTutorialPanel
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Super_Slash_Armor_Reverse, Offset: {X: 0, Y: -320}}
+          - HighlightKey: {Keys: [Forward], Toggle: Off}
+          - HighlightKey: {Keys: [Back], Toggle: On}
+
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+        Actions:
+          - SetVariable: {Name: Tutorial_SUPER_Training_Count, Value: "?GetVariable[Me, Tutorial_SUPER_Training_Count].Value + 1", ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_SUPER_1"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK_SUPER_2"}
+            - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_SUPER_Training_Count].Value", Value2: "15"}
+            #- Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_1].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Forward, Back, Kick], Toggle: Off}
+          - SetVariable: {Name: Tutorial_SUPER_ARMOR_Training_ON, Value: 0, ApplyTo: Me, Frames: 1}
+
+
+
+####################################################################################################################
+########################################################## GIZMO GO TO MAP
+####################################################################################################################
+  - Name: DOJO_GIZMO_GO_TO_MAP
+    Templates: [LOCK_LOCATION_DOJO, LOCK_PLAYER]
+    Triggers:
+      - Events:
+          - Hit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "99"}
+          - Not:
+            - GreaterEqual: {Value1: "?GetVariable[Me, GIZMO_GO_TO_MAP_TRIGGER].Value", Value2: "6"}
+            - GreaterEqual: {Value1: "?GetUserVariable[Gizmo_go_to_map_variable].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: GIZMO_GO_TO_MAP_TRIGGER, Value: "?GetVariable[Me, GIZMO_GO_TO_MAP_TRIGGER].Value + 1", ApplyTo: Me}
+
+      - Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, GIZMO_GO_TO_MAP_TRIGGER].Value", Value2: "6"}
+          - Not:
+            - GreaterEqual: {Value1: "?GetUserVariable[Gizmo_go_to_map_variable].Value", Value2: "1"}
+        Actions:
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+          - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Up_Back, Down_Forward, Down, Down_Back], State: Off}
+          - SetUserVariable: {Name: Gizmo_go_to_map_variable, Value: 1}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - IntervalEnd: {Player: Enemy, Name: Uninterrupt}
+        Conditions:
+          - Equal: {Value1: "?GetUserVariable[Gizmo_go_to_map_variable].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stun"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Stun"}
+            - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Uninterrupt"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FOLLOWED_BY"}
+        Actions:
+          - AnalyticsLog: {EType: "TUTORIAL_STEP", Name : "GoToMapQuestStart"}
+          - SetUserVariable: {Name: Gizmo_go_to_map_variable, Value: 2}
+          - SwitchTactics: {ApplyTo: Enemy, Mode: NoneMode}
+          - SetVariable: {Name: GIZMO_GO_TO_MAP_TRIGGER, Value: "0", ApplyTo: Me}
+          - SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Up_Back, Down_Forward, Down, Down_Back], State: On}
+          - Call: {ID: GIZMO_GO_TO_MAP}
+
+
+
+##########################################################################################################################################
+  - Name: TUTORIAL_SHADOW_NEW_ABILITY_WEAPON
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_PLAYER, LOCK_SHADOW_WEAPON]
+    ## TODO: Lock: GetUserVariable!!!!!
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_CHEAT"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_BLOCK"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_SF"}
+    Triggers:
+      - Priority: -99979
+        Events:
+          - PostHit
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetUserVariable[TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetShadowCharge[Me]", Value2: "1"}
+          - Or:
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowFormShown, Value: 1, ApplyTo: Me}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Skill_Weapon, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          - HighlightKey: {Keys: [Shadow], Toggle: On}
+          - SetVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_WEAPON, Value: 1, ApplyTo: Me}
+
+          - SetVariable: {Name: TUTORIAL_SHADOW_WEAPON_NOReverse, Value: 1, ApplyTo: Me}
+         ## - SetVariable: {Name: TUTORIAL_SHADOW_WEAPON_YESReverse, Value: 0, ApplyTo: Me, Frames: 1}
+
+      - Priority: -99979
+        Events:
+          - PostHit
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetUserVariable[TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetShadowCharge[Me]", Value2: "1"}
+          - Or:
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowFormShown, Value: 1, ApplyTo: Me}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Skill_Weapon_Reverse, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          - HighlightKey: {Keys: [Shadow], Toggle: On}
+          - SetVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_WEAPON, Value: 1, ApplyTo: Me}
+
+          - SetVariable: {Name: TUTORIAL_SHADOW_WEAPON_YESReverse, Value: 1, ApplyTo: Me}
+         ## - SetVariable: {Name: TUTORIAL_SHADOW_WEAPON_NOReverse, Value: 0, ApplyTo: Me, Frames: 1}
+       
+      - Priority: -99980
+        Events:
+          - StageChange: {Stage: RoundFightEnd}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - SetUserVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_WEAPON, Value: 1}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_Off].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_WEAPON_NOReverse].Value", Value2: "1"}
+
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: TUTORIAL_SHADOW_WEAPON_NOReverse, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_SHADOW_WEAPON_YESReverse, Value: 0, ApplyTo: Me, Frames: 1}
+          - HideTutorialPanel
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Skill_Weapon, Offset: {X: 0, Y: -320}}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_Off].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_WEAPON_YESReverse].Value", Value2: "1"}
+
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+          - Or:
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Less: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Me],Wall,Back].X"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: TUTORIAL_SHADOW_WEAPON_YESReverse, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_SHADOW_WEAPON_NOReverse, Value: 0, ApplyTo: Me, Frames: 1}
+          - HideTutorialPanel
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Skill_Weapon_Reverse, Offset: {X: 0, Y: -320}}
+
+      ###- Priority: -99980
+      ###  Events:
+      ###    - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold, Up, UnHold]}
+      ###  Conditions:
+      ###    - Not:
+      ###      - Equal: {Value1: "?GetUserVariable[TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_Delay].Value", Value2: "1"}
+      ###    - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+      ###    - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+      ###    #- Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+      ###  Actions:
+      ###    - HideTutorialPanel
+      ###    - ShowTutorialPanel: {Message: Tutorial_Shadow_Form_Skill_Weapon}
+      ###    - SetVariable: {Name: Tutorial_ShadowFormMoveShown, Value: 1, ApplyTo: Me}
+      ###    - SetUserVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_WEAPON, Value: 1}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+          - Less: {Value1: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value", Value2: "17"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowSkill_Count, Value: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value + 1", ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_Off].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value", Value2: "16"}
+        Actions:
+          - HideTutorialPanel
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_Off, Value: 1, ApplyTo: Me}
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}
+          - SetUserVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_WEAPON, Value: 1}
+
+      - Priority: 10
+        Events:
+          - AnimationStart: {Player: Me, Name: SHADOW_MOVE}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_2, Value: 1, ApplyTo: Me}
+
+      - Priority: 9
+        Events:
+          - AnimationEnd: {Player: Me, Name: SHADOW_MOVE_END}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowForm_PauseAnimation].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowForm_PauseAnimation, Value: 1, ApplyTo: Me}
+
+      - Events:
+          #- AnimationEnd: {Player: Me, Name: SHADOW_MOVE_END}
+          - AnimationEnd: {Player: Enemy}
+          - AnimationEnd: {Player: Me}
+          #- StageChange: {Stage: RoundFightEnd}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_3].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, InPhysics].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, InPhysics].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "PHYSICS"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowForm_PauseAnimation].Value", Value2: "1"}
+
+          ## Need off tool for pauseanimation to remove these conditions
+          - GreaterEqual: {Value1: "?Player[Me].Health", Value2: "0.15"}
+          - GreaterEqual: {Value1: "?Player[Enemy].Health", Value2: "0.15"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_3, Value: 1, ApplyTo: Me}
+          - PauseAnimation: {ApplyTo: Enemy, InOutFrames: 120, Frames: 180}
+          - PauseAnimation: {ApplyTo: Me, InOutFrames: 120, Frames: 180}
+          - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY, Value: 1, Frames: 320, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_SHOW_UI, Value: 1, Frames: 100, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_4, Value: 1, ApplyTo: Me}
+          - ShadowChargeBurnDown: {Enable: 0}
+          - ShadowChargeBurnDown: {Enable: 0, ApplyTo: Enemy}
+
+      - Events:
+          - VariableDestruction: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_SHOW_UI}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+        Actions:
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_WEAPON}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Cooldown, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+
+      - Events:
+          - VariableDestruction: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+        Actions:
+          #- FreezeFrame: {Frames: 120}
+          - ShadowChargeBurnDown: {Enable: 1}
+          - ShadowChargeBurnDown: {Enable: 1, ApplyTo: Enemy}
+          - HideTutorialPanel
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_HIDE}
+
+      - Events:
+          - ShadowChargeBurndown: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}
+
+  - Name: TUTORIAL_SHADOW_NEW_ABILITY_WEAPON_SHOCK
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_PLAYER, LOCK_SUBTYPE_FISTS]
+    ## TODO: Lock: GetUserVariable!!!!!
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_CHEAT"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_BLOCK"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_SF"}
+    Triggers:
+      - Events:
+          - VariableDestruction: {Player: Me, Name: SHOCK}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WEAPON].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}
+
+  - Name: TUTORIAL_SHADOW_NEW_ABILITY_ARMOR
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_PLAYER, LOCK_SHADOW_ARMOR]
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_CHEAT"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_BLOCK"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_SF"}
+    Triggers:
+      - Priority: -99989
+        Events:
+          - PostHit
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetUserVariable[TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WAEPON].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetShadowCharge[Me]", Value2: "1"}
+          - Greater: {Value1: "?Player[Enemy].Health", Value2: "0"}
+          - Greater: {Value1: "?Player[Me].Health", Value2: "0"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowFormShown, Value: 1, ApplyTo: Me}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Skill_Armor, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+          - HighlightKey: {Keys: [Shadow], Toggle: On}
+          - SetVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_ARMOR, Value: 1, ApplyTo: Me}
+
+      - Priority: -99990
+        Events:
+          - StageChange: {Stage: RoundFightEnd}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - SetUserVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_ARMOR, Value: 1}
+
+      ###- Priority: -99990
+      ###  Events:
+      ###    - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold, Up, UnHold]}
+      ###  Conditions:
+      ###    - Not:
+      ###      - Equal: {Value1: "?GetUserVariable[TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_Delay].Value", Value2: "1"}
+      ###    - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+      ###    - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+      ###    #- Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+      ###  Actions:
+      ###    - HideTutorialPanel
+      ###    - ShowTutorialPanel: {Message: Tutorial_Shadow_Form_Skill_Armor}
+      ###    - SetVariable: {Name: Tutorial_ShadowFormMoveShown, Value: 1, ApplyTo: Me}
+      ###    - SetUserVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_ARMOR, Value: 1}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+          - Less: {Value1: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value", Value2: "17"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowSkill_Count, Value: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value + 1", ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_Off].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value", Value2: "16"}
+        Actions:
+          - HideTutorialPanel
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_Off, Value: 1, ApplyTo: Me}
+          - SetUserVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_ARMOR, Value: 1}
+
+      - Priority: 10
+        Events:
+          - AnimationStart: {Player: Me, Name: SHADOW_MOVE}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_2, Value: 1, ApplyTo: Me}
+
+      - Priority: 9
+        Events:
+          - AnimationEnd: {Player: Me, Name: SHADOW_MOVE_END}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowForm_PauseAnimation].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowForm_PauseAnimation, Value: 1, ApplyTo: Me}
+
+      - Events:
+          #- AnimationEnd: {Player: Me, Name: SHADOW_MOVE_END}
+          - AnimationEnd: {Player: Enemy}
+          - AnimationEnd: {Player: Me}
+          #- StageChange: {Stage: RoundFightEnd}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_3].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, InPhysics].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, InPhysics].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "PHYSICS"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowForm_PauseAnimation].Value", Value2: "1"}
+
+          ## Need off tool for pauseanimation to remove these conditions
+          - GreaterEqual: {Value1: "?Player[Me].Health", Value2: "0.15"}
+          - GreaterEqual: {Value1: "?Player[Enemy].Health", Value2: "0.15"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_3, Value: 1, ApplyTo: Me}
+          - PauseAnimation: {ApplyTo: Enemy, InOutFrames: 120, Frames: 180}
+          - PauseAnimation: {ApplyTo: Me, InOutFrames: 120, Frames: 180}
+          - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY, Value: 1, Frames: 320, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_SHOW_UI, Value: 1, Frames: 100, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_4, Value: 1, ApplyTo: Me}
+          - ShadowChargeBurnDown: {Enable: 0}
+          - ShadowChargeBurnDown: {Enable: 0, ApplyTo: Enemy}
+
+      - Events:
+          - VariableDestruction: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_SHOW_UI}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+        Actions:
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_ARMOR}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Cooldown, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+
+      - Events:
+          - VariableDestruction: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+        Actions:
+          #- FreezeFrame: {Frames: 120}
+          - ShadowChargeBurnDown: {Enable: 1}
+          - ShadowChargeBurnDown: {Enable: 1, ApplyTo: Enemy}
+          - HideTutorialPanel
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_HIDE}
+
+      - Events:
+          - ShadowChargeBurndown: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}
+
+
+  - Name: TUTORIAL_SHADOW_NEW_ABILITY_HELMET
+    Templates: [LOCK_LOCATION_NOT_DOJO, LOCK_PLAYER, LOCK_SHADOW_HELMET]
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_CHEAT"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_MOVEMENT_COMBOS"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_BLOCK"}
+        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "TUTORIAL_SF"}
+    Triggers:
+      - Priority: -99999
+        Events:
+          - PostHit
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetUserVariable[TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_WAEPON].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_ARMOR].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_SUPER_ARMOR_Training_ON].Value", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetShadowCharge[Me]", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowFormShown, Value: 1, ApplyTo: Me}
+          - HighlightKey: {Keys: [Shadow], Toggle: On}
+          - SetVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_HELMET, Value: 1, ApplyTo: Me}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Skill_Helmet, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+
+      - Priority: -100000
+        Events:
+          - StageChange: {Stage: RoundFightEnd}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+        Actions:
+          - SetUserVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_HELMET, Value: 1}
+          - HideTutorialPanel
+
+      ###- Priority: -100000
+      ###  Events:
+      ###    - KeyPress: {Player: Me, Key: Shadow, States: [Down, Hold, Up, UnHold]}
+      ###  Conditions:
+      ###    - Not:
+      ###      - Equal: {Value1: "?GetUserVariable[TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+      ###      - Equal: {Value1: "?GetVariable[Me, Tutorial_Delay].Value", Value2: "1"}
+      ###    - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+      ###    - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+      ###    #- Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+      ###  Actions:
+      ###    - HideTutorialPanel
+      ###    - ShowTutorialPanel: {Message: Tutorial_Shadow_Form_Skill_Helmet}
+      ###    - SetVariable: {Name: Tutorial_ShadowFormMoveShown, Value: 1, ApplyTo: Me}
+      ###    - SetUserVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_HELMET, Value: 1}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+          - Less: {Value1: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value", Value2: "17"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowSkill_Count, Value: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value + 1", ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_Off].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+          - GreaterEqual: {Value1: "?GetVariable[Me, Tutorial_ShadowSkill_Count].Value", Value2: "16"}
+        Actions:
+          - HideTutorialPanel
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_Off, Value: 1, ApplyTo: Me}
+          - SetUserVariable: {Name: TUTORIAL_SHADOW_NEW_ABILITY_HELMET, Value: 1}
+
+      - Events:
+          - AnimationStart: {Player: Me, Name: SHADOW_MOVE}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_2, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me, Name: SHADOW_MOVE_END}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowForm_PauseAnimation].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_2].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowForm_PauseAnimation, Value: 1, ApplyTo: Me}
+
+      - Events:
+          #- AnimationEnd: {Player: Me, Name: SHADOW_MOVE_END}
+          - AnimationEnd: {Player: Enemy}
+          - AnimationEnd: {Player: Me}
+          #- StageChange: {Stage: RoundFightEnd}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormMoveShown_3].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, InPhysics].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, InPhysics].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "PHYSICS"}
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowForm_PauseAnimation].Value", Value2: "1"}
+
+          ## Need off tool for pauseanimation to remove these conditions
+          - GreaterEqual: {Value1: "?Player[Me].Health", Value2: "0.15"}
+          - GreaterEqual: {Value1: "?Player[Enemy].Health", Value2: "0.15"}
+        Actions:
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_3, Value: 1, ApplyTo: Me}
+          - PauseAnimation: {ApplyTo: Enemy, InOutFrames: 120, Frames: 180}
+          - PauseAnimation: {ApplyTo: Me, InOutFrames: 120, Frames: 180}
+          - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY, Value: 1, Frames: 320, ApplyTo: Me}
+          - SetVariable: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_SHOW_UI, Value: 1, Frames: 100, ApplyTo: Me}
+          - SetVariable: {Name: Tutorial_ShadowFormMoveShown_4, Value: 1, ApplyTo: Me}
+          - ShadowChargeBurnDown: {Enable: 0}
+          - ShadowChargeBurnDown: {Enable: 0, ApplyTo: Enemy}
+
+      - Events:
+          - VariableDestruction: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_SHOW_UI}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+        Actions:
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_HELMET}
+          - ShowTutorialPanel: {Type: BattleTutorial, Message: Tutorial_Shadow_Form_Cooldown, Offset: {X: 0, Y: -320}, Animation: MovingFromCenterAnimation}
+
+      - Events:
+          - VariableDestruction: {Name: TUTORIAL_SHADOW_ABILITY_COOLDOWN_DESTROY}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+        Actions:
+          #- FreezeFrame: {Frames: 120}
+          - ShadowChargeBurnDown: {Enable: 1}
+          - ShadowChargeBurnDown: {Enable: 1, ApplyTo: Enemy}
+          - HideTutorialPanel
+          - Call: {ID: TUTORIAL_SHADOW_COOLDOWN_HIDE}
+
+      - Events:
+          - ShadowChargeBurndown: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, TUTORIAL_SHADOW_NEW_ABILITY_HELMET].Value", Value2: "1"}
+          - Equal: {Value1: "?GetVariable[Me, Tutorial_ShadowFormShown].Value", Value2: "1"}
+        Actions:
+          - HideTutorialPanel
+          - HighlightKey: {Keys: [Shadow], Toggle: Off}

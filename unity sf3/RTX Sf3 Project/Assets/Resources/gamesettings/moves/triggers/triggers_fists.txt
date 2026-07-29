@@ -1,0 +1,308 @@
+TriggerSets:
+# ################################################# FISTS #################################################
+
+###################################### ATTACKS
+#  - Name: ATTACK_Fists_Wall_Hit
+#    Triggers:
+#      - Templates: [ATTACK.OFF_WALL]
+#        Actions:
+#          - Animation: {Name: Hit_Wall_Punch}
+
+################################### BASIC ATTACK (O)
+  - Name: ATTACK__BASIC_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Agile}
+
+  - Name: ATTACK__BASIC_Fists_Precise
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_PRECISE]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Precise}
+
+  - Name: ATTACK__BASIC_Fists_Strong
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Strong}
+
+################################### DOUBLE ATTACK (O + O)
+  - Name: ATTACK__DOUBLE_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Fists_Punch_Double_Agile}
+
+  - Name: ATTACK__DOUBLE_Fists_Precise
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_PRECISE]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Fists_Punch_Double_Precise}
+
+  - Name: ATTACK__DOUBLE_Fists_Strong
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Fists_Punch_Double_Strong}
+
+################################### TRIPLE ATTACK (O + O + O)
+  - Name: ATTACK__TRIPPLE_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.TRIPLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Fists_Punch_Triple_Agile}
+
+################################### SPINNING ATTACK (Back + O)
+  - Name: ATTACK__SPINNING_1_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Spinning_Agile_1}
+          
+  - Name: ATTACK__SPINNING_2_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.SPINNING_DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Fists_Punch_Spinning_Agile_2}
+
+  - Name: ATTACK__SPINNING_3_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.SPINNING_TRIPLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Fists_Punch_Spinning_Agile_3}
+
+  - Name: ATTACK__SPINNING_Fists_Precise
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_PRECISE]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Spinning_Precise}
+
+  - Name: ATTACK__SPINNING_1_Fists_Strong
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Spinning_Strong_1}
+          
+  - Name: ATTACK__SPINNING_2_Fists_Strong
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [ATTACK.SPINNING_DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Fists_Punch_Spinning_Strong_2}
+
+################################### LOW ATTACK (Down + O)
+  - Name: ATTACK__LOW_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Low_Agile}
+
+  - Name: ATTACK__LOW_Fists_Precise
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_PRECISE]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Low_Precise}
+
+  - Name: ATTACK__LOW_Fists_Strong
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Low_Strong}
+
+################################### UPPER ATTACK (Up + O)
+  - Name: ATTACK__UPPER_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Uppercut_Agile}
+
+  - Name: ATTACK__UPPER_Fists_Precise
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_PRECISE]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Uppercut_Precise}
+
+  - Name: ATTACK__UPPER_Fists_Strong
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Uppercut_Strong}
+
+################################### SUPER ATTACK (Forward + O)
+  - Name: ATTACK__SUPER_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_NOT_STRONG, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Fists_Punch_Superman}
+
+  - Name: ATTACK__SUPER_Fists_Precise
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_PRECISE]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Fists_Punch_Superman}
+
+  - Name: ATTACK__SUPER_Fists_Strong
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Strong}
+          
+################################### HEAVY ATTACK (Forward + O(Hold)
+  - Name: ATTACK__HEAVY_Fists_Agile
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_NOT_STRONG, LOCK_STYLE_AGILE]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Fists_Punch_Superman}
+
+  - Name: ATTACK__HEAVY_Fists_Precise
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_PRECISE]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Fists_Punch_Superman}
+
+  - Name: ATTACK__HEAVY_Fists_Strong
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Fists_Punch_Heavy_Strong}
+
+################################### START STANCE
+  - Name: STANCE_START_BIRTH_Agile_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_NOT_STRONG, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Stance_Start_Birth_Agile_Fists}
+
+  - Name: STANCE_START_BIRTH_Agile_Fists_Dojo
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_NOT_STRONG, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Stance_Idle}
+
+  - Name: STANCE_START_ROUND_PLAYER_Agile_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_NOT_STRONG, LOCK_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Actions:
+          - Animation: {Name: Stance_Start_Round_Agile_Fists}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Agile_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_NOT_STRONG, LOCK_NOT_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Actions:
+          - Animation: {Name: Stance_Start_Round_Agile_Fists}
+          
+  - Name: STANCE_START_IDLE_Agile_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_NOT_STRONG]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Actions:
+          - Animation: {Name: Stance_Start_Idle_Agile_Fists}
+
+########## strong
+  - Name: STANCE_START_BIRTH_Strong_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Stance_Start_Birth_Strong_Fists}
+
+  - Name: STANCE_START_BIRTH_Strong_Fists_Dojo
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Stance_Idle}
+
+  - Name: STANCE_START_ROUND_PLAYER_Strong_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG, LOCK_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Actions:
+          - Animation: {Name: Stance_Start_Round_Strong_Fists}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Strong_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG, LOCK_NOT_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Actions:
+          - Animation: {Name: Stance_Start_Round_Strong_Fists}
+          
+  - Name: STANCE_START_IDLE_Strong_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Actions:
+          - Animation: {Name: Stance_Start_Idle_Strong_Fists}
+          
+################################### WIN STANCE
+
+  - Name: STANCE_WIN_ROUND_Agile_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_NOT_STRONG]
+    Triggers:
+      - Templates: [STANCE.WIN_ROUND]
+        Priority: 10491
+        Actions:
+          - Animation: {Name: Stance_Win_Agile_Fists}
+          
+  - Name: STANCE_FINISHING_ROUND_IDLE_Agile_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_NOT_STRONG]
+    Triggers:
+      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+        Priority: 9391
+        Actions:
+          - Animation: {Name: Stance_Win_Idle_Agile_Fists}
+
+  - Name: STANCE_WIN_ROUND_Strong_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [STANCE.WIN_ROUND]
+        Priority: 10491
+        Actions:
+          #- Animation: {Name: Stance_Win}
+          - Animation: {Name: Sword_Lonely_Stance_Win_Round}
+          
+  - Name: STANCE_FINISHING_ROUND_IDLE_Strong_Fists
+    Templates: [LOCK_SUBTYPE_FISTS, LOCK_STYLE_STRONG]
+    Triggers:
+      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+        Priority: 9391
+        Actions:
+          #- Animation: {Name: Stance_Win_Idle}
+          - Animation: {Name: Sword_Lonely_Stance_Win_Idle}
+
+###################################### STANCES, MOVES etc.
+#  - Name: INVENTORY_EQUIP_Fists
+#    Templates: [LOCK_SUBTYPE_FISTS]
+#    Triggers:
+#      - Templates: [INVENTORY.TRY_ON]
+#        Actions:
+# #         - Animation: {Name: Fists_Punch_Spinning}

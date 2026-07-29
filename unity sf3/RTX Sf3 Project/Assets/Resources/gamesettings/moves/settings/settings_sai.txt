@@ -1,0 +1,1115 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# SWORDS #################################################
+  - Animation: Sai_Slash
+    FileName: sai_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_BASIC
+      - WEAPON
+      - SAI
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 29
+      - Name: Blocking
+        Start: 30
+      - Name: Throwable
+        Start: 24
+      - Name: Transitional
+        End: 14
+      - Name: Perk_Parry
+        Start: 4
+        End: 12
+      - Type: Attack
+        Start: 10
+        End: 12
+        HitTags:
+          - Hit_Chest_Middle_Short_Average
+        AttackingParts:
+          - Sai_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: steel
+        Impulse:
+            X: 22000
+            Y: 7000
+        Slowmo:
+            Start: 4
+            End: 12
+            Distance: 230
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 6
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+  - Animation: Sai_Slash_Double
+    FileName: sai_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_DOUBLE
+      - WEAPON
+      - SAI
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Sai_Slash
+    Intervals:
+      - Name: Uninterrupt
+        End: 51
+      - Name: Blocking
+        Start: 52
+      - Name: Throwable
+        Start: 46
+      - Name: Perk_Parry
+        Start: 4
+        End: 12
+      - Name: Perk_Parry
+        Start: 19
+        End: 31
+      - Type: Attack
+        Start: 10
+        End: 12
+        HitTags:
+          - Hit_Chest_Middle_Short_Average
+        AttackingParts:
+          - Sai_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: steel
+        Impulse:
+            X: 22000
+            Y: 7000
+        Slowmo:
+            Start: 4
+            End: 12
+            Distance: 230
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 25
+        End: 27
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Sai_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: steel
+        Impulse:
+            X: 22000
+            Y: 7000
+        Slowmo:
+            Start: 20
+            End: 27
+            Distance: 230
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 29
+        End: 31
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Sai_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: steel
+        Impulse:
+            X: 22000
+            Y: 7000
+        Slowmo:
+            Start: 24
+            End: 31
+            Distance: 230
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 6
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 18
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 24
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+  - Animation: Sai_Upper_Slash
+    FileName: sai_upper_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_UPPER
+      - WEAPON
+      - SAI
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 43
+      - Name: Blocking
+        Start: 44
+      - Name: Throwable
+        Start: 38
+      - Name: Perk_Parry
+        Start: 8
+        End: 16
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Sai_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: steel
+        Impulse:
+            X: 22000
+            Y: 9000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 250
+            Name:
+              - Block_High_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 9
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+
+  - Animation: Sai_Low_Slash
+    FileName: sai_low_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_LOW
+      - WEAPON
+      - SAI
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 37
+      - Name: Blocking
+        Start: 38
+      - Name: Throwable
+        Start: 32
+      - Name: Perk_Parry
+        Start: 7
+        End: 15
+      - Type: Attack
+        Start: 13
+        End: 15
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - Sai_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: steel
+        Impulse:
+            X: 12000
+            Y: 4000
+        Slowmo:
+            Start: 7
+            End: 15
+            Distance: 280
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 280
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 9
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 6
+
+  - Animation: Sai_Heavy_Slash
+    FileName: sai_heavy_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_HEAVY
+      - WEAPON
+      - SAI
+    # RepulsionScale:
+        # X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 46
+      - Name: Blocking
+        Start: 47
+      - Name: Throwable
+        Start: 41
+      - Name: Perk_Parry
+        Start: 17
+        End: 25
+      - Type: Attack
+        Start: 23
+        End: 25
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - Sai_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: steel
+        Impulse:
+            X: 22000
+            Y: 7000
+        Slowmo:
+            Start: 17
+            End: 28
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.13
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 16
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 14
+
+  - Animation: Sai_Super_1_Slash_1
+    FileName: sai_super_1_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - SAI
+      - HEAVY
+      - SUPER_SAI_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 35
+      - Name: Blocking
+        Start: 36
+      - Name: Throwable
+        Start: 30
+      - Name: Transitional
+        End: 17
+      - Name: Perk_Parry
+        Start: 8
+        End: 16
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Sai_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: steel
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 240
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 240
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 9
+      - Gender:
+          Male:
+          - voice/attack/heavy/m/m_heavy_attack_1
+          - voice/attack/heavy/m/m_heavy_attack_4
+          - voice/attack/heavy/m/m_heavy_attack_5
+          - voice/attack/heavy/m/m_heavy_attack_6
+          - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+          - voice/attack/heavy/f/f_heavy_attack_1
+          - voice/attack/heavy/f/f_heavy_attack_2
+          - voice/attack/heavy/f/f_heavy_attack_3
+          - voice/attack/heavy/f/f_heavy_attack_4
+          - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+
+  - Animation: Sai_Super_1_Slash_2
+    FileName: sai_super_1_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - SAI
+      - HEAVY
+      - SUPER_SAI_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Sai_Super_1_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 52
+      - Name: Blocking
+        Start: 53
+      - Name: Throwable
+        Start: 47
+      - Name: Unstable
+        Start: 24
+        End: 36
+      - Name: Perk_Parry
+        Start: 8
+        End: 16
+      - Name: Perk_Parry
+        Start: 25
+        End: 35
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Sai_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: steel
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 240
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 240
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 33
+        End: 35
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Sai_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: steel
+        Impulse:
+            X: 18000
+            Y: 4000
+        Slowmo:
+            Start: 25
+            End: 35
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 27
+      - Gender:
+          Male:
+          - voice/attack/heavy/m/m_heavy_attack_1
+          - voice/attack/heavy/m/m_heavy_attack_4
+          - voice/attack/heavy/m/m_heavy_attack_5
+          - voice/attack/heavy/m/m_heavy_attack_6
+          - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+          - voice/attack/heavy/f/f_heavy_attack_1
+          - voice/attack/heavy/f/f_heavy_attack_2
+          - voice/attack/heavy/f/f_heavy_attack_3
+          - voice/attack/heavy/f/f_heavy_attack_4
+          - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 6
+
+  - Animation: Sai_Super_2_Slash_1
+    FileName: sai_super_2_slash_4.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - SAI
+      - HEAVY
+      - SUPER_SAI_2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 82
+      - Name: Blocking
+        Start: 83
+      - Name: Throwable
+        Start: 77
+      - Name: Transitional
+        End: 17
+      - Type: Attack
+        Start: 19
+        End: 21
+        HitTags:
+          - Hit_Chest_Short_Average
+          - Unblockable
+        AttackingParts:
+          - Sai_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+          - Sai_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: steel
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 14
+            End: 21
+            Distance: 240
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 240
+            Name:
+              - Block_High_Short
+      - Type: Attack
+        Start: 36
+        End: 38
+        HitTags:
+          - Hit_Chest_Short_Average
+        AttackingParts:
+          - Sai_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: steel
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 30
+            End: 38
+            Distance: 240
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 240
+            Name:
+              - Block_High_Short
+      - Type: Attack
+        Start: 48
+        End: 50
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Sai_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: steel
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 42
+            End: 50
+            Distance: 240
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 240
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 60
+        End: 62
+        HitTags:
+          - Hit_Stomach_Heavy
+        AttackingParts:
+          - Sai_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: steel
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 56
+            End: 62
+            Distance: 240
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 240
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 9
+      - Gender:
+          Male:
+          - voice/attack/heavy/m/m_heavy_attack_1
+          - voice/attack/heavy/m/m_heavy_attack_4
+          - voice/attack/heavy/m/m_heavy_attack_5
+          - voice/attack/heavy/m/m_heavy_attack_6
+          - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+          - voice/attack/heavy/f/f_heavy_attack_1
+          - voice/attack/heavy/f/f_heavy_attack_2
+          - voice/attack/heavy/f/f_heavy_attack_3
+          - voice/attack/heavy/f/f_heavy_attack_4
+          - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+
+  - Animation: Sai_Spinning_Slash
+    FileName: sai_spinning_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SPINNING
+      - WEAPON
+      - SAI
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 43
+      - Name: Blocking
+        Start: 44
+      - Name: Throwable
+        Start: 38
+      - Name: Perk_Parry
+        Start: 13
+        End: 19
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Stomach_Heavy
+        AttackingParts:
+          - Sai_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: steel
+        Impulse:
+            X: 20000
+            Y: 10000
+        Slowmo:
+            Start: 13
+            End: 19
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 13
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 11
+
+########################################################################Stances
+#########################################Stances_Round_Start
+  - Animation: Sai_Stance_Birth
+    FileName: sai_stance_birth.bin
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Sai_Stance_Start_Round
+    FileName: sai_stance.bin
+    Groups:
+      - STANCE_START_ROUND
+    EndsStage:
+      - RoundStart
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+  #  Sounds:
+  #    - Common:
+  #        - strike/wood/light/2_Wood_Hits_A_V25_bip
+  #      Frame: 14
+
+  - Animation: Sai_Stance_Idle
+    FileName: sai_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Sai_Stance_Win
+    FileName: sai_stance_win.bin
+    WeaponSwitchFrames:
+        - Name: Main
+          Frame: 1
+    Groups:
+      - STANCE_WIN_POSE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 8
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 18
+
+  - Animation: Sai_Stance_Win_Idle
+    FileName: sai_stance_win_idle.bin
+    Groups:
+      - STANCE_WIN_IDLE
+    Intervals:
+      - Name: Uninterrupt
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot

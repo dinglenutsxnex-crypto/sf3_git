@@ -1,0 +1,1964 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCE, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# STAFF ################################################# 
+##  - Animation: Sarge_Stance_Birth
+##    FileName: m_agl_stance_birth.bin
+##    Looped: 1
+##    EndFrame: 10
+##    Groups:
+##      - STANCE_START_BIRTH
+##    Align:
+##        Rotation:
+##            Y: 90
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##    SetDirection:
+##        From:
+##            Player: Me
+##            Object: Nodes
+##            Part: pelvis
+##        To:
+##            Object: Center
+##
+##  - Animation: Sarge_Stance_Idle
+##    FileName: m_serj_stance.bin
+##    Groups:
+##      - STANCE_IDLE
+##    Align:
+##        Rotation:
+##            Y: 90
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##    Intervals:
+##      - Name: Uninterrupt
+##
+##  - Animation: Sarge_Stance_Start_Round
+##    FileName: m_serj_stance.bin
+##    EndsStage:
+##      - RoundStart
+##    FirstFrame: 11
+##    Groups:
+##      - STANCE_START_ROUND
+##    Align:
+##        Rotation:
+##            Y: 90
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+
+############ START STANCE
+  - Animation: Stance_Start_Birth_Tutorial
+    FileName: m_str_stance_birth.bin
+    Looped: 1
+    EndFrame: 60
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Stance_Start_Birth_Tutorial_2
+    FileName: m_str_stance_birth.bin
+    EndFrame: 70
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: show_tutorial_dialog
+        Start: 40
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Twohanded_Sword_Birth_ShiftForTutorialBlock
+    FileName: twohanded_sword_stance_birth.bin
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+        Shift:
+            X: -50
+    Intervals:
+      - Name: Uninterrupt
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Stance_Start_Birth_Twohanded_Sword_Tutorial
+    FileName: twohanded_sword_win_stance_idle.bin
+    Looped: 1
+    EndFrame: 80
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Stance_Start_Round_Twohanded_Sword_Tutorial
+    FileName: twohanded_sword_win_stance_idle.bin
+    EndsStage:
+      - RoundStart
+    EndFrame: 40
+    Groups:
+      - STANCE_START_ROUND
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Stance_Start_Idle_Twohanded_Sword_Tutorial
+    FileName: twohanded_sword_win_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Stance_Start_Round_Tutorial
+    FileName: m_str_stance.bin
+    EndsStage:
+      - RoundStart
+    Groups:
+      - STANCE_START_ROUND
+    RepulsionScale:
+        X: 0.5
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+        Frame: 16
+
+  - Animation: Stance_Start_Idle_Tutorial
+    FileName: m_str_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    RepulsionScale:
+        X: 0.7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+
+######################## Spill The Beans (MQ)
+
+  - Animation: Gizmo_Cast_Start
+    FileName: gizmo_ability_start.bin
+    RepulsionScale:
+        X: 0.5
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 58
+      - Name: Blocking
+        Start: 59
+      - Name: DisarmMe
+        Start: 50
+        End: 50
+    Sounds:
+      - Floor:
+          Stone:
+          - strike/steel/4_Metallic_Weapon_Hit_V2
+          Wood:
+          - strike/wood/heavy/2_Wood_Hits_A_V19_bip
+        Frame: 18
+#      - Gender:
+#          Male:
+#            - voice/attack/heavy/m/m_heavy_attack_3
+##            - voice/attack/heavy/m/m_heavy_dmg_5
+#          Female:
+#            - voice/attack/heavy/f/f_heavy_attack_5
+#        Frame: 33
+
+  - Animation: Gizmo_Throw_Active_Start
+    #FileName: gizmo_ability_throw_a.bin
+    FileName: gizmo_throw_active_start.bin
+    Groups:
+      #- THROW
+      - FISTS
+      - UNARMED
+      - HEAVY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 25
+      - Name: Blocking
+        Start: 26
+      - Name: Throwable
+        Start: 26
+      - Type: Attack
+        Start: 7
+        End: 9
+        HitTags:
+          - Unblockable
+          - No_FX_SFX
+          - Gizmo_Throw_Start
+        AttackingParts:
+          - Hand_right
+          - Forearm_right
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 5
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 3
+
+  - Animation: Gizmo_Throw_Active_End
+    #FileName: gizmo_ability_throw_a.bin
+    FileName: gizmo_throw_active_end.bin
+    FirstFrame: 8
+    Groups:
+      - THROW
+      - FISTS
+      - UNARMED
+      - HEAVY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    #Transitions:
+    #  - FrameShift: 0
+    #    Animations:
+    #      - Gizmo_Throw_Active_Start
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Type: Attack
+        Start: 23
+        End: 25
+        HitTags:
+          - Unblockable
+          ##- Gizmo_Throw_Start_2
+        Material: flesh
+        AttackingParts:
+          - Hand_left
+          - Forearm_left
+        Slowmo:
+            Start: 18
+            End: 25
+            Distance: 300
+        Damage:
+            Attack: UnarmedDamage
+            Defense: BodyDefense
+            BaseDamage: 0.06
+      - Type: Attack
+        Start: 40
+        End: 43
+        HitTags:
+          - Unblockable
+        Material: flesh
+        AttackingParts:
+          - Hand_right
+          - Forearm_right
+        Slowmo:
+            Start: 18
+            End: 25
+            Distance: 300
+        Damage:
+            Attack: UnarmedDamage
+            Defense: HeadDefense
+            BaseDamage: 0.06
+      - Type: Attack
+        Start: 59
+        End: 63
+        HitTags:
+          - Unblockable
+        Material: flesh
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Slowmo:
+            Start: 55
+            End: 63
+            Distance: 300
+        Damage:
+            Attack: UnarmedDamage
+            Defense: BodyDefense
+            BaseDamage: 0.06
+      - Type: Attack
+        Start: 89
+        End: 92
+        HitTags:
+          - Unblockable
+        Material: flesh
+        AttackingParts:
+          - Thigh_right
+          - Leg_right
+          - Foot_right
+        Slowmo:
+            Start: 83
+            End: 92
+            Distance: 300
+        Damage:
+            Attack: UnarmedDamage
+            Defense: HeadDefense
+            BaseDamage: 0.09
+    Sounds:
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 28
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 34
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 55
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 83
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 80
+
+  - Animation: Gizmo_Throw_Passive_Start
+    #FileName: gizmo_ability_throw_b.bin
+    FileName: gizmo_throw_passive_start.bin
+    FirstFrame: 1
+    Groups:
+      #- THROW_FALL
+      - FALL
+      - FOLLOWED_BY
+#    EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: -50
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoRepulsion
+      - Name: Uninterrupt
+#    Sounds:
+#      - Common:
+#          - whoosh/throw/bone_crunching
+#        Frame: 12
+#      - Common:
+#          - whoosh/throw/throw_whoosh
+#        Frame: 18
+
+  - Animation: Gizmo_Throw_Passive_End
+    #FileName: gizmo_ability_throw_b.bin
+    FileName: gizmo_throw_passive_end.bin
+    FirstFrame: 1
+    Groups:
+      - THROW_FALL
+      - SUPER_FALL
+      - FALL
+      - FOLLOWED_BY
+      - FALL_CRITICAL_ON_BACK
+#    EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoRepulsion
+      - Name: Uninterrupt
+      - Name: Floorfall
+        Start: 78
+        End: 78
+#    Sounds:
+#      - Common:
+#          - whoosh/throw/bone_crunching
+#        Frame: 12
+#      - Common:
+#          - whoosh/throw/throw_whoosh
+#        Frame: 18
+
+  - Animation: Gizmo_Throw_Passive_End_Mirrored
+    #FileName: gizmo_ability_throw_b.bin
+    FileName: gizmo_throw_passive_end.bin
+    FirstFrame: 1
+    Mirrored: -1
+    Groups:
+      - THROW_FALL
+      - SUPER_FALL
+      - FALL
+      - FOLLOWED_BY
+      - FALL_CRITICAL_ON_BACK
+#    EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoRepulsion
+      - Name: Uninterrupt
+      - Name: Floorfall
+        Start: 72
+        End: 72
+#    Sounds:
+#      - Common:
+#          - whoosh/throw/bone_crunching
+#        Frame: 12
+#      - Common:
+#          - whoosh/throw/throw_whoosh
+#        Frame: 18
+
+
+######################## GIZMO STANCES
+  - Animation: Gizmo_Stance_Start_Round
+    FileName: gizmo_stance.bin
+    EndFrame: 52
+    EndsStage:
+      - RoundStart
+    Groups:
+      - STANCE_START_ROUND
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 20
+
+  - Animation: Gizmo_Stance_Start_Idle
+    FileName: gizmo_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+
+            
+###############
+
+  - Animation: Sarge_Walk
+    FileName: sarge_walk.bin
+    Groups:
+      - SHADOW_MOVE
+    #Velocity:
+    #    X: 2
+    #Looped: 1
+    RepulsionScale:
+        X: 0.5
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+      - Name: Sarge_Walk_End
+        Start: 110
+      - Name: Sarge_Smashing_Start_Reverse
+        Start: 32
+        End: 32
+      - Name: Sarge_Smashing_Start_Reverse
+        Start: 51
+        End: 51
+      - Name: Sarge_Smashing_Start_Reverse
+        Start: 70
+        End: 70
+      - Name: Sarge_Smashing_Start_Reverse
+        Start: 89
+        End: 89
+      - Name: Sarge_Smashing_Start_Reverse
+        Start: 108
+        End: 108
+      #- Name: Sarge_Smashing_Start
+      #  Start: 25
+      #  End: 25
+      #- Name: Sarge_Smashing_Start_Reverse
+      #  Start: 48
+      #  End: 48
+      #- Name: Sarge_Smashing_Start
+      #  Start: 67
+      #  End: 67
+      #- Name: Sarge_Smashing_Start_Reverse
+      #  Start: 86
+      #  End: 86
+      #- Name: Sarge_Smashing_Start
+      #  Start: 105
+      #  End: 105
+
+  - Animation: Sarge_Smashing_Active_Reverse
+    FileName: sarge_smashing_active.bin
+    EndFrame: 150
+    #BlendingFrames: 20
+    #Mirrored: -1
+    Groups:
+      #- THROW
+      - ATTACK
+      - WEAPON
+      - HEAVY
+      - SHADOW_MOVE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        #Pivot:
+        #    Object: Nodes
+        #    Part: foot_l
+        #Position:
+        #    Player: Me
+        #    Object: Pivot
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Transitions:
+      - FrameShift: 0
+        AITransistable: 1
+        Animations:
+          - Sarge_Smashing_Active_Miss
+    Intervals:
+      - Name: Uninterrupt
+        End: 148
+      - Name: Sarge_Passive_2_Start
+        Start: 66
+        End: 66
+      #- Name: Blocking
+      #  Start: 26
+      #- Name: Throwable
+      #  Start: 26
+      - Type: Attack
+        Start: 20
+        End: 22
+        HitTags:
+          - Unblockable
+          - Hit_Stomach_Heavy
+          #- No_FX_SFX
+          - Sarge_Smashing
+        Material: hammer
+        AttackingParts:
+          - Hand_left
+          - Forearm_left
+          - Hammers_Attacking_Edge_l
+        Slowmo:
+            Start: 14
+            End: 22
+            Distance: 200
+        Damage:
+            Attack: WeaponDamage
+            Defense: BodyDefense
+            BaseDamage: 0.1
+      - Type: Attack
+        Start: 66
+        End: 68
+        HitTags:
+          - Unblockable
+          - Hit_Overhead_Critical_Fall
+        Material: hammer
+        AttackingParts:
+          - Hand_left
+          - Forearm_left
+          - Hammers_Attacking_Edge_l
+        Slowmo:
+            Start: 18
+            End: 25
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            Defense: BodyDefense
+            BaseDamage: 0.2
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 14
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 60
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Sarge_Smashing_Active_Miss
+    FileName: sarge_smashing_miss.bin
+    #EndFrame: 150
+    BlendingFrames: 20
+    Mirrored: -1
+    Groups:
+      - ATTACK
+      - WEAPON
+      - HEAVY
+      - SHADOW_MOVE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    #TEST
+    #SetDirection:
+    #    From:
+    #        Player: Me
+    #        Object: Nodes
+    #        Part: pelvis
+    #    To:
+    #        Player: Enemy
+    #        Object: Nodes
+    #        Part: pelvis
+    #TEST
+    Intervals:
+      - Name: Uninterrupt
+        End: 63
+      - Name: Sarge_Walk_End
+        Start: 62
+        End: 62
+      #- Name: Sarge_Passive_2_Start
+      #  Start: 66
+      #  End: 66
+      #- Name: Blocking
+      #  Start: 26
+      #- Name: Throwable
+      #  Start: 26
+      - Type: Attack
+        Start: 20
+        End: 22
+        HitTags:
+          - Unblockable
+          - Hit_Stomach_Heavy
+          #- No_FX_SFX
+          - Sarge_Smashing
+        Material: hammer
+        AttackingParts:
+          - Hand_left
+          - Forearm_left
+          - Hammers_Attacking_Edge_l
+        Slowmo:
+            Start: 14
+            End: 22
+            Distance: 200
+        Damage:
+            Attack: UnarmedDamage
+            Defense: BodyDefense
+            BaseDamage: 0.1
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 14
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Sarge_Throw_Passive_Start
+    FileName: sarge_smashing_passive_start.bin
+    Groups:
+      - THROW_FALL
+      - SUPER_FALL
+      - FALL
+      - FOLLOWED_BY
+      - SHADOW_MOVE
+#    EndFrame: 48
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+        Shift:
+            X: -100
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoRepulsion
+      - Name: Uninterrupt
+#    Sounds:
+#      - Common:
+#          - whoosh/throw/bone_crunching
+#        Frame: 12
+#      - Common:
+#          - whoosh/throw/throw_whoosh
+#        Frame: 18
+
+  - Animation: Sarge_Throw_Passive_End
+    FileName: sarge_smashing_passive_end.bin
+    #EndFrame: 37
+    Groups:
+      - THROW_FALL
+      - SUPER_FALL
+      - FALL_CRITICAL_ON_FACE
+      - FOLLOWED_BY
+      - SHADOW_MOVE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Type: NoRepulsion
+      - Name: Uninterrupt
+#    Sounds:
+#      - Common:
+#          - whoosh/throw/bone_crunching
+#        Frame: 12
+#      - Common:
+#          - whoosh/throw/throw_whoosh
+#        Frame: 18
+
+  - Animation: Sarge_Throw_Passive_Stand_Up
+    FileName: sarge_smashing_passive_stand_up.bin
+    Groups:
+      - STAND_UP
+    #EndFrame: 50
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Me
+            Object: Front
+        #From:
+        #    Player: Me
+        #    Object: Nodes
+        #    Part: pelvis
+        #To:
+        #    Player: Me
+        #    Object: Nodes
+        #    Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 30
+      - Name: Blocking
+        Start: 31
+      - Name: Throwable
+        Start: 35
+      - Name: Unstable
+        End: 26
+    Sounds:
+      - Floor:
+          Stone:
+            - step/land/stone/11_Land_Stone_Surface_V4
+            - step/land/stone/11_Land_Stone_Surface_V5
+            - step/land/stone/11_Land_Stone_Surface_V9
+          Wood:
+            - step/land/wood/10_Land_Wood_Surface_V4
+            - step/land/wood/10_Land_Wood_Surface_V22
+            - step/land/wood/10_Land_Wood_Surface_V23
+        Frame: 20
+
+################################## GRETA
+##  - Animation: Greta_Charge_Active_Heavy_Start
+##    FileName: greta_charge_active_heavy.bin
+##    RepulsionScale:
+##        X: 0.9
+##    Groups:
+##      #- THROW
+##      - FISTS
+##      - UNARMED
+##      - HEAVY
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##    SetDirection:
+##        From:
+##            Player: Me
+##            Object: Nodes
+##            Part: pelvis
+##        To:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##    Intervals:
+##      - Name: Uninterrupt
+##      - Name: Greta_Charge_Active_Short
+##        Start: 14
+##        End: 14
+##      - Name: Greta_Charge_Active_Middle
+##        Start: 21
+##        End: 21
+##      - Name: Greta_Charge_Stand_Up
+##        Start: 65
+##        End: 65
+##      - Type: TurnOffRepulsionBones
+##        Start: 10
+##        End: 44
+##        Bones:
+##          - foot_l
+##        BonesMirrored:
+##          - foot_r
+##      - Type: NoRepulsion
+##        Start: 51
+##        End: 80
+##      - Type: Attack
+##        Start: 41
+##        End: 45
+##        HitTags:
+##          - Unblockable
+##          - No_FX_SFX
+##          - Greta_Charge_Passive
+##          - Hit_No_Critical
+##          - Hit_No_Combo_Count
+##        AttackingParts:
+##          - Stomach
+##          - Forearm_left
+##          - Hand_left
+##          - Hand_right
+##          - Forearm_right
+##          - Neck
+##          - Head
+##          - Thigh_left
+##          - Thigh_right
+##          - Leg_left
+##          - Leg_right
+##          #- w_twohanded_sword_Attacking_Edge_r
+##          #- w_twohanded_sword_Attacking_Edge_l
+##        Material: flesh
+##        Slowmo:
+##            Start: 35
+##            End: 45
+##            Distance: 300
+##        Damage:
+##            Attack: UnarmedDamage
+##            Defense: BodyDefense
+##            BaseDamage: 0.1
+##      - Type: Attack
+##        Start: 46
+##        End: 49
+##        HitTags:
+##          - Unblockable
+##          - No_FX_SFX
+##          - Greta_Charge_Miss
+##          - Hit_No_Critical
+##          - Hit_No_Combo_Count
+##        AttackingParts:
+##          - Stomach
+##          - Forearm_left
+##          - Hand_left
+##          - Hand_right
+##          - Forearm_right
+##          - Neck
+##          - Head
+##          - Thigh_left
+##          - Thigh_right
+##          - Leg_left
+##          - Leg_right
+##          #- w_twohanded_sword_Attacking_Edge_r
+##          #- w_twohanded_sword_Attacking_Edge_l
+##        Material: flesh
+##        Impulse:
+##            X: 22000
+##            Y: 3000
+##        Slowmo:
+##            Start: 42
+##            End: 49
+##            Distance: 300
+##        Damage:
+##            Attack: UnarmedDamage
+##            Defense: BodyDefense
+##            BaseDamage: 0.1
+##    Sounds:
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 28
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 40
+##
+##  - Animation: Greta_Charge_Active_Middle_Start
+##    FileName: greta_charge_active_middle.bin
+##    RepulsionScale:
+##        X: 0.9
+##    Groups:
+##      #- THROW
+##      - FISTS
+##      - UNARMED
+##      - HEAVY
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##    Transitions:
+##      - FrameShift: 0
+##        AITransistable: 1
+##        Animations:
+##          - Greta_Charge_Active_Heavy_Start
+##    Intervals:
+##      - Name: Uninterrupt
+##      - Name: Greta_Charge_Stand_Up
+##        Start: 45
+##        End: 45
+##      - Type: TurnOffRepulsionBones
+##        Start: 10
+##        End: 35
+##        Bones:
+##          - foot_l
+##        BonesMirrored:
+##          - foot_r
+##      - Type: NoRepulsion
+##        Start: 31
+##        End: 50
+##      - Type: Attack
+##        Start: 29
+##        End: 33
+##        HitTags:
+##          - Unblockable
+##          - No_FX_SFX
+##          - Greta_Charge_Passive
+##          - Hit_No_Critical
+##          - Hit_No_Combo_Count
+##        AttackingParts:
+##          - Stomach
+##          - Forearm_left
+##          - Hand_left
+##          - Hand_right
+##          - Forearm_right
+##          - Neck
+##          - Head
+##          - Thigh_left
+##          - Thigh_right
+##          - Leg_left
+##          - Leg_right
+##          #- w_twohanded_sword_Attacking_Edge_r
+##          #- w_twohanded_sword_Attacking_Edge_l
+##        Material: flesh
+##        Slowmo:
+##            Start: 23
+##            End: 33
+##            Distance: 300
+##        Damage:
+##            Attack: UnarmedDamage
+##            Defense: BodyDefense
+##            BaseDamage: 0.1
+##      - Type: Attack
+##        Start: 34
+##        End: 35
+##        HitTags:
+##          - Unblockable
+##          - No_FX_SFX
+##          - Greta_Charge_Miss
+##          - Hit_No_Critical
+##          - Hit_No_Combo_Count
+##        AttackingParts:
+##          - Stomach
+##          - Forearm_left
+##          - Hand_left
+##          - Hand_right
+##          - Forearm_right
+##          - Neck
+##          - Head
+##          - Thigh_left
+##          - Thigh_right
+##          - Leg_left
+##          - Leg_right
+##          #- w_twohanded_sword_Attacking_Edge_r
+##          #- w_twohanded_sword_Attacking_Edge_l
+##        Material: flesh
+##        Impulse:
+##            X: 22000
+##            Y: 3000
+##        Slowmo:
+##            Start: 30
+##            End: 35
+##            Distance: 300
+##        Damage:
+##            Attack: UnarmedDamage
+##            Defense: BodyDefense
+##            BaseDamage: 0.1
+##    Sounds:
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 20
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 33
+##
+##  - Animation: Greta_Charge_Active_Short_Start
+##    FileName: greta_charge_active_short.bin
+##    RepulsionScale:
+##        X: 0.9
+##    Groups:
+##      #- THROW
+##      - FISTS
+##      - UNARMED
+##      - HEAVY
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##    Transitions:
+##      - FrameShift: 0
+##        AITransistable: 1
+##        Animations:
+##          - Greta_Charge_Active_Heavy_Start
+##    Intervals:
+##      - Name: Uninterrupt
+##      - Name: Greta_Charge_Stand_Up
+##        Start: 33
+##        End: 33
+##      - Type: TurnOffRepulsionBones
+##        Start: 10
+##        End: 23
+##        Bones:
+##          - foot_l
+##        BonesMirrored:
+##          - foot_r
+##      - Type: NoRepulsion
+##        Start: 51
+##        End: 80
+##      - Type: Attack
+##        Start: 18
+##        End: 20
+##        HitTags:
+##          - Unblockable
+##          - No_FX_SFX
+##          - Greta_Charge_Passive
+##          - Hit_No_Critical
+##          - Hit_No_Combo_Count
+##        AttackingParts:
+##          - Stomach
+##          - Forearm_left
+##          - Hand_left
+##          - Hand_right
+##          - Forearm_right
+##          - Neck
+##          - Head
+##          - Thigh_left
+##          - Thigh_right
+##          - Leg_left
+##          - Leg_right
+##          #- w_twohanded_sword_Attacking_Edge_r
+##          #- w_twohanded_sword_Attacking_Edge_l
+##        Material: flesh
+##        Slowmo:
+##            Start: 14
+##            End: 20
+##            Distance: 300
+##        Damage:
+##            Attack: UnarmedDamage
+##            Defense: BodyDefense
+##            BaseDamage: 0.1
+##      - Type: Attack
+##        Start: 21
+##        End: 22
+##        HitTags:
+##          - Unblockable
+##          - No_FX_SFX
+##          - Greta_Charge_Miss
+##          - Hit_No_Critical
+##          - Hit_No_Combo_Count
+##        AttackingParts:
+##          - Stomach
+##          - Forearm_left
+##          - Hand_left
+##          - Hand_right
+##          - Forearm_right
+##          - Neck
+##          - Head
+##          - Thigh_left
+##          - Thigh_right
+##          - Leg_left
+##          - Leg_right
+##          #- w_twohanded_sword_Attacking_Edge_r
+##          #- w_twohanded_sword_Attacking_Edge_l
+##        Material: flesh
+##        Impulse:
+##            X: 22000
+##            Y: 3000
+##        Slowmo:
+##            Start: 18
+##            End: 22
+##            Distance: 300
+##        Damage:
+##            Attack: UnarmedDamage
+##            Defense: BodyDefense
+##            BaseDamage: 0.1
+##    Sounds:
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 10
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 25
+##
+##  - Animation: Greta_Charge_Active_Heavy_End
+##    FileName: greta_charge_active_heavy.bin
+##    RepulsionScale:
+##        X: 0.9
+##    Groups:
+##      #- THROW
+##      - FISTS
+##      - UNARMED
+##      - HEAVY
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##    Transitions:
+##      - FrameShift: 0
+##        AITransistable: 1
+##        Animations:
+##          - Greta_Charge_Active_Heavy_Start
+##    Intervals:
+##      - Name: Uninterrupt
+##      - Name: Greta_Charge_Stand_Up
+##        Start: 65
+##        End: 65
+##      - Type: TurnOffRepulsionBones
+##        Start: 10
+##        End: 44
+##        Bones:
+##          - foot_l
+##        BonesMirrored:
+##          - foot_r
+##      - Type: NoRepulsion
+##        Start: 51
+##        End: 80
+##      - Type: Attack
+##        Start: 54
+##        End: 54
+##        HitTags:
+##          - Unblockable
+##        Material: flesh
+##        AttackingParts:
+##          - Thigh_right
+##          - Leg_right
+##          - Foot_right
+##        Slowmo:
+##            Start: 48
+##            End: 54
+##            Distance: 300
+##        Damage:
+##            Attack: UnarmedDamage
+##            Defense: BodyDefense
+##            BaseDamage: 0.15
+##    Sounds:
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 28
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 40
+##
+##  - Animation: Greta_Charge_Active_Middle_End
+##    FileName: greta_charge_active_middle.bin
+##    RepulsionScale:
+##        X: 0.9
+##    Groups:
+##      #- THROW
+##      - FISTS
+##      - UNARMED
+##      - HEAVY
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##    Transitions:
+##      - FrameShift: 0
+##        AITransistable: 1
+##        Animations:
+##          - Greta_Charge_Active_Middle_Start
+##    Intervals:
+##      - Name: Uninterrupt
+##      - Name: Greta_Charge_Stand_Up
+##        Start: 45
+##        End: 45
+##      - Type: TurnOffRepulsionBones
+##        Start: 10
+##        End: 35
+##        Bones:
+##          - foot_l
+##        BonesMirrored:
+##          - foot_r
+##      - Type: NoRepulsion
+##        Start: 31
+##        End: 50
+##      - Type: Attack
+##        Start: 44
+##        End: 44
+##        HitTags:
+##          - Unblockable
+##        Material: flesh
+##        AttackingParts:
+##          - Thigh_right
+##          - Leg_right
+##          - Foot_right
+##        Slowmo:
+##            Start: 38
+##            End: 44
+##            Distance: 300
+##        Damage:
+##            Attack: UnarmedDamage
+##            Defense: BodyDefense
+##            BaseDamage: 0.15
+##    Sounds:
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 20
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 33
+##
+##  - Animation: Greta_Charge_Active_Short_End
+##    FileName: greta_charge_active_short.bin
+##    RepulsionScale:
+##        X: 0.9
+##    Groups:
+##      #- THROW
+##      - FISTS
+##      - UNARMED
+##      - HEAVY
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: foot_l
+##        Position:
+##            Player: Me
+##            Object: Pivot
+##    Transitions:
+##      - FrameShift: 0
+##        AITransistable: 1
+##        Animations:
+##          - Greta_Charge_Active_Short_Start
+##    Intervals:
+##      - Name: Uninterrupt
+##      - Name: Greta_Charge_Stand_Up
+##        Start: 33
+##        End: 33
+##      - Type: TurnOffRepulsionBones
+##        Start: 10
+##        End: 23
+##        Bones:
+##          - foot_l
+##        BonesMirrored:
+##          - foot_r
+##      - Type: NoRepulsion
+##        Start: 51
+##        End: 80
+##      - Type: Attack
+##        Start: 32
+##        End: 32
+##        HitTags:
+##          - Unblockable
+##        Material: flesh
+##        AttackingParts:
+##          - Thigh_right
+##          - Leg_right
+##          - Foot_right
+##        Slowmo:
+##            Start: 26
+##            End: 32
+##            Distance: 300
+##        Damage:
+##            Attack: UnarmedDamage
+##            Defense: BodyDefense
+##            BaseDamage: 0.15
+##    Sounds:
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 10
+##      - Gender:
+##          Male:
+##            - voice/attack/heavy/m/m_heavy_attack_1
+##            - voice/attack/heavy/m/m_heavy_attack_4
+##            - voice/attack/heavy/m/m_heavy_attack_5
+##            - voice/attack/heavy/m/m_heavy_attack_6
+##            - voice/attack/heavy/m/m_heavy_attack_7
+##          Female:
+##            - voice/attack/heavy/f/f_heavy_attack_1
+##            - voice/attack/heavy/f/f_heavy_attack_2
+##            - voice/attack/heavy/f/f_heavy_attack_3
+##            - voice/attack/heavy/f/f_heavy_attack_4
+##            - voice/attack/heavy/f/f_heavy_attack_5
+##        Frame: 25
+##
+##
+##  - Animation: Greta_Charge_Passive
+##    FileName: greta_charge_passive.bin
+##    FirstFrame: 1
+##    #ShiftByVariable: 
+##    #  - Name: GRETA_FrameShiftForPassiveAnimation
+##    Groups:
+##      - THROW_FALL
+##      - SUPER_FALL
+##      - FALL
+##      - FOLLOWED_BY
+##      - FALL_CRITICAL_ON_BACK
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: pelvis
+##        Position:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##        Shift:
+##            X: -30
+##    SetDirection:
+##        From:
+##            Player: Me
+##            Object: Nodes
+##            Part: pelvis
+##        To:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##    Intervals:
+##      - Type: NoRepulsion
+##      - Name: Uninterrupt
+##      - Name: Unstable
+##        #Start: 18
+##        End: 25
+##      - Name: Floorfall
+##        Start: 18
+##        End: 18
+##
+##  - Animation: Greta_Charge_Passive_Mirrored
+##    FileName: greta_charge_passive.bin
+##    FirstFrame: 1
+##    #ShiftByVariable: 
+##    #  - Name: GRETA_FrameShiftForPassiveAnimation
+##    Mirrored: -1
+##    Groups:
+##      - THROW_FALL
+##      - SUPER_FALL
+##      - FALL
+##      - FOLLOWED_BY
+##      - FALL_CRITICAL_ON_BACK
+##    Align:
+##        Rotation:
+##            Y: 6
+##        Axis:
+##          - X
+##        Pivot:
+##            Object: Nodes
+##            Part: pelvis
+##        Position:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##        Shift:
+##            X: -30
+##    SetDirection:
+##        From:
+##            Player: Me
+##            Object: Nodes
+##            Part: pelvis
+##        To:
+##            Player: Enemy
+##            Object: Nodes
+##            Part: pelvis
+##    Intervals:
+##      - Type: NoRepulsion
+##      - Name: Uninterrupt
+##      - Name: Unstable
+##        #Start: 18
+##        End: 25
+##      - Name: Floorfall
+##        Start: 18
+##        End: 18

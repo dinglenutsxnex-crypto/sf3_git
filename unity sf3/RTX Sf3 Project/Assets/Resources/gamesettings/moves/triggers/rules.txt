@@ -1,0 +1,286 @@
+TriggerSets:
+######################################## FIGHT RULES
+
+  - Name: RULE__SHADOWLESS
+    Templates: [LOCK_SKELETON, LOCK_LOCATION_NOT_DOJO]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, Shadowless].HasRule", Value2: "1"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - RuleShadowless
+          
+################################## PERPETUAL SHADOW FORM
+
+  - Name: RULE__PERPETUAL_SHADOW_FORM
+    Templates: [LOCK_SKELETON, LOCK_LOCATION_NOT_DOJO]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, PerpetualSF].HasRule", Value2: "1"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - ToggleShadowForm: {Value: 1, ApplyTo: Me, EffectName: "shadow_fire"}
+          - CustomEffect: {Name: shadow_fire, ApplyTo: Me, AttachToBone: pelvis, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          - RuleWithoutSF
+
+      - Events:
+          - StageChange
+        Conditions:
+          - Equal: {Value1: "?Fight[].CurrentStage", Value2: "FightEnd"}
+        Actions:
+          - ToggleShadowForm: {Value: 0, ApplyTo: Me, EffectName: "shadow_fire"}
+          - DestroyEffect: {Name: shadow_fire, ApplyTo: Me}
+          - PlaySound: {Sounds: [shadow_form/shadow end]}
+
+
+################################## REGENERATION
+
+  - Name: RULE__REGENERATION
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, Regeneration].HasRule", Value2: "1"}
+    Triggers:
+      - Events:
+          - StageChange
+        Conditions:
+          - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightStart"}
+        Actions:
+          - ApplyStatus: {ApplyTo: Me, Name: RULE_REGENERATION, Type: ModHP, HPPerFrame: "?RuleVariable[Me, Regeneration, Value]"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_REGENERATION, Icon: ICON_ENCHANTMENT_REGENERATION, BackgroundColor: "#cc6128"}
+
+
+################################## DEGENERATION
+
+  - Name: RULE__DEGENERATION
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, Degeneration].HasRule", Value2: "1"}
+    Triggers:
+      - Events:
+          - StageChange
+        Conditions:
+          - Equal: {Value1: "?Fight[].CurrentStage", Value2: "RoundFightStart"}
+        Actions:
+          - ApplyStatus: {ApplyTo: Me, Name: RULE_REGENERATION, Type: ModHP, HPPerFrame: "-1 * ?RuleVariable[Me, Degeneration, Value]"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_BLEEDING, Icon: ICON_ENCHANTMENT_BLEEDING, BackgroundColor: "#cc6128"}
+
+
+################################## DARKNESS
+
+  - Name: RULE__DARKNESS
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, Darkness].HasRule", Value2: "1"}
+    Triggers:
+      - Priority: 999999
+        Events:
+          - StageChange: {Stage: RoundFightStart}
+        Actions:
+          - RuleDarkness: {DarkFrames: "?RuleVariable[Me, Darkness, DarkFrames]", LightFrames: "?RuleVariable[Me, Darkness, LightFrames]", TransitionFrames: "?RuleVariable[Me, Darkness, TransitionFrames]"}
+
+
+################################## INVERTED JOYSTICK
+
+  - Name: RULE__INVERTED_JOYSTICK
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, InvertedJoystick].HasRule", Value2: "1"}
+    Triggers:
+      - Priority: 999999
+        Events:
+          - StageChange: {Stage: RoundFightStart}
+        Actions:
+          - RuleInvertJoystick
+
+
+################################## SCORE FIGHT
+
+  - Name: RULE__SCORE_FIGHT
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, ScoreFight].HasRule", Value2: "1"}
+    Triggers:
+      - Priority: 999999
+        Events:
+          - Birth: {Player: Me}
+        Actions:
+          - RuleScoreFight: {Score: "?RuleVariable[Me, ScoreFight, Score]"}
+
+
+################################## NO HEALTH BAR
+
+  - Name: RULE__NO_HEALTH_BAR
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, WithoutHP].HasRule", Value2: "1"}
+    Triggers:
+      - Priority: 999999
+        Events:
+          - Birth: {Player: Me}
+        Actions:
+          - RuleWithoutHP
+
+
+################################## NO SHADOW BAR
+
+  - Name: RULE__NO_SHADOW_BAR
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, WithoutSF].HasRule", Value2: "1"}
+    Triggers:
+      - Priority: 999999
+        Events:
+          - Birth: {Player: Me}
+        Actions:
+          - RuleWithoutSF
+
+################################## INVISIBLE WARRIOR
+
+  - Name: RULE__INVISIBLE_WARRIOR
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, InvisibleWarrior].HasRule", Value2: "1"}
+    Triggers:
+      - Priority: 999999
+        Events:
+          - Birth: {Player: Me}
+        Actions:
+          - InvisibleWarrior: {ApplyTo: Me}
+
+
+################################## NO TIMER
+
+  - Name: RULE__NO_TIMER
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, WithoutTime].HasRule", Value2: "1"}
+    Triggers:
+      - Priority: 999999
+        Events:
+          - Birth: {Player: Me}
+        Actions:
+          - RuleWithoutTime
+
+
+################################## TIMEOUT WIN
+
+  - Name: RULE__TIMEOUT_WIN
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, TimeoutWin].HasRule", Value2: "1"}
+    Triggers:
+      - Priority: 999999
+        Events:
+          - Birth: {Player: Me}
+        Actions:
+          - TimeoutWin
+          - SetAttribute: {Name: Factor_UnarmedDamage, Value: "0", ApplyTo: Me}
+          - SetAttribute: {Name: Factor_WeaponDamage, Value: "0", ApplyTo: Me}
+          
+      - Priority: -999999
+        Events:
+          - Hit: {Player: Enemy}
+        Actions:
+          - SetHit: {DealsDamage: 0}
+
+
+################################## PERFECT WIN
+
+  - Name: RULE__PERFECT_WIN
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, PerfectWin].HasRule", Value2: "1"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+        Actions:
+          - Lose
+
+
+################################## LIFESTEAL
+
+  - Name: RULE__LIFESTEAL
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, LifeSteal].HasRule", Value2: "1"}
+    Triggers:
+      - Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - ApplyStatus: {ApplyTo: Me, Name: ENCHANTMENT_LIFESTEAL_REGEN, Frames: 1, Type: ModHP, HPPerFrame: "?RuleVariable[Me, LifeSteal, Value] * ?Hit[].Damage"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_ENCHANTMENT_LIFESTEAL, BackgroundColor: "#cc6128", Icon: ICON_ENCHANTMENT_LIFESTEAL, Frames: 90, Stackable: 0}
+
+################################## NO KICKS
+
+  - Name: RULE__NO_KICKS
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, NoKicks].HasRule", Value2: "1"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - SwitchKey: {Keys: [Kick], State: Off, Hide: 1}
+
+
+################################## NO PUNCHES
+
+  - Name: RULE__NO_PUNCHES
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, NoPunches].HasRule", Value2: "1"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - SwitchKey: {Keys: [Punch], State: Off, Hide: 1}
+
+
+################################# TEST RULES
+
+  - Name: RULE__SARGE_SHADOW_FORM
+    Templates: [LOCK_SKELETON, LOCK_NOT_PLAYER, LOCK_LOCATION_NOT_DOJO]
+    Locks:
+      - Equal: {Value1: "?Rule[Me, SargeSF].HasRule", Value2: "1"}
+    Triggers:
+      - Events:
+          - RoundLoad
+        Conditions: 
+          - GreaterEqual: {Value1: "?Fight[].Round", Value2: "2"}
+        Actions:
+          - ToggleShadowForm: {Value: 1, Infinity: 1, EffectName: "shadow_fire"}
+          - SetShadowCharge: {Value: "1"}
+          #- CustomEffect: {Name: shadow_fire, ApplyTo: Me, AttachToBone: pelvis, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, SingleInstance: 1}
+          #- SetShadowCharge: {Value: "1"}
+################################## TRANSITIONAL BLEEDING
+
+
+#  - Name: RULE__TRANSITIONAL_BLEEDING
+#    Templates: [LOCK_SKELETON]
+#    Locks:
+#      - Or:
+#        - Equal: {Value1: "?Player[Me].TagExists", Value2: "RULE_TRANSITIONAL_BLEEDING"}
+#        - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "RULE_TRANSITIONAL_BLEEDING"}
+#    Triggers:
+#      - Events:
+#          - PostHit: {Player: Enemy}
+#        Conditions:
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Enemy, TRANSITIONAL_BLEEDING].Value", Value2: "1"}
+#        Actions:
+#          ###### CLEAR
+#          - ClearStatus: {ApplyTo: Me, Name: RULE_TRANSITIONAL_BLEEDING}
+#          - ClearStatusIcon: {ApplyTo: Me, Name: ICON_TRANSITIONAL_BLEEDING}
+#          - SetVariable: {Name: TRANSITIONAL_BLEEDING, Value: 0, ApplyTo: Me}
+#          ###### APPLY
+#          - ApplyStatus: {ApplyTo: Enemy, Name: RULE_TRANSITIONAL_BLEEDING, Type: ModHP, HPPerFrame: -0.001}
+#          - ShowStatusIcon: {ApplyTo: Enemy, Name: ICON_TRANSITIONAL_BLEEDING, BackgroundColor: "#9f1c03", Icon: ICON_BLEEDING}
+#          - SetVariable: {Name: TRANSITIONAL_BLEEDING, Value: 1, ApplyTo: Enemy}

@@ -1,0 +1,1318 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# SWORDS #################################################
+  - Animation: Hammers_Slash
+    FileName: dual_axes_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_BASIC
+      - WEAPON
+      - HAMMERS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 34
+      - Name: Blocking
+        Start: 35
+      - Name: Throwable
+        Start: 29
+      - Name: Transitional
+        End: 16
+      - Name: Perk_Parry
+        Start: 8
+        End: 16
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 10
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Hammers_Slash_Double
+    FileName: dual_axes_slash_double.bin
+    Groups:
+      - ATTACK
+      - ATTACK_DOUBLE
+      - WEAPON
+      - HAMMERS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Hammers_Slash
+    Intervals:
+      - Name: Uninterrupt
+        End: 51
+      - Name: Blocking
+        Start: 52
+      - Name: Throwable
+        Start: 46
+      - Name: Perk_Parry
+        Start: 8
+        End: 16
+      - Name: Perk_Parry
+        Start: 29
+        End: 37
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 35
+        End: 37
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: hammer
+        Impulse:
+            X: 25000
+            Y: 13000
+        Slowmo:
+            Start: 29
+            End: 37
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 10
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 28
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Hammers_Slash_Low
+    FileName: dual_axes_low_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_LOW
+      - WEAPON
+      - HAMMERS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 37
+      - Name: Blocking
+        Start: 38
+      - Name: Throwable
+        Start: 32
+      - Name: Perk_Parry
+        Start: 8
+        End: 17
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: hammer
+        Impulse:
+            X: 22000
+            Y: 7000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 220
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 220
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Hammers_Slash_Upper
+    FileName: dual_axes_upper_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_UPPER
+      - WEAPON
+      - HAMMERS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 40
+      - Name: Blocking
+        Start: 41
+      - Name: Throwable
+        Start: 35
+      - Name: Perk_Parry
+        Start: 10
+        End: 19
+      - Type: Attack
+        Start: 16
+        End: 19
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 17000
+            Y: 18000
+        Slowmo:
+            Start: 10
+            End: 19
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 270
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 10
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+
+  - Animation: Hammers_Heavy_Slash
+    FileName: dual_axes_heavy_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_HEAVY
+      - WEAPON
+      - HAMMERS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 39
+      - Name: Blocking
+        Start: 40
+      - Name: Throwable
+        Start: 34
+      - Name: Perk_Parry
+        Start: 11
+        End: 20
+      - Type: Attack
+        Start: 17
+        End: 20
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 22000
+            Y: -6000
+        Slowmo:
+            Start: 11
+            End: 20
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.12
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 12
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 8
+
+  - Animation: Hammers_Super_1_Slash_1
+    FileName: dual_hammers_super_1_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - HAMMERS
+      - HEAVY
+      - SUPER_HAMMERS_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 36
+      - Name: Blocking
+        Start: 37
+      - Name: Transitional
+        End: 20
+      - Name: Throwable
+        Start: 31
+      - Name: Perk_Parry
+        Start: 11
+        End: 19
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 22000
+            Y: 11000
+        Slowmo:
+            Start: 11
+            End: 18
+            Distance: 220
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+        
+  - Animation: Hammers_Super_1_Slash_2
+    FileName: dual_hammers_super_1_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - HAMMERS
+      - HEAVY
+      - SUPER_HAMMERS_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Hammers_Super_1_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 55
+      - Name: Blocking
+        Start: 56
+      - Name: Throwable
+        Start: 50
+      - Name: Transitional
+        End: 39
+      - Name: Perk_Parry
+        Start: 11
+        End: 19
+      - Name: Perk_Parry
+        Start: 28
+        End: 37
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 22000
+            Y: 11000
+        Slowmo:
+            Start: 11
+            End: 18
+            Distance: 220
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 34
+        End: 37
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: hammer
+        Impulse:
+            X: 16000
+            Y: -10000
+        Slowmo:
+            Start: 28
+            End: 37
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 28
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+        
+  - Animation: Hammers_Super_1_Slash_3
+    FileName: dual_hammers_super_1_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_3
+      - WEAPON
+      - HAMMERS
+      - HEAVY
+      - SUPER_HAMMERS_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Hammers_Super_1_Slash_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 80
+      - Name: Blocking
+        Start: 81
+      - Name: Throwable
+        Start: 75
+      - Name: Perk_Parry
+        Start: 11
+        End: 19
+      - Name: Perk_Parry
+        Start: 27
+        End: 37
+      - Name: Perk_Parry
+        Start: 46
+        End: 54
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 22000
+            Y: 11000
+        Slowmo:
+            Start: 11
+            End: 18
+            Distance: 220
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 34
+        End: 37
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: hammer
+        Impulse:
+            X: 16000
+            Y: -10000
+        Slowmo:
+            Start: 28
+            End: 37
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead
+      - Type: Attack
+        Start: 52
+        End: 54
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 24000
+            Y: 8000
+        Slowmo:
+            Start: 46
+            End: 54
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_High_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 28
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 46
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+
+  - Animation: Hammers_Super_2_Slash_1
+    FileName: dual_hammers_super_2_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - HAMMERS
+      - HEAVY
+      - SUPER_HAMMERS_2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 90
+      - Name: Blocking
+        Start: 91
+      - Name: Transitional
+        End: 30
+      - Name: Throwable
+        Start: 85
+      - Name: Perk_Parry
+        Start: 11
+        End: 19
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 14000
+            Y: 7000
+        Slowmo:
+            Start: 11
+            End: 19
+            Distance: 220
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.02
+        Block:
+            Distance: 220
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 25
+        End: 28
+        HitTags:
+          - Hit_Overhead_Short
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: hammer
+        Impulse:
+            X: 14000
+            Y: -2000
+        Slowmo:
+            Start: 19
+            End: 28
+            Distance: 220
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 220
+            Name:
+              - Block_Overhead_Short
+      - Type: Attack
+        Start: 31
+        End: 34
+        HitTags:
+          - Hit_Overhead_Heavy
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 16000
+            Y: -4000
+        Slowmo:
+            Start: 25
+            End: 34
+            Distance: 220
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 220
+            Name:
+              - Block_Overhead_Heavy
+      - Type: Attack
+        Start: 57
+        End: 59
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: hammer
+        Impulse:
+            X: 16000
+            Y: -4000
+        Slowmo:
+            Start: 51
+            End: 59
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Overhead
+      - Type: Attack
+        Start: 62
+        End: 64
+        HitTags:
+          - Hit_Overhead_Heavy
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 20000
+            Y: -6000
+        Slowmo:
+            Start: 56
+            End: 64
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 19
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 25
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 51
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 62
+        #### floorhit sfx
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 9
+
+  - Animation: Hammers_Slash_Spinning
+    FileName: dual_axes_spinning_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SPINNING
+      - WEAPON
+      - HAMMERS
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 51
+      - Name: Blocking
+        Start: 52
+      - Name: Throwable
+        Start: 46
+      - Name: Perk_Parry
+        Start: 13
+        End: 29
+      - Type: Attack
+        Start: 19
+        End: 21
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Hammers_Attacking_Edge_l
+          - Hand_left
+          - Forearm_left
+        Material: hammer
+        Impulse:
+            X: 19000
+            Y: 9000
+        Slowmo:
+            Start: 12
+            End: 21
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 270
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 27
+        End: 29
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Hammers_Attacking_Edge_r
+          - Hand_right
+          - Forearm_right
+        Material: hammer
+        Impulse:
+            X: 21000
+            Y: 11000
+        Slowmo:
+            Start: 21
+            End: 29
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 12
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 21
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Hammers_Stance_Start_Birth
+    FileName: dual_hammers_stance_birth.bin
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 73
+
+  - Animation: Hammers_Stance_Start_Round
+    FileName: dual_hammers_stance_idle.bin
+    EndsStage:
+      - RoundStart
+    Groups:
+      - STANCE_START_ROUND
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Hammers_Stance_Start_Idle
+    FileName: dual_hammers_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+#######
+
+  - Animation: Hammers_Stance_Win_Round
+    FileName: dual_axes_stance_win.bin
+    Groups:
+      - STANCE_WIN_POSE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    Intervals:
+      - Name: Uninterrupt
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 73
+            
+  - Animation: Hammers_Stance_Finishing_Round_Idle
+    FileName: dual_axes_stance_idle.bin
+    Groups:
+      - STANCE_WIN_IDLE
+    Intervals:
+      - Name: Uninterrupt
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+...

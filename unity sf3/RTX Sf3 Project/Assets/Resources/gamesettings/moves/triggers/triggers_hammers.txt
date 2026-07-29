@@ -1,0 +1,145 @@
+TriggerSets:
+########################################## AXES
+
+###################################### ATTACKS
+
+################################### BASIC ATTACK (O)
+  - Name: ATTACK_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Hammers_Slash}
+
+################################### DOUBLE ATTACK (O + O)
+  - Name: ATTACK_DOUBLE_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Hammers_Slash_Double}
+
+################################### BASIC ATTACK INSTEAD SUPER
+  - Name: ATTACK_Hammers_Instead_Super_1
+    Templates: [LOCK_SUBTYPE_HAMMERS, LOCK_NOT_SUPER_WEAPON]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1]
+        Actions:
+          - Animation: {Name: Hammers_Slash}
+
+################################### UPPER ATTACK (Up + O)
+  - Name: ATTACK_UPPER_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Hammers_Slash_Upper}
+
+################################### LOW ATTACK (Down + O)
+  - Name: ATTACK_LOW_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Hammers_Slash_Low}
+
+################################### HEAVY ATTACK (Forward + O)
+  - Name: ATTACK_HEAVY_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Hammers_Heavy_Slash}
+
+################################### SPINNING ATTACK (Backward + O)
+  - Name: ATTACK_SPINNING_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Hammers_Slash_Spinning}
+
+################################### SUPER ATTACK FOR HAMMERS (Forward + O + O)
+  - Name: ATTACK_HAMMERS_SUPER_1_1
+    Templates: [LOCK_SUBTYPE_HAMMERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_HAMMERS_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Hammers_Super_1_Slash_1}
+
+  - Name: ATTACK_HAMMERS_SUPER_1_2
+    Templates: [LOCK_SUBTYPE_HAMMERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_HAMMERS_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Hammers_Super_1_Slash_2}
+
+  - Name: ATTACK_HAMMERS_SUPER_1_3
+    Templates: [LOCK_SUBTYPE_HAMMERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_HAMMERS_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_3, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Hammers_Super_1_Slash_3}
+
+
+  - Name: ATTACK_HAMMERS_SUPER_2_1
+    Templates: [LOCK_SUBTYPE_HAMMERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_HAMMERS_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Hammers_Super_2_Slash_1}
+
+###################################### STANCES, MOVES etc. HUMMERS
+  - Name: STANCE_START_BIRTH_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Hammers_Stance_Start_Birth}
+
+########################
+  - Name: STANCE_START_ROUND_PLAYER_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Actions:
+          - Animation: {Name: Hammers_Stance_Start_Round}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Actions:
+          - Animation: {Name: Hammers_Stance_Start_Round}
+
+########################
+  - Name: STANCE_START_IDLE_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Actions:
+          - Animation: {Name: Hammers_Stance_Start_Idle}
+
+########################
+  - Name: STANCE_WIN_ROUND_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [STANCE.WIN_ROUND]
+        Actions:
+          - Animation: {Name: Hammers_Stance_Win_Round}
+
+########################
+  - Name: STANCE_FINISHING_ROUND_IDLE_Hammers
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Triggers:
+      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+        Actions:
+          - Animation: {Name: Hammers_Stance_Finishing_Round_Idle}

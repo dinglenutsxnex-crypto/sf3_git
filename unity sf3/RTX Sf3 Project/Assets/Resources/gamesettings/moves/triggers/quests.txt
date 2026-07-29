@@ -1,0 +1,215 @@
+TriggerSets:
+########################################################## CHAPTER 1
+############################  Final Resolution (MQ)
+  ###- Name: beta_BAMBOO_MQ_FINALRESOLUTION_BOSS
+  ###  Templates: [LOCK_SKELETON]
+  ###  Locks:
+  ###    - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "BETA_BAMBOO_MQ_FINALRESOLUTION_BOSS"}
+  ###  Triggers:
+  ###    - Events:
+  ###        - AnimationEnd: {Player: Enemy, Name: STANCE_START_ROUND}
+  ###      Conditions:
+  ###        - Equal: {Value1: "?Fight[].Round", Value2: "3"}
+  ###      Actions:
+  ###        - ShowDialog: {Prefab: OneButton, Title: CHAR_MQ_Fort_Commander, Image: avatars/man_sensei, Label: beta_Bamboo_MQ_FinalResolution_InGame_Dialog_1, ButtonAlias: continue}
+  ###        - ShowDialog: {Prefab: OneButton, Title: CHAR_MQ_Princess, Image: avatars/girl_princess, Label: beta_Bamboo_MQ_FinalResolution_InGame_Dialog_2, ButtonAlias: continue}
+
+
+############################  Spill The Beans (MQ)
+
+  - Name: beta_LEGIONDOJO_MQ_SPILLTHEBEANS
+#    Templates: [LOCK_SKELETON]
+    Templates: [LOCK_SKELETON, LOCK_NOT_PLAYER]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "BETA_LEGIONDOJO_MQ_SPILLTHEBEANS"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: UNSHOCKABLE, Value: 1, ApplyTo: Me}
+          - SetVariable: {Name: BASHER_FOR_GIZMO_CHEAT, Value: 20, ApplyTo: Enemy}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+          - AnimationStart: {Player: Enemy, Name: Stun}
+          - EveryFrame: {Step: 20}
+        Priority: 3000
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+            - Equal: {Value1: "?GetVariable[Me, SHOCKED].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "ATTACK"}
+            - Equal: {Value1: "?GetVariable[Me, GIZMO_DISARM].Value", Value2: "1"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Uninterrupt"}
+          - Or:
+            - Equal: {Value1: "?GetVariable[Enemy, PERK_BASHER].Value", Value2: "1"}
+#            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FALL"}
+#            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+#            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FALL_CRITICAL"}
+            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Stun"}
+        Actions:
+          - SetVariable: {Name: GIZMO_DISARM, Value: 1, ApplyTo: Me}
+          - Animation: {Name: Gizmo_Cast_Start}
+          - Call: {ID: GIZMO_RAGE_DIALOG, Frame: 5}
+
+
+################## CRITICAL CHANCE CRUTCH ON
+#      - Events:
+#          - Strike: {Player: Me}
+#        Priority: 8000
+#        Conditions:
+#          - Not:
+#            - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Blocking"}
+#          - LessEqual: {Value1: "?Random[1,100]", Value2: "100"}
+#          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, Gizmo_DISARM].Value", Value2: "1"}
+#            - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+#        Actions:
+#          - SetVariable: {Name: CRITICAL, Value: 1, ApplyTo: Enemy, Frames: 1}
+################## CRITICAL CHANCE CRUTCH OFF
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: DisarmMe}
+        Actions:
+          - Disarm: {ApplyTo: Me, InstantFreeze: 1}
+          - SetVariable: {Name: UNSHOCKABLE, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable:
+              Name: SHOCKED
+              Value: 1
+              ApplyTo: Me
+          - SetVariable:
+              Name: SHOCK
+              Value: 1
+              ApplyTo: Me
+              Frames: 1
+          ##- SwitchKey: {Keys: [Punch, Kick, Up, Up_Forward, Down_Forward, Up_Back, Down_Back], State: On}
+          ##- RepulsionType: {ApplyTo: Me, State: 0}
+
+      - Events:
+          - PostHit: {Player: Me}
+        Priority: 99999
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Cast_Start"}
+          - Not:
+#            - Equal: {Value1: "?GetVariable[Me, Tutorial_BlockShown].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Enemy, GIZMO_DISARM].Value", Value2: "1"}
+        Actions:
+          - Disarm: {ApplyTo: Me}
+          - SetVariable: {Name: UNSHOCKABLE, Value: 0, ApplyTo: Me, Frames: 1}
+          - SetVariable: {Name: GIZMO_DISARM, Value: 1, ApplyTo: Me}
+          - SetVariable:
+              Name: SHOCKED
+              Value: 1
+              ApplyTo: Me
+          - SetVariable:
+              Name: SHOCK
+              Value: 1
+              ApplyTo: Me
+              Frames: 1
+
+
+
+      #- Events:
+      #    - IntervalEnd: {Player: Me, Name: Uninterrupt}
+      #  Priority: 399
+      #  Conditions:
+      #    - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Cast_Start"}
+      #  Actions:
+      #    - Animation: {Name: Gizmo_Cast_Run}
+      #- Events:
+      #    - IntervalEnd: {Player: Me, Name: Uninterrupt}
+      #  Priority: 399
+      #  Conditions:
+      #    - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Cast_Run"}
+#     #     - Equal: {Value1: "?GetVariable[Me, Shadow_Mind_Throw_Destroy].Value", Value2: "1"}
+      #  Actions:
+      #    - Animation: {Name: Gizmo_Cast_Run}
+      #
+      #- Events:
+      #    - EveryFrame: {Step: 1}
+      #  Priority: 1000
+      #  Conditions:
+      #    - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Cast_Run"}
+      #    - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "230"}
+      #  Actions:
+      #    - Animation: {Name: Gizmo_Throw_Active}
+
+
+#  - Name: beta_LEGIONDOJO_MQ_SPILLTHEBEANS_PASSIVE
+##    Templates: [LOCK_SKELETON]
+#    Templates: [LOCK_SKELETON, LOCK_PLAYER]
+#    Locks:
+#      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "BETA_LEGIONDOJO_MQ_SPILLTHEBEANS"}
+#    Triggers:
+#      - Name: PASSIVE
+#        Priority: 2000
+#        Events:
+#          - AnimationStart: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Gizmo_Throw_Active"}
+#        Actions:
+#          - Animation: {Name: Gizmo_Throw_Passive}
+#
+#
+#      - Events:
+#          - AnimationEnd: {Player: Me}
+#        Conditions:
+#          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Cast"}
+#        Actions:
+#          - Call: {ID: GIZMO_RAGE_DIALOG}
+  - Name: PERK_BASHER_FOR_GIZMO
+    Templates: [PERK, LOCK_PLAYER]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "BETA_LEGIONDOJO_MQ_SPILLTHEBEANS"}
+    Triggers:
+      - Priority: 202
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - Less: {Value1: "?GetVariable[Me, BASHER_FOR_GIZMO_CHEAT].Value", Value2: "100"}
+        Actions:
+          - SetVariable: {Name: BASHER_FOR_GIZMO_CHEAT, Value: "?GetVariable[Me, BASHER_FOR_GIZMO_CHEAT].Value + 20", ApplyTo: Me}
+          
+      - Priority: 201
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Fight[].Round", Value2: "1"}
+          - LessEqual: {Value1: "?Random[1,100]", Value2: "?GetVariable[Me, BASHER_FOR_GIZMO_CHEAT].Value"}
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "WEAPON"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, BLOCK].Value", Value2: "1"}
+            - Equal: {Value1: "?GetVariable[Me, PERK_BASHER].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: PERK_BASHER, Value: 1, ApplyTo: Me}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BASHER, BackgroundColor: "#2f4668", Icon: ICON_PERK_BASHER, Stackable: 0}
+
+      - Priority: 5001
+        Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, PERK_BASHER].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stun"}
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Invincible"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+        Actions:
+          - Animation: {Name: Stun}
+          - ClearStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BASHER}
+          - ShowStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BASHER, BackgroundColor: "#9f1c03", Icon: ICON_PERK_BASHER, Frames: 90, ShowExpiration: 1, Stackable: 0}
+
+      - Priority: 5002
+        Events:
+          - PostHit: {Player: Me}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Stun"}
+        Actions:
+          - SetVariable: {Name: PERK_BASHER, Value: 0, ApplyTo: Me, Frames: 1}
+          - ClearStatusIcon: {ApplyTo: Me, Name: ICON_PERK_BASHER}
+
+

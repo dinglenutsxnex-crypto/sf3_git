@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1234477549235058
+GameObject:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_Component:
+  - component: {fileID: 4043685150910368}
+  - component: {fileID: 137093979949197525}
+  - component: {fileID: 114548739038350516}
+  m_Layer: 0
+  m_Name: wpn__twohanded_hammer_01_01__trail_l
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4043685150910368
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1234477549235058}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &137093979949197525
+SkinnedMeshRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1234477549235058}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: de5c846a7f43ed6469265464024a7f08, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 4300000, guid: a7045ca7ab38a514d98a0e4493a5c563, type: 2}
+  m_Bones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 0}
+  m_AABB:
+    m_Center: {x: 29.993855, y: -0.000541687, z: -0.005972624}
+    m_Extent: {x: 30.00346, y: 6.7864256, z: 7.6518965}
+  m_DirtyAABB: 0
+--- !u!114 &114548739038350516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1234477549235058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd192ea7c6d470ddf27f92fc3bde1df0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  _rootBoneName: w_twohanded_hammer_trail1_l
+  _bindBonesName:
+  - w_twohanded_hammer_trail1_l
+  - w_twohanded_hammer_trail2_l
+  - w_twohanded_hammer_trail3_l
+  - w_twohanded_hammer_trail4_l
+  shadowFormMaterial: {fileID: 2100000, guid: de5c846a7f43ed6469265464024a7f08, type: 2}
+  enemyMaskColor: {r: 1, g: 1, b: 1, a: 1}
+  playerMaskColor: {r: 1, g: 1, b: 1, a: 1}
+  simpleMaterial: {fileID: 0}
+  matcapMaterial: {fileID: 0}
+  gradientInfo:
+    gradientStartColor: {r: 0, g: 0, b: 0, a: 0}
+    gradientEndColor: {r: 0, g: 0, b: 0, a: 0}
+    gradientStart: 0
+    gradientEnd: 0
+  droppable: 0
+  isGradientSource: 0
+  updateGlowBoundsFromBone: 0
+  glowBoudsMeshExpansion: {x: 1, y: 1, z: 1}
+  glowBoundsMesh: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1234477549235058}
+  m_IsPrefabParent: 1

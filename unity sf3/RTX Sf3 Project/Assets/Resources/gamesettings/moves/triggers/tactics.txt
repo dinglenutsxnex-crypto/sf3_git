@@ -1,0 +1,256 @@
+TriggerSets:
+
+  - Name: TACTICS_BASE
+    Type: Template
+    Triggers:
+
+      - Name: APPROACH
+        Tactics:
+          MathWeight: 10
+          Conditions:
+            - Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "100"}
+
+      - Name: RETREAT
+        Tactics:
+          MathWeight: 10
+
+      - Name: ATTACK
+        Tactics:
+          MathWeight: 10
+          Conditions:
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "370"}
+
+      - Name: ESCAPE
+        Tactics:
+          MathWeight: 10
+          Conditions:
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "150"}
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "250"}
+
+      - Name: SHADOW_MOVE
+        Tactics:
+          MathWeight: 10
+          Conditions:
+            - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+
+      - Name: SHADOW_TOGGLE
+        Tactics:
+          MathWeight: 10
+          Conditions:
+            - GreaterEqual: {Value1: "?GetShadowCharge[Me]", Value2: "1"}
+
+  - Name: TACTICS
+    Type: Template
+    Triggers:
+      - Name: APPROACH_CLOSE
+        Templates: [TACTICS_BASE.APPROACH]
+        Tactics:
+          MathWeight: 20
+          Conditions:
+            - Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "100"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+
+      - Name: APPROACH_AFAR
+        Templates: [TACTICS_BASE.APPROACH]
+        Tactics:
+          MathWeight: 40
+          Conditions:
+            - Or:
+              - And:
+                - Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "300"}
+                - Not:
+                  - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - And:
+                - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+                - Not:
+                  - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+
+
+      - Name: RETREAT
+        Templates: [TACTICS_BASE.RETREAT]
+        Tactics:
+          MathWeight: 10
+          Conditions:
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+
+      - Name: ATTACK_VERY_CLOSE
+        Templates: [TACTICS_BASE.ATTACK]
+        Tactics:
+          MathWeight: 600
+          Conditions:
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "120"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+
+      - Name: ATTACK_CLOSE
+        Templates: [TACTICS_BASE.ATTACK]
+        Tactics:
+          MathWeight: 600
+          Conditions:
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "180"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+
+      - Name: ATTACK_MIDRANGE
+        Templates: [TACTICS_BASE.ATTACK]
+        Tactics:
+          MathWeight: 600
+          Conditions:
+            - Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "160"}
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "300"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+
+      - Name: ATTACK_AFAR
+        Templates: [TACTICS_BASE.ATTACK]
+        Tactics:
+          MathWeight: 600
+          Conditions:
+            - Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "250"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+
+      - Name: ATTACK_COMBO
+        Templates: [TACTICS_BASE.ATTACK]
+        Tactics:
+          MathWeight: 1800
+          Conditions:
+            - Or:
+              - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+              - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "HIT"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+
+      - Name: THROW
+        Templates: [TACTICS_BASE.ATTACK]
+        Tactics:
+          MathWeight: 1500
+          Conditions:
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "155"}
+            - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Throwable"}
+            - Not:
+              - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Unstable"}
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+
+      - Name: ESCAPE
+        Templates: [TACTICS_BASE.ESCAPE]
+        Tactics:
+          MathWeight: 2000
+          Conditions:
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Me],Wall,Back].X)", Value2: "150"}
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "250"}
+            - Not:
+              - Equal: {Value1: "?Player[Enemy].CurrentInterval", Value2: "Attack"}
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+
+      - Name: SHADOW_TOGGLE
+        Templates: [TACTICS_BASE.SHADOW_TOGGLE]
+        Tactics:
+          MathWeight: 9999
+          Conditions:
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+     
+              - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+
+      - Name: SHADOW_ATTACK
+        Templates: [TACTICS_BASE.SHADOW_MOVE]
+        Tactics:
+          MathWeight: 1800
+          Conditions:
+            - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, SF_CD_ARMOR].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, SF_CD_WEAPON].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, SF_CD_HELM].Value", Value2: "1"}
+
+      - Name: SHADOW_ATTACK_CLOSE
+        Templates: [TACTICS_BASE.SHADOW_MOVE]
+        Tactics:
+          MathWeight: 1800
+          Conditions:
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "230"}
+            - Equal: {Value1: "?Player[Me].ShadowForm", Value2: "1"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, SF_CD_ARMOR].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, SF_CD_WEAPON].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, SF_CD_HELM].Value", Value2: "1"}
+
+     
+      - Name: GIZMO_THROW
+        #Templates: [TACTICS_BASE.ATTACK]
+        Tactics:
+          MathWeight: 9999
+          Conditions:
+            - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "135"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, CHEAT_ATTACKS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, GIZMO_THROW_Active_CD].Value", Value2: "1"}
+
+      - Name: GIZMO_HOP
+        #Templates: [TACTICS_BASE.APPROACH]
+        Tactics:
+          MathWeight: 9999
+          Conditions:
+            - Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "135"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, GIZMO_THROW_Active_CD].Value", Value2: "1"}
+
+            - Or:
+              - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FALL"}
+              - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+              - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FALL_CRITICAL"}
+              - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Stun"}
+
+      #- Name: GIZMO_STEP_FRONT
+      #  #Templates: [TACTICS_BASE.APPROACH]
+      #  Tactics:
+      #    MathWeight: 9999
+      #    Conditions:
+      #      - Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "135"}
+      #      - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "150"}
+      #      - Not:
+      #        - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+      #        - Equal: {Value1: "?GetVariable[Me, GIZMO_THROW_Active_CD].Value", Value2: "1"}
+      #
+      #      - Or:
+      #        - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FALL"}
+      #        - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+      #        - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FALL_CRITICAL"}
+      #        - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Stun"}
+                
+      - Name: SARGES_WALK
+        #Templates: [TACTICS_BASE.APPROACH]
+        Tactics:
+          MathWeight: 9999
+          Conditions:
+            #- Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "150"}
+            - Not:
+              - Equal: {Value1: "?GetVariable[Me, TUTORIAL_CONTROLS_DISABLED].Value", Value2: "1"}
+              - Equal: {Value1: "?GetVariable[Me, SARGE_THROW_Active_CD].Value", Value2: "1"}
+            - GreaterEqual: {Value1: "?Fight[].Round", Value2: "2"}
+            #- Or:
+            #  - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FALL"}
+            #  - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+            #  - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "FALL_CRITICAL"}
+            #  - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Stun"}
+                
+                
+                
+                
+                

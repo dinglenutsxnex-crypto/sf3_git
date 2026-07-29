@@ -1,0 +1,1741 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCE, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# SPEAR #################################################
+  - Animation: Spear_Slash_1
+    FileName: spear_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_BASIC
+      - WEAPON
+      - SPEAR
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 35
+      - Name: Blocking
+        Start: 36
+      - Name: Throwable
+        Start: 30
+      - Name: Transitional
+        End: 17
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 19000
+            Y: 7000
+        Slowmo:
+            Start: 6
+            End: 14
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 6
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 3
+
+  - Animation: Spear_Slash_2
+    FileName: spear_slash_double.bin
+    Groups:
+      - ATTACK
+      - ATTACK_DOUBLE
+      - WEAPON
+      - SPEAR
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Spear_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 57
+      - Name: Blocking
+        Start: 58
+      - Name: Throwable
+        Start: 52
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 27
+        End: 35
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Stomach_Heavy
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 21000
+            Y: 7000
+        Slowmo:
+            Start: 6
+            End: 14
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+      - Type: Attack
+        Start: 32
+        End: 35
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: 7000
+        Slowmo:
+            Start: 26
+            End: 35
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 300
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 6
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 28
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 3
+
+  - Animation: Spear_Super_1_Slash_1
+    FileName: spear_super_1_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - SPEAR
+      - SUPER_SPEAR_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 93
+      - Name: Blocking
+        Start: 94
+      - Name: Throwable
+        Start: 87
+      - Name: Transitional
+        End: 21
+      - Name: Perk_Parry
+        Start: 10
+        End: 19
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 16000
+            Y: 18000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 275
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+      - Type: Attack
+        Start: 35
+        End: 38
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: -4000
+        Slowmo:
+            Start: 29
+            End: 38
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 375
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 64
+        End: 66
+        HitTags:
+          - Hit_Stomach_Heavy
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 58
+            End: 66
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 29
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 56
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Spear_Super_1_Slash_2
+    FileName: guandao_super_1_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - SPEAR
+      - SUPER_SPEAR_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Spear_Super_1_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 56
+      - Name: Blocking
+        Start: 57
+      - Name: Throwable
+        Start: 51
+      - Name: Transitional
+        End: 43
+      - Name: Perk_Parry
+        Start: 10
+        End: 19
+      - Name: Perk_Parry
+        Start: 35
+        End: 42
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: 6000
+        Slowmo:
+            Start: 10
+            End: 19
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 40
+        End: 42
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 35
+            End: 42
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 35
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Spear_Super_1_Slash_3
+    FileName: guandao_super_1_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_3
+      - WEAPON
+      - SPEAR
+      - SUPER_SPEAR_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Spear_Super_1_Slash_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 80
+      - Name: Blocking
+        Start: 81
+      - Name: Throwable
+        Start: 75
+      - Name: Perk_Parry
+        Start: 10
+        End: 19
+      - Name: Perk_Parry
+        Start: 35
+        End: 42
+      - Name: Perk_Parry
+        Start: 50
+        End: 60
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: 6000
+        Slowmo:
+            Start: 10
+            End: 19
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 40
+        End: 42
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 35
+            End: 42
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 250
+            Name:
+              - Block_Overhead
+      - Type: Attack
+        Start: 55
+        End: 60
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 28000
+            Y: 11000
+        Slowmo:
+            Start: 50
+            End: 60
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 35
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 50
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Spear_Super_2_Slash_1
+    FileName: spear_super_2_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - SPEAR
+      - SUPER_SPEAR_2
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 30
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 54
+      - Name: Blocking
+        Start: 55
+      - Name: Throwable
+        Start: 49
+      - Name: Transitional
+        End: 33
+      - Name: Perk_Parry
+        Start: 13
+        End: 25
+      - Type: Attack
+        Start: 19
+        End: 25
+        HitTags:
+          - Hit_Stomach_Chest_Heavy_Slow_40
+        AttackingParts:
+          - Spear_Attacking_Edge_r
+        Impulse:
+            X: 23000
+            Y: 9000
+        Slowmo:
+            Start: 13
+            End: 25
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 375
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 13
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Spear_Super_2_Slash_2
+    FileName: spear_super_2_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - SPEAR
+      - SUPER_SPEAR_2
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Spear_Super_2_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 96
+      - Name: Blocking
+        Start: 97
+      - Name: Throwable
+        Start: 90
+      - Name: Unstable
+        Start: 44
+        End: 53
+      - Name: Perk_Parry
+        Start: 13
+        End: 25
+      - Name: Perk_Parry
+        Start: 51
+        End: 61
+      - Type: Attack
+        Start: 19
+        End: 25
+        HitTags:
+          - Hit_Stomach_Chest_Heavy_Slow_40
+        AttackingParts:
+          - Spear_Attacking_Edge_r
+        Impulse:
+            X: 23000
+            Y: 9000
+        Slowmo:
+            Start: 13
+            End: 25
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 375
+            Name:
+              - Block_Middle_Heavy
+      - Type: Attack
+        Start: 57
+        End: 61
+        HitTags:
+          - Hit_Stomach_Heavy_Slow_41
+        AttackingParts:
+          - Spear_Attacking_Edge_r
+        Impulse:
+            X: 16000
+            Y: -6000
+        Slowmo:
+            Start: 51
+            End: 61
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.11
+        Block:
+            Distance: 375
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 13
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 50
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 43
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Spear_Super_3_Slash_1
+    FileName: spear_super_3_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - SPEAR
+      - SUPER_SPEAR_3
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 30
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 52
+      - Name: Blocking
+        Start: 53
+      - Name: Throwable
+        Start: 47
+      - Name: Transitional
+        End: 32
+      - Name: Unstable
+        Start: 16
+        End: 26
+      - Name: Perk_Parry
+        Start: 16
+        End: 25
+      - Type: Attack
+        Start: 21
+        End: 25
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Spear_Attacking_Edge_r
+        Impulse:
+            X: 23000
+            Y: 9000
+        Slowmo:
+            Start: 16
+            End: 25
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 375
+            Name:
+              - Block_High_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 16
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Spear_Super_3_Slash_2
+    FileName: spear_super_3_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - SPEAR
+      - SUPER_SPEAR_3
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Spear_Super_3_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 75
+      - Name: Blocking
+        Start: 76
+      - Name: Throwable
+        Start: 70
+      - Name: Unstable
+        Start: 16
+        End: 26
+      - Name: Perk_Parry
+        Start: 16
+        End: 25
+      - Name: Perk_Parry
+        Start: 44
+        End: 52
+      - Type: Attack
+        Start: 21
+        End: 25
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Spear_Attacking_Edge_r
+        Impulse:
+            X: 23000
+            Y: 7000
+        Slowmo:
+            Start: 16
+            End: 25
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 375
+            Name:
+              - Block_High_Heavy
+      - Type: Attack
+        Start: 50
+        End: 52
+        HitTags:
+          - Hit_Stomach_Heavy
+        AttackingParts:
+          - Spear_Attacking_Edge_r
+        Impulse:
+            X: 18000
+            Y: 7000
+        Slowmo:
+            Start: 44
+            End: 52
+            Distance: 375
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.12
+        Block:
+            Distance: 375
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 16
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 44
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Spear_Spinning_Slash_1
+    FileName: spear_spinning_slash.bin
+    Groups: [ATTACK, ATTACK_SPINNING, WEAPON, SPEAR]
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+      Rotation: {Y: 6}
+      Axis: [X]
+      Pivot: {Object: Nodes, Part: foot_l}
+      Position: {Player: Me, Object: Pivot}
+    SetDirection:
+      From: {Player: Me, Object: Nodes, Part: pelvis}
+      To: {Player: Enemy, Object: Nodes, Part: pelvis}
+    Intervals:
+      - Name: Uninterrupt
+        End: 46
+      - Name: Blocking
+        Start: 47
+      - Name: Throwable
+        Start: 41
+      - Name: Perk_Parry
+        Start: 17
+        End: 25
+      - Type: Attack
+        Start: 23
+        End: 25
+        HitTags:
+          - Hit_Stomach
+        AttackingParts: [Spear_Attacking_Edge_l]
+        Impulse: 
+            X: 26000
+            Y: 9000
+        Slowmo:
+            Start: 17
+            End: 25
+            Distance: 350
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.14
+        Block:
+          Distance: 350
+          Name: [Block_Middle]
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 17
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 12
+
+  - Animation: Spear_Low_Slash_1
+    FileName: spear_low_slash.bin
+    Groups: 
+      - ATTACK
+      - ATTACK_LOW
+      - WEAPON
+      - SPEAR
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 44
+      - Name: Blocking
+        Start: 45
+      - Name: Throwable
+        Start: 39
+      - Name: Perk_Parry
+        Start: 13
+        End: 22
+      - Type: Attack
+        Start: 19
+        End: 22
+        HitTags:
+          - Hit_Legs
+        AttackingParts: 
+          - Spear_Attacking_Edge_l
+        Impulse: 
+            X: 19000
+            Y: -6000
+        Slowmo:
+            Start: 13
+            End: 22
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 350
+            Name: 
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 13
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Spear_Heavy_Slash_1
+    FileName: spear_heavy_slash.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - ATTACK
+      - ATTACK_HEAVY
+      - WEAPON
+      - SPEAR
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 56
+      - Name: Blocking
+        Start: 57
+      - Name: Throwable
+        Start: 51
+      - Name: Perk_Parry
+        Start: 19
+        End: 28
+      - Type: Attack
+        Start: 27
+        End: 29
+        HitTags:
+          - Hit_Stomach_Heavy
+        AttackingParts:
+          - Spear_Attacking_Edge_l
+        Impulse:
+            X: 26000
+            Y: 14000
+        Slowmo:
+            Start: 21
+            End: 29
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.17
+        Block:
+            Distance: 350
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 21
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+
+  - Animation: Spear_Upper_Slash_1
+    FileName: spear_upper_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_UPPER
+      - WEAPON
+      - SPEAR
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+      Rotation: {Y: 6}
+      Axis: [X]
+      Pivot: {Object: Nodes, Part: foot_l}
+      Position: {Player: Me, Object: Pivot}
+    SetDirection:
+      From: {Player: Me, Object: Nodes, Part: pelvis}
+      To: {Player: Enemy, Object: Nodes, Part: pelvis}
+    Intervals:
+      - Name: Uninterrupt
+        End: 43
+      - Name: Blocking
+        Start: 44
+      - Name: Throwable
+        Start: 38
+      - Name: Perk_Parry
+        Start: 14
+        End: 23
+      - Type: Attack
+        Start: 20
+        End: 23
+        HitTags:
+          - Hit_Head
+        AttackingParts: [Spear_Attacking_Edge_l]
+        Impulse: 
+            X: 25000
+            Y: 13000
+        Slowmo:
+            Start: 14
+            End: 23
+            Distance: 280
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.1
+        Block:
+          Distance: 280
+          Name: [Block_High]
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 14
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 12
+
+  - Animation: Spear_Idle
+    FileName: staff_idle.bin
+    Groups:
+      - STANCE_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Spear_Step_Forward
+    FileName: staff_step_forward.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_FORWARD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+  - Animation: Spear_Step_Back
+    FileName: staff_step_back.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_BACK
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+########################################################################Stances
+#########################################Stances_Round_Start
+  - Animation: Spear_Stance_Birth
+    FileName: spear_stance_birth.bin
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+        Shift:
+            X: 50
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Spear_Stance_Start_Round
+    FileName: spear_stance.bin
+    Groups:
+      - STANCE_START_ROUND
+    EndsStage:
+      - RoundStart
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 17
+
+  - Animation: Spear_Stance_Idle
+    FileName: spear_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    SelfNoMirroring: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+#########################################Stance_Win
+  - Animation: Spear_Stance_Win
+    FileName: spear_win.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - STANCE_WIN_POSE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Floor:
+          Stone:
+          - strike/steel/4_Metallic_Weapon_Hit_V2
+          Wood:
+          - strike/wood/heavy/2_Wood_Hits_A_V19_bip
+        Frame: 28
+
+  - Animation: Spear_Stance_Win_Idle
+    FileName: spear_win_idle.bin
+    Groups:
+      - STANCE_WIN_IDLE
+    Intervals:
+      - Name: Uninterrupt
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+
+##########################################Stance_Low
+#  - Animation: Low_Stance_Polearm_In
+#    FileName: m_low_stance_inout_polearm.bin
+#    EndFrame: 19
+#    Groups:
+#      - LOW_STANCE_IN
+#    WeaponSwitchFrames:
+#      - Name: Main
+#        Frame: 1
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#        Pivot:
+#            Object: Nodes
+#            Part: foot_l
+#        Position:
+#            Player: Me
+#            Object: Pivot
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: pelvis
+#        To:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#    Intervals:
+#      - Name: Blocking
+#      - Name: Throwable
+# #     - Name: Uninterrupt
+#      - Name: Transitional
+#      
+#  - Animation: Low_Stance_Polearm_Loop
+#    FileName: m_polearm_low_stance_idle.bin
+#    Groups:
+#      - LOW_STANCE_LOOP
+#    WeaponSwitchFrames:
+#      - Name: Main
+#        Frame: 1
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#        Pivot:
+#            Object: Nodes
+#            Part: foot_l
+#        Position:
+#            Player: Me
+#            Object: Pivot
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: pelvis
+#        To:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#    Intervals:
+#      - Name: Blocking
+#      - Name: Throwable
+# #     - Name: Uninterrupt
+#      - Name: Transitional
+#      - Name: Dodging
+#
+#  - Animation: Low_Stance_Polearm_Out
+#    FileName: m_low_stance_inout_polearm.bin
+#    FirstFrame: 22
+#    WeaponSwitchFrames:
+#      - Name: Main
+#        Frame: 1
+#    Groups:
+#      - LOW_STANCE_OUT
+#    Align:
+#        Rotation:
+#            Y: 6
+#        Axis:
+#          - X
+#        Pivot:
+#            Object: Nodes
+#            Part: foot_l
+#        Position:
+#            Player: Me
+#            Object: Pivot
+#    SetDirection:
+#        From:
+#            Player: Me
+#            Object: Nodes
+#            Part: pelvis
+#        To:
+#            Player: Enemy
+#            Object: Nodes
+#            Part: pelvis
+#    Intervals:
+#      - Name: Blocking
+#      - Name: Throwable
+# #     - Name: Uninterrupt
+# #       End: 27

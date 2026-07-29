@@ -1,0 +1,2054 @@
+TriggerSets:
+############################################ LOCKS 
+  - Name: LOCK_SHADOW_WEAPON
+    Type: Template
+    Locks: 
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_TWOHANDED_SWORD_SLASH"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SWORD_LONELY_SPINNING_SLASH"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_DUAL_SWORDS_SLASH"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SPEAR_THROW"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_HAMMERS_THROW"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SPEAR_SLASH"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_AXES_THROW"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SWORD_RAY"}
+
+  - Name: LOCK_SHADOW_ARMOR
+    Type: Template
+    Locks: 
+      - Or:
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_THUD"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_CARAPACE"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_STRONG_ARMOR"}
+
+  - Name: LOCK_SHADOW_HELMET
+    Type: Template
+    Locks: 
+      - Or:
+        #- Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_MIND_THROW"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_UPPERCUT"}
+        - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_POWER_WILL"}
+
+################################## LEGION
+############################ WEAPON
+########################################## SHADOW SLASH
+
+  - Name: Shadow_Twohanded_Sword_Slash
+    Templates: [LOCK_SUBTYPE_TWOHANDED_SWORD]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_TWOHANDED_SWORD_SLASH"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Twohanded_Sword_Slash_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Twohanded_Sword_Slash}
+          - SetVariable: {Name: Shadow_Twohanded_Sword_Slash_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Twohanded_Sword_Slash_CD, Frames: 400, Equipment: Weapon}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Twohanded_Sword_Slash_Model_Creation}
+        Actions:
+          - CustomEffect: {Name: sf_2h_slash_wave, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 1, Shift: {X: 170, Y: -80, Z: 0}, PoolQuantity: 1}
+          - PlaySound: {Sounds: [shadow_moves/2h_slash/shadow_slash_wave_2_short]}
+          #W8 FOR FIX ApplyTo: Parent    and need switch in settings
+          #- SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          #W8 FOR FIX ApplyTo: Parent
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_TWOHANDED_SWORD_SLASH_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-shadow_twohanded_sword_slash
+                Tags:
+                    - SHADOW_TWOHANDED_SWORD_SLASH_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Twohanded_Sword_Slash"}
+        Actions:
+          - DestroyEffect: {Name: sf_2h_slash_wave, ApplyTo: Me}
+
+  - Name: Shadow_Twohanded_Sword_Slash_Model_Attack
+    Templates: [LOCK_SHADOW_TWOHANDED_SWORD_SLASH_MODEL]
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Twohanded_Sword_Slash_Model_Attack}
+          - ShakeCamera: {Frames: 30, AmpX: 8, AmpY: -15, PeriodX: 10, PeriodY: 10}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - PostHit: {Player: Parent}
+        Actions:
+          - DestroyMe
+
+########################################## SHADOW SWORD LONELY SLASH
+
+  - Name: Shadow_Sword_Lonely_Slash_1
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SWORD_LONELY_SPINNING_SLASH"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Sword_Lonely_Slash_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Sword_Lonely_Slash_Start}
+          - CustomEffect: {Name: ShadowJumpUP, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Shift: {X: 10, Y: -50, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Sword_Lonely_Slash_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Sword_Lonely_Slash_CD, Frames: 400, Equipment: Weapon}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - PostHit: {Player: Me}
+        Priority: 399
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sword_Lonely_Slash_Start"}
+        Actions:
+          - DestroyEffect: {Name: ShadowJumpUP, ApplyTo: Me}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Priority: 399
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sword_Lonely_Slash_Start"}
+        Actions:
+          - Animation: {Name: Shadow_Sword_Lonely_Slash_Attack}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: ShadowJumpDown}
+        Priority: 399
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sword_Lonely_Slash_Attack"}
+        Actions:
+          - SetVariable: {Name: Shadow_Sword_Lonely_Slash_Model_Destroy, Value: 1, ApplyTo: Both, Frames: 100}
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_SWORD_LONELY_SLASH_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: mgc-fireball
+                Tags:
+                    - SHADOW_SWORD_LONELY_SLASH_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Priority: 399
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sword_Lonely_Slash_Attack"}
+        Actions:
+          - Animation: {Name: Shadow_Sword_Lonely_Slash_End}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sword_Lonely_Slash_Attack"}
+        Actions:
+          - DestroyEffect: {Name: ShadowJumpUP, ApplyTo: Me}
+
+
+  
+  - Name: Shadow_Sword_Lonely_Slash_Model
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SWORD_LONELY_SLASH_MODEL"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Sword_Lonely_Slash_Model}
+          - CustomEffect: {Name: ShadowJumpDown, ApplyTo: Me, AttachToBone: magic_joint_right, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+#      - Events:
+#          - AnimationEnd: {Player: Parent}
+#        Conditions:
+#          - Equal: {Value1: "?Player[Parent].CurrentAnimation", Value2: "Shadow_Sword_Lonely_Slash_Attack"}
+#        Actions:
+#          - DestroyMe
+#          - DestroyEffect: {Name: ShadowJumpUP, ApplyTo: Me}
+      - Events:
+          - VariableDestruction: {Player: Both, Name: Shadow_Sword_Lonely_Slash_Model_Destroy}
+        Actions:
+          - DestroyEffect: {Name: ShadowJumpDown, ApplyTo: Me}
+          - DestroyMe
+
+########################################## SHADOW DUAL SWORD
+
+  - Name: Shadow_Dual_Swords_Slash
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_DUAL_SWORDS_SLASH"}
+    Triggers: 
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Dual_Swords_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Dual_Swords_Miss}
+          - SetVariable: {Name: Shadow_Dual_Swords_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Dual_Swords_CD, Frames: 400, Equipment: Weapon}
+
+#### EFFECT ON
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Dual_Swords_Left_FX}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - CustomEffect: {Name: shadow_dual_swords_trail_r, ApplyTo: Me, AttachToBone: w_dual_swords_02_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, AttachToLocal: 1}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Dual_Swords_Left_FX}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - CustomEffect: {Name: shadow_dual_swords_trail_l, ApplyTo: Me, AttachToBone: w_dual_swords_02_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, AttachToLocal: 1}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Dual_Swords_Right_FX}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - CustomEffect: {Name: shadow_dual_swords_trail_l, ApplyTo: Me, AttachToBone: w_dual_swords_02_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, AttachToLocal: 1}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Dual_Swords_Right_FX}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+        Actions:
+          - CustomEffect: {Name: shadow_dual_swords_trail_r, ApplyTo: Me, AttachToBone: w_dual_swords_02_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, AttachToLocal: 1}
+
+      - Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Dual_Swords_Miss"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Dual_Swords_Hit"}
+        Actions:
+          - DestroyEffect: {Name: shadow_dual_swords_trail_r, ApplyTo: Me}
+          - DestroyEffect: {Name: shadow_dual_swords_trail_l, ApplyTo: Me}
+#### EFFECT OFF
+      - Events:
+          - PostHit: {Player: Enemy}
+        Priority: 399
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Shadow_Dual_Sword_Hit"}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+        Actions:
+          - Animation: {Name: Shadow_Dual_Swords_Hit}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+  
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Shadow_Dual_Swords_Model_Create}
+        Priority: 399
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Dual_Swords_Hit"}
+        Actions:
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          - CreateModel:
+              PoolQuantity: 1
+              OverrideFromParent: Weapon
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_DUAL_SWORDS_SLASH_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-dual_swords_slash
+                Tags:
+                    - SHADOW_DUAL_SWORDS_SLASH_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+  
+  - Name: Shadow_Dual_Swords_Slash_Model
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_DUAL_SWORDS_SLASH_MODEL"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Dual_Swords_Slash_Model}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Dual_Swords_Slash_Model_FX}
+        Actions:
+          - CustomEffect: {Name: shadow_dual_swords_hit_l, ApplyTo: Me, AttachToBone: weapon_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, AttachToLocal: 1}
+          - CustomEffect: {Name: shadow_dual_swords_hit_r, ApplyTo: Me, AttachToBone: weapon_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, AttachToLocal: 1}
+  
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+        Actions:
+          - DestroyMe
+
+############################################ SHADOW SPEAR THROW
+
+  - Name: Shadow_Spear_Throw
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SPEAR_THROW"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Spear_Throw_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Spear_Throw}
+          - SetVariable: {Name: Shadow_Spear_Throw_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Spear_Throw_CD, Frames: 400, Equipment: Weapon}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Spear_Throw_Model_Creation}
+        Actions:
+          #- CustomEffect: {Name: sf_2h_slash_wave, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 1, Shift: {X: 170, Y: -80, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          - PlaySound: {Sounds: [shadow_moves/2h_slash/shadow_slash_wave_2_short]}
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_SPEAR_THROW_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-shadow_spear_throw
+                Tags:
+                    - SHADOW_SPEAR_THROW_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+  - Name: Shadow_Spear_Throw_Model_Attack
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SPEAR_THROW_MODEL"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Spear_Throw_Model_Attack}
+          - CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: magic_joint_top, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+         # - ShakeCamera: {Frames: 30, AmpX: 8, AmpY: -15, PeriodX: 10, PeriodY: 10}
+
+      - Priority: 1110
+        Events:
+          - Hit: {Player: Parent}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Spear_Throw_Model_Attack"}
+        Actions:
+          - DestroyEffect: {Name: sf_staff_thresh, ApplyTo: Me}
+          - DestroyMe
+
+########################################## SHADOW HAMMERS THROW
+
+  - Name: Shadow_Hammers_Throw
+    Templates: [LOCK_SUBTYPE_HAMMERS]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_HAMMERS_THROW"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Hammers_Throw_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Hammers_Throw_Miss}
+          - SetVariable: {Name: Shadow_Hammers_Throw_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Hammers_Throw_CD, Frames: 400, Equipment: Weapon}
+          #- CustomEffect: {Name: hammers_hand, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          #- CustomEffect: {Name: hammers_fly, ApplyTo: Me, AttachToBone: w_hammer_01_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Hammers_FX}
+        Actions:
+          - CustomEffect: {Name: hammers_hand, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 1, Shift: {X: 50, Y: -38, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Hammers_miss_hit_FX}
+        Actions:
+          - CustomEffect: {Name: hammers_fly, ApplyTo: Me, AttachToBone: w_hammer_01_l, Looped: 0, Follow: 1, Shift: {X: 23, Y: 0, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Hammers_FX_2}
+        Actions:
+          - CustomEffect: {Name: hammers_hand_2, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 1, Shift: {X: -130, Y: -15, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Hammers_Throw_Miss"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Hammers_Throw"}
+        Actions:
+          - DestroyEffect: {Player: Me, Name: hammers_hand}
+          - DestroyEffect: {Player: Me, Name: hammers_hand_2}
+          - DestroyEffect: {Player: Me, Name: hammers_fly}
+          - DestroyEffect: {Player: Me, Name: hammers_fly_hit}
+
+      - Templates: [REACTION.HIT_TO_ENEMY]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Hammers_Throw_Start"}
+          - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Transitional"}
+        Actions:
+          - Animation: {Name: Shadow_Hammers_Throw}
+          - DestroyEffect: {Player: Me, Name: hammers_fly}
+          - CustomEffect: {Name: hammers_fly_hit, ApplyTo: Me, AttachToBone: w_hammer_01_l, Looped: 0, Follow: 1, Shift: {X: 20, Y: 0, Z: 0}, PoolQuantity: 1}
+
+
+  - Name: Shadow_Hammers_Throw_Reaction
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_HAMMERS_THROW"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Hammers_Throw_Start"}
+        Actions:
+          - Animation: {Name: Shadow_Hammers_Throw_Passive_Start}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Enemy}
+
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Hammers_Throw_End"}
+        Actions:
+          - Animation: {Name: Shadow_Hammers_Throw_Passive_End}
+
+      - Priority: 1102
+        Events:
+          - BorderHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Hammers_Throw_Passive_Start"}
+        Actions:
+          #- Animation: {Name: Shadow_Hammers_Throw_Passive_End}
+          - Animation: {Name: Hit_Wall_Critical_Fall}
+
+############################################ SHADOW SPEAR SLASH
+
+  - Name: Shadow_Spear_Slash
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SPEAR_SLASH"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Spear_Slash_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Spear_Slash}
+          - SetVariable: {Name: Shadow_Spear_Slash_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Spear_Slash_CD, Frames: 400, Equipment: Weapon}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Spear_Slash_Model_Creation}
+        Actions:
+          #- SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_SPEAR_SLASH_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-shadow_spear_slash
+                Tags:
+                    - SHADOW_SPEAR_SLASH_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+  - Name: Shadow_Spear_Slash_Model_Attack
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SPEAR_SLASH_MODEL"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Spear_Slash_Model_Attack}
+          - CustomEffect: {Name: groundSpearFX, ApplyTo: Me, AttachToBone: magic_joint_root, Looped: 0, Follow: 1, Shift: {X: 12, Y: 17, Z: 0}, PoolQuantity: 1}
+         # - ShakeCamera: {Frames: 30, AmpX: 8, AmpY: -15, PeriodX: 10, PeriodY: 10}
+      
+      - Events:
+          - Hit: {Player: Parent}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Spear_Slash_Model_Attack"}
+        Actions:
+          - DestroyEffect: {Name: groundSpearFX, ApplyTo: Me}
+          - DestroyMe
+
+  - Name: Shadow_Spear_Slash_Reaction
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_SPEAR_SLASH"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Spear_Slash_Hit"}
+        Actions:
+          - Animation: {Name: Shadow_Spear_Slash_Passive}
+
+########################################## SHADOW AXES THROW
+
+  - Name: Shadow_Axes_Throw
+    Templates: [LOCK_SUBTYPE_AXES]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_AXES_THROW"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Axes_Throw_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Axes_Throw}
+          - CustomEffect: {Name: axe_hand_trail, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 0, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: axe_ring_glow, ApplyTo: Me, AttachToBone: w_axe_01_l, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: axe_trails_splash, ApplyTo: Me, AttachToBone: w_axe_01_l, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+          - SetVariable: {Name: Shadow_Axes_Throw_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Axes_Throw_CD, Frames: 400, Equipment: Weapon}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Axes_Throw"}
+        Actions:
+          - DestroyEffect: {Player: Me, Name: axe_hand_trail}
+          - DestroyEffect: {Player: Me, Name: axe_ring_glow}
+          - DestroyEffect: {Player: Me, Name: axe_trails_splash}
+
+  ###- Name: Shadow_Axes_Throw_Reaction
+  ###  Templates: [LOCK_SKELETON]
+  ###  Locks:
+  ###    - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_AXES_THROW"}
+  ###  Triggers:
+  ###    - Templates: [REACTION.HIT]
+  ###      Priority: 1101
+  ###      Conditions:
+  ###        - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Axes_Throw"}
+  ###      Actions:
+  ###        - Animation: {Name: Shadow_Axes_Throw_Passive}
+  ###        - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Enemy}
+  ###
+  ###    - Priority: 1102
+  ###      Events:
+  ###        - BorderHit: {Player: Me}
+  ###      Conditions:
+  ###        - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Axes_Throw_Passive"}
+  ###      Actions:
+  ###        #- Animation: {Name: Shadow_Hammers_Throw_Passive_End}
+  ###        - Animation: {Name: Hit_Wall_Critical_Fall}
+
+############################################ SWORD LONELY RAY
+
+  - Name: Shadow_Sword_Ray
+    Templates: [LOCK_SUBTYPE_SWORD]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SWORD_RAY"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Sword_Ray_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Sword_Ray}
+          - SetVariable: {Name: Shadow_Sword_Ray_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Sword_Ray_CD, Frames: 400, Equipment: Weapon}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Sword_Ray_Model_Creation}
+        Actions:
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          - PlaySound: {Sounds: [shadow_moves/2h_slash/shadow_slash_wave_2_short]}
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_SWORD_RAY_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-shadow_spear_throw
+                Tags:
+                    - SHADOW_SWORD_RAY_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+  - Name: Shadow_Sword_Ray_Model_Attack
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SWORD_RAY_MODEL"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Sword_Ray_Model_Attack}
+          - CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: magic_joint_left, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+         # - ShakeCamera: {Frames: 30, AmpX: 8, AmpY: -15, PeriodX: 10, PeriodY: 10}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Actions:
+          - DestroyEffect: {Name: sf_staff_thresh, ApplyTo: Me}
+          - DestroyMe
+
+########################################## STRONG WEAPON
+
+  - Name: Shadow_Strong_Weapon
+    Templates: [LOCK_SKELETON, LOCK_SUBTYPE_NOT_FISTS]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_STRONG_WEAPON"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Strong_Weapon_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Strong_Weapon}
+          #- CustomEffect: {Name: sf_dash_main, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          #- CustomEffect: {Name: sf_dash_trail_1, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          #- CustomEffect: {Name: sf_dash_trail_2, ApplyTo: Me, AttachToBone: arm_l, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          #- CustomEffect: {Name: sf_dash_trail_2, ApplyTo: Me, AttachToBone: arm_r, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          #- CustomEffect: {Name: sf_dash_trail_2, ApplyTo: Me, AttachToBone: foot_l, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          #- CustomEffect: {Name: sf_dash_trail_2, ApplyTo: Me, AttachToBone: foot_r, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+          - SetVariable: {Name: Shadow_Strong_Weapon_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Strong_Weapon_CD, Frames: 400, Equipment: Weapon}
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Strong_Weapon"}
+        Actions:
+          - DestroyEffect: {Name: sf_dash_main, ApplyTo: Me}
+          - DestroyEffect: {Name: sf_dash_trail_1, ApplyTo: Me}
+          - DestroyEffect: {Name: sf_dash_trail_2, ApplyTo: Me}
+
+############################ ARMOR
+########################################## SHADOW THUD
+
+  - Name: Shadow_Thud
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_THUD"}
+    Triggers: 
+      - Templates: [SHADOW_KEY.DOWN, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Thud_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Thud}
+          - SetVariable: {Name: Shadow_Thud_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_ARMOR, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Thud_CD, Frames: 400, Equipment: Armor}
+
+  - Name: Shadow_Thud_Model_Creation
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_THUD"}
+    Triggers:
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Explosion}
+        Actions:
+          - CustomEffect: {Name: sf_thud, ApplyTo: Me, AttachToBone: neck, Shift: {X: 0, Y: -120, Z: 0}, PoolQuantity: 1}
+          #- SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_THUD_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-shadow_thud
+                Tags:
+                    - SHADOW_THUD_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+  - Name: Shadow_Thud_Model_Attack
+    Templates: [LOCK_SHADOW_THUD_MODEL]
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Thud_Model_Attack}
+          - ShakeCamera: {Frames: 50, AmpX: 10, AmpY: -20, PeriodX: 10, PeriodY: 10}
+
+
+########################################## SHADOW CARAPACE
+
+  - Name: Shadow_Carapace
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_CARAPACE"}
+    Triggers:
+      - Templates: [SHADOW_KEY.DOWN, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK_CLOSE]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Carapace_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Carapace}
+          - SetVariable: {Name: Shadow_Carapace_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_ARMOR, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Carapace_CD, Frames: 400, Equipment: Armor}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Carapace_Model_Creation}
+        Actions:
+          - CustomEffect: {Name: ShadowCarapace, ApplyTo: Me, AttachToBone: chest, Shift: {X: 0, Y: 0, Z: 0}, Follow: 1, PoolQuantity: 1, AttachToLocal: 1}
+          #- CustomEffect: {Name: ShadowCarapace, ApplyTo: Me, AttachToBone: chest, Shift: {X: -10, Y: 35, Z: -20}, Follow: 1, PoolQuantity: 1, AttachToLocal: 1}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_CARAPACE_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-shadow_carapace
+                Tags:
+                    - SHADOW_CARAPACE_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+  - Name: Shadow_Carapace_Model_Attack
+    Templates: [LOCK_SHADOW_CARAPACE_MODEL]
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Carapace_Model_Attack}
+
+      - Events:
+          - Hit: {Player: Enemy}
+        Actions:
+          - PlaySound: {Sounds: [shadow_moves/carapace/shadow_spray_hit]}
+
+########################################## STRONG ARMOR
+
+  - Name: Shadow_Strong_Armor
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_STRONG_ARMOR"}
+    Triggers:
+      - Templates: [SHADOW_KEY.DOWN, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Strong_Armor_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Strong_Armor}
+          - SetVariable: {Name: Shadow_Strong_Armor_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_ARMOR, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Strong_Armor_CD, Frames: 400, Equipment: Armor}
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Strong_Armor"}
+        Actions:
+          - DestroyEffect: {Name: shadowStrongArmorTrails, ApplyTo: Me}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Strong_Armor_FX}
+        Actions:
+          - CustomEffect: {Name: shadowStrongArmorTrails, ApplyTo: Me, AttachToBone: chest, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: -20, Y: 0, Z: -30}, PoolQuantity: 1}
+
+############################ HELMET
+########################################## POWER WILL
+
+  - Name: Shadow_Power_Will
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_POWER_WILL"}
+    Triggers:
+      - Templates: [SHADOW_KEY.UP, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Power_Will_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Power_Will_Cast}
+          - SetVariable: {Name: Shadow_Power_Will_CD, Value: 1, ApplyTo: Me, Frames: 500}
+          - SetVariable: {Name: SF_CD_HELM, Value: 1, ApplyTo: Me, Frames: 500}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Power_Will_CD, Frames: 500, Equipment: Helmet}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Power_Will_No_Reaction}
+        Actions:
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 1, ApplyTo: Me, Frames: 300}
+          - ShowStatusIcon: {ApplyTo: Me, Name: Shadow_Power_Will_CD, BackgroundColor: "#2f4668", Icon: ICON_PERK_ROCK, Frames: 300, ShowExpiration: 1, Stackable: 0}
+          - SetShader: {ApplyTo: Me, Name: power, Toggle: On, Transition: 0.3}
+
+      - Events:
+          - VariableDestruction: {Player: Me, Name: SHADOW_POWER_WILL_NO_REACTION}
+        Actions:
+          - SetShader: {ApplyTo: Me, Name: power, Toggle: Off, Transition: 0.3}
+
+      - Events:
+          - PostHit: {Player: Me}
+        Priority: -1000
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+        Actions:
+          - PlaySound: {Sounds: [shadow_form/shadow start]}
+          - HitEffect: {Name: HitEffect_Critical_Basic, ParticlesCount: 1000}
+          - FreezeFrame: {Frames: 30}
+          - ShakeCamera: {Frames: 55, AmpX: 5, AmpY: 15, PeriodX: 5.7, PeriodY: 6.3}
+
+########################################## SHADOW MIND THROW
+
+  - Name: Shadow_Mind_Throw_Active
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_MIND_THROW"}
+    Triggers:
+      - Templates: [SHADOW_KEY.UP, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Mind_Throw_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Mind_Throw_Active_Create}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+          #draft effect
+          ####- CustomEffect: {Name: MindThrowHandLeft, ApplyTo: Me, AttachToBone: forearm_twist_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, AttachToLocal: 1}
+          ####- CustomEffect: {Name: MindThrowHandRight, ApplyTo: Me, AttachToBone: forearm_twist_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, AttachToLocal: 1}
+          - SetVariable: {Name: Shadow_Mind_Throw_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_HELM, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Mind_Throw_CD, Frames: 400, Equipment: Helmet} 
+
+      ####- Events:
+      ####    - AnimationEnd: {Player: Me}
+      ####  Conditions:
+      ####    - Or:
+      ####      - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Throw"}
+      ####      - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Miss"}
+      ####  Actions:
+      ####    - DestroyEffect: {Name: MindThrowHandLeft, ApplyTo: Me}
+      ####    - DestroyEffect: {Name: MindThrowHandRight, ApplyTo: Me}
+      ####
+      ####- Events:
+      ####    - PostHit: {Player: Me}
+      ####  Conditions:
+      ####    - Or:
+      ####      - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Create"}
+      ####      - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Loop"}
+      ####      - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Throw"}
+      ####      - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Miss"}
+      ####  Actions:
+      ####    - DestroyEffect: {Name: MindThrowHandLeft, ApplyTo: Me}
+      ####    - DestroyEffect: {Name: MindThrowHandRight, ApplyTo: Me}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Mind_Throw}
+        Actions:
+        ### rasstavit'
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+        ###
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: MIND_THROW_BULLET
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                #### peredelat'
+                Skeleton: mgc-fireball
+                Tags:
+                    - SHADOW_MIND_THROW_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+                #### peredelat'
+#          - SetVariable: {Name: Shadow_Mind_Throw_Destroy, Value: 1, ApplyTo: Me, Frames: 300}
+          #### ubrat' 300 frames, kogda budet rabotat' setvariable applyto parent
+
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Priority: 399
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Create"}
+          #Shadow_Mind_Throw_Active_Create
+        Actions:
+          - Animation: {Name: Shadow_Mind_Throw_Active_Loop}
+          #Shadow_Mind_Throw_Active_Pull
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Priority: 399
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Loop"}
+          - Equal: {Value1: "?GetVariable[Me, Shadow_Mind_Throw_Destroy].Value", Value2: "1"}
+          #Shadow_Mind_Throw_Active_Create
+        Actions:
+          - Animation: {Name: Shadow_Mind_Throw_Active_Loop}
+          #Shadow_Mind_Throw_Active_Pull
+
+      - Events:
+          - Hit: {Player: Enemy}
+        Priority: 400
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Mind_Throw"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Mind_Throw_Active_Throw}
+          #- SetVariable: {Name: Shadow_Mind_Throw_Destroy, Value: 0, ApplyTo: Me, Frames: 1}
+
+      - Events:
+          - VariableDestruction: {Player: Me, Name: Shadow_Mind_Throw_Destroy}
+          - PostHit: {Player: Enemy}
+        Priority: 401
+        Conditions:
+          - Or:
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "VariableDestruction"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Create"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Loop"}
+            - And:
+              - Equal: {Value1: "?Trigger[].Event", Value2: "PostHit"}
+              - Equal: {Value1: "?GetVariable[Enemy, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+              - Or:
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Create"}
+                - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Active_Loop"}
+        Actions:
+          - Animation: {Name: Shadow_Mind_Throw_Active_Miss}
+
+
+  - Name: Shadow_Mind_Throw_Model_Create
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_MIND_THROW_MODEL"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Mind_Throw_Model_Create}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: magic_joint_root, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+          #### Name: MindThrowFlyRotateCyan
+          ####- CustomEffect: {Name: rotatingSmokesCyan, ApplyTo: Me, AttachToBone: magic_joint_root, Looped: 1, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Mind_Throw_Destroy, Value: 1, ApplyTo: Parent}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Model_Create"}
+        Actions:
+          - Animation: {Name: Shadow_Mind_Throw_Model_Attack}
+
+      - Events:
+          - Hit: {Player: Enemy}
+          - BorderHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Model_Attack"}
+        Actions:
+          - DestroyEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me}
+          - SetVariable: {Name: Shadow_Mind_Throw_Destroy, Value: 0, ApplyTo: Parent, Frames: 1}
+          ####- Animation: {Name: Shadow_Mind_Throw_Model_Attack_End}
+          - DestroyMe
+
+
+      - Events:
+          - EveryFrame: {Step: 5}
+        Priority: 1000
+        Conditions:
+          - GreaterEqual: {Value1: "abs(?Coordinate[?Player[Me],Nodes,magic_joint_root].X - ?Coordinate[?Player[Parent],COM].X)", Value2: "600"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Model_Attack"}
+        Actions:
+          - DestroyEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me}
+          - SetVariable: {Name: Shadow_Mind_Throw_Destroy, Value: 0, ApplyTo: Parent, Frames: 1}
+          ####- Animation: {Name: Shadow_Mind_Throw_Model_Attack_End}
+          - DestroyMe
+
+      - Events:
+          - PostHit: {Player: Parent}
+        Priority: 3200
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Model_Attack"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Model_Create"}
+        Actions:
+          - DestroyEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me}
+          - SetVariable: {Name: Shadow_Mind_Throw_Destroy, Value: 0, ApplyTo: Parent, Frames: 1}
+          ####- Animation: {Name: Shadow_Mind_Throw_Model_Attack_End}
+          - DestroyMe
+
+      ####- Events:
+      ####    #- AnimationEnd: {Player: Me}
+      ####    - IntervalStart: {Player: Me, Name: Shadow_Mind_Throw_trail_end}
+      ####  Conditions:
+      ####    - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Model_Attack_End"}
+      ####  Actions:
+      ####    ##- DestroyEffect: {Name: MindThrowFlyRotateCyan, ApplyTo: Me}
+      ####    - DestroyEffect: {Name: rotatingSmokesCyan, ApplyTo: Me}
+      ####    - DestroyMe
+
+
+  - Name: Shadow_Mind_Throw_Passive
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_MIND_THROW"}
+    Triggers: 
+      - Events:
+          - Hit: {Player: Me}
+        Priority: 4000
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Mind_Throw"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Mind_Throw_Passive}
+          - CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: head, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+          ####- CustomEffect: {Name: mindThrowEnemyFX, ApplyTo: Me, AttachToBone: neck, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          ####- CustomEffect: {Name: mindThrowExplosion, ApplyTo: Me, AttachToBone: neck, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1, AttachToLocal: 1}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Priority: 1000
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Passive"}
+        Actions:
+          - DestroyEffect: {Name: sf_staff_thresh, ApplyTo: Me}
+
+          ####- DestroyEffect: {Name: mindThrowExplosion, ApplyTo: Me}
+          ####- DestroyEffect: {Name: mindThrowEnemyFX, ApplyTo: Me}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Floorfall_Mind_Throw}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Passive"}
+        Actions:
+          - ShakeCamera: {Frames: 30, AmpX: 8, AmpY: -15, PeriodX: 10, PeriodY: 10}
+          - CustomEffect: {Name: mindThrowEnemyFallFX, ApplyTo: Me, AttachToBone: chest, Looped: 0, Follow: 0, Shift: {X: 0, Y: -12, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - PostHit: {Player: Enemy}
+        Priority: 1001
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Passive"}
+        Actions:
+          - Animation: {Name: Physics}
+          - SetVariable:
+              Name: InPhysics
+              Value: 1
+              ApplyTo: Me
+              Frames: 200
+
+########################################## SHADOW UPPERCUT
+
+  - Name: Shadow_Uppercut
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_UPPERCUT"}
+    Triggers:
+      - Templates: [SHADOW_KEY.UP, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Uppercut_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Uppercut}
+          - SetVariable: {Name: Shadow_Uppercut_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_HELM, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Uppercut_CD, Frames: 400, Equipment: Helmet}
+          - PlaySound: {Sounds: [shadow_moves/uppercut/shadow_uppercut_start]}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Uppercut_SFX}
+        Actions:
+          - PlaySound: {Sounds: [shadow_moves/uppercut/shadow_uppercut_attack]}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Uppercut_Model_Creation}
+        Actions:
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_UPPERCUT_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-shadow_uppercut
+                Tags:
+                    - SHADOW_UPPERCUT_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+  - Name: Shadow_Uppercut_Model_Attack
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_UPPERCUT_MODEL"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Uppercut_Model_Attack}
+          - CustomEffect: {Name: Shadow_uppercut, ApplyTo: Me, AttachToBone: magic_joint_root, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+         # - ShakeCamera: {Frames: 30, AmpX: 8, AmpY: -15, PeriodX: 10, PeriodY: 10}
+
+      - Priority: 1110
+        Events:
+          - Hit: {Player: Parent}
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Uppercut_Model_Attack"}
+        Actions:
+          - DestroyEffect: {Name: Shadow_uppercut, ApplyTo: Me}
+          - DestroyMe
+
+  - Name: Shadow_Uppercut_Reaction
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_UPPERCUT"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Uppercut"}
+        Actions:
+          #- Animation: {Name: Hit_Legs_Critical_Fall}
+          - Animation: {Name: Physics}
+          - SetVariable:
+              Name: InPhysics
+              Value: 1
+              ApplyTo: Me
+              Frames: 200
+
+      - Templates: [REACTION.HIT_ROLL]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Uppercut"}
+        Actions:
+          - Animation: {Name: Physics}
+          - SetVariable:
+              Name: InPhysics
+              Value: 1
+              ApplyTo: Me
+              Frames: 200
+
+################################### DYNASTY
+############################# WEAPON
+########################################## SHADOW STAFF SPINNING SLASH
+
+  - Name: Shadow_Staff_Slash
+    Templates: [LOCK_WEAPON_TYPE_POLEARM]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_STAFF_SPINNING_SLASH"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Staff_Slash_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Staff_Slash}
+          - CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: w_staff_08_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: w_staff_02_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_strike, ApplyTo: Me, AttachToBone: pelvis, Looped: 1, Follow: 1, Shift: {X: 270, Y: 85, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Staff_Slash_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Staff_Slash_CD, Frames: 400, Equipment: Weapon}
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Staff_Slash"}
+        Actions:
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh}
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh_hand}
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh_strike}
+
+########################################## SHADOW NUNCHAKU SPINNING SLASH
+
+  - Name: Shadow_Nunchaku_Slash
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_NUNCHAKU_SPINNING_SLASH"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Nunchaku_Slash_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Nunchaku_Slash}
+          #- CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: w_staff_08_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          #- CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: w_staff_02_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: w_nunchaku_04_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: w_nunchaku_01_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Nunchaku_Slash_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Nunchaku_Slash_CD, Frames: 400, Equipment: Weapon}
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Nunchaku_Slash"}
+        Actions:
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh}
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh_hand}
+
+########################################## SHADOW SABERS SLASH
+
+  - Name: Shadow_Sabers_Blink
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Locks:
+     - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SABERS_BLINK"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Sabers_Blink_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Sabers_Blink_Start}
+          - SetVariable: {Name: Shadow_Sabers_Blink_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Sabers_Blink_CD, Frames: 400, Equipment: Weapon}
+
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Sabers_Blink_FX}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sabers_Blink_Start"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sabers_Blink_End"}
+        Actions:
+          - CustomEffect: {Name: blink_teleport_exit, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 0, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 2}
+          
+      - Priority: 400
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sabers_Blink_Start"}
+          - GreaterEqual: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Enemy],Wall,Back].X)", Value2: "200"}
+        Actions:
+          - Animation: {Name: Shadow_Sabers_Blink_End}
+
+      - Priority: 400
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sabers_Blink_Start"}
+          - Less: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Enemy],Wall,Back].X)", Value2: "200"}
+        Actions:
+          - Animation: {Name: Shadow_Sabers_Blink_End_Near_Wall}
+
+  - Name: Shadow_Sabers_Blink_Reaction
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_SABERS_BLINK"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Sabers_Blink"}
+        Actions:
+          - Animation: {Name: Shadow_Sabers_Blink_Passive}
+
+
+########################################## SHADOW SLASH GUANDAO 1
+
+  - Name: Shadow_Guandao_Slash_1
+    Templates: [LOCK_WEAPON_TYPE_POLEARM]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_GUANDAO_SPINNING_SLASH_1"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Guandao_Slash_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Guandao_Slash_1}
+          - CustomEffect: {Name: Shadow_wirlwind, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 1, Shift: {X: 10, Y: -140, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Guandao_Slash_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Guandao_Slash_CD, Frames: 400, Equipment: Weapon}
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Guandao_Slash_1"}
+        Actions:
+          - DestroyEffect: {Player: Me, Name: Shadow_wirlwind}
+
+
+########################################## SHADOW GUANDAO SLASH 2
+
+  - Name: Shadow_Guandao_Slash_2
+    Templates: [LOCK_WEAPON_TYPE_POLEARM]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_GUANDAO_SPINNING_SLASH_2"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Guandao_Slash_2_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Guandao_Slash_2}
+          - CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: w_guandao_02_blade_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: w_guandao_03_stave_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Guandao_Slash_2_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Guandao_Slash_2_CD, Frames: 400, Equipment: Weapon}
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Guandao_Slash_2"}
+        Actions:
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh}
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh_hand}
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh_strike}
+
+########################################## SHADOW GENERAL WEAPON AGILE 
+
+  - Name: Shadow_Agile_Weapon_Tornado
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_AGILE_WEAPON_TORNADO"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Agile_Weapon_Tornado_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Agile_Weapon_Tornado}
+          #- CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: weapon_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          #- CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: weapon_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Agile_Weapon_Tornado_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Agile_Weapon_Tornado_CD, Frames: 400, Equipment: Weapon}
+      - Events:
+          - AnimationEnd: {Player: Me}
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Agile_Weapon_Tornado"}
+        Actions:
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh}
+          - DestroyEffect: {Player: Me, Name: sf_staff_thresh_hand}
+
+########################################## SABERS THROW
+
+  - Name: Shadow_Sabers_Throw
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SABERS_THROW"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Sabers_Throw_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Sabers_Throw_Miss}
+          - SetVariable: {Name: Shadow_Sabers_Throw_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Sabers_Throw_CD, Frames: 400, Equipment: Weapon}
+
+      - Templates: [REACTION.HIT_TO_ENEMY]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Sabers_Throw_Start"}
+        Actions:
+          #- Animation: {Name: Shadow_Sabers_Throw_Hit}
+          - SetVariable: {Name: Shadow_Sabers_Throw_Hit, Value: 1, ApplyTo: Me, Frames: 100}
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+
+      
+      - Priority: 400
+        Events:
+          - IntervalEnd: {Player: Me, Name: Shadow_Sabers_Throw_Hit}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Shadow_Sabers_Throw_Hit].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Sabers_Throw_Hit}
+
+      #- Priority: 400
+      #  Events:
+      #    - AnimationEnd: {Player: Me}
+      #  Conditions:
+      #    - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sabers_Throw"} 
+      #  Actions:
+      #    - Animation: {Name: Shadow_Sabers_Throw_Hit}
+
+
+  - Name: Shadow_Sabers_Throw_Reaction
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_SABERS_THROW"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Sabers_Throw_Start"}
+        Actions:
+          - Animation: {Name: Shadow_Sabers_Throw_Passive_Start}
+
+      - Priority: 400
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Sabers_Throw_Passive_Start"}
+        Actions:
+          - Animation: {Name: Shadow_Sabers_Throw_Passive_End}
+  
+############################# ARMOR
+########################################## BLINK
+
+  - Name: Shadow_Blink_In
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_BLINK"}
+    Triggers:
+      - Templates: [SHADOW_KEY.DOWN, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Blink_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Blink_In}
+          - CustomEffect: {Name: sf_teleport_in, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: -80, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Blink_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_ARMOR, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Blink_CD, Frames: 400, Equipment: Armor}
+      #- Events:
+      #    - AnimationEnd: {Player: Me}
+      #  Conditions:
+      #    - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Blink_In"}
+      #  Actions:
+      #    - DestroyEffect: {Name: sf_teleport_in, ApplyTo: Me}
+
+      - Priority: 400
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Blink_In"}
+        Actions:
+          - Animation: {Name: Shadow_Blink_Out}
+
+      - Events:
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Blink_Out"}
+        Actions:
+          - DestroyEffect: {Name: sf_teleport_in, ApplyTo: Me}
+          - CustomEffect: {Name: sf_teleport_out, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: -15, Y: -45, Z: 0}, Frames: 5, PoolQuantity: 1}
+
+############################# HELMET
+########################################## SHADOW MINA
+
+  - Name: Shadow_Mine
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_MINE"}
+    Triggers: 
+      - Templates: [SHADOW_KEY.UP, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK_CLOSE]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Mine_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Mine_Start}
+          - CustomEffect: {Name: blink_teleport, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 0, Shift: {X: 0, Y: -60, Z: 0}, Frames: 3, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Mine_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_HELMET, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Mine_CD, Frames: 400, Equipment: Helmet}
+
+      - Priority: 400
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mine_Start"}
+        Actions:
+          - Animation: {Name: Shadow_Mine_End}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Mine_End_FX}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mine_End"}
+        Actions:
+          - CustomEffect: {Name: blink_teleport_exit, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: 0, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Mine}
+        Actions:
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_MINE_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-shadow_uppercut
+                Tags:
+                    - SHADOW_MINE_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+##### kostil' dlia effecta
+    #      - SetVariable: {Name: Shadow_Mine_Model_Explosion, Value: 1, ApplyTo: Me, Frames: 250}
+    #  - Events:
+    #      - Hit: {Player: Enemy}
+    #    Conditions:
+    #      - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Mine"}
+    #    Actions:
+    #      - DestroyEffect: {Name: sf_2h_slash_wave, ApplyTo: Me}
+    #  - Events:
+    #      - VariableDestruction: {Player: Me, Name: Shadow_Mine_Model_Explosion}
+    #    Actions:
+    #      - DestroyEffect: {Name: sf_2h_slash_wave, ApplyTo: Me}
+#####
+  - Name: Shadow_Mine_Model_Attack
+    Templates: [LOCK_SHADOW_MINE_MODEL]
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Mine_Model_Attack}
+          - CustomEffect: {Name: blink_explosion_base, ApplyTo: Me, AttachToBone: magic_joint_root, Looped: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          #- ShakeCamera: {Frames: 50, AmpX: 10, AmpY: -20, PeriodX: 10, PeriodY: 10}
+         # - SetVariable: {Name: Shadow_Mine_Model_Explosion, Value: 1, ApplyTo: Me, Frames: 250}
+
+      - Priority: 1110
+        Events:
+          - AnimationEnd: {Player: Me}
+          # - Hit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mine_Model_Attack"}
+        Actions:
+          - DestroyEffect: {Name: blink_explosion_base, ApplyTo: Me}
+          - DestroyMe
+
+      #- Events:
+      #    - VariableDestruction: {Player: Me, Name: Shadow_Mine_Model_Explosion}
+      #  Actions:
+      #    - DestroyEffect: {Name: sf_2h_slash_wave, ApplyTo: Me}
+      #    - DestroyMe
+
+########################################## SHADOW STASIS
+
+  - Name: Shadow_Stasis
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_STASIS"}
+    Triggers: 
+      - Templates: [SHADOW_KEY.UP, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Stasis_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Stasis}
+          - SetVariable: {Name: Shadow_Stasis_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_HELMET, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Stasis_CD, Frames: 400, Equipment: Helmet}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Stasis}
+        Actions:
+          - PauseAnimation: {ApplyTo: Enemy, InOutFrames: 80, Frames: 120}
+          - CustomEffect: {Name: sf_force_push, ApplyTo: Me, AttachToBone: arm_l, Looped: 0, Follow: {X: 0, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Priority: 1000
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Stasis"}
+        Actions:
+          - DestroyEffect: {Name: sf_force_push, ApplyTo: Me}
+
+########################################## SHADOW AGILE HELMET
+
+  - Name: Shadow_Agile_Helmet
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_AGILE_HELMET"}
+    Triggers:
+      - Templates: [SHADOW_KEY.UP, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Agile_Helmet_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Agile_Helmet}
+          - SetVariable: {Name: Shadow_Agile_Helmet_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_HELM, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Agile_Helmet_CD, Frames: 400, Equipment: Helmet}
+          - PlaySound: {Sounds: [shadow_moves/2h_slash/shadow_slash_wave_2_short]}
+
+  #    - Events:
+  #        - IntervalStart: {Player: Me, Name: Shadow_Agile_Helmet_Model_Creation}
+  #      Actions:
+  #        - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+  #        - CreateModel:
+  #            PoolQuantity: 1
+  #            ModelInfo:
+  #              AiMode: NoneMode
+  #              Alias: SHADOW_AGILE_HELMET_ATTACKING_EDGE
+  #              Animation: 1
+  #              Attributes:
+  #                CriticalChance: 0
+  #              Skeleton: shd-shadow_uppercut
+  #              Tags:
+  #                  - SHADOW_AGILE_HELMET_MODEL
+  #                  - SHADOW_ATTACKING_EDGE
+  #                  - DESTROYABLE
+  #
+  #- Name: Shadow_Agile_Helmet_Model_Attack
+  #  Locks:
+  #    - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_AGILE_HELMET_MODEL"}
+  #  Triggers:
+  #    - Events:
+  #        - Birth: {Player: Me}
+  #      Actions:
+  #        - Animation: {Name: Shadow_Agile_Helmet_Model_Attack}
+  #        - CustomEffect: {Name: Shadow_uppercut, ApplyTo: Me, AttachToBone: magic_joint_root, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+  #       # - ShakeCamera: {Frames: 30, AmpX: 8, AmpY: -15, PeriodX: 10, PeriodY: 10}
+  #
+  #    - Events:
+  #        - Hit: {Player: Parent}
+  #        - AnimationEnd: {Player: Me}
+  #      Conditions:
+  #        - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Agile_Helmet_Model_Attack"}
+  #      Actions:
+  #        - DestroyMe
+  #        - DestroyEffect: {Name: Shadow_uppercut, ApplyTo: Me}
+  #
+  #- Name: Shadow_Agile_Helmet_Reaction
+  #  Templates: [LOCK_SKELETON]
+  #  Locks:
+  #    - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_AGILE_HELMET"}
+  #  Triggers:
+  #    - Templates: [REACTION.HIT]
+  #      Priority: 1101
+  #      Conditions:
+  #        - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Uppercut"}
+  #      Actions:
+  #        #- Animation: {Name: Hit_Legs_Critical_Fall}
+  #        - Animation: {Name: Physics}
+  #        - SetVariable:
+  #            Name: InPhysics
+  #            Value: 1
+  #            ApplyTo: Me
+  #            Frames: 200
+  #
+  #    - Templates: [REACTION.HIT_ROLL]
+  #      Priority: 1101
+  #      Conditions:
+  #        - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Uppercut"}
+  #      Actions:
+  #        - Animation: {Name: Physics}
+  #        - SetVariable:
+  #            Name: InPhysics
+  #            Value: 1
+  #            ApplyTo: Me
+  #            Frames: 200
+
+
+################################### HARBINGERS
+############################# WEAPON
+########################################## DASH
+
+  - Name: Shadow_Dash
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_DASH"}
+    Triggers:
+      - Templates: [SHADOW_KEY.FORWARD, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Dash_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Dash}
+          - CustomEffect: {Name: sf_dash_main, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail1, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail2, ApplyTo: Me, AttachToBone: weapon_l, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail2, ApplyTo: Me, AttachToBone: weapon_r, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail2, ApplyTo: Me, AttachToBone: foot_l, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail2, ApplyTo: Me, AttachToBone: foot_r, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Dash_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_WEAPON, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Dash_CD, Frames: 400, Equipment: Weapon}
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Dash"}
+        Actions:
+          - DestroyEffect: {Name: sf_dash_main, ApplyTo: Me}
+          - DestroyEffect: {Name: sf_dash_trail1, ApplyTo: Me}
+          - DestroyEffect: {Name: sf_dash_trail2, ApplyTo: Me}
+
+
+############################# ARMOR
+########################################## FORCE PUSH
+
+  - Name: Shadow_Push_Active
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_PUSH"}
+    Triggers: 
+      - Templates: [SHADOW_KEY.DOWN, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Push_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Push_Player}
+          - CustomEffect: {Name: sf_force_push, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 85, Y: 47, Z: 0}, Frame: 8, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Push_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_ARMOR, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Push_CD, Frames: 400, Equipment: Armor}
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Priority: 1000
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Push_Player"}
+        Actions:
+          - DestroyEffect: {Name: sf_force_push, ApplyTo: Me}
+
+  - Name: Shadow_Push_Passive
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_PUSH"}
+    Triggers: 
+      - Events:
+          - IntervalStart: {Player: Enemy, Name: Force_Push}
+        Conditions:
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "300"}
+          - LessEqual: {Value1: "?Coordinate[?Player[Enemy],COM].X", Value2: "?Coordinate[?Player[Me],COM].X"}
+        Actions:
+          - Move: {ApplyTo: Me, Speed: 30, Acceleration: -1.5, Frames: 20}
+      - Events:
+          - IntervalStart: {Player: Enemy, Name: Force_Push}
+        Conditions:
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "300"}
+          - Greater: {Value1: "?Coordinate[?Player[Enemy],COM].X", Value2: "?Coordinate[?Player[Me],COM].X"}
+        Actions:
+          - Move: {ApplyTo: Me, Speed: -30, Acceleration: 1.5, Frames: 20}
+
+
+########################################## SHADOW SPURT
+
+  - Name: Shadow_Spurt
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_SPURT"}
+    Triggers:
+      - Templates: [SHADOW_KEY.DOWN, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Spurt_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Spurt_Cast}
+
+      - Events:
+          - AnimationEnd: {Player: Me, Name: Shadow_Spurt_Cast}
+        Actions:
+          - SetVariable: {ApplyTo: Me, Name: SHADOW_SPURT, Value: 1, Frames: 400}
+          - SetVariable: {Name: SF_CD_ARMOR, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Spurt_CD, Frames: 400, Equipment: Armor}
+
+      - Events:
+          - AnimationStart: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+          - Equal: {Value1: "?GetVariable[Me, SHADOW_SPURT].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+        Actions:
+          - CustomEffect: {Name: sf_dash_main, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail1, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail2, ApplyTo: Me, AttachToBone: weapon_l, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail2, ApplyTo: Me, AttachToBone: weapon_r, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail2, ApplyTo: Me, AttachToBone: foot_l, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_dash_trail2, ApplyTo: Me, AttachToBone: foot_r, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "ATTACK"}
+          - Equal: {Value1: "?GetVariable[Me, SHADOW_SPURT].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+        Actions:
+          - DestroyEffect: {Name: sf_dash_main, ApplyTo: Me}
+          - DestroyEffect: {Name: sf_dash_trail1, ApplyTo: Me}
+          - DestroyEffect: {Name: sf_dash_trail2, ApplyTo: Me}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Attack}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, SHADOW_SPURT].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+        Actions:
+          - Move: {ApplyTo: Me, Speed: 30, Acceleration: -3, Frames: 10}
+
+      - Events:
+          - IntervalStart: {Player: Me, Name: Attack}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, SHADOW_SPURT].Value", Value2: "1"}
+          - Greater: {Value1: "?Coordinate[?Player[Me],COM].X", Value2: "?Coordinate[?Player[Enemy],COM].X"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "THROW"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "FOLLOWED_BY"}
+        Actions:
+          - Move: {ApplyTo: Me, Speed: -30, Acceleration: 3, Frames: 10}
+
+
+############################# HELMET
+########################################## SHADOW MIND CONTROL
+
+  - Name: Shadow_Mind_Control_Active
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_MIND_CONTROL"}
+    Triggers:
+      - Templates: [SHADOW_KEY.UP, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Mind_Control_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Mind_Control_Active}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_l, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: hand_r, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+          - SetVariable: {Name: Shadow_Mind_Control_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_HELM, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Mind_Control_CD, Frames: 400, Equipment: Helmet}
+
+      - Events:
+          - Hit: {Player: Enemy}
+        Priority: -300
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Control_Active"}
+        Actions:
+          - SetVariable: {Name: CRITICAL, Value: 1, ApplyTo: Enemy, Frames: 1}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Priority: 1000
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Control_Active"}
+        Actions:
+          - DestroyEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me}
+
+  - Name: Shadow_Mind_Control_Passive
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_MIND_CONTROL"}
+    Triggers: 
+      - Events:
+          - IntervalStart: {Player: Enemy, Name: Mind_Control}
+        Actions:
+          - Animation: {Name: Shadow_Mind_Control_Passive}
+          - CustomEffect: {Name: sf_staff_thresh, ApplyTo: Me, AttachToBone: head, Looped: 0, Follow: 1, Shift: {X: 0, Y: 0, Z: 0}, PoolQuantity: 1}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Uninterrupt}
+        Priority: 1000
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Control_Passive"}
+        Actions:
+          - DestroyEffect: {Name: sf_staff_thresh, ApplyTo: Me}
+
+
+########################################## SHADOW EVAPORATION
+ 
+  - Name: Shadow_Evaporation
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_EVAPORATION"}
+    Triggers: 
+      - Templates: [SHADOW_KEY.DOWN, STATE.SHADOW_FORM, TACTICS.SHADOW_ATTACK]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Evaporation_CD].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Shadow_Evaporation}
+          - SetVariable: {Name: Shadow_Evaporation_CD, Value: 1, ApplyTo: Me, Frames: 400}
+          - SetVariable: {Name: SF_CD_ARMOR, Value: 1, ApplyTo: Me, Frames: 400}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Evaporation_CD, Frames: 400, Equipment: Armor}
+
+  - Name: Shadow_Evaporation_Model_Creation
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_EVAPORATION"}
+    Triggers:
+      - Events:
+          - IntervalStart: {Player: Me, Name: Shadow_Evaporation}
+        Actions:
+          - SetVariable: {Name: SHADOW_ATTACKING_EDGE, Value: 1, ApplyTo: Me}
+          - CreateModel:
+              PoolQuantity: 1
+              ModelInfo:
+                AiMode: NoneMode
+                Alias: SHADOW_EVAPORATION_ATTACKING_EDGE
+                Animation: 1
+                Attributes:
+                  CriticalChance: 0
+                Skeleton: shd-shadow_evaporation
+                Tags:
+                    - SHADOW_EVAPORATION_MODEL
+                    - SHADOW_ATTACKING_EDGE
+                    - DESTROYABLE
+
+  - Name: Shadow_Evaporation_Model_Attack
+    Templates: [LOCK_SHADOW_EVAPORATION_MODEL]
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - Animation: {Name: Shadow_Evaporation_Model_Attack}
+          - CustomEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me, AttachToBone: magic_joint_root, Looped: 1, Follow: 1, Shift: {X: 0, Y: 120, Z: 0}, PoolQuantity: 1}
+          - ShakeCamera: {Frames: 50, AmpX: 10, AmpY: -20, PeriodX: 10, PeriodY: 10}
+
+      - Events:
+          - Hit: {Player: Enemy}
+        Actions:
+          - DestroyEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me}
+          - DestroyMe
+
+  - Name: Shadow_Evaporation_Passive
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SHADOW_EVAPORATION"}
+    Triggers:
+      - Priority: 3010
+        Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Evaporation"}
+        Actions:
+          - Animation: {Name: Shadow_Evaporation_Passive}
+          - ApplyStatus: {ApplyTo: Me, Name: Shadow_Evaporation, Frames: 90, Type: ModHP, HPPerFrame: "-1 * ?Hit[].Damage / 90"}
+          - ApplyStatus: {ApplyTo: Enemy, Name: Shadow_Evaporation, Frames: 90, Type: ModHP, HPPerFrame: "-1 * ?Hit[].Damage / 90"}
+          - ShowStatusIcon: {ApplyTo: Me, Name: Shadow_Evaporation, Icon: ICON_PERK_BREAKING_POINT_BODY, BackgroundColor: "#9f1c03", Frames: 90, ShowExpiration: 1, Stackable: 0}
+
+
+########################################## VANISH
+  - Name: Shadow_Vanish
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SHADOW_VANISH"}
+    Triggers:
+      - Templates: [SHADOW_KEY.DOWN_BREAKER, STATE.SHADOW_FORM]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Shadow_Vanish_CD].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {ApplyTo: Me, Name: Shadow_Vanish, Value: 1, Frames: 120}
+          - SetShader: {ApplyTo: Me, Name: power, Toggle: On, Transition: 0.3}
+          - SetVariable: {Name: Shadow_Vanish_CD, Value: 1, ApplyTo: Me, Frames: 600}
+          - SetVariable: {Name: SF_CD_ARMOR, Value: 1, ApplyTo: Me, Frames: 600}
+          - ShowSFIcon: {ApplyTo: Me, Name: Shadow_Vanish_CD, Frames: 600, Equipment: ARMOR}
+
+      - Priority: -99999
+        Events:
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Shadow_Vanish].Value", Value2: "1"}
+          - Not:
+            - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+        Actions:
+          - SetHit: {DealsDamage: 0}  
+          - CustomEffect: {Name: sf_teleport_in, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: 0, Y: -80, Z: 0}, PoolQuantity: 1}
+
+      - Priority: 99999
+        Events:
+          - Hit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Shadow_Vanish].Value", Value2: "1"}
+          - Not:
+            - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+        Actions:
+          - SetVariable: {ApplyTo: Me, Name: Shadow_Vanish, Value: 0, Frames: 1}
+          - PlaySound: {Sounds: [shadow_form/shadow start]}
+          - Animation: {Name: Shadow_Vanish_Out}
+          - CustomEffect: {Name: sf_teleport_out, ApplyTo: Me, AttachToBone: pelvis, Looped: 0, Follow: {X: 1, Y: 0, Z: 0}, Shift: {X: -15, Y: -45, Z: 0}, Frames: 5, PoolQuantity: 1}
+          - SetVariable: {ApplyTo: Me, Name: Shadow_Vanish, Value: 0, Frames: 1}
+
+      - Events:
+          - VariableDestruction: {Player: Me, Name: Shadow_Vanish}
+        Actions:
+          - SetShader: {ApplyTo: Me, Name: power, Toggle: Off, Transition: 0.3}
+          
+  - Name: VANISH_REACTION
+    Templates: [LOCK_SKELETON]
+    Triggers:
+      - Priority: 99999
+        Events:
+          - AnimationStart: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "Shadow_Vanish_Out"}
+        Actions:
+          - Animation: {Name: Physics}
+          - SetVariable:
+              Name: InPhysics
+              Value: 1
+              ApplyTo: Me
+              Frames: 200
+
+
+
+
+
+########################################### SHADOW ATTACKING EDGE DESTRUCTION
+  - Name: Shadow_Attacking_Edge_Destruction
+    Templates: [LOCK_DESTROYABLE_MODELS]
+    Triggers:
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "SHADOW_ATTACKING_EDGE"}
+          - Not: 
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Shadow_Mind_Throw_Model_Attack"}
+        Actions:
+          - DestroyMe
+
+      - Events:
+          - StageChange: {Stage: RoundFightEnd}
+        Actions:
+          - DestroyEffect: {Name: ShadowJumpDown, ApplyTo: Me}
+          - DestroyEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me}
+          - DestroyMe

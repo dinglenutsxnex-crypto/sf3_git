@@ -1,0 +1,236 @@
+User:
+    Name: PLAYER
+    Alias: NAME_SHADOW
+    Avatar: avatar_hero
+    Level: 4
+    Experience: 0
+    LevelExperience: 40
+    Bonus: 0
+    Coins: 300
+    Player: 1
+    Controller: 1
+    Ai: 0
+    Animation: 1
+    GlobalVariables:
+      - SelectedBattle: ChinaTown
+      - DefaultBattle: dojo
+      - FirstRunDialog: 1
+      - FirstPlotFight: 1
+      - FirstWeapon: 0
+      - SecondPlotFight: 1
+      - ThirdPlotFight: 1
+    Attributes:
+        WeaponDamage: 7
+        UnarmedDamage: 3
+        BodyDefense: 7
+        HeadDefense: 4
+        CriticalChance: 0.1
+    Items:
+      - ID: Skeleton
+        Model: skeleton
+        Equipped: 1
+        Type: Equipment
+        SubType: Skeleton
+        Tags:
+          - SKELETON
+      - ID: DefaultWeapon
+        Alias: DefaultWeapon
+        Tags:
+          - WEAPON
+          - FISTS
+          - UNARMED
+        Level: 1
+        Rarity: 2
+        RarityImage: gold_card
+        Image: weapon_steel_nunchaku
+        Model: weapon_fists
+        Description: weapon_stilettos_description
+        BonusPrice: 300
+        CoinPrice: 250
+        Equipped: 0
+        Type: Equipment
+        SubType: Weapon
+      - ID: defaultArmor
+        Alias: defaultArmor
+        Tags:
+          - ARMOR
+          - PRECISE
+        Level: 1
+        Image: armor_super_fusion
+        Model: armor_prc_01_m
+        Rarity: 2
+        RarityImage: gold_card
+        Description: armor_defaultArmor_description
+        BonusPrice: 202
+        CoinPrice: 1000
+        Equipped: 1
+        Type: Equipment
+        SubType: Armor
+      - ID: defaultHead
+        Alias: defaultHead
+        Tags:
+          - HELM
+        Level: 1
+        Image: helm_advanced_conical
+        Model: helm_head_01
+        Description: helm_super_predator_description
+        Rarity: 2
+        RarityImage: gold_card
+        BonusPrice: 300
+        CoinPrice: 250
+        Equipped: 1
+        Type: Equipment
+        SubType: Helmet
+      - ID: FirstRewardWeapon
+        Alias: weapon_katana
+        Level: 2
+        Image: weapon_katana
+        Description: description_common
+        BonusPrice: 0
+        CoinPrice: 74
+        Rarity: 0
+        RarityImage: grey_card
+        Type: EQUIPMENT
+        SubType: WEAPON
+        Faction: PRECISE
+        FactionImage: green_symbol
+        Bought: False
+        Tags:
+          - SWORD_LONELY
+        Attributes:
+            CriticalChance: 0.1
+            WeaponDamage: 1
+        Items:
+          - ID: moveSlot1
+            Alias: error_no_alias
+            Level: 0
+            Image: error_no_image
+            Description: error_no_Description
+            BonusPrice: 0
+            CoinPrice: 0
+            Rarity: 0
+            RarityImage: 
+            Type: SLOT
+            SubType: MOVE
+            Faction: NONE
+            FactionImage: 
+            Bought: False
+          - ID: enchantmentSlot1
+            Alias: error_no_alias
+            Level: 0
+            Image: error_no_image
+            Description: error_no_Description
+            BonusPrice: 0
+            CoinPrice: 0
+            Rarity: 0
+            RarityImage: 
+            Type: SLOT
+            SubType: ENCHANTMENT
+            Faction: NONE
+            FactionImage: 
+            Bought: False
+          - ID: enchantmentSlot2
+            Alias: error_no_alias
+            Level: 0
+            Image: error_no_image
+            Description: error_no_Description
+            BonusPrice: 0
+            CoinPrice: 0
+            Rarity: 0
+            RarityImage: 
+            Type: SLOT
+            SubType: ENCHANTMENT
+            Faction: NONE
+            FactionImage: 
+            Bought: False
+          - ID: shadowSlot
+            Alias: error_no_alias
+            Level: 0
+            Image: error_no_image
+            Description: error_no_Description
+            BonusPrice: 0
+            CoinPrice: 0
+            Rarity: 0
+            RarityImage: 
+            Type: SLOT
+            SubType: SHADOW
+            Faction: NONE
+            FactionImage: 
+            Bought: False
+        Equipped: 1
+        Model: weapon_sword
+    Battles:
+      - ID: EmptyScene
+        Available: 1
+        Hidden: 0
+      - ID: dojoFight
+        Available: 1
+        Hidden: 0
+      - ID: ChinaTown1
+        Available: 1
+        Hidden: 0
+      - ID: FirstPlotFight
+        Available: 0
+        Hidden: 1
+        Fights:
+          - ID: Fight1
+            CompletedCount: 1
+            LossCount: 0
+            TimeStamp: 1442918792
+      - ID: SecondPlotFight
+        Available: 0
+        Hidden: 1
+        Fights:
+          - ID: Fight1
+            CompletedCount: 1
+            LossCount: 0
+            TimeStamp: 1442918836
+      - ID: ThirdPlotFight
+        Available: 1
+        Hidden: 1
+        Fights:
+          - ID: Fight1
+            CompletedCount: 1
+            LossCount: 0
+            TimeStamp: 1442918864
+      - ID: School
+        Available: 1
+        Hidden: 0
+        Fights: []
+      - ID: ChinaTown
+        Available: 1
+        Hidden: 0
+        Fights: []
+      - ID: Bamboo
+        Available: 1
+        Hidden: 0
+        Fights: []
+    QuestsQueue: 
+    QuestsLog:
+      - Name: Quest1
+        TimeStamp: '[1442918966,1442918785]'
+      - Name: LevelUpDialog
+        TimeStamp: '[1442918903,1442918860]'
+      - Name: RewardsDialog
+        TimeStamp: '[1442918887,1442918855,1442918812]'
+      - Name: FirstTimeEnter
+        TimeStamp: '[1442918788]'
+      - Name: OnFirstPlotFightEnter
+        TimeStamp: '[1442918807]'
+      - Name: ItemsRewardDialog
+        TimeStamp: '[1442918813]'
+      - Name: WinPlot1
+        TimeStamp: '[1442918815]'
+      - Name: LevelUpBeforeShop
+        TimeStamp: '[1442918817]'
+      - Name: AfterEquipFirstItem
+        TimeStamp: '[1442918823]'
+      - Name: OnSecondPlotFightEnter
+        TimeStamp: '[1442918850]'
+      - Name: WinPlot2
+        TimeStamp: '[1442918856]'
+      - Name: OnThirdPlotFightEnter
+        TimeStamp: '[1442918882]'
+      - Name: WinPlot3
+        TimeStamp: '[1442918889]'
+...

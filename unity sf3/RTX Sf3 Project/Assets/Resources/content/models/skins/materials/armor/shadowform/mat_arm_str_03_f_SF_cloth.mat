@@ -1,0 +1,203 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: mat_arm_str_03_f_SF_cloth
+  m_Shader: {fileID: 4800000, guid: 87f78c83f1e488b4c8e8caeea793844c, type: 3}
+  m_ShaderKeywords: SF USE_SKIN_COLOR _UseSkinColor
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _AlphaTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _GlowTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: d5526299d61e7354dacce5d158bc44bf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTexPreRender
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Mask
+      second:
+        m_Texture: {fileID: 2800000, guid: d53579fd40039834d96e1857ffbe3fef, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MatCap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ShadowForm
+      second:
+        m_Texture: {fileID: 2800000, guid: 29affd6901dff3d4fadaf00152ff209b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ShadowFormPreRender
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _Alpha
+      second: 1
+    - first:
+        name: _BlendValue
+      second: 0.7
+    - first:
+        name: _BumpScale
+      second: 1
+    - first:
+        name: _Cull
+      second: 0
+    - first:
+        name: _Cutoff
+      second: 0.5
+    - first:
+        name: _DetailNormalMapScale
+      second: 1
+    - first:
+        name: _DstBlend
+      second: 0
+    - first:
+        name: _FogEnd
+      second: 0
+    - first:
+        name: _FogStart
+      second: 0
+    - first:
+        name: _FogType
+      second: 0
+    - first:
+        name: _Glossiness
+      second: 0.5
+    - first:
+        name: _GlowPower
+      second: 1
+    - first:
+        name: _GradientEnd
+      second: 0.5
+    - first:
+        name: _GradientStart
+      second: 0.25
+    - first:
+        name: _IgnoreLight
+      second: 0
+    - first:
+        name: _LineSize
+      second: 0.0005
+    - first:
+        name: _MaskSize
+      second: 1
+    - first:
+        name: _MaterialType
+      second: 1
+    - first:
+        name: _MetalPower
+      second: 2
+    - first:
+        name: _Metallic
+      second: 0
+    - first:
+        name: _Mode
+      second: 0
+    - first:
+        name: _OcclusionStrength
+      second: 1
+    - first:
+        name: _Parallax
+      second: 0.02
+    - first:
+        name: _RimMaterialPower
+      second: 1
+    - first:
+        name: _ShadowFormEnabled
+      second: 1
+    - first:
+        name: _SrcBlend
+      second: 1
+    - first:
+        name: _UVSec
+      second: 0
+    - first:
+        name: _UseSkinColor
+      second: 0
+    - first:
+        name: _ZWrite
+      second: 1
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _EmissionColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _GlowColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _GlowColorMult
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _GradientEndColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _GradientStartColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _LineColor
+      second: {r: 0.42352942, g: 0.42352942, b: 0.42352942, a: 1}
+    - first:
+        name: _MainColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _MaskColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _MaskEndColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _MaskEnemyColor
+      second: {r: 0.5058824, g: 0.105882354, b: 0.105882354, a: 0.8156863}
+    - first:
+        name: _MaskPlayerColor
+      second: {r: 0.14509805, g: 0.27058825, b: 0.5058824, a: 0.8156863}
+    - first:
+        name: _MaskStartColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _SkinColor
+      second: {r: 0.62352943, g: 0.526012, b: 0.45970014, a: 1}
+    - first:
+        name: _SkinColorBase
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _SkinColorDifference
+      second: {r: -0.37647057, g: -0.473988, b: -0.5402999, a: 0}

@@ -1,0 +1,431 @@
+TriggerSets:
+########################
+#  - Name: DOJO_CHATTER_GIZMO
+#    Templates: [LOCK_LOCATION_DOJO, LOCK_PLAYER]
+#    Triggers:
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Conditions:
+#          - Not:
+#            - GreaterEqual: {Value1: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value", Value2: "4"}
+#        Actions:
+#          - SetVariable: {Name: CHATTER_GIZMO_TRIGGER, Value: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value + 1", ApplyTo: Me}
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value", Value2: "4"}
+#        Actions:
+#          - SetVariable: {Name: CHATTER_GIZMO_VARIANT_RANDOM, Value: "?Random[1,5]", ApplyTo: Me}
+#          - SetVariable: {Name: CHATTER_GIZMO_TRIGGER, Value: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value + 1", ApplyTo: Me}
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value", Value2: "5"}
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_VARIANT_RANDOM].Value", Value2: "1"}
+#        Actions:
+#          - SetVariable: {Name: CHATTER_GIZMO_TRIGGER, Value: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value + 1", ApplyTo: Me}
+#          - ShowDialog: {Prefab: OneButton, Title: CHAR_GIZMO, Image: Content/Avatars/man_Gizmo, Label: dojo_chatter_Gizmo_1, ButtonAlias: continue}
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value", Value2: "5"}
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_VARIANT_RANDOM].Value", Value2: "2"}
+#        Actions:
+#          - SetVariable: {Name: CHATTER_GIZMO_TRIGGER, Value: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value + 1", ApplyTo: Me}
+#          - ShowDialog: {Prefab: OneButton, Title: CHAR_GIZMO, Image: Content/Avatars/man_Gizmo, Label: dojo_chatter_Gizmo_2, ButtonAlias: continue}
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value", Value2: "5"}
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_VARIANT_RANDOM].Value", Value2: "3"}
+#        Actions:
+#          - SetVariable: {Name: CHATTER_GIZMO_TRIGGER, Value: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value + 1", ApplyTo: Me}
+#          - ShowDialog: {Prefab: OneButton, Title: CHAR_GIZMO, Image: Content/Avatars/man_Gizmo, Label: dojo_chatter_Gizmo_3, ButtonAlias: continue}
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value", Value2: "5"}
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_VARIANT_RANDOM].Value", Value2: "4"}
+#        Actions:
+#          - SetVariable: {Name: CHATTER_GIZMO_TRIGGER, Value: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value + 1", ApplyTo: Me}
+#          - ShowDialog: {Prefab: OneButton, Title: CHAR_GIZMO, Image: Content/Avatars/man_Gizmo, Label: dojo_chatter_Gizmo_4, ButtonAlias: continue}
+#      - Events:
+#          - Hit: {Player: Enemy}
+#        Conditions:
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value", Value2: "5"}
+#          - Equal: {Value1: "?GetVariable[Me, CHATTER_GIZMO_VARIANT_RANDOM].Value", Value2: "5"}
+#        Actions:
+#          - SetVariable: {Name: CHATTER_GIZMO_TRIGGER, Value: "?GetVariable[Me, CHATTER_GIZMO_TRIGGER].Value + 1", ApplyTo: Me}
+#          - ShowDialog: {Prefab: OneButton, Title: CHAR_GIZMO, Image: Content/Avatars/man_Gizmo, Label: dojo_chatter_Gizmo_5, ButtonAlias: continue}
+
+########################
+  #- Name: DOJO_GIZMO_GO_TO_MAP
+  #  Templates: [LOCK_LOCATION_DOJO, LOCK_PLAYER]
+  #  Triggers:
+  #    - Events:
+  #        - Hit: {Player: Enemy}
+  #      Conditions:
+  #        - Not:
+  #          - GreaterEqual: {Value1: "?GetVariable[Me, GIZMO_GO_TO_MAP_TRIGGER].Value", Value2: "3"}
+  #          - Equal: {Value1: "?GetUserVariable[GIZMO_GO_TO_MAP_VARIABLE].Value", Value2: "3"}
+  #      Actions:
+  #        - SetVariable: {Name: GIZMO_GO_TO_MAP_TRIGGER, Value: "?GetVariable[Me, GIZMO_GO_TO_MAP_TRIGGER].Value + 1", ApplyTo: Me}
+  #    - Events:
+  #        - Hit: {Player: Enemy}
+  #      Conditions:
+  #        - Equal: {Value1: "?GetVariable[Me, GIZMO_GO_TO_MAP_TRIGGER].Value", Value2: "3"}
+  #        - Not:
+  #          - Equal: {Value1: "?GetUserVariable[GIZMO_GO_TO_MAP_VARIABLE].Value", Value2: "3"}
+  #      Actions:
+  #        - ShowDialog: {Prefab: OneButton, Title: CHAR_GIZMO, Image: Content/Avatars/man_Gizmo, Label: dojo_gotomap_Gizmo_1, ButtonAlias: continue}
+  #        - GoToModuleTrigger: {Module: Map, Type: Float}
+  #        - SetUserVariable: {Name: GIZMO_GO_TO_MAP_VARIABLE, Value: "?GetUserVariable[GIZMO_GO_TO_MAP_VARIABLE].Value + 1"}
+  #        - SetVariable: {Name: GIZMO_GO_TO_MAP_TRIGGER, Value: "0", ApplyTo: Me}
+
+##########################
+##  - Name: STANCE_START_BIRTH_Sarge
+##    Locks:
+##      - Equal: {Value1: "?Player[Me].TagExists", Value2: "CHARACTER_SARGE"}
+##    Triggers:
+##      - Templates: [STANCE.START_BIRTH]
+##        Priority: 99999
+##        Actions:
+##          - Animation: {Name: Sarge_Stance_Birth}
+##
+##########################
+##  - Name: STANCE_START_ROUND_Sarge
+##    Locks:
+##      - Equal: {Value1: "?Player[Me].TagExists", Value2: "CHARACTER_SARGE"}
+##    Triggers:
+##      - Templates: [STANCE.START_ROUND]
+##        Priority: 99999
+##        Actions:
+##          - Animation: {Name: Sarge_Stance_Start_Round}
+##
+##########################
+##  - Name: STANCE_IDLE_Sarge
+##    Locks:
+##      - Equal: {Value1: "?Player[Me].TagExists", Value2: "CHARACTER_SARGE"}
+##    Triggers:
+##      - Templates: [STANCE.START_IDLE]
+##        Priority: 99999
+##        Actions:
+##          - Animation: {Name: Sarge_Stance_Idle}
+
+######################## SPECIAL GIZMO THROW
+
+  - Name: GIZMO_THROW_Active
+    Templates: [LOCK_SKELETON, LOCK_SUBTYPE_FISTS]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_GIZMO_THROW_1"}
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.GIZMO_THROW]
+      #ATTACK.THROW
+        Priority: 301
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, GIZMO_THROW_Active_CD].Value", Value2: "1"}
+
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "155"}
+          #- Or:
+          #  - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Back(Down|Hold)]", IgnoredByAI: 1}
+          #  - And: 
+          #    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[Forward(Down|Hold)]", IgnoredByAI: 1}
+        Actions:
+          - Animation: {Name: Gizmo_Throw_Active_Start}
+          - SetVariable: {Name: GIZMO_THROW_Active_CD, Value: 1, ApplyTo: Me, Frames: 50}
+
+      - Templates: [REACTION.HIT_TO_ENEMY]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Gizmo_Throw_Start"}
+          #- Greater: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Me],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Gizmo_Throw_Active_End}
+          - SetVariable: {Name: GIZMO_THROW_Active_CD, Value: 1, ApplyTo: Me, Frames: 450}
+
+      - Templates: [REACTION.HIT_HEAD_CRIT_TO_ENEMY]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Gizmo_Throw_Start"}
+          #- Greater: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Me],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Gizmo_Throw_Active_End}
+          - SetVariable: {Name: GIZMO_THROW_Active_CD, Value: 1, ApplyTo: Me, Frames: 450}
+
+      - Templates: [REACTION.HIT_CRIT_TO_ENEMY]
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Gizmo_Throw_Start"}
+          #- Greater: {Value1: "abs(?Coordinate[?Player[Enemy],COM].X - ?Coordinate[?Player[Me],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Gizmo_Throw_Active_End}
+          - SetVariable: {Name: GIZMO_THROW_Active_CD, Value: 1, ApplyTo: Me, Frames: 450}
+
+
+  - Name: GIZMO_THROW_Passive
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "SUPER_GIZMO_THROW_1"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Greater: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Equal: {Value1: "?Hit[].Name", Value2: "Gizmo_Throw_Start"}
+          #- Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Gizmo_Throw_Passive_Start}
+
+      - Templates: [REACTION.HIT_HEAD_CRIT]
+        Priority: 3012
+        Conditions:
+          - Greater: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Equal: {Value1: "?Hit[].Name", Value2: "Gizmo_Throw_Start"}
+          #- Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Gizmo_Throw_Passive_Start}
+
+      - Templates: [REACTION.HIT_CRIT]
+        Priority: 3012
+        Conditions:
+          - Greater: {Value1: "?Player[Me].Health", Value2: "0"}
+          - Equal: {Value1: "?Hit[].Name", Value2: "Gizmo_Throw_Start"}
+          #- Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Gizmo_Throw_Passive_Start}
+
+      - Priority: 3012
+        Events:
+          - AnimationEnd: {Player: Me}
+          ##- PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Throw_Passive_Start"}
+          ##- Or:
+          ##  - And:
+          ##    - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+          ##    - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Throw_Passive_Start"}
+          ##  - And:
+          ##    - Equal: {Value1: "?Trigger[].Event", Value2: "PostHit"}
+          ##    - Equal: {Value1: "?Hit[].Name", Value2: "Gizmo_Throw_Start_2"}
+          ##    - Or:
+          ##      - Not:
+          ##        - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Throw_Passive_End"}
+          ##        - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Throw_Passive_End_Mirrored"}
+          - Or:
+            - And:
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+                - Equal: {Value1: "?Player[Enemy].InMirrorPose", Value2: "1"}
+            - And:
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+              - Equal: {Value1: "?Player[Enemy].InMirrorPose", Value2: "1"}
+        Actions:
+          - Animation: {Name: Gizmo_Throw_Passive_End}
+
+      - Priority: 3012
+        Events:
+          - AnimationEnd: {Player: Me}
+          ##- PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Throw_Passive_Start"}
+          ##- Or:
+          ##  - And:
+          ##    - Equal: {Value1: "?Trigger[].Event", Value2: "AnimationEnd"}
+          ##    - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Throw_Passive_Start"}
+          ##  - And:
+          ##    - Equal: {Value1: "?Trigger[].Event", Value2: "PostHit"}
+          ##    - Equal: {Value1: "?Hit[].Name", Value2: "Gizmo_Throw_Start_2"}
+          ##    - Or:
+          ##      - Not:
+          ##        - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Throw_Passive_End"}
+          ##        - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Gizmo_Throw_Passive_End_Mirrored"}
+          - Or:
+            - And:
+              - Equal: {Value1: "?Player[Enemy].InMirrorPose", Value2: "1"}
+              - Not:
+                - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+            - And:
+              - Equal: {Value1: "?Player[Me].InMirrorPose", Value2: "1"}
+              - Not:
+                - Equal: {Value1: "?Player[Enemy].InMirrorPose", Value2: "1"}
+        Actions:
+          - Animation: {Name: Gizmo_Throw_Passive_End_Mirrored}
+
+  - Name: GIZMO_HOP_FRONT
+    Templates: [LOCK_SKELETON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "BETA_LEGIONDOJO_MQ_SPILLTHEBEANS"}
+    Triggers:
+      - Templates: [TACTICS.GIZMO_HOP]
+        Events:
+          - KeyPress: {Player: Me, Key: Forward, States: [Down]}
+        Priority: 110
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP_FORWARD", IgnoredByAI: 1}
+          #- Not:
+          #  - Equal: {Value1: "?GetVariable[Me, TUTORIAL_HOP_BLOCK].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Hop_Front}
+
+########################################################## SPECIAL SARGE THROW
+
+  - Name: SARGE_WALK
+    ##FOR TEST
+    ##Templates: [LOCK_SKELETON, LOCK_SUBTYPE_HAMMERS]
+    Templates: [LOCK_SKELETON, LOCK_SUBTYPE_HAMMERS, LOCK_NOT_PLAYER]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "BETA_BAMBOO_MQ_YOUWEREASONTOME_BOSS"}
+    Triggers:
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - SetVariable: {Name: UNSHOCKABLE, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - Birth: {Player: Me}
+        Conditions:
+          - GreaterEqual: {Value1: "?Fight[].Round", Value2: "2"}
+        Actions:
+          - SetVariable: {Name: SARGE_THROW_Active_CD, Value: 1, ApplyTo: Me, Frames: 300}
+      #    - SetVariable: {Name: SARGE_THROW_Active_CD, Value: 1, ApplyTo: Me}
+      #    - UIElements: {ids: [589, 588], Show: false}
+      #
+      #- Priority: 1000
+      #  Events:
+      #    - AnimationEnd: {Player: Enemy}
+      #  Conditions: 
+      #    - Equal: {Value1: "?Fight[].Round", Value2: "2"}
+      #    - Or:
+      #      - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "HIT"}
+      #      - Equal: {Value1: "?Player[Enemy].CurrentAnimation", Value2: "PHYSICS"}
+      #    - Not:
+      #      - Equal: {Value1: "?GetVariable[Me, DIALOG_100_SARGE_RAGE].Value", Value2: "1"}
+      #  Actions:
+      #    - Call: {ID: DIALOG_100_SARGE_RAGE}
+      #    - UIElements: {ids: [589, 588], Show: true}
+      #    - SetVariable: {Name: DIALOG_100_SARGE_RAGE, Value: 1, ApplyTo: Me}
+      #    - SetShadowCharge: {ApplyTo: Enemy, Value: "0.5"}
+      #    - SetShadowCharge: {Value: "1"}
+      #    - ToggleShadowForm: {Value: 1, Infinity: 1, EffectName: "shadow_fire"}
+      #    - SetShadowCharge: {Value: "1"}
+      #    - SetVariable: {Name: SARGE_THROW_Active_CD, Value: 1, ApplyTo: Me, Frames: 300}
+
+
+      - Templates: [TACTICS.SARGES_WALK]
+      ####FOR TEST
+      ###- Events:
+      ###    - KeyPress: {Player: Me, Key: TEST2, States: [Down]}
+      ###  Conditions:
+      ###    - Equal: {Value1: "?Player[Me].KeyPress", Value2: "?CLC_KeyPressConvert[TEST2]"}
+      ####test 
+        Priority: 3500
+        #Priority: 400
+        Actions:
+          - Animation: {Name: Sarge_Walk}
+          - SetVariable: {Name: SARGE_THROW_Active_CD, Value: 1, ApplyTo: Me, Frames: 800}
+          - RepulsionType: {ApplyTo: Me, State: 1}
+
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 1, ApplyTo: Me}
+          - SetShader: {ApplyTo: Enemy, Name: power, Toggle: On, Transition: 1}
+          #- ShowStatusIcon: {ApplyTo: Me, Name: Shadow_Power_Will_CD, BackgroundColor: "#2f4668", Icon: ICON_PERK_ROCK, Frames: 200, ShowExpiration: 1, Stackable: 0, Equipment: Helmet}
+
+      ##- Events:
+      ##    - VariableDestruction: {Player: Me, Name: SHADOW_POWER_WILL_NO_REACTION}
+      ##  Priority: -1000
+      ##  Actions:
+      ##    - DestroyEffect: {Name: sf_staff_thresh_hand, ApplyTo: Me}
+      ##    - RepulsionType: {ApplyTo: Me, State: 0}
+
+      - Events:
+          - PostHit: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+          - LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+        Actions:
+          - RepulsionType: {ApplyTo: Me, State: 0}
+          - SetShader: {ApplyTo: Enemy, Name: power, Toggle: Off, Transition: 0.5}
+
+      - Events:
+          - IntervalEnd: {Player: Me, Name: Sarge_Walk_End}
+        Conditions:
+          #- Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+          #- LessEqual: {Value1: "?Player[Me].Health", Value2: "0"}
+        Actions:
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 0, ApplyTo: Me, Frames: 1}
+          - RepulsionType: {ApplyTo: Me, State: 0}
+          - SetShader: {ApplyTo: Enemy, Name: power, Toggle: Off, Transition: 0.5}
+
+      - Events:
+          - PostHit: {Player: Me}
+        Priority: -1000
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+        Actions:
+          - PlaySound: {Sounds: [shadow_form/shadow start]}
+          - HitEffect: {Name: HitEffect_Critical_Basic, ParticlesCount: 1000}
+          - FreezeFrame: {Frames: 30}
+          - ShakeCamera: {Frames: 55, AmpX: 5, AmpY: 15, PeriodX: 5.7, PeriodY: 6.3}
+          
+      - Events:
+          - IntervalStart: {Player: Me, Name: Sarge_Smashing_Start_Reverse}
+        Priority: 401
+        Conditions:
+          - GreaterEqual: {Value1: "?Fight[].Round", Value2: "2"}
+          - LessEqual: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],COM].X)", Value2: "155"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Sarge_Walk"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentInterval", Value2: "Sarge_Walk_End"}
+        Actions:
+          - Animation: {Name: Sarge_Smashing_Active_Miss}
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 1, ApplyTo: Me}
+
+      - Templates: [REACTION.HIT_TO_ENEMY]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Sarge_Smashing"}
+          #- Greater: {Value1: "abs(?Coordinate[?Player[Me],COM].X - ?Coordinate[?Player[Enemy],Wall,Front].X)", Value2: "150"}
+        Actions:
+          - Animation: {Name: Sarge_Smashing_Active_Reverse}
+
+      - Priority: 401
+        Events:
+          - AnimationEnd: {Player: Me}
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Sarge_Smashing_Active_Reverse"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Sarge_Smashing_Active_Miss"}
+        Actions:
+          - SetVariable: {Name: SHADOW_POWER_WILL_NO_REACTION, Value: 1, ApplyTo: Me, Frames: 1}
+          - RepulsionType: {ApplyTo: Me, State: 0}
+          - SetShader: {ApplyTo: Enemy, Name: power, Toggle: Off, Transition: 0.5}
+
+
+  - Name: SARGE_THROW_Passive
+    ##Templates: [LOCK_SKELETON]
+    ##FOR TEST
+    Templates: [LOCK_PLAYER]
+    Locks:
+      - Equal: {Value1: "?Player[Enemy].TagExists", Value2: "BETA_BAMBOO_MQ_YOUWEREASONTOME_BOSS"}
+    Triggers:
+      - Templates: [REACTION.HIT]
+        Priority: 1101
+        Conditions:
+          - Equal: {Value1: "?Hit[].Name", Value2: "Sarge_Smashing"}
+        Actions:
+          - Animation: {Name: Sarge_Throw_Passive_Start}
+
+      - Priority: 3012
+        Events:
+          - IntervalStart: {Player: Enemy, Name: Sarge_Passive_2_Start}
+          #- AnimationEnd: {Player: Me}
+        Conditions:
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Sarge_Throw_Passive_Start"}
+        Actions:
+          - Animation: {Name: Sarge_Throw_Passive_End}
+
+      #- Templates: [STAND_UP.AFTER_THROW]
+      #  Priority: 1111
+      #  Conditions:
+      #    - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "Sarge_Throw_Passive_End"}
+      #  Actions:
+      #    - Animation: {Name: Sarge_Throw_Passive_Stand_Up}
+
+

@@ -1,0 +1,1057 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# KATANA #################################################
+  - Animation: Katana_Slash
+    FileName: katana_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_BASIC
+      - WEAPON
+      - KATANA
+    RepulsionScale:
+        X: 0.9
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Transitional_Delay
+        End: 3
+      - Name: Uninterrupt
+        End: 37
+      - Name: Transitional
+        End: 17
+      - Name: Blocking
+        Start: 38
+      - Name: Throwable
+        Start: 32
+      - Name: Riposte
+        End: 2
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Katana_Attacking_Edge_l
+        Impulse:
+            X: 15000
+            Y: 4000
+        Slowmo:
+            Start: 10
+            End: 14
+            Distance: 230
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/katana/vzmah1
+          - whoosh/katana/vzmah2
+          - whoosh/katana/vzmah3
+          - whoosh/katana/vzmah4
+          - whoosh/katana/vzmah5
+        Frame: 6
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+  - Animation: Katana_Slash_Double
+    FileName: katana_double_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_DOUBLE
+      - WEAPON
+      - KATANA
+    RepulsionScale:
+        X: 0.9
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Katana_Slash
+    Intervals:
+      - Name: Uninterrupt
+        End: 47
+      - Name: Blocking
+        Start: 48
+      - Name: Throwable
+        Start: 42
+      - Name: Riposte
+        End: 2
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 16
+        End: 24
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Katana_Attacking_Edge_l
+        Impulse:
+            X: 15000
+            Y: 4000
+        Slowmo:
+            Start: 10
+            End: 14
+            Distance: 230
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 22
+        End: 24
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - Katana_Attacking_Edge_l
+        Impulse:
+            X: 16000
+            Y: 5000
+        Slowmo:
+            Start: 20
+            End: 24
+            Distance: 235
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 235
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/katana/vzmah1
+          - whoosh/katana/vzmah2
+          - whoosh/katana/vzmah3
+          - whoosh/katana/vzmah4
+          - whoosh/katana/vzmah5
+        Frame: 6
+      - Common:
+          - whoosh/katana/vzmah1
+          - whoosh/katana/vzmah2
+          - whoosh/katana/vzmah3
+          - whoosh/katana/vzmah4
+          - whoosh/katana/vzmah5
+        Frame: 16
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+  - Animation: Katana_Slash_Heavy
+    FileName: katana_heavy_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_HEAVY
+      - WEAPON
+      - KATANA
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 44
+      - Name: Blocking
+        Start: 45
+      - Name: Throwable
+        Start: 39
+      - Name: Riposte
+        End: 7
+      - Name: Perk_Parry
+        Start: 10
+        End: 18
+      - Type: Attack
+        Start: 16
+        End: 18
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - Katana_Attacking_Edge_l
+        Impulse:
+            X: 16000
+            Y: -5000
+        Slowmo:
+            Start: 14
+            End: 18
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 270
+            Name:
+              - Block_High_Heavy
+    Sounds:
+      - Common:
+          - whoosh/katana/vzmah1
+          - whoosh/katana/vzmah2
+          - whoosh/katana/vzmah3
+          - whoosh/katana/vzmah4
+          - whoosh/katana/vzmah5
+        Frame: 9
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Katana_Slash_Super_1_1
+    FileName: katana_super1_slash1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - KATANA
+      - SUPER_KATANA_1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 39
+      - Name: Blocking
+        Start: 40
+      - Name: Throwable
+        Start: 34
+      - Name: Riposte
+        End: 6
+      - Name: Perk_Parry
+        Start: 9
+        End: 16
+      - Type: Attack
+        Start: 15
+        End: 16
+        HitTags:
+          - Hit_Stomach_Heavy
+        AttackingParts:
+          - Katana_Attacking_Edge_l
+        Impulse:
+            X: 20000
+            Y: 5000
+        Slowmo:
+            Start: 9
+            End: 16
+            Distance: 350
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 350
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/katana/vzmah1
+          - whoosh/katana/vzmah2
+          - whoosh/katana/vzmah3
+          - whoosh/katana/vzmah4
+          - whoosh/katana/vzmah5
+        Frame: 9
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Katana_Slash_Spinning
+    FileName: katana_spinning_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SPINNING
+      - WEAPON
+      - KATANA
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Riposte
+        End: 4
+      - Name: Perk_Parry
+        Start: 7
+        End: 15
+      - Type: Attack
+        Start: 13
+        End: 15
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - Katana_Attacking_Edge_l
+        Impulse: 
+            X: 16000
+            Y: -4000
+        Slowmo:
+            Start: 11
+            End: 15
+            Distance: 290
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 290
+            Name:
+              - Block_High_Heavy
+    Sounds:
+      - Common:
+          - whoosh/katana/vzmah1
+          - whoosh/katana/vzmah2
+          - whoosh/katana/vzmah3
+          - whoosh/katana/vzmah4
+          - whoosh/katana/vzmah5
+        Frame: 7
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+        
+  - Animation: Katana_Slash_Low
+    FileName: katana_low_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_LOW
+      - WEAPON
+      - KATANA
+    RepulsionScale:
+        X: 0.9
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Riposte
+        End: 4
+      - Name: Perk_Parry
+        Start: 7
+        End: 14
+      - Type: Attack
+        Start: 13
+        End: 14
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - Sword_Attacking_Edge_l
+          - Katana_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 7
+            End: 14
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/katana/vzmah1
+          - whoosh/katana/vzmah2
+          - whoosh/katana/vzmah3
+          - whoosh/katana/vzmah4
+          - whoosh/katana/vzmah5
+        Frame: 7
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+  - Animation: Katana_Slash_Upper
+    FileName: katana_upper_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_UPPER
+      - WEAPON
+      - KATANA
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Riposte
+        End: 5
+      - Name: Perk_Parry
+        Start: 8
+        End: 16
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - Katana_Attacking_Edge_l
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 12
+            End: 16
+            Distance: 260
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 260
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/katana/vzmah1
+          - whoosh/katana/vzmah2
+          - whoosh/katana/vzmah3
+          - whoosh/katana/vzmah4
+          - whoosh/katana/vzmah5
+        Frame: 7
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Katana_Transition
+    FileName: sword_transition.bin
+    Groups:
+      - TRANSITION
+    MidFrames: 2
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 4
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+      
+############## STEPS
+  - Animation: Katana_Step_Forward
+    FileName: katana_step_forward.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_FORWARD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+  - Animation: Katana_Step_Back
+    FileName: katana_step_back.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_BACK
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+        
+  - Animation: Katana_Idle
+    FileName: katana_idle.bin
+    Groups:
+      - STANCE_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+#########################################Stances_Round_Start
+  - Animation: Katana_Stance_Birth
+    FileName: katana_stance_birth.bin
+    BlendingFrames: 1
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+        Shift:
+            X: -75
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Katana_Stance_Start_Round
+    FileName: katana_stance.bin
+    BlendingFrames: 1
+    Groups:
+      - STANCE_START_ROUND
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundStart
+    Sounds:
+      - Common:
+          - whoosh/katana/vzmah1
+        Frame: 10
+      - Common:
+          - whoosh/katana/vzmah1
+          - whoosh/katana/vzmah2
+          - whoosh/katana/vzmah3
+          - whoosh/katana/vzmah4
+          - whoosh/katana/vzmah5
+        Frame: 40
+
+  - Animation: Katana_Stance_Idle
+    FileName: katana_stance_idle.bin
+#    BlendingFrames: 1
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Katana_Stance_Start_Round
+    Groups:
+      - STANCE_START_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+            
+  - Animation: Katana_Stance_Win_Round
+    FileName: katana_win.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - STANCE_WIN_POSE
+    BlendingFrames: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    Intervals:
+      - Name: Uninterrupt
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/katana/vzmah5
+        Frame: 20
+      - Common:
+          - whoosh/katana/vzmah5
+        Frame: 31
+      - Common:
+          - whoosh/katana/vzmah1
+        Frame: 85
+        
+  - Animation: Katana_Stance_Win_Idle
+    FileName: katana_win_idle.bin
+    Groups:
+      - STANCE_WIN_IDLE
+    Intervals:
+      - Name: Uninterrupt
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+            
+#########################################Stance_Low
+  - Animation: Katana_Low_Stance_In
+    FileName: katana_low_stance_inout.bin
+    EndFrame: 15
+    Groups:
+      - LOW_STANCE_IN
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+ #     - Name: Uninterrupt
+      - Name: Transitional
+      
+  - Animation: Katana_Low_Stance_Idle
+    FileName: katana_low_stance_idle.bin
+    Groups:
+      - LOW_STANCE_LOOP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+ #     - Name: Uninterrupt
+      - Name: Transitional
+      - Name: Dodging
+
+  - Animation: Katana_Low_Stance_Out
+    FileName: katana_low_stance_inout.bin
+    FirstFrame: 24
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - LOW_STANCE_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+ #     - Name: Uninterrupt
+ #       End: 27

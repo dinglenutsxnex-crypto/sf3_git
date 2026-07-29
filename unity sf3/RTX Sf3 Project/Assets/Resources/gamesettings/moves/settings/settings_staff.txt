@@ -1,0 +1,1680 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCE, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# STAFF #################################################
+  - Animation: Staff_Slash
+    FileName: staff_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_BASIC
+      - WEAPON
+      - STAFF
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 25
+      - Name: Blocking
+        Start: 26
+      - Name: Throwable
+        Start: 20
+      - Name: Transitional
+        End: 17
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Head
+#          - Hit_Head_Short
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 6
+            End: 14
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 270
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Staff_Double_Slash
+    FileName: staff_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_DOUBLE
+      - WEAPON
+      - STAFF
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Staff_Slash
+    Intervals:
+      - Name: Uninterrupt
+        End: 51
+      - Name: Blocking
+        Start: 52
+      - Name: Throwable
+        Start: 46
+      - Name: Transitional
+        Start: 10
+        End: 32
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 22
+        End: 30
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Head
+#          - Hit_Head_Short
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: 8000
+        Slowmo:
+            Start: 10
+            End: 14
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 270
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 28
+        End: 30
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 20000
+            Z: 5000
+        Slowmo:
+            Start: 22
+            End: 30
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 23
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Staff_Triple_Slash
+    FileName: staff_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_TRIPLE
+      - WEAPON
+      - STAFF
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Staff_Double_Slash
+    Intervals:
+      - Name: Uninterrupt
+        End: 76
+      - Name: Blocking
+        Start: 77
+      - Name: Throwable
+        Start: 71
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Name: Perk_Parry
+        Start: 22
+        End: 30
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Head
+#          - Hit_Head_Short
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 18000
+            Y: 8000
+        Slowmo:
+            Start: 10
+            End: 14
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 28
+        End: 30
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 20000
+            Z: 5000
+        Slowmo:
+            Start: 22
+            End: 30
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 52
+        End: 55
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 20000
+            Z: 5000
+        Slowmo:
+            Start: 46
+            End: 55
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 23
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 46
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Staff_Super_1_Slash_1
+    FileName: staff_super-combo1_slash1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - STAFF
+      - SUPER_STAFF_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 37
+      - Name: Blocking
+        Start: 38
+      - Name: Throwable
+        Start: 32
+      - Name: Transitional
+        End: 24
+      - Name: Perk_Parry
+        Start: 12
+        End: 21
+      - Type: Attack
+        Start: 18
+        End: 21
+        HitTags:
+          - Hit_Overhead_Heavy
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 26000
+            Y: -6000
+        Slowmo:
+            Start: 12
+            End: 21
+            Distance: 320
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 320
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+      - Common:
+          - strike/wood/light/2_Wood_Hits_A_V25_bip
+        Frame: 21
+
+  - Animation: Staff_Super_1_Slash_2
+    FileName: staff_super-combo1_slash2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - STAFF
+      - SUPER_STAFF_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Staff_Super_1_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 69
+      - Name: Blocking
+        Start: 70
+      - Name: Throwable
+        Start: 64
+      - Name: Unstable
+        Start: 41
+        End: 55
+      - Name: Perk_Parry
+        Start: 12
+        End: 21
+      - Name: Perk_Parry
+        Start: 43
+        End: 50
+      - Type: Attack
+        Start: 19
+        End: 21
+        HitTags:
+          - Hit_Overhead_Heavy
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 26000
+            Y: -6000
+        Slowmo:
+            Start: 12
+            End: 21
+            Distance: 320
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 320
+            Name:
+              - Block_Overhead
+      - Type: Attack
+        Start: 48
+        End: 50
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 32000
+            Y: 10000
+        Slowmo:
+            Start: 43
+            End: 50
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.16
+        Block:
+            Distance: 250
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 47
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 39
+      - Floor:
+          Stone:
+          - step/land/stone/11_Land_Stone_Surface_V4
+          - step/land/stone/11_Land_Stone_Surface_V5
+          - step/land/stone/11_Land_Stone_Surface_V9
+        Frame: 55
+      - Common:
+          - strike/wood/light/2_Wood_Hits_A_V25_bip
+        Frame: 21
+
+  - Animation: Staff_Super_2_Slash_1
+    FileName: staff_super_2_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - STAFF
+      - SUPER_STAFF_2
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 37
+      - Name: Blocking
+        Start: 38
+      - Name: Throwable
+        Start: 32
+      - Name: Transitional
+        End: 20
+      - Name: Perk_Parry
+        Start: 12
+        End: 21
+      - Type: Attack
+        Start: 15
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 22000
+            Y: 8000
+        Slowmo:
+            Start: 9
+            End: 19
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 10
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 7
+
+  - Animation: Staff_Super_2_Slash_2
+    FileName: staff_super_2_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - STAFF
+      - SUPER_STAFF_2
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Staff_Super_2_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 68
+      - Name: Blocking
+        Start: 69
+      - Name: Throwable
+        Start: 63
+      - Name: Perk_Parry
+        Start: 9
+        End: 19
+      - Name: Perk_Parry
+        Start: 32
+        End: 50
+      - Type: Attack
+        Start: 15
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 22000
+            Y: 8000
+        Slowmo:
+            Start: 9
+            End: 19
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 38
+        End: 40
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 32
+            End: 40
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.03
+        Block:
+            Distance: 250
+            Name:
+              - Block_High_Short
+      - Type: Attack
+        Start: 43
+        End: 45
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 37
+            End: 45
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.03
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 48
+        End: 50
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 42
+            End: 50
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.04
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 8
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 32
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 37
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 42
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Staff_Slash_Spinning
+    FileName: staff_spinning_slash.bin
+    Groups: [ATTACK, ATTACK_SPINNING, WEAPON, STAFF]
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+      Rotation: {Y: 6}
+      Axis: [X]
+      Pivot: {Object: Nodes, Part: foot_l}
+      Position: {Player: Me, Object: Pivot}
+    SetDirection:
+      From: {Player: Me, Object: Nodes, Part: pelvis}
+      To: {Player: Enemy, Object: Nodes, Part: pelvis}
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - {Name: Unstable, Start: 10, End: 19}
+      - Name: Blocking
+        Start: 42
+      - Name: Throwable
+        Start: 36
+      - Name: Riposte
+        End: 14
+      - Name: Perk_Parry
+        Start: 17
+        End: 25
+      - Type: Attack
+        Start: 23
+        End: 25
+        HitTags:
+          - Hit_Stomach
+        AttackingParts: [Staff_Attacking_Edge_l]
+        Impulse: 
+            X: 25000
+            Y: 13000
+        Slowmo:
+            Start: 17
+            End: 25
+            Distance: 350
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.13
+        Block:
+          Distance: 350
+          Name: [Block_Middle]
+    Sounds:
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 7
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 16
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Staff_Slash_Low
+    FileName: staff_low_slash.bin
+    Groups: [ATTACK, ATTACK_LOW, WEAPON, STAFF]
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    BlendingFrames: 2
+    Align:
+      Rotation: {Y: 6}
+      Axis: [X]
+      Pivot: {Object: Nodes, Part: foot_l}
+      Position: {Player: Me, Object: Pivot}
+    SetDirection:
+      From: {Player: Me, Object: Nodes, Part: pelvis}
+      To: {Player: Enemy, Object: Nodes, Part: pelvis}
+    Intervals:
+      - {Name: Uninterrupt, End: 41}
+      - {Name: Unstable, Start: 15, End: 30}
+      - {Name: Blocking, Start: 42}
+      - Name: Riposte
+        End: 3
+      - {Name: Throwable, Start: 36}
+      - Name: Perk_Parry
+        Start: 6
+        End: 14
+      - Type: Attack
+        Start: 12
+        End: 14
+        HitTags:
+          - Hit_Legs
+        AttackingParts: [Staff_Attacking_Edge_l]
+        Impulse: 
+            X: 25000
+            Y: 8000
+        Slowmo:
+            Start: 6
+            End: 14
+            Distance: 300
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.12
+        Block:
+          Distance: 300
+          Name: [Block_Low]
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 7
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+  - Animation: Staff_Slash_Heavy
+    FileName: staff_heavy_slash.bin
+#    FirstFrame: 4
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - ATTACK
+      - ATTACK_HEAVY
+      - WEAPON
+      - STAFF
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - {Name: Uninterrupt, End: 46}
+      - {Name: Blocking, Start: 47}
+      - {Name: Throwable, Start: 41}
+      - Name: Unstable
+        Start: 13
+        End: 21
+      - Name: Unstable
+        Start: 33
+        End: 42
+      - Name: Riposte
+        End: 22
+      - Name: Perk_Parry
+        Start: 20
+        End: 29
+      - Type: Attack
+        Start: 26
+        End: 29
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Staff_Attacking_Edge_l
+        Impulse:
+            X: 26000
+            Y: -8000
+        Slowmo:
+            Start: 19
+            End: 29
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.15
+        Block:
+            Distance: 300
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/jump/19a_Jumps_Wooshes_V2
+          - whoosh/jump/19a_Jumps_Wooshes_V12
+          - whoosh/jump/19a_Jumps_Wooshes_V16
+          - whoosh/jump/19a_Jumps_Wooshes_V18
+        Frame: 10
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 18
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 13
+      - Floor:
+          Stone:
+          - step/land/stone/11_Land_Stone_Surface_V4
+          - step/land/stone/11_Land_Stone_Surface_V5
+          - step/land/stone/11_Land_Stone_Surface_V9
+        Frame: 21
+      - Common:
+          - strike/wood/light/2_Wood_Hits_A_V25_bip
+        Frame: 29
+
+  - Animation: Staff_Slash_Upper_1
+    FileName: staff_upper_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_UPPER
+      - WEAPON
+      - STAFF
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+      Rotation: {Y: 6}
+      Axis: [X]
+      Pivot: {Object: Nodes, Part: foot_l}
+      Position: {Player: Me, Object: Pivot}
+    SetDirection:
+      From: {Player: Me, Object: Nodes, Part: pelvis}
+      To: {Player: Enemy, Object: Nodes, Part: pelvis}
+    Intervals:
+      - Name: Uninterrupt
+        End: 36
+      - Name: Blocking
+        Start: 37
+      - Name: Throwable
+        Start: 31
+      - Name: Transitional
+        End: 24
+      - Name: Riposte
+        End: 8
+      - Name: Perk_Parry
+        Start: 15
+        End: 18
+      - Type: Attack
+        Start: 17
+        End: 18
+        HitTags:
+          - Hit_Stomach
+        AttackingParts: [Staff_Attacking_Edge_l]
+        Impulse: 
+            X: 25000
+            Y: 13000
+        Slowmo:
+            Start: 11
+            End: 18
+            Distance: 330
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.05
+        Block:
+          Distance: 330
+          Name: [Block_Middle]
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 12
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Staff_Slash_Upper_2
+    FileName: staff_upper_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_UPPER_DOUBLE
+      - WEAPON
+      - STAFF
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+      Rotation: {Y: 6}
+      Axis: [X]
+      Pivot: {Object: Nodes, Part: foot_l}
+      Position: {Player: Me, Object: Pivot}
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Staff_Slash_Upper_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 49
+      - Name: Blocking
+        Start: 50
+      - Name: Throwable
+        Start: 44
+      - Name: Riposte
+        End: 8
+      - Name: Perk_Parry
+        Start: 11
+        End: 18
+      - Name: Perk_Parry
+        Start: 26
+        End: 34
+      - Type: Attack
+        Start: 17
+        End: 18
+        HitTags:
+          - Hit_Stomach
+        AttackingParts: [Staff_Attacking_Edge_l]
+        Impulse: 
+            X: 25000
+            Y: 13000
+        Slowmo:
+            Start: 11
+            End: 18
+            Distance: 330
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.05
+        Block:
+          Distance: 330
+          Name: [Block_Middle]
+      - Type: Attack
+        Start: 32
+        End: 34
+        HitTags:
+          - Hit_Overhead
+        AttackingParts: [Staff_Attacking_Edge_l]
+        Impulse: 
+            X: 25000
+            Y: 13000
+        Slowmo:
+            Start: 26
+            End: 34
+            Distance: 300
+        Damage:
+          Attack: WeaponDamage
+          BaseDamage: 0.06
+        Block:
+          Distance: 300
+          Name: [Block_Overhead]
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 12
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 26
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Staff_Idle
+    FileName: staff_idle.bin
+    Groups:
+      - STANCE_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 8
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Staff_Step_Forward
+    FileName: staff_step_forward.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_FORWARD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+  - Animation: Staff_Step_Back
+    FileName: staff_step_back.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_BACK
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+########################################################################Stances
+#########################################Stances_Round_Start
+  - Animation: Staff_Stance_Birth
+    FileName: staff_stance_birth.bin
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+        Shift:
+            X: 40
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Staff_Stance_Start_Round
+    FileName: staff_stance.bin
+    BlendingFrames: 1
+    Groups:
+      - STANCE_START_ROUND
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundStart
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 32
+
+  - Animation: Staff_Stance_Idle
+    FileName: staff_stance_idle.bin
+#    BlendingFrames: 1
+    Transitions:
+        Animations:
+          - Staff_Stance_Start_Round
+    Groups:
+      - STANCE_START_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+#########################################Stance_Win
+  - Animation: Stance_Win_Staff
+    FileName: staff_win.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - STANCE_WIN_POSE
+    BlendingFrames: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 4
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+
+  - Animation: Stance_Win_Idle_Staff
+    FileName: staff_stance_idle.bin
+    Groups:
+      - STANCE_WIN_IDLE
+    Intervals:
+      - Name: Uninterrupt
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+
+#########################################Stance_Low
+  - Animation: Low_Stance_Polearm_In
+    FileName: m_polearm_low_stance_inout.bin
+    EndFrame: 19
+    Groups:
+      - LOW_STANCE_IN
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+ #     - Name: Uninterrupt
+      - Name: Transitional
+      
+  - Animation: Low_Stance_Polearm_Loop
+    FileName: m_polearm_low_stance_idle.bin
+    Groups:
+      - LOW_STANCE_LOOP
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+ #     - Name: Uninterrupt
+      - Name: Transitional
+      - Name: Dodging
+
+  - Animation: Low_Stance_Polearm_Out
+    FileName: m_polearm_low_stance_inout.bin
+    FirstFrame: 22
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - LOW_STANCE_OUT
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+ #     - Name: Uninterrupt
+ #       End: 27

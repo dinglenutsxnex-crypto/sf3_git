@@ -1,0 +1,65 @@
+TriggerSets:
+#########################################################################################################################################################
+  - Name: Reward_Bonus_Counter_HeadHit
+    Templates: [LOCK_PLAYER, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Priority: -99999
+        Events:
+          - PostHit: {Player: Enemy, Defense: HeadDefense}
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Enemy, BLOCK].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Reward_Bonus_HeadHit, Value: "?GetVariable[Me, Reward_Bonus_HeadHit].Value + 1", ApplyTo: Me}
+
+
+  - Name: Reward_Bonus_Counter_ShadowAbilities
+    Templates: [LOCK_PLAYER, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Priority: -99999
+        Events:
+          - IntervalEnd: {Player: Me, Name: Shadow_Move_Successful}
+        Actions:
+          - SetVariable: {Name: Reward_Bonus_ShadowAbilities, Value: "?GetVariable[Me, Reward_Bonus_ShadowAbilities].Value + 1", ApplyTo: Me}
+
+
+  - Name: Reward_Bonus_Counter_Critical
+    Templates: [LOCK_PLAYER, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Priority: -99999
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Enemy, CRITICAL].Value", Value2: "1"}
+          - Not:
+              - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Shadow_Jump"}
+              - Equal: {Value1: "?Hit[].Name", Value2: "Hit_Magic_Fareball"}
+              - Equal: {Value1: "?GetVariable[Enemy, SHADOW_POWER_WILL_NO_REACTION].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Reward_Bonus_Critical, Value: "?GetVariable[Me, Reward_Bonus_Critical].Value + 1", ApplyTo: Me}
+
+
+  - Name: Reward_Bonus_Counter_FirstStrike
+    Templates: [LOCK_PLAYER, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Priority: -99998
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, FirstStrike].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Reward_Bonus_FirstStrike].Value", Value2: "1"}
+        Actions:
+          - SetVariable: {Name: Reward_Bonus_FirstStrike, Value: 1, ApplyTo: Me}
+
+
+  - Name: Reward_Bonus_Counter_Combo
+    Templates: [LOCK_PLAYER, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Priority: -99999
+        Events:
+          - PostHit: {Player: Enemy}
+        Conditions: 
+          - GreaterEqual: {Value1: "?GetVariable[Me, COMBO_COUNTER].Value", Value2: "3"}
+        Actions:
+          - SetVariable: {Name: Reward_Bonus_Combo, Value: "?GetVariable[Me, COMBO_COUNTER].Value", ApplyTo: Me}

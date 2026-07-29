@@ -1,0 +1,315 @@
+TriggerSets:
+########################################## SWORD
+
+###################################### ATTACKS
+
+#################################### BASIC ATTACK (O)
+  - Name: ATTACK_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Nunchaku_Slash}
+
+#################################### DOUBLE ATTACK (O + O)
+  - Name: ATTACK_DOUBLE_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Nunchaku_Slash_Double}
+
+#################################### BASIC ATTACK INSTEAD SUPER
+  - Name: ATTACK_Nunchaku_Instead_Super_1
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_NOT_SUPER_WEAPON]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1]
+        Actions:
+          - Animation: {Name: Nunchaku_Slash}
+
+#################################### HEAVY ATTACK (Forward + O)
+  - Name: ATTACK_HEAVY_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Nunchaku_Slash_Heavy}
+
+#################################### UPPER ATTACK (Up + O)
+  - Name: ATTACK_UPPER_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Nunchaku_Slash_Upper}
+
+################################### SPINNING ATTACK (Backward + O)
+  - Name: ATTACK_SPINNING_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Nunchaku_Slash_Spinning_1}
+
+  - Name: ATTACK__SPINNING_2_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [ATTACK.SPINNING_DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Nunchaku_Slash_Spinning_2}
+################################### LOW ATTACK (Down + P)
+  - Name: ATTACK_LOW_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Nunchaku_Slash_Low}
+
+################################### SUPER ATTACK (Forward + O + O)
+  - Name: ATTACK_SUPER_1_1_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_NUNCHAKU_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Nunchaku_Super_1_Slash_1}
+
+  - Name: ATTACK_SUPER_1_2_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_NUNCHAKU_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Nunchaku_Super_1_Slash_2}
+
+  - Name: ATTACK_SUPER_1_3_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_NUNCHAKU_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_3, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Nunchaku_Super_1_Slash_3}
+
+  - Name: ATTACK_SUPER_1_4_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_NUNCHAKU_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_4, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Nunchaku_Super_1_Slash_4}
+
+################################### SUPER ATTACK 2
+  - Name: ATTACK_SUPER_2_1_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_NUNCHAKU_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Nunchaku_Super_2_Slash_1}
+
+  - Name: ATTACK_SUPER_2_2_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_NUNCHAKU_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Nunchaku_Super_2_Slash_2}
+
+  - Name: ATTACK_SUPER_2_3_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_NUNCHAKU_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_3, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Nunchaku_Super_2_Slash_3}
+
+  - Name: ATTACK_SUPER_3_4_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_NUNCHAKU_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_4, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Nunchaku_Super_2_Slash_4}
+
+################################### STANCES, MOVES etc.
+#  - Name: TRANSITION_Nunchaku
+#    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+#    Triggers:
+#      - Templates: [TRANSITION.COMMON]
+#        Actions:
+#          - Animation: {Name: Nunchaku_Transition}
+
+####################################### STANCES, MOVES etc.
+  - Name: STEP_FORWARD_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, STEP_FORWARD]
+    Triggers:
+      - Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Nunchaku_Idle_Weapon].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Nunchaku_Step_Forward}
+
+  - Name: STEP_BACK_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, STEP_BACK]
+    Triggers:
+      - Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Nunchaku_Idle_Weapon].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Nunchaku_Step_Back}
+
+  - Name: STANCE_IDLE_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [STANCE.IDLE]
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Nunchaku_Idle_Weapon].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Nunchaku_Idle}
+
+  - Name: STEP_FORWARD_Nunchaku_Weapon
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, STEP_FORWARD]
+    Triggers:
+      - Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Nunchaku_Idle_Weapon].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Nunchaku_Step_Forward_Weapon}
+
+  - Name: STEP_BACK_Nunchaku_Weapon
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, STEP_BACK]
+    Triggers:
+      - Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Nunchaku_Idle_Weapon].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Nunchaku_Step_Back_Weapon}
+
+  - Name: STANCE_IDLE_Nunchaku_Weapon
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [STANCE.IDLE]
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Nunchaku_Idle_Weapon].Value", Value2: "1"}
+        Actions:
+          - Animation: {Name: Nunchaku_Idle_Weapon}
+
+##################################################### NUNCHAKU IDLE VARIABLE
+  - Name: NUNCHAKU_IDLE_VARIABLE
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Priority: 500
+        Conditions:
+          - Equal: {Value1: "?GetVariable[Me, Nunchaku_Idle_Weapon].Value", Value2: "1"}
+          - Not:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "STEP"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "IDLE"}
+          - Or:
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "KICK"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "MOVE"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "BLOCK"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "REACTION"}
+            - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "LOW_STANCE"}
+        Actions:
+          - SetVariable: {Name: Nunchaku_Idle_Weapon, Value: 0, ApplyTo: Me}
+
+      - Events:
+          - Birth: {Player: Me}
+        Actions:
+          - SetVariable: {Name: Nunchaku_Idle_Weapon, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - AnimationEnd: {Player: Me}
+        Priority: 500
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetVariable[Me, Nunchaku_Idle_Weapon].Value", Value2: "1"}
+          - Equal: {Value1: "?Player[Me].CurrentAnimation", Value2: "WEAPON"}
+        Actions:
+          - SetVariable: {Name: Nunchaku_Idle_Weapon, Value: 1, ApplyTo: Me}
+
+      - Events:
+          - Birth: {Player: Me}
+        Priority: -99999
+        Actions:
+          - SetVariable: {Name: Nunchaku_Idle_Weapon, Value: 1, ApplyTo: Me}
+
+#########################
+  - Name: STANCE_START_BIRTH_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Nunchaku_Stance_Birth}
+
+  - Name: STANCE_START_BIRTH_Nunchaku_Dojo
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Nunchaku_Idle_Weapon}
+
+#########################
+  - Name: STANCE_START_ROUND_PLAYER_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Actions:
+          - Animation: {Name: Nunchaku_Stance_Start_Round}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU, LOCK_NOT_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Actions:
+          - Animation: {Name: Nunchaku_Stance_Start_Round}
+
+#########################
+  - Name: STANCE_START_IDLE_Nunchaku
+    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Actions:
+          - Animation: {Name: Nunchaku_Stance_Idle}
+          
+#########################
+#  - Name: STANCE_WIN_ROUND_Nunchaku
+#    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+#    Triggers:
+#      - Templates: [STANCE.WIN_ROUND]
+#        Actions:
+#          - Animation: {Name: Nunchaku_Stance_Win_Round}
+#
+#########################
+#  - Name: STANCE_FINISHING_ROUND_IDLE_Nunchaku
+#    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+#    Triggers:
+#      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+#        Actions:
+#          - Animation: {Name: Nunchaku_Stance_Win_Idle}
+#          
+####################################### LOW STANCE
+#  - Name: LOW_STANCE_Nunchaku
+#    Templates: [LOCK_SUBTYPE_NUNCHAKU]
+#    Triggers:
+#      - Templates: [LOW_STANCE.IN]
+#        Actions:
+#          - Animation: {Name: Nunchaku_Low_Stance_In}
+#
+#      - Templates: [LOW_STANCE.LOOP]
+#        Actions:
+#          - Animation: {Name: Nunchaku_Low_Stance_Idle}
+#
+#      - Templates: [LOW_STANCE.OUT]
+#        Actions:
+#          - Animation: {Name: Nunchaku_Low_Stance_Out}

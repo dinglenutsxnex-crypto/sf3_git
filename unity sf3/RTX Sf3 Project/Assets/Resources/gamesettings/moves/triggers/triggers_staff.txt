@@ -1,0 +1,204 @@
+TriggerSets:
+########################################## STAFF
+
+###################################### ATTACKS
+
+################################### BASIC ATTACK (O)
+  - Name: ATTACK_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Staff_Slash}
+            
+################################### DOUBLE ATTACK (O + O)
+  - Name: ATTACK_DOUBLE_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Staff_Double_Slash}
+
+################################### TRIPLE ATTACK (O + O)
+  - Name: ATTACK_TRIPLE_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [ATTACK.TRIPLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Staff_Triple_Slash}
+
+################################### BASIC ATTACK INSTEAD SUPER
+  - Name: ATTACK_Staff_Instead_Super_1
+    Templates: [LOCK_SUBTYPE_STAFF, LOCK_NOT_SUPER_WEAPON]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1]
+        Actions:
+          - Animation: {Name: Staff_Slash}
+
+################################### HEAVY ATTACK (Forward + O)
+  - Name: ATTACK_HEAVY_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Staff_Slash_Heavy}
+
+################################### UPPER ATTACK (Up + O)
+  - Name: ATTACK_UPPER_1_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Staff_Slash_Upper_1}
+
+  - Name: ATTACK_UPPER_2_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [ATTACK.UPPER_DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Staff_Slash_Upper_2}
+
+################################## SPINNING ATTACK (Backward + O)
+  - Name: ATTACK_SPINNING_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Staff_Slash_Spinning}
+
+################################### LOW ATTACK (Down + P)
+  - Name: ATTACK_LOW_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Staff_Slash_Low}
+
+################################### SUPER ATTACK (Forward + O + O)
+  - Name: ATTACK_SUPER_1_1_Staff
+    Templates: [LOCK_SUBTYPE_STAFF, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_STAFF_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Staff_Super_1_Slash_1}
+
+  - Name: ATTACK_SUPER_1_2_Staff
+    Templates: [LOCK_SUBTYPE_STAFF, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_STAFF_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Staff_Super_1_Slash_2}
+
+
+  - Name: ATTACK_SUPER_2_1_Staff
+    Templates: [LOCK_SUBTYPE_STAFF, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_STAFF_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Staff_Super_2_Slash_1}
+
+  - Name: ATTACK_SUPER_2_2_Staff
+    Templates: [LOCK_SUBTYPE_STAFF, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_STAFF_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Staff_Super_2_Slash_2}
+
+###################################### STANCES, MOVES etc.
+  - Name: STANCE_IDLE_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [STANCE.IDLE]
+        Actions:
+          - Animation: {Name: Staff_Idle}
+
+########################
+  - Name: STEP_FORWARD_Staff
+    Templates: [LOCK_SUBTYPE_STAFF, STEP_FORWARD]
+    Triggers:
+      - Actions:
+          - Animation: {Name: Staff_Step_Forward}
+
+  - Name: STEP_BACK_Staff
+    Templates: [LOCK_SUBTYPE_STAFF, STEP_BACK]
+    Triggers:
+      - Actions:
+          - Animation: {Name: Staff_Step_Back}
+
+########################
+  - Name: STANCE_START_BIRTH_Staff
+    Templates: [LOCK_SUBTYPE_STAFF, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Staff_Stance_Birth}
+
+  - Name: STANCE_START_BIRTH_Staff_Dojo
+    Templates: [LOCK_SUBTYPE_STAFF, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Staff_Idle}
+
+########################
+  - Name: STANCE_START_ROUND_PLAYER_Staff
+    Templates: [LOCK_SUBTYPE_STAFF, LOCK_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Actions:
+          - Animation: {Name: Staff_Stance_Start_Round}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Staff
+    Templates: [LOCK_SUBTYPE_STAFF, LOCK_NOT_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Actions:
+          - Animation: {Name: Staff_Stance_Start_Round}
+
+########################
+  - Name: STANCE_START_IDLE_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Actions:
+          - Animation: {Name: Staff_Stance_Idle}
+
+########################
+  - Name: STANCE_WIN_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [STANCE.WIN_ROUND]
+        Actions:
+          - Animation: {Name: Stance_Win_Staff}
+
+########################
+  - Name: STANCE_WIN_IDLE_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+        Actions:
+          - Animation: {Name: Stance_Win_Idle_Staff}
+
+###################################### LOW STANCE
+  - Name: LOW_STANCE_COMMON_Staff
+    Templates: [LOCK_SUBTYPE_STAFF]
+    Triggers:
+      - Templates: [LOW_STANCE.IN]
+        Actions:
+          - Animation: {Name: Low_Stance_Polearm_In}
+
+      - Templates: [LOW_STANCE.LOOP]
+        Actions:
+          - Animation: {Name: Low_Stance_Polearm_Loop}
+
+      - Templates: [LOW_STANCE.OUT]
+        Actions:
+          - Animation: {Name: Low_Stance_Polearm_Out}

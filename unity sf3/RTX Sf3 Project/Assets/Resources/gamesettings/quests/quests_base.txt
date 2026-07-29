@@ -1,0 +1,158 @@
+Files:
+  - Name: quests_tutorial
+  - Name: quests_dialogues
+  - Name: quests_dialogues_missions
+
+
+TriggerSets:
+###### LOCKS
+  - Name: LOCK_FIGHT
+    Type: Template
+    Locks: 
+      - Equal: {Value1: "?Module[].CurrentModule", Value2: "Fight"}
+
+  - Name: LOCK_NOT_FIGHT
+    Type: Template
+    Locks:
+      - Not:
+        - Equal: {Value1: "?Module[].CurrentModule", Value2: "Fight"}
+
+###### QUESTS
+
+  - Name: QUESTS
+    Triggers:
+      - Name: SESSION_START_COMMON
+        Priority: 100000
+        Unresumable: 1
+        Events:
+          - SessionStart
+        Conditions:
+          - Or:
+            - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "99"}
+            - Not:
+              - Equal: {Value1: "?GetUserVariable[TUTORIAL].Value", Value2: "1"}
+        Actions:
+          - QuestStartQueue
+
+      - Name: FIGHT_END_GO_TO_MAP
+        Priority: 100000
+        Unresumable: 1
+        Events:
+          - FightEnd
+        Conditions:
+          - Not:
+            - Equal: {Value1: "?GetUserVariable[TUTORIAL].Value", Value2: "1"}
+        Actions:
+          - GoToModule: {Module: Map, Type: Jump}
+
+      - Name: SET_DOJO_JUNE
+        Events:
+          - FightEnd: {ID: 50.1}
+        AllowInFight: 1
+        Actions:
+          - SetUserVariable: {Name: June_in_Dojo, Value: 1}
+          - SetDojo: {ID: 1.2}
+
+###### FEEDBACK
+
+      - Name: CBT_FIRST_FEEDBACK
+        Priority: -10000
+        Unresumable: 1
+        Events:
+          - FightEnd: {ID: 40.3, Result: Win}
+        Actions:
+          - Call: {ID: CBT_FEEDBACK_WINDOW}
+
+      - Name: CBT_LATER_FEEDBACK
+        Priority: -10000
+        Unresumable: 1
+        Events:
+          - FightEnd
+        Conditions:
+          - Greater: {Value1: "?GetUserVariable[CBT_FEEDBACK_WINDOW].Value", Value2: "0"}
+          - GreaterEqual: {Value1: "?GetTimeStamp[] - ?GetUserVariable[CBT_FEEDBACK_WINDOW].Value", Value2: "21600"}
+        Actions:
+          - Call: {ID: CBT_FEEDBACK_WINDOW}
+
+      - Name: CBT_FEEDBACK_WINDOW
+        Events:
+          - Call: {ID: CBT_FEEDBACK_WINDOW}
+        Unresumable: 1
+        Actions:
+          - SetUserVariable: {Name: CBT_FEEDBACK_WINDOW, Value: "?GetTimeStamp[]"}
+          - FeedbackDialog:
+                Checkboxes:
+                  - Alias: feedback_1
+                  - Alias: feedback_2
+                  - Alias: feedback_3
+                  - Alias: feedback_4
+                  - Alias: feedback_5
+
+#      - Name: SHOP_PRE_PURCHASE_COIN_NOT_ENOUGH
+#        Events:
+#          - PrePurchase: {Currency: Coin}
+#        Unresumable: 1
+#        Conditions:
+#          - Less: {Value1: "?GetUserCurrency[Coin]", Value2: "?PrePurchase[Coin]"}
+#        Actions:
+#          - Dialog:
+#             Type: TwoButton
+#             Content:
+#              Title:
+#                  Alias: CHAR_SARGE
+#              Images:
+#                - Sprite: Content/Avatars/man_Sarge
+#              Labels:
+#                - Alias: no_money_honey
+#              Buttons:
+#                - Alias: ok
+#
+#
+#      - Name: SHOP_PRE_PURCHASE_BONUS_NOT_ENOUGH
+#        Events:
+#          - PrePurchase: {Currency: Bonus}
+#        Unresumable: 1
+#        Conditions:
+#          - Less: {Value1: "?GetUserCurrency[Bonus]", Value2: "?PrePurchase[Bonus]"}
+#        Actions:
+#          - Dialog:
+#             Type: TwoButton
+#             Content:
+#              Title:
+#                  Alias: CHAR_SARGE
+#              Images:
+#                - Sprite: Content/Avatars/man_Sarge
+#              Labels:
+#                - Alias: no_money_honey
+#              Buttons:
+#                - Alias: ok
+#
+#
+#      - Name: SHOP_PRE_PURCHASE_COIN_ENOUGH
+#        Events:
+#          - PrePurchase: {Currency: Coin}
+#        Unresumable: 1
+#        Conditions:
+#          - GreaterEqual: {Value1: "?GetUserCurrency[Coin]", Value2: "?PrePurchase[Coin]"}
+#          - Not:
+#            - Equal: {Value1: "?GetUserVariable[STATE_tutorial].Value", Value2: "4"}
+#        Actions:
+#          - Dialog:
+#             Type: TwoButton
+#             Content:
+#              Title:
+#                  Alias: CHAR_SARGE
+#              Images:
+#                - Sprite: Content/Avatars/man_Sarge
+#              Labels:
+#                - Alias: prepurchase_confirmation
+#              Buttons:
+#                - Alias: not_ok
+#                - Alias: buy
+#                  CallID: COMPLETE_PURCHASE
+#
+#      - Name: SHOP_COMPLETE_PURCHASE
+#        Events:
+#          - Call: {ID: COMPLETE_PURCHASE}
+#        Actions:
+#          - CompletePurchase: {}

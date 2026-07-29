@@ -1,0 +1,2145 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# TWOHANDED_SWORD #################################################
+  - Animation: Twohanded_Sword_Slash
+    FileName: twohanded_sword_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_BASIC
+      - WEAPON
+      - TWOHANDED_SWORD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 34
+      - Name: Blocking
+        Start: 35
+      - Name: Transitional
+        End: 20
+      - Name: Throwable
+        Start: 29
+      - Name: Perk_Parry
+        Start: 10
+        End: 19
+      - Type: Attack
+        Start: 16
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: -3000
+        Slowmo:
+            Start: 10
+            End: 19
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 270
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 12
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Twohanded_Sword_Slash_Double
+    FileName: twohanded_sword_double_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_DOUBLE
+      - WEAPON
+      - TWOHANDED_SWORD
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Twohanded_Sword_Slash
+    Intervals:
+      - Name: Uninterrupt
+        End: 50
+      - Name: Blocking
+        Start: 51
+      - Name: Throwable
+        Start: 45
+      - Name: Perk_Parry
+        Start: 10
+        End: 19
+      - Name: Perk_Parry
+        Start: 23
+        End: 32
+      - Type: Attack
+        Start: 16
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: -3000
+        Slowmo:
+            Start: 10
+            End: 19
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 270
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 29
+        End: 32
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 25000
+            Y: -3000
+        Slowmo:
+            Start: 25
+            End: 32
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 12
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 25
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Twohanded_Sword_Slash_Low
+    FileName: twohanded_sword_low_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_LOW
+      - WEAPON
+      - TWOHANDED_SWORD
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 32
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 27
+      - Name: Perk_Parry
+        Start: 11
+        End: 19
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 7000
+        Slowmo:
+            Start: 12
+            End: 19
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Low_Short
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+
+  - Animation: Twohanded_Sword_Slash_Upper
+    FileName: twohanded_sword_upper_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_UPPER
+      - WEAPON
+      - TWOHANDED_SWORD
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 37
+      - Name: Blocking
+        Start: 38
+      - Name: Throwable
+        Start: 32
+      - Name: Perk_Parry
+        Start: 9
+        End: 19
+      - Type: Attack
+        Start: 15
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 24000
+            Y: 17000
+        Slowmo:
+            Start: 10
+            End: 19
+            Distance: 200
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 200
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 8
+        
+
+  - Animation: Twohanded_Sword_Slash_Heavy
+    FileName: twohanded_sword_heavy_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_HEAVY
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 44
+      - Name: Blocking
+        Start: 45
+      - Name: Throwable
+        Start: 39
+      - Name: Perk_Parry
+        Start: 13
+        End: 22
+      - Type: Attack
+        Start: 18
+        End: 22
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 25000
+            Y: 12000
+        Slowmo:
+            Start: 13
+            End: 22
+            Distance: 420
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.13
+        Block:
+            Distance: 420
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 14
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 8
+
+  - Animation: Twohanded_Sword_Super_1_Slash_1
+    FileName: twohanded_sword_super_1_slash_1.bin
+    BlendingFrames: 2
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+      - SUPER_TWOHANDED_SWORD_1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 59
+      - Name: Blocking
+        Start: 60
+      - Name: Throwable
+        Start: 54
+      - Name: Transitional
+        End: 35
+      - Name: Perk_Parry
+        Start: 16
+        End: 24
+      - Type: Attack
+        Start: 22
+        End: 24
+        HitTags:
+          - Hit_Chest_Heavy_Slow_39
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 15000
+        Slowmo:
+            Start: 15
+            End: 24
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 18
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 12
+
+  - Animation: Twohanded_Sword_Super_1_Slash_2
+    FileName: twohanded_sword_super_1_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+      - SUPER_TWOHANDED_SWORD_1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Twohanded_Sword_Super_1_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 78
+      - Name: Blocking
+        Start: 79
+      - Name: Throwable
+        Start: 75
+      - Name: Unstable
+        Start: 44
+        End: 50
+      - Name: Perk_Parry
+        Start: 16
+        End: 24
+      - Name: Perk_Parry
+        Start: 46
+        End: 56
+      - Type: Attack
+        Start: 22
+        End: 24
+        HitTags:
+          - Hit_Chest_Heavy_Slow_39
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 15000
+        Slowmo:
+            Start: 15
+            End: 24
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+      - Type: Attack
+        Start: 52
+        End: 55
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: -4000
+        Slowmo:
+            Start: 46
+            End: 55
+            Distance: 330
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.1
+        Block:
+            Distance: 330
+            Name:
+              - Block_High_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 18
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 46
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 12
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 40
+
+  - Animation: Twohanded_Sword_Super_2_Slash_1
+    FileName: twohanded_sword_super_2_slash_1.bin
+#    BlendingFrames: 2
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+      - SUPER_TWOHANDED_SWORD_2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 41
+      - Name: Blocking
+        Start: 42
+      - Name: Transitional
+        End: 20
+      - Name: Throwable
+        Start: 36
+      - Name: Perk_Parry
+        Start: 12
+        End: 21
+      - Type: Attack
+        Start: 18
+        End: 21
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 12
+            End: 21
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 17
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 11
+
+  - Animation: Twohanded_Sword_Super_2_Slash_2
+    FileName: twohanded_sword_super_2_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+      - SUPER_TWOHANDED_SWORD_2
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Twohanded_Sword_Super_2_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 66
+      - Name: Blocking
+        Start: 67
+      - Name: Unstable
+        Start: 26
+        End: 34
+      - Name: Throwable
+        Start: 61
+      - Name: Perk_Parry
+        Start: 12
+        End: 21
+      - Name: Perk_Parry
+        Start: 33
+        End: 40
+      - Type: Attack
+        Start: 18
+        End: 21
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 12
+            End: 21
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+      - Type: Attack
+        Start: 39
+        End: 42
+        HitTags:
+          - Hit_Overhead_Heavy
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: -4000
+        Slowmo:
+            Start: 33
+            End: 40
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 17
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 11
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 33
+
+  - Animation: Twohanded_Sword_Super_3_Slash_1
+    FileName: twohanded_sword_super_3_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+      - SUPER_TWOHANDED_SWORD_3
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 40
+      - Name: Blocking
+        Start: 41
+      - Name: Transitional
+        End: 21
+      - Name: Throwable
+        Start: 35
+      - Name: Perk_Parry
+        Start: 11
+        End: 20
+      - Type: Attack
+        Start: 17
+        End: 20
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 16000
+            Y: 12000
+        Slowmo:
+            Start: 11
+            End: 20
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 270
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+
+  - Animation: Twohanded_Sword_Super_3_Slash_2
+    FileName: twohanded_sword_super_3_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+      - SUPER_TWOHANDED_SWORD_3
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Twohanded_Sword_Super_3_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 104
+      - Name: Blocking
+        Start: 105
+      - Name: Throwable
+        Start: 98
+      - Name: Perk_Parry
+        Start: 11
+        End: 20
+      - Name: Perk_Parry
+        Start: 44
+        End: 53
+      - Name: Perk_Parry
+        Start: 59
+        End: 67
+      - Type: Attack
+        Start: 17
+        End: 20
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 16000
+            Y: 12000
+        Slowmo:
+            Start: 11
+            End: 20
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 270
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 50
+        End: 53
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 44
+            End: 53
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 65
+        End: 67
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 59
+            End: 67
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_High_Heavy
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 11
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 41
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 59
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+        
+  - Animation: Twohanded_Sword_Super_4_Slash_1
+    FileName: twohanded_sword_super_4_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+      - SUPER_TWOHANDED_SWORD_4
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 46
+      - Name: Blocking
+        Start: 47
+      - Name: Transitional
+        End: 19
+      - Name: Throwable
+        Start: 47
+      - Name: Perk_Parry
+        Start: 8
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 8
+            End: 17
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 270
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 10
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 26
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 61
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+
+  - Animation: Twohanded_Sword_Super_4_Slash_2
+    FileName: twohanded_sword_super_4_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+      - SUPER_TWOHANDED_SWORD_4
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Twohanded_Sword_Super_4_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 60
+      - Name: Blocking
+        Start: 61
+      - Name: Transitional
+        End: 42
+      - Name: Throwable
+        Start: 61
+      - Name: Perk_Parry
+        Start: 8
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 8
+            End: 17
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 270
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 31
+        End: 33
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 25
+            End: 33
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 270
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 10
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 26
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 61
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+
+  - Animation: Twohanded_Sword_Super_4_Slash_3
+    FileName: twohanded_sword_super_4_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_3
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+      - SUPER_TWOHANDED_SWORD_4
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Twohanded_Sword_Super_4_Slash_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 97
+      - Name: Blocking
+        Start: 98
+      - Name: Transitional
+        End: 20
+      - Name: Throwable
+        Start: 94
+      - Name: Perk_Parry
+        Start: 8
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 8
+            End: 17
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 270
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 31
+        End: 33
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 25
+            End: 33
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 270
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 66
+        End: 68
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 5000
+        Slowmo:
+            Start: 61
+            End: 68
+            Distance: 270
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 270
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 10
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 26
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 61
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 7
+
+  - Animation: Twohanded_Sword_Slash_Spinning_1
+    FileName: twohanded_sword_spinning_slash1.bin
+    BlendingFrames: 2
+    Groups:
+      - ATTACK
+      - ATTACK_SPINNING
+      - WEAPON
+      - TWOHANDED_SWORD
+      - HEAVY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 43
+      - Name: Blocking
+        Start: 44
+      - Name: Transitional
+        End: 26
+      - Name: Throwable
+        Start: 38
+      - Name: Perk_Parry
+        Start: 14
+        End: 23
+      - Type: Attack
+        Start: 20
+        End: 23
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 14
+            End: 23
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 16
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Twohanded_Sword_Slash_Spinning_2
+    FileName: twohanded_sword_spinning_slash2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SPINNING_DOUBLE
+      - WEAPON
+      - TWOHANDED_SWORD
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Twohanded_Sword_Slash_Spinning_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 60
+      - Name: Blocking
+        Start: 61
+      - Name: Throwable
+        Start: 55
+      - Name: Perk_Parry
+        Start: 14
+        End: 23
+      - Name: Perk_Parry
+        Start: 33
+        End: 42
+      - Type: Attack
+        Start: 20
+        End: 23
+        HitTags:
+          - Hit_Stomach
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_l
+        Impulse:
+            X: 24000
+            Y: 10000
+        Slowmo:
+            Start: 14
+            End: 23
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Low
+#      - Type: Attack
+#        Start: 30
+#        End: 32
+#        HitTags:
+#          - Hit_Head_Short
+#        AttackingParts:
+#          - w_twohanded_sword_Attacking_Edge_l
+#        Impulse:
+#            X: 20000
+#            Y: 10000
+#        Slowmo:
+#            Start: 14
+#            End: 23
+#            Distance: 300
+#        Damage:
+#            Attack: WeaponDamage
+#            BaseDamage: 0.01
+#        Block:
+#            Distance: 200
+#            Name:
+#              - Block_High_Short
+      - Type: Attack
+        Start: 39
+        End: 42
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - w_twohanded_sword_Attacking_Edge_l
+        Impulse:
+            X: 21000
+            Y: 11000
+        Slowmo:
+            Start: 33
+            End: 42
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 16
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 33
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 10
+
+  - Animation: Twohanded_Sword_Slash_Short
+    FileName: twohanded_sword_short_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SHORT
+      - WEAPON
+      - TWOHANDED_SWORD
+      - SHORT
+    RepulsionScale:
+        X: 0.7
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 22
+      - Name: Blocking
+        Start: 23
+      - Name: Throwable
+        Start: 17
+      - Name: Perk_Parry
+        Start: 4
+        End: 12
+      - Type: Attack
+        Start: 10
+        End: 12
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Hand_left
+          - Forearm_left
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 6
+            End: 12
+            Distance: 110
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 110
+            Name:
+              - Block_High_Short
+    Sounds:
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 4
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 2
+
+  - Animation: Twohanded_Sword_Idle
+    FileName: twohanded_sword_idle.bin
+    Groups:
+      - STANCE_IDLE
+    RepulsionScale:
+        X: 0.9
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Twohanded_Sword_Step_Forward
+    FileName: twohanded_sword_step_forward.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_FORWARD
+    RepulsionScale:
+        X: 0.9
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+          - step/stone/9_Footsteps_Stone_Surface_V1
+          - step/stone/9_Footsteps_Stone_Surface_V2
+          - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+          - step/Wood/8_Footsteps_Wood_Surface_V3
+          - step/Wood/8_Footsteps_Wood_Surface_V7
+          - step/Wood/8_Footsteps_Wood_Surface_V9
+          - step/Wood/8_Footsteps_Wood_Surface_V10
+          - step/Wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+  - Animation: Twohanded_Sword_Step_Back
+    FileName: twohanded_sword_step_back.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_BACK
+    RepulsionScale:
+        X: 0.9
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+          - step/stone/9_Footsteps_Stone_Surface_V1
+          - step/stone/9_Footsteps_Stone_Surface_V2
+          - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+          - step/Wood/8_Footsteps_Wood_Surface_V3
+          - step/Wood/8_Footsteps_Wood_Surface_V7
+          - step/Wood/8_Footsteps_Wood_Surface_V9
+          - step/Wood/8_Footsteps_Wood_Surface_V10
+          - step/Wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+  - Animation: Twohanded_Sword_Stance_Start_Birth
+    FileName: twohanded_sword_stance_birth.bin
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Uninterrupt
+    Sounds:
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Twohanded_Sword_Stance_Start_Round
+    FileName: twohanded_sword_stance.bin
+    EndFrame: 52
+    EndsStage:
+      - RoundStart
+    Groups:
+      - STANCE_START_ROUND
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 20
+
+  - Animation: Twohanded_Sword_Stance_Start_Idle
+    FileName: twohanded_sword_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+#####################
+  - Animation: Twohanded_Sword_Stance_Win_Round
+    FileName: twohanded_sword_win_stance.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - STANCE_WIN_POSE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    EndsStage:
+      - RoundFightEnd
+    Intervals:
+      - Name: Uninterrupt
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V2_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V3_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V12_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V17_bip
+          - whoosh/medium/8_Short_Whooshes_Of_Medium_Weapon_V19_bip
+        Frame: 10
+      - Floor:
+          Stone:
+          - strike/steel/4_Metallic_Weapon_Hit_V2
+          Wood:
+          - strike/wood/heavy/2_Wood_Hits_A_V19_bip
+        Frame: 50
+
+
+  - Animation: Twohanded_Sword_Stance_Win_Idle
+    FileName: twohanded_sword_win_stance_idle.bin
+    Groups:
+      - STANCE_WIN_IDLE
+    Intervals:
+      - Name: Uninterrupt
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+
+############################################### SPECIAL
+
+  - Animation: Twohanded_Sword_Step_Forward_Tutorial
+    FileName: twohanded_sword_step_forward.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_FORWARD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+      - Name: Uninterrupt
+        End: 13
+    Sounds:
+      - Floor:
+          Stone:
+          - step/stone/9_Footsteps_Stone_Surface_V1
+          - step/stone/9_Footsteps_Stone_Surface_V2
+          - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+          - step/Wood/8_Footsteps_Wood_Surface_V3
+          - step/Wood/8_Footsteps_Wood_Surface_V7
+          - step/Wood/8_Footsteps_Wood_Surface_V9
+          - step/Wood/8_Footsteps_Wood_Surface_V10
+          - step/Wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10

@@ -1,0 +1,368 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# KNIVES #################################################
+################################### BASIC ATTACK (O)
+  - Animation: Knives_Slash
+    FileName: knives_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_BASIC
+      - WEAPON
+      - KNIVES
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Transitional_Delay
+        End: 3
+      - Name: Uninterrupt
+        End: 32
+      - Name: Blocking
+        Start: 33
+      - Name: Throwable
+        Start: 33
+      - Name: Transitional
+        End: 25
+      - Name: Riposte
+        End: 6
+      - Name: Perk_Parry
+        Start: 11
+        End: 17
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Knife_Attacking_Edge_r
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 13
+            End: 17
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 10
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+################################### DOUBLE ATTACK (O + O)
+  - Animation: Knives_Slash_Double
+    FileName: knives_double_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_DOUBLE
+      - WEAPON
+      - KNIVES
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Knives_Slash
+    Intervals:
+      - Name: Uninterrupt
+        End: 50
+      - Name: Blocking
+        Start: 51
+      - Name: Throwable
+        Start: 51
+      - Name: Transitional
+        Start: 30
+        End: 45
+      - Name: Riposte
+        End: 6
+      - Name: Perk_Parry
+        Start: 11
+        End: 17
+      - Name: Perk_Parry
+        Start: 26
+        End: 32
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Knife_Attacking_Edge_r
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 13
+            End: 17
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 30
+        End: 32
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Knife_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 28
+            End: 32
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 10
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 28
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4
+
+################################### TRIPLE ATTACK (O + O + O)
+  - Animation: Knives_Slash_Triple
+    FileName: knives_triple_slash.bin
+    Groups:
+      - ATTACK
+      - ATTACK_TRIPLE
+      - WEAPON
+      - KNIVES
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Knives_Slash_Double
+    Intervals:
+      - Name: Uninterrupt
+        End: 70
+      - Name: Blocking
+        Start: 71
+      - Name: Throwable
+        Start: 71
+      - Name: Riposte
+        End: 6
+      - Name: Perk_Parry
+        Start: 11
+        End: 17
+      - Name: Perk_Parry
+        Start: 26
+        End: 32
+      - Name: Perk_Parry
+        Start: 45
+        End: 51
+      - Type: Attack
+        Start: 15
+        End: 17
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Knife_Attacking_Edge_r
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 13
+            End: 17
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 30
+        End: 32
+        HitTags:
+          - Hit_Stomach_Short
+        AttackingParts:
+          - Knife_Attacking_Edge_r
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 28
+            End: 32
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 49
+        End: 51
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - Knife_Attacking_Edge_r
+          - Knife_Attacking_Edge_l
+        Impulse:
+            X: 12000
+            Y: 22000
+        Slowmo:
+            Start: 47
+            End: 51
+            Distance: 250
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.09
+        Block:
+            Distance: 250
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 10
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 28
+      - Common:
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V6_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V10_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V16_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V17_bip
+          - whoosh/light/8_Short_Whooshes_Of_Light_Weapon_V21_bip
+        Frame: 47
+      - Gender:
+          Male:
+            - voice/attack/light/m/m_light_attack_1
+            - voice/attack/light/m/m_light_attack_2
+            - voice/attack/light/m/m_light_attack_3
+            - voice/attack/light/m/m_light_attack_4
+            - voice/attack/light/m/m_light_attack_5
+          Female:
+            - voice/attack/light/f/f_light_attack_1
+            - voice/attack/light/f/f_light_attack_2
+            - voice/attack/light/f/f_light_attack_3
+            - voice/attack/light/f/f_light_attack_4
+            - voice/attack/light/f/f_light_attack_5
+        Frame: 4

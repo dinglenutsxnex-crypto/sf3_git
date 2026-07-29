@@ -1,0 +1,2761 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+# ################################################# NUNCHAKU #################################################
+  - Animation: Nunchaku_Slash
+    FileName: nunchaku_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_BASIC
+      - WEAPON
+      - NUNCHAKU
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 45
+      - Name: Blocking
+        Start: 46
+      - Name: Throwable
+        Start: 40
+      - Name: Transitional
+        End: 25
+      - Name: Perk_Parry
+        Start: 8
+        End: 25
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 23
+        End: 25
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 17
+            End: 25
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 6
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 13
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 18
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 29
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Slash_Double
+    FileName: nunchaku_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_DOUBLE
+      - WEAPON
+      - NUNCHAKU
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Nunchaku_Slash
+    Intervals:
+      - Name: Uninterrupt
+        End: 59
+      - Name: Blocking
+        Start: 60
+      - Name: Throwable
+        Start: 54
+      - Name: Perk_Parry
+        Start: 8
+        End: 25
+      - Name: Perk_Parry
+        Start: 30
+        End: 38
+      - Type: Attack
+        Start: 14
+        End: 16
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 15000
+            Y: 8000
+        Slowmo:
+            Start: 8
+            End: 16
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 23
+        End: 25
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 17
+            End: 25
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 36
+        End: 38
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 30
+            End: 38
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 6
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 13
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 18
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 30
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 39
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Slash_Heavy
+    FileName: nunchaku_heavy_slash.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - ATTACK
+      - ATTACK_HEAVY
+      - WEAPON
+      - NUNCHAKU
+      - HEAVY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 64
+      - Name: Blocking
+        Start: 65
+      - Name: Throwable
+        Start: 59
+      - Name: Perk_Parry
+        Start: 29
+        End: 36
+      - Type: Attack
+        Start: 34
+        End: 36
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 25000
+            Y: 8000
+        Slowmo:
+            Start: 29
+            End: 36
+            Distance: 320
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.22
+        Block:
+            Distance: 320
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 3
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 15
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 32
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 40
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 55
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 28
+
+  - Animation: Nunchaku_Slash_Low
+    FileName: nunchaku_low_slash.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - ATTACK
+      - ATTACK_LOW
+      - WEAPON
+      - NUNCHAKU
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 60
+      - Name: Blocking
+        Start: 61
+      - Name: Throwable
+        Start: 55
+      - Name: Perk_Parry
+        Start: 5
+        End: 13
+      - Name: Perk_Parry
+        Start: 24
+        End: 32
+      - Type: Attack
+        Start: 11
+        End: 13
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 16000
+            Y: 4000
+        Slowmo:
+            Start: 8
+            End: 13
+            Distance: 230
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 30
+        End: 32
+        HitTags:
+          - Hit_Legs
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_l
+          - Nunchaku_Attacking_Edge_2_l
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_left
+          - Forearm_left
+        Material: nunchaku
+        Impulse:
+            X: 16000
+            Y: 6000
+        Slowmo:
+            Start: 24
+            End: 32
+            Distance: 280
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 280
+            Name:
+              - Block_Low
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 3
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 13
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 26
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 32
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 45
+      - Gender:
+          Male:
+            - voice/attack/heavy/m/m_heavy_attack_1
+            - voice/attack/heavy/m/m_heavy_attack_4
+            - voice/attack/heavy/m/m_heavy_attack_5
+            - voice/attack/heavy/m/m_heavy_attack_6
+            - voice/attack/heavy/m/m_heavy_attack_7
+          Female:
+            - voice/attack/heavy/f/f_heavy_attack_1
+            - voice/attack/heavy/f/f_heavy_attack_2
+            - voice/attack/heavy/f/f_heavy_attack_3
+            - voice/attack/heavy/f/f_heavy_attack_4
+            - voice/attack/heavy/f/f_heavy_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Slash_Upper
+    FileName: nunchaku_upper_slash.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Groups:
+      - ATTACK
+      - ATTACK_UPPER
+      - WEAPON
+      - NUNCHAKU
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 49
+      - Name: Unstable
+        Start: 23
+        End: 32
+      - Name: Blocking
+        Start: 50
+      - Name: Throwable
+        Start: 44
+      - Name: Perk_Parry
+        Start: 3
+        End: 13
+      - Name: Perk_Parry
+        Start: 24
+        End: 32
+      - Type: Attack
+        Start: 9
+        End: 11
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_l
+          - Nunchaku_Attacking_Edge_2_l
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 12000
+            Y: 4000
+        Slowmo:
+            Start: 3
+            End: 11
+            Distance: 230
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 230
+            Name:
+              - Block_Overhead
+      - Type: Attack
+        Start: 23
+        End: 24
+        HitTags:
+          - Hit_Chest_Heavy
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_l
+          - Nunchaku_Attacking_Edge_2_l
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_left
+          - Forearm_left
+        Material: nunchaku
+        Impulse:
+            X: 18000
+            Y: 8000
+        Slowmo:
+            Start: 24
+            End: 32
+            Distance: 230
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 230
+            Name:
+              - Block_Middle_Heavy
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 3
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 14
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 22
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 35
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Super_1_Slash_1
+    FileName: nunchaku_super_1_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - NUNCHAKU
+      - SUPER_NUNCHAKU_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 30
+      - Name: Blocking
+        Start: 31
+      - Name: Transitional
+        End: 13
+      - Name: Throwable
+        Start: 23
+      - Name: Perk_Parry
+        Start: 4
+        End: 11
+      - Type: Attack
+        Start: 10
+        End: 11
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 5
+            End: 11
+            Distance: 280
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 280
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 3
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 12
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Super_1_Slash_2
+    FileName: nunchaku_super_1_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - NUNCHAKU
+      - SUPER_NUNCHAKU_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Nunchaku_Super_1_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 54
+      - Name: Blocking
+        Start: 55
+      - Name: Throwable
+        Start: 49
+      - Name: Transitional
+        End: 39
+      - Name: Perk_Parry
+        Start: 4
+        End: 11
+      - Name: Perk_Parry
+        Start: 19
+        End: 27
+      - Name: Perk_Parry
+        Start: 30
+        End: 38
+      - Type: Attack
+        Start: 10
+        End: 11
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 17000
+            Y: 8000
+        Slowmo:
+            Start: 5
+            End: 11
+            Distance: 280
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 280
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 26
+        End: 27
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 20
+            End: 27
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 36
+        End: 38
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 30
+            End: 38
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 3
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 12
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 22
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 30
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 38
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Super_1_Slash_3
+    FileName: nunchaku_super_1_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_3
+      - WEAPON
+      - NUNCHAKU
+      - SUPER_NUNCHAKU_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Nunchaku_Super_1_Slash_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 75
+      - Name: Blocking
+        Start: 76
+      - Name: Throwable
+        Start: 70
+      - Name: Transitional
+        End: 58
+      - Name: Unstable
+        Start: 52
+        End: 62
+      - Name: Perk_Parry
+        Start: 4
+        End: 11
+      - Name: Perk_Parry
+        Start: 19
+        End: 27
+      - Name: Perk_Parry
+        Start: 30
+        End: 38
+      - Name: Perk_Parry
+        Start: 48
+        End: 57
+      - Type: Attack
+        Start: 10
+        End: 11
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 17000
+            Y: 8000
+        Slowmo:
+            Start: 5
+            End: 11
+            Distance: 280
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 280
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 26
+        End: 27
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 20
+            End: 27
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 36
+        End: 38
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 18000
+            Y: 8000
+        Slowmo:
+            Start: 30
+            End: 38
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 54
+        End: 57
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Material: flesh
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 48
+            End: 57
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 3
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 12
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 22
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 30
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 39
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 47
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 58
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 67
+
+  - Animation: Nunchaku_Super_1_Slash_4
+    FileName: nunchaku_super_1_slash_4.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_4
+      - WEAPON
+      - NUNCHAKU
+      - SUPER_NUNCHAKU_1
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Nunchaku_Super_1_Slash_3
+    Intervals:
+      - Name: Uninterrupt
+        End: 96
+      - Name: Blocking
+        Start: 98
+      - Name: Unstable
+        Start: 52
+        End: 62
+      - Name: Unstable
+        Start: 67
+        End: 76
+      - Name: Throwable
+        Start: 91
+      - Name: Perk_Parry
+        Start: 4
+        End: 11
+      - Name: Perk_Parry
+        Start: 19
+        End: 27
+      - Name: Perk_Parry
+        Start: 30
+        End: 38
+      - Name: Perk_Parry
+        Start: 48
+        End: 57
+      - Name: Perk_Parry
+        Start: 78
+        End: 76
+      - Type: Attack
+        Start: 10
+        End: 11
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 17000
+            Y: 8000
+        Slowmo:
+            Start: 5
+            End: 11
+            Distance: 280
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 280
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 26
+        End: 27
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 20
+            End: 27
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 36
+        End: 38
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 18000
+            Y: 8000
+        Slowmo:
+            Start: 30
+            End: 38
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 54
+        End: 57
+        HitTags:
+          - Hit_Head
+        AttackingParts:
+          - Thigh_left
+          - Leg_left
+          - Foot_left
+        Material: flesh
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 48
+            End: 57
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_High
+      - Type: Attack
+        Start: 74
+        End: 76
+        HitTags:
+          - Hit_Overhead
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 17000
+            Y: 5000
+        Slowmo:
+            Start: 68
+            End: 76
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.06
+        Block:
+            Distance: 300
+            Name:
+              - Block_Overhead
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 3
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 12
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 22
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 30
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 39
+      - Common:
+          - whoosh/fists/light/7_Hand_Whooshes_V1_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V4_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V14_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V30_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V34_bip
+          - whoosh/fists/light/7_Hand_Whooshes_V35_bip
+        Frame: 47
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 58
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 68
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 78
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 90
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Super_2_Slash_1
+    FileName: nunchaku_super_2_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_1
+      - WEAPON
+      - NUNCHAKU
+      - SUPER_NUNCHAKU_2
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 45
+      - Name: Blocking
+        Start: 46
+      - Name: Transitional
+        End: 19
+      - Name: Throwable
+        Start: 40
+      - Name: Perk_Parry
+        Start: 11
+        End: 19
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_left
+          - Forearm_left
+        Material: nunchaku
+        Impulse:
+            X: 19000
+            Y: 11000
+        Slowmo:
+            Start: 11
+            End: 19
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 9
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 20
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 30
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 40
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 48
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Super_2_Slash_2
+    FileName: nunchaku_super_2_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_2
+      - WEAPON
+      - NUNCHAKU
+      - SUPER_NUNCHAKU_2
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Nunchaku_Super_2_Slash_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 63
+      - Name: Blocking
+        Start: 64
+      - Name: Throwable
+        Start: 58
+      - Name: Transitional
+        End: 44
+      - Name: Perk_Parry
+        Start: 11
+        End: 19
+      - Name: Perk_Parry
+        Start: 32
+        End: 40
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_left
+          - Forearm_left
+        Material: nunchaku
+        Impulse:
+            X: 19000
+            Y: 11000
+        Slowmo:
+            Start: 11
+            End: 19
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 38
+        End: 40
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 21000
+            Y: 5000
+        Slowmo:
+            Start: 32
+            End: 40
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Low_Short
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 9
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 20
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 32
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 41
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 50
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 60
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Super_2_Slash_3
+    FileName: nunchaku_super_2_slash_3.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_3
+      - WEAPON
+      - NUNCHAKU
+      - SUPER_NUNCHAKU_2
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Nunchaku_Super_2_Slash_2
+    Intervals:
+      - Name: Uninterrupt
+        End: 67
+      - Name: Blocking
+        Start: 68
+      - Name: Throwable
+        Start: 62
+      - Name: Transitional
+        End: 58
+      - Name: Perk_Parry
+        Start: 11
+        End: 19
+      - Name: Perk_Parry
+        Start: 32
+        End: 40
+      - Name: Perk_Parry
+        Start: 46
+        End: 54
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_left
+          - Forearm_left
+        Material: nunchaku
+        Impulse:
+            X: 19000
+            Y: 11000
+        Slowmo:
+            Start: 11
+            End: 19
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 38
+        End: 40
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 21000
+            Y: 5000
+        Slowmo:
+            Start: 32
+            End: 40
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Low_Short
+      - Type: Attack
+        Start: 52
+        End: 54
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 48
+            End: 57
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Short
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 9
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 20
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 32
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 41
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 47
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 57
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Super_2_Slash_4
+    FileName: nunchaku_super_2_slash_4.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SUPER_4
+      - WEAPON
+      - NUNCHAKU
+      - SUPER_NUNCHAKU_2
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    RepulsionScale:
+        X: 0.9
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Nunchaku_Super_2_Slash_3
+    Intervals:
+      - Name: Uninterrupt
+        End: 96
+      - Name: Blocking
+        Start: 97
+      - Name: Throwable
+        Start: 91
+      - Name: Perk_Parry
+        Start: 11
+        End: 19
+      - Name: Perk_Parry
+        Start: 32
+        End: 40
+      - Name: Perk_Parry
+        Start: 46
+        End: 54
+      - Name: Perk_Parry
+        Start: 61
+        End: 69
+      - Type: Attack
+        Start: 17
+        End: 19
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_left
+          - Forearm_left
+        Material: nunchaku
+        Impulse:
+            X: 19000
+            Y: 11000
+        Slowmo:
+            Start: 11
+            End: 19
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 38
+        End: 40
+        HitTags:
+          - Hit_Legs_Short
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 21000
+            Y: 5000
+        Slowmo:
+            Start: 32
+            End: 40
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Low_Short
+      - Type: Attack
+        Start: 52
+        End: 54
+        HitTags:
+          - Hit_Chest_Short
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 15000
+            Y: 5000
+        Slowmo:
+            Start: 46
+            End: 54
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Short
+      - Type: Attack
+        Start: 67
+        End: 69
+        HitTags:
+          - Hit_Overhead_Heavy
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 20000
+            Y: 9000
+        Slowmo:
+            Start: 61
+            End: 69
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.08
+        Block:
+            Distance: 300
+            Name:
+              - Block_Overhead_Heavy
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 9
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 20
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 32
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 41
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 47
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 58
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 68
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 78
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 90
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+################################################################## SUPER 2 OFF
+
+  - Animation: Nunchaku_Slash_Spinning_1
+    FileName: nunchaku_spinning_slash_1.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SPINNING
+      - WEAPON
+      - NUNCHAKU
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Uninterrupt
+        End: 34
+      - Name: Blocking
+        Start: 35
+      - Name: Throwable
+        Start: 29
+      - Name: Transitional
+        End: 14
+      - Name: Perk_Parry
+        Start: 5
+        End: 13
+      - Type: Attack
+        Start: 11
+        End: 13
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 17000
+            Y: 8000
+        Slowmo:
+            Start: 5
+            End: 13
+            Distance: 260
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 260
+            Name:
+              - Block_Middle
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 4
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 15
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 22
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 33
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+  - Animation: Nunchaku_Slash_Spinning_2
+    FileName: nunchaku_spinning_slash_2.bin
+    Groups:
+      - ATTACK
+      - ATTACK_SPINNING_DOUBLE
+      - WEAPON
+      - NUNCHAKU
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        ApplyTo: Bot
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Transitions:
+      - FrameShift: 0
+        Animations:
+          - Nunchaku_Slash_Spinning_1
+    Intervals:
+      - Name: Uninterrupt
+        End: 61
+      - Name: Blocking
+        Start: 62
+      - Name: Throwable
+        Start: 56
+      - Name: Unstable
+        Start: 25
+        End: 30
+      - Name: Perk_Parry
+        Start: 5
+        End: 13
+      - Name: Perk_Parry
+        Start: 24
+        End: 33
+      - Type: Attack
+        Start: 11
+        End: 13
+        HitTags:
+          - Hit_Chest
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 17000
+            Y: 8000
+        Slowmo:
+            Start: 5
+            End: 13
+            Distance: 260
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.05
+        Block:
+            Distance: 260
+            Name:
+              - Block_Middle
+      - Type: Attack
+        Start: 30
+        End: 33
+        HitTags:
+          - Hit_Head_Heavy
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 22000
+            Y: 10000
+        Slowmo:
+            Start: 24
+            End: 33
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.07
+        Block:
+            Distance: 300
+            Name:
+              - Block_Middle_Heavy
+      - Type: Attack
+        Start: 47
+        End: 49
+        HitTags:
+          - Hit_Head_Short
+        AttackingParts:
+          - Nunchaku_Attacking_Edge_1_r
+          - Nunchaku_Attacking_Edge_2_r
+          - Hand_right
+          - Forearm_right
+        Material: nunchaku
+        Impulse:
+            X: 18000
+            Y: 9000
+        Slowmo:
+            Start: 30
+            End: 38
+            Distance: 300
+        Damage:
+            Attack: WeaponDamage
+            BaseDamage: 0.03
+        Block:
+            Distance: 300
+            Name:
+              - Block_High_Short
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 4
+#      - Common:
+#          - whoosh/nunchaku/nunchak_light_1
+#          - whoosh/nunchaku/nunchak_light_2
+#          - whoosh/nunchaku/nunchak_light_3
+#        Frame: 16
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 18
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 30
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 40
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 45
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 54
+      - Gender:
+          Male:
+          - voice/attack/light/m/m_light_attack_1
+          - voice/attack/light/m/m_light_attack_2
+          - voice/attack/light/m/m_light_attack_3
+          - voice/attack/light/m/m_light_attack_4
+          - voice/attack/light/m/m_light_attack_5
+          Female:
+          - voice/attack/light/f/f_light_attack_1
+          - voice/attack/light/f/f_light_attack_2
+          - voice/attack/light/f/f_light_attack_3
+          - voice/attack/light/f/f_light_attack_4
+          - voice/attack/light/f/f_light_attack_5
+        Frame: 5
+
+############## STEPS
+  - Animation: Nunchaku_Step_Forward
+    FileName: m_step_forward.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_FORWARD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+  - Animation: Nunchaku_Step_Back
+    FileName: m_step_back.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_BACK
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+        
+  - Animation: Nunchaku_Idle
+    FileName: m_idle.bin
+    Groups:
+      - STANCE_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+  - Animation: Nunchaku_Stance_Birth
+    FileName: nunchaku_idle.bin
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Looped: 1
+    Groups:
+      - STANCE_START_BIRTH
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+        Shift:
+            X: -50
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Object: Center
+
+  - Animation: Nunchaku_Stance_Start_Round
+    FileName: nunchaku_stance.bin
+    EndsStage:
+      - RoundStart
+    EndFrame: 77
+    Groups:
+      - STANCE_START_ROUND
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 6
+      - Common:
+          - whoosh/nunchaku/nunchak_hit_1
+          - whoosh/nunchaku/nunchak_hit_2
+          - whoosh/nunchaku/nunchak_hit_3
+        Frame: 15
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 30
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 45
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 54
+
+  - Animation: Nunchaku_Stance_Idle
+    FileName: nunchaku_stance_idle.bin
+    Groups:
+      - STANCE_START_IDLE
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Sounds:
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 1
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 15
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 25
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 35
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 50
+      - Common:
+          - whoosh/nunchaku/nunchak_light_low_1
+          - whoosh/nunchaku/nunchak_light_low_2
+          - whoosh/nunchaku/nunchak_light_low_3
+        Frame: 60
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 70
+      - Common:
+          - whoosh/nunchaku/nunchak_light_1
+          - whoosh/nunchaku/nunchak_light_2
+          - whoosh/nunchaku/nunchak_light_3
+        Frame: 80
+      #- Common:
+      #    - whoosh/nunchaku/nunchak_light_low_1
+      #    - whoosh/nunchaku/nunchak_light_low_2
+      #    - whoosh/nunchaku/nunchak_light_low_3
+      #  Frame: 70
+      #- Common:
+      #    - whoosh/nunchaku/nunchak_light_1
+      #    - whoosh/nunchaku/nunchak_light_2
+      #    - whoosh/nunchaku/nunchak_light_3
+      #  Frame: 80
+
+
+  - Animation: Nunchaku_Step_Forward_Weapon
+    FileName: nunchaku_step_forward.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_FORWARD
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+
+  - Animation: Nunchaku_Step_Back_Weapon
+    FileName: nunchaku_step_back.bin
+    Groups:
+      - MOVE
+      - STEP
+      - STEP_BACK
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 7
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    Sounds:
+      - Floor:
+          Stone:
+            - step/stone/9_Footsteps_Stone_Surface_V1
+            - step/stone/9_Footsteps_Stone_Surface_V2
+            - step/stone/9_Footsteps_Stone_Surface_V25
+          Wood:
+            - step/wood/8_Footsteps_Wood_Surface_V3
+            - step/wood/8_Footsteps_Wood_Surface_V7
+            - step/wood/8_Footsteps_Wood_Surface_V9
+            - step/wood/8_Footsteps_Wood_Surface_V10
+            - step/wood/8_Footsteps_Wood_Surface_V12
+        Frame: 10
+        
+  - Animation: Nunchaku_Idle_Weapon
+    FileName: nunchaku_idle.bin
+    Groups:
+      - STANCE_IDLE
+    WeaponSwitchFrames:
+      - Name: Main
+        Frame: 1
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Name: Blocking
+      - Name: Throwable
+    SetDirection:
+        From:
+            Player: Me
+            Object: Nodes
+            Part: pelvis
+        To:
+            Player: Enemy
+            Object: Nodes
+            Part: pelvis
+
+#########################################Stances_Round_Start
+#########################################Stance_Low

@@ -1,0 +1,380 @@
+TriggerSets:
+########################################## SWORDS
+
+###################################### ATTACKS
+
+################################### BASIC ATTACK (O)
+  - Name: ATTACK_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash}
+
+  - Name: ATTACK_Dual_Swords
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Dual_Swords_Slash}
+
+################################### DOUBLE ATTACK (O + O)
+  - Name: ATTACK_DOUBLE_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash_Double}
+
+  - Name: ATTACK_DOUBLE_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Swords_Slash_Double}
+
+################################### TRIPLE ATTACK (O + O + O)
+  - Name: ATTACK_TRIPLE_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [ATTACK.TRIPLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash_Triple}
+
+################################### QUADRUPLE ATTACK (O + O + O + O)
+  - Name: ATTACK_QUADRUPLE_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [ATTACK.QUADRUPLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash_Quadruple}
+
+################################### QUINTUPLE ATTACK (O + O + O + O + O)
+  - Name: ATTACK_QUINTUPLE_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [ATTACK.QUINTUPLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash_Quintuple}
+
+################################### BASIC ATTACK INSTEAD SUPER
+  - Name: ATTACK_Swords_Instead_Super_1
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_NOT_SUPER_WEAPON]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash}
+
+################################### BASIC ATTACK INSTEAD SUPER
+  - Name: ATTACK_Swords_Instead_Super_1_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_NOT_SUPER_WEAPON]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1]
+        Actions:
+          - Animation: {Name: Dual_Swords_Slash}
+
+################################### UPPER ATTACK (Up + O)
+  - Name: ATTACK_UPPER_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash_Upper}
+
+  - Name: ATTACK_UPPER_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Dual_Swords_Slash_Upper}
+
+################################### LOW ATTACK (Down + O)
+  - Name: ATTACK_LOW_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash_Low}
+
+  - Name: ATTACK_LOW_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Dual_Swords_Slash_Low}
+
+################################### HEAVY ATTACK (Forward + O)
+  - Name: ATTACK_HEAVY_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash_Heavy}
+
+  - Name: ATTACK_HEAVY_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Dual_Swords_Slash_Heavy}
+
+################################### SPINNING ATTACK (Backward + O)
+  - Name: ATTACK_SPINNING_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Slash_Spinning}
+
+
+  - Name: ATTACK_SPINNING_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Dual_Swords_Spinning_Slash}
+
+################################### SUPER ATTACK (Forward + O + O)
+########### SABERS SUPER_1 
+  - Name: ATTACK_SUPER_1_1_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_AGILE_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Super_1_Slash_1}
+
+  - Name: ATTACK_SUPER_1_2_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_AGILE_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Super_1_Slash_2}
+
+########### SABERS SUPER_2
+  - Name: ATTACK_SUPER_2_1_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_AGILE_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Super_2_Slash_1}
+
+  - Name: ATTACK_SUPER_2_2_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_AGILE_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Super_2_Slash_2}
+
+  - Name: ATTACK_SUPER_2_3_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_AGILE_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_3, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Super_2_Slash_3}
+
+########### SABERS SUPER_3
+  - Name: ATTACK_SUPER_3_1_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_AGILE_3"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Super_3_Slash_1}
+
+  - Name: ATTACK_SUPER_3_2_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_AGILE_3"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Super_3_Slash_2}
+
+  - Name: ATTACK_SUPER_3_3_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_AGILE_3"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_3, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Super_3_Slash_3}
+
+########### SUPER_1
+  - Name: ATTACK_SUPER_1_1_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_STRONG_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Swords_Slash_Super_1_1}
+
+  - Name: ATTACK_SUPER_1_2_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_STRONG_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Swords_Slash_Super_1_2}
+
+########### SUPER_2
+  - Name: ATTACK_SUPER_2_1_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_STRONG_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Swords_Slash_Super_2_1}
+
+  - Name: ATTACK_SUPER_2_2_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_STRONG_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Swords_Slash_Super_2_2}
+
+  - Name: ATTACK_SUPER_2_3_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_STRONG_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_3, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Swords_Slash_Super_2_3}
+
+########### SUPER_3
+  - Name: ATTACK_SUPER_3_1_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_STRONG_3"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Swords_Super_3_Slash_1}
+
+  - Name: ATTACK_SUPER_3_2_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SWORDS_STRONG_3"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Swords_Super_3_Slash_2}
+
+###################################### STANCES, MOVES etc.
+  - Name: STANCE_START_BIRTH_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Stance_Start_Birth}
+
+  - Name: STANCE_START_BIRTH_Swords_Dojo
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Stance_Idle}
+
+  - Name: STANCE_START_BIRTH_Dual_Swords
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Dual_Swords_Stance_Start_Birth}
+
+  - Name: STANCE_START_BIRTH_Swords_Strong_Dojo
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Stance_Idle}
+
+########################
+  - Name: STANCE_START_ROUND_PLAYER_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Stance_Start_Round}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS, LOCK_NOT_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Stance_Start_Round}
+
+  - Name: STANCE_START_ROUND_PLAYER_Dual_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Actions:
+          - Animation: {Name: Dual_Swords_Stance_Start_Round}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Dual_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS, LOCK_NOT_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Actions:
+          - Animation: {Name: Dual_Swords_Stance_Start_Round}
+
+########################
+  - Name: STANCE_START_IDLE_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Stance_Start_Idle}
+
+  - Name: STANCE_START_IDLE_Dual_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Actions:
+          - Animation: {Name: Dual_Swords_Stance_Start_Idle}
+
+########################
+  - Name: STANCE_WIN_ROUND_Dual_Sabers
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [STANCE.WIN_ROUND]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Stance_Win_Round}
+
+  - Name: STANCE_WIN_ROUND_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Triggers:
+      - Templates: [STANCE.WIN_ROUND]
+        Actions:
+          - Animation: {Name: Dual_Swords_Stance_Win_Round}
+
+########################
+  - Name: DUAL_SABERS_STANCE_WIN_ROUND_IDLE
+    Templates: [LOCK_SUBTYPE_SABERS]
+    Triggers:
+      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+        Actions:
+          - Animation: {Name: Dual_Sabers_Stance_Win_Idle}
+
+  - Name: STANCE_WIN_ROUND_IDLE_Swords_Strong
+    Templates: [LOCK_SUBTYPE_SWORDS]
+    Triggers:
+      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+        Actions:
+          - Animation: {Name: Dual_Swords_Stance_Win_Round_Idle}

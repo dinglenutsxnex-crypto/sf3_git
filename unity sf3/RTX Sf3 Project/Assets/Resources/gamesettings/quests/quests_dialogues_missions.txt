@@ -1,0 +1,1290 @@
+TriggerSets:
+
+######################################################################################################################################################
+
+
+  - Name: DLG_BATTLE_30001
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30001.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_YouOweMeOne_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30001.2"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_YouOweMeOne_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30001"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_YouOweMeOne_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30002
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30002.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_TheLegionsJustice_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30002.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_TheLegionsJustice_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30002"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_TheLegionsJustice_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30003
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30003.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_FullContact_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON_2
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30003.2"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_FullContact_Win2
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30003"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_FullContact_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30004
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30004.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_FreshBlood_BattleSelected
+                Buttons:
+                  - Alias: continue
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_FreshBlood_BattleSelected2
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30004.2"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_FreshBlood_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30004"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_FreshBlood_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30005
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30005.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Marauders_BattleSelected
+                Buttons:
+                  - Alias: continue
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Marauders_BattleSelected2
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30005.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Marauders_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30005"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Marauders_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30006
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30006.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Nightwatch_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30006.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Nightwatch_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30006"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Nightwatch_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30007
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30007.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_HitNCount_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30007.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_HitNCount_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30007"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_HitNCount_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30008
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30008.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Blackouts_BattleSelected
+                Buttons:
+                  - Alias: continue
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Blackouts_BattleSelected2
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30008.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Blackouts_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30008"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_Blackouts_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30009
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30009.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_MaintainSecrecy_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30009.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_MaintainSecrecy_WIn
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30009"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_MaintainSecrecy_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30010
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30010.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_RecklessRecruit_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30010.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_RecklessRecruit_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30010"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_RecklessRecruit_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30011
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30011.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_AllTomorrowsParties_BattleSelected
+                Buttons:
+                  - Alias: continue
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_AllTomorrowsParties_BattleSelected2
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30011.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_AllTomorrowsParties_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30011"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_AllTomorrowsParties_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30012
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30012.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_AWOL_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30012.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_AWOL_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30012"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_AWOL_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30013
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30013.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Runaway_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30013.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Runaway_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30013"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_Runaway_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30014
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30014.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_GoodReputation_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30014.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_GoodReputation_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30014"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_SARGE
+                Images:
+                  - Sprite: Content/Avatars/man_Sarge
+                Labels:
+                  - Alias: beta_Mission_GoodReputation_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30015
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30015.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_JUNE
+                Images:
+                  - Sprite: Content/Avatars/girl_princess
+                Labels:
+                  - Alias: beta_Mission_StartWithTheBasics_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30015.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_JUNE
+                Images:
+                  - Sprite: Content/Avatars/girl_princess
+                Labels:
+                  - Alias: beta_Mission_StartWithTheBasics_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30015"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_JUNE
+                Images:
+                  - Sprite: Content/Avatars/girl_princess
+                Labels:
+                  - Alias: beta_Mission_StartWithTheBasics_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                 
+  - Name: DLG_BATTLE_30017
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30017.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_KnowYourEnemy_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30017.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_KnowYourEnemy_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30017"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_KnowYourEnemy_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30018
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30018.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_Fractured_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30018.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_Fractured_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30018"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_Fractured_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30019
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30019.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_AGiftFromOldFriends_BattleSelected
+                Buttons:
+                  - Alias: continue
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_AGiftFromOldFriends_BattleSelected2
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30019.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_AGiftFromOldFriends_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30019"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_AGiftFromOldFriends_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30020
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30020.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_PrideAndPrejudice_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30020.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_PrideAndPrejudice_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30020"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_PrideAndPrejudice_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30021
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30021.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_BlastFromThePast_BattleSelected
+                Buttons:
+                  - Alias: continue
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_BlastFromThePast_BattleSelected2
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30021.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_BlastFromThePast_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30021"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GIZMO
+                Images:
+                  - Sprite: Content/Avatars/man_Gizmo
+                Labels:
+                  - Alias: beta_Mission_BlastFromThePast_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30022
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30022.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_RiotOuttaNowhere_BattleSelected
+                Buttons:
+                  - Alias: continue
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_RiotOuttaNowhere_BattleSelected2
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30022.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_RiotOuttaNowhere_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30022"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_RiotOuttaNowhere_Loss
+                Buttons:
+                  - Alias: continue
+                  
+                  
+  - Name: DLG_BATTLE_30023
+    Triggers:
+      - Name: BATTLE_SELECTED_END
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.BATTLE_SELECTED_END]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[BattleSelectionEnd, ID]", Value2: "30023.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_StarvingForAFight_BattleSelected
+                Buttons:
+                  - Alias: continue
+
+      - Name: FIGHT_WON
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_WON]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, ID]", Value2: "30023.1"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_StarvingForAFight_Win
+                Buttons:
+                  - Alias: continue
+
+
+      - Name: FIGHT_LOST
+        Templates: [TEMPLATE_QUESTS_DIALOGUES.FIGHT_LOST]
+        Conditions:
+          - Equal: {Value1: "?QuestEvent[FightEnd, BattleID]", Value2: "30023"}
+        Actions:
+          - Dialog:
+              Type: Dialog
+              Content:
+                Title:
+                    Alias: CHAR_GRETA
+                Images:
+                  - Sprite: Content/Avatars/girl_Greta
+                Labels:
+                  - Alias: beta_Mission_StarvingForAFight_Loss
+                Buttons:
+                  - Alias: continue

@@ -1,0 +1,211 @@
+﻿Battles:
+  - ID: 10
+    Hidden: 1
+    WonFights: 0
+    GenTime: -62135596800000
+    Fights:
+      - ID: 1
+        Rounds:
+          - ModelInfo:
+                Alias: CHAR_GIZMO
+                Gender: Male
+                Head: head-gizmo
+                AiMode: NoneMode
+                WarriorPower: 17.5
+                Tags:
+                  - SKELETON
+                  - TUTORIAL_MOVEMENT_COMBOS
+                HairColor:
+                    Color:
+                        ID: 4
+                    Value: 0.05
+                SkinColor:
+                    Color:
+                        ID: 1
+                    Value: 0.05
+                Equipments:
+                  - ID: 409
+                    StackLevel: 0
+                    Equipped: 1
+                  - ID: 200
+                    StackLevel: 0
+                    ShadowMark: SHADOW_THUD
+                    EnemyShadowMark: SHADOW_THUD
+                    Equipped: 1
+                  - ID: 4
+                    StackLevel: 0
+                    EnemyShadowMark: SHADOW_TWOHANDED_SWORD_SLASH
+                    Equipped: 1
+            Rules:
+              - 11: {}
+              - 10: {}
+              - 1:
+                    4: 1.4
+                    5: 1.4
+        Rewards:
+          - Experience: 0
+          - Experience: 10
+            Currencies:
+              - Type: Coin
+                Value: 75
+  - ID: 20
+    Hidden: 1
+    WonFights: 0
+    GenTime: -62135596800000
+    Fights:
+      - ID: 1
+        Rounds:
+          - ModelInfo:
+                Alias: CHAR_GIZMO
+                Gender: Male
+                Head: head-gizmo
+                WarriorPower: 17.5
+                Tags:
+                  - SKELETON
+                  - TUTORIAL_CHEAT
+                  - TUTORIAL_BLOCK
+                HairColor:
+                    Color:
+                        ID: 4
+                    Value: 0.05
+                SkinColor:
+                    Color:
+                        ID: 1
+                    Value: 0.05
+                Equipments:
+                  - ID: 409
+                    StackLevel: 0
+                    Equipped: 1
+                  - ID: 200
+                    StackLevel: 0
+                    ShadowMark: SHADOW_THUD
+                    EnemyShadowMark: SHADOW_THUD
+                    Equipped: 1
+                  - ID: 4
+                    StackLevel: 0
+                    EnemyShadowMark: SHADOW_TWOHANDED_SWORD_SLASH
+                    Equipped: 1
+            Rules:
+              - 11: {}
+              - 10: {}
+        Rewards:
+          - Experience: 0
+          - Experience: 15
+            Currencies:
+              - Type: Coin
+                Value: 75
+  - ID: 30
+    WonFights: 0
+    GenTime: -62135596800000
+    Fights:
+      - ID: 1
+        Rounds:
+          - ModelInfo:
+                Alias: CHAR_PARTISAN
+                Gender: Male
+                Head: head__03b
+                WarriorPower: 17.5
+                Tags:
+                  - SKELETON
+                  - TUTORIAL_SF
+                  - SHADOW_STAFF_SPINNING_SLASH
+                  - SHADOW_BLINK
+                HairColor:
+                    Color:
+                        ID: 5
+                    Value: 0.5
+                SkinColor:
+                    Color:
+                        ID: 3
+                    Value: 0.5
+                Equipments:
+                  - ID: 402
+                    StackLevel: 0
+                    ShadowMark: SHADOW_MINE
+                    EnemyShadowMark: SHADOW_MINE
+                    Equipped: 1
+                  - ID: 206
+                    StackLevel: 0
+                    ShadowMark: SHADOW_BLINK
+                    EnemyShadowMark: SHADOW_BLINK
+                    Equipped: 1
+                  - ID: 8
+                    StackLevel: 0
+                    EnemyShadowMark: SHADOW_STAFF_SPINNING_SLASH
+                    Equipped: 1
+            Rules:
+              - 11: {}
+        Rewards:
+          - Experience: 0
+          - Experience: 25
+            Currencies:
+              - Type: Coin
+                Value: 60
+            Perks:
+              - ID: 3003
+                StackLevel: 10
+  - ID: 1
+    Hidden: 1
+    WonFights: 0
+    GenTime: -62135596800000
+    Fights:
+      - ID: 1
+        Rounds:
+          - ModelInfo:
+                Alias: CHAR_GIZMO
+                Gender: Male
+                Head: head-gizmo
+                AiMode: NoneMode
+                WarriorPower: 0
+                HairColor:
+                    Color:
+                        ID: 4
+                    Value: 0.05
+                SkinColor:
+                    Color:
+                        ID: 1
+                    Value: 0.05
+                Equipments:
+                  - ID: 409
+                    StackLevel: 0
+                    Equipped: 1
+                  - ID: 200
+                    StackLevel: 0
+                    ShadowMark: SHADOW_THUD
+                    EnemyShadowMark: SHADOW_THUD
+                    Equipped: 1
+                  - ID: 4
+                    StackLevel: 0
+                    EnemyShadowMark: SHADOW_TWOHANDED_SWORD_SLASH
+                    Equipped: 1
+      - ID: 2
+        Rounds:
+          - ModelInfo:
+                Alias: CHAR_JUNE
+                Gender: Female
+                Head: head-june
+                AiMode: NoneMode
+                WarriorPower: 0
+                HairColor:
+                    Color:
+                        ID: 6
+                    Value: 0.05
+                SkinColor:
+                    Color:
+                        ID: 1
+                    Value: 0.05
+                Equipments:
+                  - ID: 4013
+                    StackLevel: 0
+                    Equipped: 1
+                  - ID: 215
+                    StackLevel: 0
+                    ShadowMark: SHADOW_BLINK
+                    EnemyShadowMark: SHADOW_BLINK
+                    Equipped: 1
+                  - ID: 35
+                    StackLevel: 0
+                    ShadowMark: SHADOW_NUNCHAKU_SPINNING_SLASH
+                    EnemyShadowMark: SHADOW_NUNCHAKU_SPINNING_SLASH
+                    Equipped: 1
+...

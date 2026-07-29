@@ -1,0 +1,222 @@
+TriggerSets:
+########################################## SPEAR
+
+###################################### ATTACKS
+
+################################### BASIC ATTACK (O)
+  - Name: ATTACK_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [ATTACK.BASIC, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Spear_Slash_1}
+            
+################################### DOUBLE ATTACK (O + O)
+  - Name: ATTACK_DOUBLE_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [ATTACK.DOUBLE, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Spear_Slash_2}
+
+################################### BASIC ATTACK INSTEAD SUPER
+  - Name: ATTACK_Spear_Instead_Super_1
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_NOT_SUPER_WEAPON]
+    Triggers:
+      - Templates: [ATTACK.SUPER_1]
+        Actions:
+          - Animation: {Name: Spear_Slash_1}
+
+################################### HEAVY ATTACK (Forward + O)
+  - Name: ATTACK_HEAVY_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [ATTACK.HEAVY, TACTICS.ATTACK_AFAR]
+        Actions:
+          - Animation: {Name: Spear_Heavy_Slash_1}
+
+################################### UPPER ATTACK (Up + O)
+  - Name: ATTACK_UPPER_1_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [ATTACK.UPPER, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Spear_Upper_Slash_1}
+          
+#  - Name: ATTACK_UPPER_2_Spear
+#    Templates: [LOCK_SUBTYPE_SPEAR]
+#    Triggers:
+#      - Templates: [ATTACK.UPPER_DOUBLE, TACTICS.ATTACK_CLOSE]
+#        Actions:
+#          - Animation: {Name: Spear_Upper_Slash_2}
+
+################################## SPINNING ATTACK (Backward + O)
+  - Name: ATTACK_SPINNING_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [ATTACK.SPINNING, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Spear_Spinning_Slash_1}
+
+################################### LOW ATTACK (Down + P)
+  - Name: ATTACK_LOW_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [ATTACK.LOW, TACTICS.ATTACK_MIDRANGE]
+        Actions:
+          - Animation: {Name: Spear_Low_Slash_1}
+
+################################### SUPER ATTACK (Forward + O + O)
+  - Name: ATTACK_SUPER_1_1_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SPEAR_1"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Spear_Super_1_Slash_1}
+
+#  - Name: ATTACK_SUPER_1_2_Spear
+#    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_SUPER_WEAPON]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SPEAR_1"}
+#    Triggers:
+#      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+#        Actions:
+#          - Animation: {Name: Spear_Super_1_Slash_2}
+#
+#  - Name: ATTACK_SUPER_1_3_Spear
+#    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_SUPER_WEAPON]
+#    Locks:
+#      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SPEAR_1"}
+#    Triggers:
+#      - Templates: [ATTACK.SUPER_3, TACTICS.ATTACK_COMBO]
+#        Actions:
+#          - Animation: {Name: Spear_Super_1_Slash_3}
+
+  - Name: ATTACK_SUPER_2_1_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SPEAR_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Spear_Super_2_Slash_1}
+
+  - Name: ATTACK_SUPER_2_2_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SPEAR_2"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Spear_Super_2_Slash_2}
+
+  - Name: ATTACK_SUPER_3_1_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SPEAR_3"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_1, TACTICS.ATTACK_CLOSE]
+        Actions:
+          - Animation: {Name: Spear_Super_3_Slash_1}
+
+  - Name: ATTACK_SUPER_3_2_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_SUPER_WEAPON]
+    Locks:
+      - Equal: {Value1: "?Player[Me].TagExists", Value2: "SUPER_SPEAR_3"}
+    Triggers:
+      - Templates: [ATTACK.SUPER_2, TACTICS.ATTACK_COMBO]
+        Actions:
+          - Animation: {Name: Spear_Super_3_Slash_2}
+
+###################################### STANCES, MOVES etc.
+  - Name: STANCE_IDLE_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [STANCE.IDLE]
+        Actions:
+          - Animation: {Name: Spear_Idle}
+
+########################
+  - Name: STEP_FORWARD_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, STEP_FORWARD]
+    Triggers:
+      - Actions:
+          - Animation: {Name: Spear_Step_Forward}
+
+  - Name: STEP_BACK_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, STEP_BACK]
+    Triggers:
+      - Actions:
+          - Animation: {Name: Spear_Step_Back}
+
+########################
+  - Name: STANCE_START_BIRTH_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_LOCATION_NOT_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Spear_Stance_Birth}
+
+  - Name: STANCE_START_BIRTH_Spear_Dojo
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_LOCATION_DOJO]
+    Triggers:
+      - Templates: [STANCE.START_BIRTH]
+        Actions:
+          - Animation: {Name: Spear_Idle}
+
+########################
+  - Name: STANCE_START_ROUND_PLAYER_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_PLAYER]
+        Actions:
+          - Animation: {Name: Spear_Stance_Start_Round}
+
+  - Name: STANCE_START_ROUND_NOT_PLAYER_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR, LOCK_NOT_PLAYER]
+    Triggers:
+      - Templates: [STANCE.START_ROUND_NOT_PLAYER]
+        Actions:
+          - Animation: {Name: Spear_Stance_Start_Round}
+
+########################
+  - Name: STANCE_START_IDLE_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [STANCE.START_IDLE]
+        Actions:
+          - Animation: {Name: Spear_Stance_Idle}
+
+########################
+  - Name: STANCE_WIN_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [STANCE.WIN_ROUND]
+        Actions:
+          - Animation: {Name: Spear_Stance_Win}
+
+########################
+  - Name: STANCE_WIN_IDLE_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [STANCE.FINISHING_ROUND_IDLE]
+        Actions:
+          - Animation: {Name: Spear_Stance_Win_Idle}
+
+###################################### LOW STANCE
+  - Name: LOW_STANCE_COMMON_Spear
+    Templates: [LOCK_SUBTYPE_SPEAR]
+    Triggers:
+      - Templates: [LOW_STANCE.IN]
+        Actions:
+          - Animation: {Name: Low_Stance_Polearm_In}
+
+      - Templates: [LOW_STANCE.LOOP]
+        Actions:
+          - Animation: {Name: Low_Stance_Polearm_Loop}
+
+      - Templates: [LOW_STANCE.OUT]
+        Actions:
+          - Animation: {Name: Low_Stance_Polearm_Out}

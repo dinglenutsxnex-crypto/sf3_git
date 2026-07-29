@@ -1,0 +1,868 @@
+Animations:
+# Просьба придерживаться структуры и именования анимаций
+# Все анимации, относящиеся к одному стилю / смысловой группе, должны быть записаны подряд (STANCES, UNARMED, SWORDS...)
+# Внутри одной группы сначала идут анимации вне боевой школы, далее школозависимые (Сильные, Ловкие, Точные)
+# Имя анимации складывается из префикса, обозначающего стиль (если есть), далее, префикса, указывающего, что делает движение (пинок, удар, ...), и окончания, определяющего вид движения (например, вперёд/назад/суперудар и т.п.)
+
+# ################################################# INVENTORY #################################################
+
+######################## IN/OUT ANIMATIONS ########################
+###################### IN/OUT 0 WEAPON
+  - Animation: Inv_0_In_M
+    FileName: inv_0_in_m.bin
+    Groups:
+      - STANCE_INVENTORY_IN
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_0_In_Back_M
+    FileName: inv_0_in_back_m.bin
+    Mirrored: -1
+    Groups:
+      - STANCE_INVENTORY_IN
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_0_Idle
+    FileName: inv_0_idle.bin
+    Groups:
+      - STANCE_INVENTORY_IDLE
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inventory_0_Out
+    FileName: inv_0_out.bin
+    Groups:
+      - STANCE_INVENTORY_OUT
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+            
+###################### IN/OUT 1 WEAPON
+  - Animation: Inventory_1_In_M
+    FileName: inv_1_in_m.bin
+    Groups:
+      - STANCE_INVENTORY_IN
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_In_Back_M
+    FileName: inv_1_in_back_m.bin
+    Mirrored: -1
+    Groups:
+      - STANCE_INVENTORY_IN
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_Idle
+    FileName: inv_1_idle.bin
+    Groups:
+      - STANCE_INVENTORY_IDLE
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_Out
+    FileName: inv_1_out.bin
+    Groups:
+      - STANCE_INVENTORY_OUT
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+            
+
+###################### IN/OUT 1 WEAPON MIRRORED
+  - Animation: Inv_1_In_M_Mirrored
+    FileName: inv_1_in_m.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - STANCE_INVENTORY_IN
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_In_Back_M_Mirrored
+    FileName: inv_1_in_back_m.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Mirrored: -1
+    Groups:
+      - STANCE_INVENTORY_IN
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_Idle_Mirrored
+    FileName: inv_1_idle.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - STANCE_INVENTORY_IDLE
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible 
+
+  - Animation: Inv_1_Out_Mirrored
+    FileName: inv_1_out.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - STANCE_INVENTORY_OUT
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+        
+###################### IN/OUT 2 WEAPON
+  - Animation: Inv_2_In_M
+    FileName: inv_2_in_m.bin
+    Groups:
+      - STANCE_INVENTORY_IN
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: foot_l
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_2_In_Back_M
+    FileName: inv_2_in_back_m.bin
+    Mirrored: -1
+    Groups:
+      - STANCE_INVENTORY_IN
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_2_Idle
+    FileName: inv_2_idle.bin
+    Groups:
+      - STANCE_INVENTORY_IDLE
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_2_Out
+    FileName: inv_2_out.bin
+    Groups:
+      - STANCE_INVENTORY_OUT
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 6
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+            
+            
+######################## 0 WEAPON TRYON INVENTORY ANIMATIONS ########################
+
+######################## 0 ARMORS 
+  - Animation: Inv_0_Armor_01_M
+    FileName: inv_0_armor_01_m.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+            
+  - Animation: Inv_0_Armor_02_M
+    FileName: inv_0_armor_02_m.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+ 
+  - Animation: Inv_0_Armor_04_M
+    FileName: inv_0_armor_04_m.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+ 
+
+######################## 0 HELMETS
+  - Animation: Inv_0_Helm_01
+    FileName: inv_0_helm_01.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+            
+            
+            
+######################## 1 WEAPON TRYON INVENTORY ANIMATIONS ########################
+
+######################## 1 ARMORS 
+  - Animation: Inv_1_Armor_01_M
+    FileName: inv_1_armor_01_m.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+            
+  - Animation: Inv_1_Armor_02_M
+    FileName: inv_1_armor_02_m.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+ 
+  - Animation: Inv_1_Armor_04_M
+    FileName: inv_1_armor_04_m.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+ 
+
+######################## 1 HELMETS
+  - Animation: Inv_1_Helm_01
+    FileName: inv_1_helm_01.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+            
+
+######################## 1 WEAPONS
+  - Animation: Inv_1_Dual_Swords_01
+    FileName: inv_1_dual_swords_01.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_OneHanded_Sword_01
+    FileName: inv_1_onehanded_sword_01.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_Staff_01
+    FileName: inv_1_staff_01.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+            
+######################## 1 WEAPON MIRRORED TRYON INVENTORY ANIMATIONS ########################
+
+######################## 1 ARMORS MIRRORED  
+  - Animation: Inv_1_Armor_01_M_Mirrored
+    FileName: inv_1_armor_01_m.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+            
+  - Animation: Inv_1_Armor_02_M_Mirrored
+    FileName: inv_1_armor_02_m.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+ 
+  - Animation: Inv_1_Armor_04_M_Mirrored
+    FileName: inv_1_armor_04_m.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+ 
+
+######################## 1 HELMETS MIRRORED 
+  - Animation: Inv_1_Helm_01_Mirrored
+    FileName: inv_1_helm_01.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+            
+
+######################## 1 WEAPONS MIRRORED 
+  - Animation: Inv_1_Dual_Swords_01_Mirrored
+    FileName: inv_1_dual_swords_01.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_OneHanded_Sword_01_Mirrored
+    FileName: inv_1_onehanded_sword_01.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_Twohanded_Sword_01
+    FileName: inv_1_twohanded_sword_01.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_1_Twohanded_Hammer_01
+    FileName: inv_1_twohanded_hammer_01.bin
+    WeaponSwitchFrames:
+      - Name: Mirror
+        Frame: 1
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+######################## 2 WEAPON TRYON INVENTORY ANIMATIONS ######################## 
+            
+######################## 2 ARMORS
+  - Animation: Inv_2_Armor_01_M
+    FileName: inv_2_armor_01_m.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+            
+  - Animation: Inv_2_Armor_02_M
+    FileName: inv_2_armor_02_m.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+ 
+  - Animation: Inv_2_Armor_04_M
+    FileName: inv_2_armor_04_m.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+ 
+
+######################## 2 HELMETS
+  - Animation: Inv_2_Helm_01
+    FileName: inv_2_helm_01.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+            
+###################### 2 WEAPON
+  - Animation: Inv_2_Dual_Swords_01
+    FileName: inv_2_dual_swords_01.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+  - Animation: Inv_2_OneHanded_Sword_01
+    FileName: inv_2_onehanded_sword_01.bin
+    Groups:
+      - TRY_ON
+      - STANCE_INVENTORY
+    Align:
+        Rotation:
+            Y: 0
+        Axis:
+          - X
+        Pivot:
+            Object: Nodes
+            Part: pelvis
+        Position:
+            Player: Me
+            Object: Pivot
+    Intervals:
+      - Type: Invincible
+
+
+
+
+

@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
-      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
       UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
 
     steps:
       - name: Checkout repository
@@ -27,11 +27,6 @@ jobs:
           key: unity-library-${{ hashFiles('unity sf3/RTX Sf3 Project/Packages/manifest.json') }}
           restore-keys: |
             unity-library-
-
-      - name: Debug license
-        run: |
-          echo "LICENSE length: ${#UNITY_LICENSE}"
-          echo "EMAIL: $UNITY_EMAIL"
 
       - name: Build Android APK
         uses: game-ci/unity-builder@v4

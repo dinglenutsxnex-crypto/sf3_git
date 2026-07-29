@@ -1,0 +1,44 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Cache Unity Library
+        uses: actions/cache@v4
+        with:
+          path: "unity sf3/RTX Sf3 Project/Library"
+          key: unity-library-${{ hashFiles('unity sf3/RTX Sf3 Project/Packages/manifest.json') }}
+          restore-keys: |
+            unity-library-
+
+      - name: Copy Unity license
+        run: |
+          mkdir -p "/root/.local/share/unity3d/Unity"
+          echo "${{ secrets.UNITY_LICENSE }}" > "/root/.local/share/unity3d/Unity/Unity_lic.ulf"
+
+      - name: Build Android APK
+        uses: game-ci/unity-builder@v4
+        with:
+          projectPath: "unity sf3/RTX Sf3 Project"
+          targetPlatform: Android
+          unityVersion: 2021.3.45f2
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AndroidBuild
+          path: build
+          retention-days: 7
